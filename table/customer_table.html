@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="../css/tablepage.css">
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+  </head>
+  <body>
+    <br />
+    <div class="container">
+
+      <br />
+      <div class="card">
+        
+        <div class="card-body">
+          <div class="form-group" style="align-content: right;">
+            <button class="butLink"  title="Create New Item" id="myBtn">Add Customer</button>
+            <input type="text" name="search_box" id="search_box" style="width: 500px; height: 40px; float: right;"  placeholder=" &#x1F50E;&nbsp;Search by company.....">
+          </div>
+
+          <div class="table-responsive" id="dynamic_content">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  $(document).ready(function(){
+
+    load_data(1);
+
+    function load_data(page, query = '')
+    {
+      $.ajax({
+        url:"../fetch/customer_fetch.php",
+        method:"POST",
+        data:{page:page, query:query},
+        success:function(data)
+        {
+          $('#dynamic_content').html(data);
+        }
+      });
+    }
+
+    $(document).on('click', '.page-link', function(){
+      var page = $(this).data('page_number');
+      var query = $('#search_box').val();
+      load_data(page, query);
+    });
+
+    $('#search_box').keyup(function(){
+      var query = $('#search_box').val();
+      load_data(1, query);
+    });
+
+  });
+</script>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>

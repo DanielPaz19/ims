@@ -1,0 +1,186 @@
+<style>
+
+#myInput {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+ }
+
+ 
+.item_list {
+  background-color: #666;
+  padding: 50px;
+  text-align: center;
+  font-size: 35px;
+  color: midnightblue;
+}
+
+
+
+
+#items table {
+  border:1px solid gray;
+  width: 100%;
+}
+
+#items input {
+
+  width: 50%;
+  height: 5%;
+
+}
+
+#items {
+  font-family:arial, serif;
+  border-collapse: collapse;
+  width: 90%;
+  margin: auto;
+  
+}
+
+#items td {
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+#items th:nth-child(even){background-color: #;}
+
+
+#items th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #6495ed;
+  color: white;
+}
+
+#butAddItem {
+  background-color: #6495ed;
+  display: none;
+}
+.button {
+  background-color: #6495ed;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10%;
+}
+
+
+
+
+#header-title {
+  font-size: 35px;
+}
+
+
+
+
+
+/*ADDITEM DESIGN*/
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  bottom: 0;
+  right: 0px;
+  border: 50px solid #f1f1f1;
+  z-index: 9;
+  padding: 90px;
+  color: midnightblue;
+
+}
+
+/* Add styles to the form container */
+
+.form-popup form {
+  width: 100%;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 0;
+}
+/*ADDITEM DESIGN END*/
+
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+
+  background-color: #6495ed;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color:#6495ed;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 10px;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #0000ff;
+  color: white;
+
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 60px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+</style>

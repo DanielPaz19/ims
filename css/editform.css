@@ -1,0 +1,46 @@
+
+body {
+font-family: sans-serif;
+background-color:#B0C4DE ;
+padding: 100px;
+margin-top: 0px;
+}
+
+.container {
+    margin: auto;
+    background-color: whitesmoke;
+    width:60% ;
+    height: 65vh;
+    box-shadow:  0 0 10px  rgba(0,0,0,0.6);
+    -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+    -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+    margin-bottom: 10px;
+    padding: 100px;
+}
+
+.container h1 {
+    letter-spacing: 5px;
+}
+
+.items1 th,td {
+    text-align: left;
+    padding-bottom: 10px;
+    
+
+}
+
+.items1 input[type=text] {
+   width: 90%;
+   height: 35px;
+}
+.items1 select {
+   width: 60%;
+   height: 35px;  
+}
+
+.items1 input[type=number] {
+   width: 90%;
+   height: 35px;
+}
+

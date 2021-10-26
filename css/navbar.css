@@ -1,0 +1,16 @@
+
+.navbar{
+  background: midnightblue;
+  height: 50px;
+  width: 100%;
+  font-family: sans-serif;
+}
+
+.navbar a:hover {
+  background-color: white;
+  color:#6495ed;
+}
+
+
+
+
