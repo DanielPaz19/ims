@@ -1,6 +1,9 @@
 <?php
 
-use PhpMyAdmin\Database\Search;
+
+// use PhpMyAdmin\Database\Search;
+
+
 
 include('../php/config.php');
 
@@ -10,8 +13,45 @@ if (isset($_POST['stin_submit'])) {
   $stin_title = mysqli_real_escape_string($db, $_POST['stin_title']);
   $stin_remarks = mysqli_real_escape_string($db, $_POST['stin_remarks']);
   $stin_date = mysqli_real_escape_string($db, $_POST['stin_date']);
+  $productId = $_POST['productId'];
+  $stinTempQty = $_POST['stinTempQty'];
+  $cost = $_POST['cost'];
+  $discount = $_POST['discount'];
+  $incomintQty = $_POST['incomingQty'];
 
   mysqli_query($db, "UPDATE stin_tb SET stin_code='$stin_code', stin_title='$stin_title' ,stin_remarks='$stin_remarks',stin_date='$stin_date'  WHERE stin_id='$id'");
+
+
+  function updateStinProd($id, $productId, $stinTempQty, $cost, $discount, $incomintQty)
+  {
+    include('../php/config.php');
+    mysqli_query($db, "UPDATE stin_product SET stin_temp_qty = '$stinTempQty',  stin_temp_cost = '$cost', 
+    stin_temp_disamount = '$discount', stin_temp_tot = '$incomintQty' WHERE stin_id = '$id' AND product_id = '$productId'");
+  }
+
+  function addStinProdRecord($productId, $id, $stinTempQty, $cost, $discount,  $incomintQty)
+  {
+    include('../php/config.php');
+    mysqli_query($db, "INSERT INTO stin_product(product_id, stin_id, stin_temp_qty, stin_temp_cost, stin_temp_disamount, stin_temp_tot)
+    VALUES ('$productId', '$id', '$stinTempQty', '$cost', '$discount',  '$incomintQty')");
+  }
+
+
+  // If product ID exist, update the record
+  // If product ID doesnt exist, add record
+  $counter = 0;
+  while (count($productId) !== $counter) {
+    $result =  mysqli_query($db, "SELECT * FROM stin_product  WHERE product_id = $productId[$counter] AND stin_id = $id");
+    $row = mysqli_fetch_assoc($result);
+    if (!$row) {
+      addStinProdRecord($productId[$counter], $id, $stinTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
+    } else {
+      updateStinProd($id, $productId[$counter], $stinTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
+    }
+    $counter++;
+  }
+
+
 
   header("Location:../main/stin_main.php");
 }
@@ -37,9 +77,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 }
 
 
-// Check product ID if exist on stin_product table
-// If product ID exist, update the record
-// If product ID doesnt exist, add record
+
 
 
 
@@ -354,54 +392,64 @@ border: 1px solid black;
 
         <br>
         <table class="itemTb">
-          <tr>
-            <th style="text-align: left;">ID</th>
-            <th style="text-align: left;">Item Description</th>
-            <th style="text-align: left;">On-Hand</th>
-            <th style="text-align: left;">Qty-In</th>
-            <th style="text-align: left;">Unit</th>
-            <th style="text-align: left;">Cost</th>
-            <th style="text-align: left;">Discount Amount</th>
-            <th style="text-align: left;">Incomming Qty</th>
-            <th style="text-align: center;">Action</th>
-          </tr>
+          <thead>
+            <tr>
+              <th style="text-align: left;">ID</th>
+              <th style="text-align: left;">Item Description</th>
+              <th style="text-align: left;">On-Hand</th>
+              <th style="text-align: left;">Qty-In</th>
+              <th style="text-align: left;">Unit</th>
+              <th style="text-align: left;">Cost</th>
+              <th style="text-align: left;">Discount Amount</th>
+              <th style="text-align: left;">Incomming Qty</th>
+              <th style="text-align: center;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            include "../php/config.php";
+            $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
+            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount 
+            FROM product 
+            INNER JOIN stin_product ON stin_product.product_id=product.product_id 
+            INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
+            INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+            WHERE stin_tb.stin_id='$id' 
+            ORDER BY product.product_id DESC";
 
-          <?php
-          include "../php/config.php";
-          $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,unit_tb.unit_name,product.cost,stin_product.stin_temp_disamount FROM product INNER JOIN stin_product ON stin_product.product_id=product.product_id INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_tb.stin_id='$id' ORDER BY product.product_id ASC";
+            $result = $db->query($sql);
+            $count = 0;
+            if ($result->num_rows >  0) {
 
-          $result = $db->query($sql);
-          $count = 0;
-          if ($result->num_rows >  0) {
+              while ($irow = $result->fetch_assoc()) {
+                $count = $count + 1;
+                $total = $irow['qty'] + $irow['stin_temp_qty'];
+            ?>
 
-            while ($irow = $result->fetch_assoc()) {
-              $count = $count + 1;
-              $total = $irow['qty'] + $irow['stin_temp_qty'];
-          ?>
+                <tr>
 
-              <tr>
-
-                <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>"></td>
-                <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
-                <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
-                <td style="text-align: left;"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>"></td>
-                <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
-                <td style="text-align: left;"><?php echo $irow['cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['cost'] ?>"></td>
-                <td style="text-align: left;"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>"></td>
-                <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>"></td>
-                <td>
-                  <center>
-                    <a href="../edit/item_edit/stin_itemedit.php?<?php echo 'id=' . $id . '&prodId=' . $irow['product_id'] . '&Tot=' . $total; ?>" title="Edit"><i class="fa fa-edit" style="font-size:24px"></i></a>
-                    &nbsp;
-                    <a href="stin_item_delete.php?id=<?php echo $id; ?>" title="Remove">
-                      <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                    </a>
-                </td>
+                  <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
+                  <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
+                  <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
+                  <td style="text-align: left;"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>" class='stin--qty__in'></td>
+                  <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
+                  <td style="text-align: left;"><?php echo $irow['stin_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stin_temp_cost'] ?>" class='stin--cost'></td>
+                  <td style="text-align: left;"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>" class='stin--discount'></td>
+                  <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>" class='stin--incoming__qty'></td>
+                  <td>
+                    <center>
+                      <a href="../edit/item_edit/stin_itemedit.php?<?php echo 'id=' . $id . '&prodId=' . $irow['product_id'] . '&Tot=' . $total; ?>" title="Edit"><i class="fa fa-edit" style="font-size:24px"></i></a>
+                      &nbsp;
+                      <a href="stin_item_delete.php?id=<?php echo $id; ?>" title="Remove">
+                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      </a>
+                  </td>
 
 
-              </tr>
-          <?php }
-          } ?>
+                </tr>
+            <?php }
+            } ?>
+          </tbody>
         </table>
         <br>
         <button class="butLink" name="stin_submit" onclick="alert('Edit Records Successfully !')">Update</button>
@@ -414,9 +462,10 @@ border: 1px solid black;
 
   <div class="container--modal">
     <div class='modal--add__item'>
-      <span class='close--modal'>Close</span>
-      <button class="button--add__item">New Item</button>
-      <input type="text" class='input--search' placeholder="Search Item...">
+
+      <a href=""><button class="button--add__item">New Item</button></a>
+      <input type="text" class='input--search' placeholder="Search Item..."><br>
+      <span class='close--modal' style="float: right;"><i class="fa fa-close"></i></span>
       <div class='table--container'>
         <table class="modal--table__itemlist">
           <thead>
@@ -446,6 +495,31 @@ border: 1px solid black;
     const inputSearch = document.querySelector('.input--search');
     const tableItemTb = document.querySelector('.itemTb');
 
+    const stinEdit = function(e) {
+      const target = e.target.closest('td').children[0];
+      const changeValue = function(promptMessage) {
+        newValue = prompt(promptMessage);
+        target.closest('td').childNodes[0].textContent = newValue;
+        target.value = newValue;
+      }
+
+      let newValue;
+
+      if (!target) return;
+
+      if (target.classList.contains('stin--qty__in')) {
+        changeValue("Enter New Qty-In");
+      }
+
+      if (target.classList.contains('stin--cost')) {
+        changeValue("Enter New Cost");
+      }
+
+      if (target.classList.contains('stin--discount')) {
+        changeValue("Enter New Discount");
+      }
+
+    };
 
     const modalOpen = function(e) {
       e.preventDefault();
@@ -475,14 +549,14 @@ border: 1px solid black;
       modalClose();
 
       tableItemTb.querySelector('tbody').insertAdjacentHTML('beforeend', `<tr>
-      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}"></td>
+      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stin--product__id'></td>
       <td>${selectedName}</td>
       <td>${selectedQty}</td>
-      <td>${qtyIn}<input type="hidden" name="stinTempQty[]" value="${qtyIn}"></td>
+      <td>${qtyIn}<input type="hidden" name="stinTempQty[]" value="${qtyIn}" class='stin--qty__in'></td>
       <td>${selectedUnit}</td>
-      <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}"></td>
-      <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}"></td>
-      <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}"></td>
+      <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stin--cost'></td>
+      <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stin--discount'></td>
+      <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
       </tr>
       `)
     };
@@ -528,6 +602,8 @@ border: 1px solid black;
     inputSearch.addEventListener('keyup', searchItem)
 
     containerItemList.addEventListener('dblclick', selectItem)
+
+    tableItemTb.querySelector('tbody').addEventListener('dblclick', stinEdit)
   </script>
 
 </html>

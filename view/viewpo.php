@@ -42,7 +42,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     a.print();
   }
 </script>
-<button id="printPageButton" onClick="printDiv();">Print</button>
 
 <body>
   <div class="print-area">
@@ -68,8 +67,19 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
       <div class="suptab">
-        <h3 style="text-align: right; margin-right:20px;"><label>Puchase Order :</label></label> <?php echo $po_title; ?></h3>
-        <h4 style="text-align: right; margin-right:20px;">Date: <?php echo $po_date; ?></h4>
+        <table width="100%">
+          <tr>
+            <td>
+              <h4 style="text-align: left; margin-right:20px;"><label>Puchase Order :</label> <?php echo $po_title; ?></h4>
+            </td>
+            <td>
+              <h4 style="text-align: right; margin-right:20px;">Date: <?php echo $po_date; ?></h4>
+            </td>
+          </tr>
+        </table>
+
+
+
 
         <fieldset>
           <legend style="letter-spacing: 3px; font-weight: bolder;">&nbsp;Supplier Information &nbsp;&nbsp;&nbsp;</legend>
@@ -166,7 +176,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           </table>
         </div>
       </div>
-
+      <table>
+        <tr>
+          <td>Prepared By:__________</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>Check By:__________</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>Approve By:__________</td>
+        </tr>
+      </table>
     </page>
   </div>
 </body>
