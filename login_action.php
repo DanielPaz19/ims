@@ -1,49 +1,31 @@
 <?php
-include("log_connect.php"); 
-$tbl_name="user_levels"; 
+if (isset($_POST['submit'])) {
+  $userName = $_POST['username'];
+  $pwd = $_POST['pwd'];
 
-$username=$_POST['username']; 
-$password=$_POST['password']; 
+  require_once 'php/config.php';
 
-$username = stripslashes($username);
-$password = stripslashes($password);
-$username = mysqli_real_escape_string($dbhandle,$username);
-$password = mysqli_real_escape_string($dbhandle,$password);
+  $sql = "SELECT * FROM user WHERE user_name = '$userName'";
+  $result = mysqli_query($db, $sql);
 
-$result = mysqli_query($dbhandle, "SELECT * FROM $tbl_name WHERE username='$username' AND password='$password'");
+  // Check username and password
+  if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+      if ($pwd !== $row['user_pass']) {
+        header("location: index.php?error=invalidpwd");
 
-if(mysqli_num_rows($result) != 1){
-      echo "<script>alert('Invalid Username or Password ');
-      window.location='index.php';
-      </script>";
-     }else{
-      $row = mysqli_fetch_assoc($result); 
-      if($row['userlevel'] == 1)
-      {
-        echo "<script>alert('Account Login Successfully !');
-      window.location='home.php';
-      </script>";
-      
-      }else if($row['userlevel'] == 2 ){
-       echo "<script>alert('Account Login Successfully !');
-      window.location='home2.php';
-      </script>";
-
-      }else if($row['userlevel'] == 3 ){
-       echo "<script>alert('Account Login Successfully !');
-      window.location='../pos/index.html';
-      </script>";
+        exit();
       }
-      else if($row['userlevel'] == 4 ){
-      echo "<script>alert('Login Successful ! ');
-      window.location='user-item.php';
-      </script>";
-      }
-      else{
-       echo "<script>alert('Invalid Username  or Password !');
-      window.location='index.php';
-      </script>";
-      }
-     }
 
-?>
+      session_start();
+      $_SESSION['user'] = $row['user_name'];
+      $_SESSION['level'] = $row['user_level'];
+
+      header("location: home2.php");
+      exit();
+    }
+  } else {
+    header("location: index.php?error=username");
+    exit();
+  }
+}

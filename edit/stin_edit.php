@@ -1,9 +1,6 @@
 <?php
 
-
 // use PhpMyAdmin\Database\Search;
-
-
 
 include('../php/config.php');
 
@@ -149,15 +146,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     .itemTb th {
       border: 1px solid lightgrey;
       text-align: left;
-      padding: 10px;
-      font-size: 18px;
+      padding: 5px;
+      font-size: 16px;
       color: white;
       background-color: midnightblue;
     }
 
     .itemTb td {
       border: 1px solid lightgray;
-      padding: 9px;
+      padding: 5px;
     }
 
     input[type=text] {
@@ -331,13 +328,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       text-align: right;
     }
 
+    .button__add--item {
+      color: white;
+      cursor: pointer;
+      background-color: midnightblue;
+    }
 
 
-
-
-    /*.table1 td,th {
-border: 1px solid black;
-}*/
+    /* .table1 td,
+    th {
+      border: 1px solid black;
+    } */
   </style>
 
 </head>
@@ -345,11 +346,12 @@ border: 1px solid black;
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
   <div class="container">
+    <a href="../main/stin_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
     <fieldset>
       <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory IN: Editing Record&nbsp;&nbsp;&nbsp;</legend>
       <form autocomplete="off" method="post">
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
-        <table class="table1">
+        <table class="table1" width="100%">
           <tr>
             <td><b>
                 <font color='midnightblue'>Code:</font>
@@ -385,7 +387,10 @@ border: 1px solid black;
             <td><label>
                 <input type="date" class="form-control" name="stin_date" value="<?php echo $stin_date; ?>">
               </label></td>
-            <td><button class="button__add--item">ADD ITEM</button></td>
+            <td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </td>
+            <td style="text-align: right;"><button class="button__add--item" title="Add Item" style="font-size: 18px; padding: 8px"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button></td>
           </tr>
 
         </table>
@@ -394,15 +399,15 @@ border: 1px solid black;
         <table class="itemTb">
           <thead>
             <tr>
-              <th style="text-align: left;">ID</th>
-              <th style="text-align: left;">Item Description</th>
-              <th style="text-align: left;">On-Hand</th>
-              <th style="text-align: left;">Qty-In</th>
-              <th style="text-align: left;">Unit</th>
-              <th style="text-align: left;">Cost</th>
-              <th style="text-align: left;">Discount Amount</th>
-              <th style="text-align: left;">Incomming Qty</th>
-              <th style="text-align: center;">Action</th>
+              <th style="text-align: left;" width="5%">Prod. ID</th>
+              <th style="text-align: left;" width="20%">Item Description</th>
+              <th style="text-align: left;" width="10%">On-Hand</th>
+              <th style="text-align: left;" width="10%">Qty-In</th>
+              <th style="text-align: left;" width="5%">Unit</th>
+              <th style="text-align: left;" width="5%">Cost</th>
+              <th style="text-align: left;" width="10%">Discount Amount</th>
+              <th style="text-align: left;" width="10%">Incomming Qty</th>
+              <th width="5%"></th>
             </tr>
           </thead>
           <tbody>
@@ -438,7 +443,7 @@ border: 1px solid black;
                   <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>" class='stin--incoming__qty'></td>
                   <td>
                     <center>
-                      <a href="../edit/item_edit/stin_itemedit.php?<?php echo 'id=' . $id . '&prodId=' . $irow['product_id'] . '&Tot=' . $total; ?>" title="Edit"><i class="fa fa-edit" style="font-size:24px"></i></a>
+
                       &nbsp;
                       <a href="stin_item_delete.php?id=<?php echo $id; ?>" title="Remove">
                         <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
@@ -455,7 +460,6 @@ border: 1px solid black;
         <button class="butLink" name="stin_submit" onclick="alert('Edit Records Successfully !')">Update</button>
       </form>
       <br>
-      <a href="../main/stin_main.php"><button class="butLink">Cancel</button></a>
     </fieldset>
     <!-- EDIT PO END -->
   </div>
@@ -463,7 +467,8 @@ border: 1px solid black;
   <div class="container--modal">
     <div class='modal--add__item'>
 
-      <a href=""><button class="button--add__item">New Item</button></a>
+      <a href=""><button onclick="showadditem()" class="button--add__item">New Item</button></a>
+
       <input type="text" class='input--search' placeholder="Search Item..."><br>
       <span class='close--modal' style="float: right;"><i class="fa fa-close"></i></span>
       <div class='table--container'>
@@ -605,5 +610,36 @@ border: 1px solid black;
 
     tableItemTb.querySelector('tbody').addEventListener('dblclick', stinEdit)
   </script>
+
+
+  <script type='text/javascript'>
+    function showadditem() {
+      //set the width and height of the 
+      //pop up window in pixels
+      var width = 1200;
+      var height = 500;
+
+      //Get the TOP coordinate by
+      //getting the 50% of the screen height minus
+      //the 50% of the pop up window height
+      var top = parseInt((screen.availHeight / 2) - (height / 2));
+
+      //Get the LEFT coordinate by
+      //getting the 50% of the screen width minus
+      //the 50% of the pop up window width
+      var left = parseInt((screen.availWidth / 2) - (width / 2));
+
+      //Open the window with the 
+      //file to show on the pop up window
+      //title of the pop up
+      //and other parameter where we will use the
+      //values of the variables above
+      window.open('../edit/item_edit_addnew.php',
+        "Contact The Code Ninja",
+        "menubar=no,resizable=yes,width=1300,height=600,scrollbars=yes,left=" +
+        left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
+    }
+  </script>
+
 
 </html>

@@ -19,8 +19,8 @@ $lastQty = [];
 $query = "INSERT INTO order_tb (customer_id, pos_date, total, order_status_id) 
   VALUES ('$customerId','$transDate','$total','1');";
 
-$query2 = "INSERT INTO order_payment (order_id, payment_type_id, order_payment_credit, order_payment_balance, order_payment_date)
-  VALUES ('$orderId','0','$total','$total','$transDate');";
+$query2 = "INSERT INTO order_payment (order_id, payment_type_id, order_payment_credit, order_payment_balance, order_payment_date, payment_status_id)
+  VALUES ('$orderId','0','$total','$total','$transDate', '1');";
 
 mysqli_query($db, $query);
 mysqli_query($db, $query2);
