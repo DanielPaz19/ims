@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="styles/pos-style.css" />
     <link rel="stylesheet" href="styles/login-style.css" />
     <link rel="stylesheet" href="styles/adduser-style.css" />
+    <link rel="stylesheet" href="../css/itemlist-modal-style.css" />
     <script defer type="application/javascript" src="js/pos-script.js"></script>
+    <script defer type="application/javascript" src="../js/itemlist-modal-script.js"></script>
 </head>
 
 <body>

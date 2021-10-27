@@ -43,7 +43,6 @@ if (!$_SESSION['user']) {
           <input type="text" id="transactionDate" disabled value="01-01-2021" /></span>
       </div>
       <div class="order-list-container">
-        <?php echo $user_name;?>
         <table class="order-list">
           <thead>
             <tr>
@@ -297,4 +296,6 @@ if (!$_SESSION['user']) {
   </div>
 </div>
 
+
+<?php include_once '../itemlist-modal.php'; ?>
 <?php include_once 'footer.php'; ?>

@@ -1,10 +1,12 @@
 <title>Inventory Management System</title>
-<link rel="shortcut icon" href="../img/pacclogo.png"/>
+<link rel="shortcut icon" href="../img/pacclogo.png" />
 
 <style>
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 
-*, *:after, *:before {
+  *,
+  *:after,
+  *:before {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -13,52 +15,59 @@
     outline: 0 none;
     font-family: "Open Sans";
     padding: 0;
-}
+  }
 
-body {
-  background: #007CC8;
-  font-family: "Open Sans";
-}
-.loading {
+  body {
+    background: #007CC8;
+    font-family: "Open Sans";
+  }
+
+  .loading {
     margin: 10% auto 15px;
     position: relative;
 
     height: 40px;
     width: 40px;
-}
-.loading .circle {
+  }
+
+  .loading .circle {
     border-radius: 100%;
     position: absolute;
-}
-.loading .circle.dark {
+  }
+
+  .loading .circle.dark {
     background-color: #1F5BA9;
     height: 22px;
     left: 1px;
     top: 10px;
     width: 22px;
-}
-.loading .circle.light {
+  }
+
+  .loading .circle.light {
     background-color: #61B5E4;
     height: 25px;
     right: 1px;
     top: 8px;
     width: 25px;
-}
-.loading .branding {
+  }
+
+  .loading .branding {
     background: url("https://s18.postimg.org/8a4d3vj3p/db_loader.png") repeat scroll 0 0 transparent;
     height: 40px;
     width: 40px;
     position: absolute;
-}
+  }
 
-.login {
+  .login {
     width: 300px;
     margin: 0 auto;
-}
-.login form {
-  width: 100%;
-}
-input {
+  }
+
+  .login form {
+    width: 100%;
+  }
+
+  input {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 4px 4px 4px 4px;
@@ -70,13 +79,14 @@ input {
     padding: 10px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     width: 100%;
-}
-::placeholder {
-  color: white;
-  letter-spacing: 2px;
-}
+  }
 
-button {
+  ::placeholder {
+    color: white;
+    letter-spacing: 2px;
+  }
+
+  button {
     background: linear-gradient(to bottom, #009EFF 0px, #0075BC 100%) repeat scroll 0 0 transparent;
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.55);
@@ -90,9 +100,7 @@ button {
     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
     width: 100%;
     letter-spacing: 3px;
-}
-
-
+  }
 </style>
 
 
@@ -102,13 +110,16 @@ button {
   <div class="branding"></div>
 
 </div>
-<center><h2 style="color: white; letter-spacing: 2px;">PACC IMS</h2></center><br>
+<center>
+  <h2 style="color: white; letter-spacing: 2px;">PACC IMS</h2>
+</center><br>
+
 <div class="login">
-  <form action="login_action.php" method="post">
-    <input type="text" id="login-username"  name="username" placeholder="👤 Username" required="required" />
-    <input type="password" id="login-password"   name="password" placeholder="🔑 Password" required="required" />
-    <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
-    </form>
+  <form action="login_action.php" method="POST">
+    <input type="text" id="login-username" name="username" placeholder="👤 Username" required="required" />
+    <input type="password" id="login-password" name="pwd" placeholder="🔑 Password" required="required" />
+    <button type="submit" name="submit" class="btn btn-primary btn-block btn-large">Login</button>
+  </form>
 </div>
 
-<?php include "footer2.php"?>
+<?php include "footer2.php" ?>

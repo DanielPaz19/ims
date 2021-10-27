@@ -30,38 +30,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <title><?php echo $po_code; ?></title>
 
 <head>
-  <style>
-    body {
-      background: rgb(204, 204, 204);
-    }
-
-    page {
-      background: white;
-      display: block;
-      margin: 0 auto;
-      margin-bottom: 0.5cm;
-      box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-      color: black;
-      font-family: sans-serif;
-    }
-
-    page[size="A4"] {
-      width: 21cm;
-      height: 29.7cm;
-    }
-
-    @media print {
-      #printPageButton {
-        display: none;
-        font-family: sans-serif;
-      }
-
-    }
-
-    .suptab {
-      line-height: 30px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../css/viewpo.css" type="text/css" media="print">
+  <link rel="stylesheet" href="../../css/viewpo.css" type="text/css">
 </head>
 <script>
   function printDiv() {
@@ -72,67 +42,151 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     a.print();
   }
 </script>
-<button id="printPageButton" onClick="printDiv();">Print</button>
 
 <body>
-  <div>
-  </div>
-  <div id="print-area">
+  <div class="print-area">
     <page id="print" size="A4">
-      <fieldset style="border:none;">
-        <div class="top">
-          <center>
+      <div class="top">
+        <table width="100%">
+          <tr>
+            <td>
+              <font color="midnightblue"><img src="../img/pacclogo.png" height="65px" width="65px" style="float:left">
+            </td>
+            <td style="text-align: center;">
+              <font style="font-size: 25px; letter-spacing: 4px;">Philippine Acrylic & Chemical Corporation</font><br>
+              <center>
+                <font style="font-size: 20px; letter-spacing: 3px;"> 635 Mercedes Ave. San Miguel, Pasig City</font><br>
+                <font style="font-size: 15px; letter-spacing: 3px;">Tel. Nos.<input type="text" style="border: none; width: 80px;" value="7894-5612">&nbsp;<input type="text" style="border: none; width: 80px;" value="3216-5478">&nbsp;<input type="text" style="border: none; width: 100px;" value="+6391234287"></font>
+              </center>
+            </td>
+          </tr>
+        </table>
+        <hr>
+        </center>
+      </div>
 
-            <table style="border: 1px solid black;" width="100%">
+
+      <div class="suptab">
+        <table width="100%">
+          <tr>
+            <td>
+              <h4 style="text-align: left; margin-right:20px;"><label>Puchase Order :</label> <?php echo $po_title; ?></h4>
+            </td>
+            <td>
+              <h4 style="text-align: right; margin-right:20px;">Date: <?php echo $po_date; ?></h4>
+            </td>
+          </tr>
+        </table>
+
+
+
+
+        <fieldset>
+          <legend style="letter-spacing: 3px; font-weight: bolder;">&nbsp;Supplier Information &nbsp;&nbsp;&nbsp;</legend>
+          <table width="100%">
+            <tr>
+              <td style="font-size: 11px; "><label> Name :</label>
+                <?php echo $sup_name; ?>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size: 11px; "><label> Addres :</label><?php echo $sup_address; ?></td>
+              <td style="font-size: 11px; "><label> Contact :</label> <?php echo $sup_tel; ?></td>
+            </tr>
+            <tr>
+              <td style="font-size: 11px; "><label>TIN :</label><?php echo $sup_tin; ?></td>
+              <td style="font-size: 11px; "><label>Terms :</label><?php echo $po_terms; ?></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div class="itemTB">
+        <table class="ordertable">
+          <tr>
+            <th width="40%">Product Name</th>
+            <th width="10%">Qty Order</th>
+            <th width="5%">Unit</th>
+            <th width="10%">Cost</th>
+            <th width="10%">Total Cost</th>
+            <th width="10%">Discount</th>
+            <th width="10%">Total Amount</th>
+          </tr>
+          <?php
+          $sql = "SELECT product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.cost, po_product.item_disamount 
+                                  FROM product
+                                  INNER JOIN po_product
+                                  ON product.product_id = po_product.product_id
+                                  INNER JOIN unit_tb
+                                  ON product.unit_id = unit_tb.unit_id
+                                  WHERE po_product.po_id = '$id' ";
+
+          $result = $db->query($sql);
+          $count = 0;
+          if ($result->num_rows >  0) {
+            while ($irow = $result->fetch_assoc()) {
+              $count = $count + 1;
+
+              $total[] = $irow["item_qtyorder"] * $irow["cost"];
+
+              $totaldisamount[] =  $irow["item_disamount"];
+
+          ?>
               <tr>
-                <td>
-                  <font color="midnightblue"><img src="../img/pacclogo.png" height="50px" width="50px" style="float:left">
-                </td>
-                <td>
-                  <font color="midnightblue" style="font-size: 25px; letter-spacing: 2px;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</font><br>
-                  <center>635 Mercedes Ave. San Miguel, Pasig City
-                  </center>
-                </td>
+                <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
+                <td contenteditable="false"><?php echo $irow['item_qtyorder'] ?></td>
+                <td contenteditable="true"><?php echo $irow['unit_name'] ?></td>
+                <td contenteditable="true"><?php echo $irow['cost'] ?></td>
+                <td class="item_totcost"><?php echo $irow["item_qtyorder"] * $irow["cost"]; ?></td>
+                <td contenteditable="true"><?php echo $irow['item_disamount'] ?></td>
+                <td class="po_temp_tot"><?php echo $irow["item_qtyorder"] * $irow["cost"] - $irow["item_disamount"]; ?></td>
               </tr>
-            </table>
-          </center>
+              <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
+          <?php }
+          } ?>
+        </table><br>
+        <div class="subtot">
+          <table>
+            <?php
 
-          <b>
-            <font color="midnightblue">Contact No. :</font>
-          </b><input type="text" style="border: none; width: 80px;" value="7894-5612">,<input type="text" style="border: none; width: 80px;" value="3216-5478">,<input type="text" style="border: none; width: 100px;" value="+6391234287"><br>
-          <b>
-            <font color="midnightblue">Contact Person:</font>
-          </b> <input type="text" style="border: none; width: 150px;" value="Ms. Jan Ciria Cruz">
-        </div>
-      </fieldset>
-      <br>
+            $limit = 0;
+            $subTot = 0;
+            $disTot = 0;
 
-      <fieldset>
-        <legend>Supplier Details</legend>
-        <div class="suptab">
-          <b>
-            <font color="midnightblue">Supplier :</font>
-          </b> <?php echo $sup_name; ?> &nbsp&nbsp<br>
-          <b>
-            <font color="midnightblue">Address :</font>
-          </b> <?php echo $sup_address; ?> &nbsp&nbsp
-          <b>
-            <font color="midnightblue">Contact:</font>
-          </b> <?php echo $sup_tel; ?>&nbsp&nbsp<br>
-          <b>
-            <font color="midnightblue">Terms :</font>
-          </b><input type="text" style="border: none; width: 120px;" value="<?php echo $po_terms; ?>"><br>
-          <b>
-            <font color="midnightblue">Tin :</font>
-          </b><?php echo $sup_tin; ?>&nbsp&nbsp︳
-          <b>
-            <font color="midnightblue">Remarks :</font>
-          </b> <?php echo $po_remarks; ?> &nbsp&nbsp︳
-          <b>
-            <font color="midnightblue">Date :</font>
-          </b> <?php echo $po_date; ?>
+            while ($limit != count($total)) {
+              $subTot += $total[$limit];
+              $disTot += $totaldisamount[$limit];
+              $limit += 1;
+            }
+
+            $grandTot = $subTot - $disTot;
+
+            ?>
+            <tr>
+              <td><label for=""> Sub Total:</label>&nbsp;<?php echo $subTot; ?></td>
+            </tr>
+            <tr>
+              <td><label for=""> Shipping:</label>&nbsp;0</td>
+            </tr>
+            <tr>
+              <td><label for=""> Total Discount:</label>&nbsp;<?php echo $disTot ?></td>
+            </tr>
+            <tr>
+              <td><label for=""> Total Amount:</label>&nbsp;<?php echo $grandTot ?></td>
+            </tr>
+          </table>
         </div>
-      </fieldset>
+      </div>
+      <table>
+        <tr>
+          <td>Prepared By:__________</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>Check By:__________</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>Approve By:__________</td>
+        </tr>
+      </table>
     </page>
   </div>
 </body>
