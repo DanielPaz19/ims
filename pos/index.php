@@ -297,5 +297,4 @@ if (!$_SESSION['user']) {
 </div>
 
 
-<?php include_once '../itemlist-modal.php'; ?>
 <?php include_once 'footer.php'; ?>
