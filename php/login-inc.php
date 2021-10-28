@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['user'] = $row['user_name'];
       $_SESSION['level'] = $row['user_level'];
 
-      header("location: ../index.php?" . $_SESSION['user']);
+      header("location: ../index.php");
       exit();
     }
   } else {

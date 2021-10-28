@@ -1,0 +1,419 @@
+* {
+  font-family: sans-serif;
+}
+
+body {
+  padding: 50px;
+}
+
+fieldset {
+  padding: 30px;
+  font-family: sans-serif;
+  border: 5px solid lightgrey;
+  height: 650px;
+}
+
+legend {
+  letter-spacing: 3px;
+  font-weight: bolder;
+  color: midnightblue;
+  font-size: 24px;
+}
+
+.container {
+  border-radius: 10px;
+  padding: 50px;
+  height: 750px;
+  background-color: #eaeaea;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 10px;
+}
+
+.itemTb {
+  border: 3px solid lightgray;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.itemTb tr:nth-child(even) {
+  background-color: #e7e8f8;
+}
+
+.itemTb tr:nth-child(odd) {
+  background-color: white;
+}
+
+.itemTb th {
+  border: 1px solid lightgrey;
+  text-align: left;
+  padding: 5px;
+  font-size: 16px;
+  color: white;
+  background-color: midnightblue;
+}
+
+.itemTb td {
+  border: 1px solid lightgray;
+  padding: 5px;
+}
+
+input[type="text"] {
+  height: 24px;
+}
+
+input[type="date"] {
+  height: 24px;
+}
+
+.butLink {
+  background-color: midnightblue;
+  color: white;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+
+/* Modal Style */
+.container--modal {
+  opacity: 0;
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  background-color: rgb(0, 0, 0);
+  transition: 0.3s;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal--add__item {
+  position: relative;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.modal--active {
+  z-index: 1;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.table--container {
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.modal--table__itemlist {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.modal--table__itemlist th {
+  height: 30px;
+  background-color: midnightblue;
+  color: #ffffff;
+  font-size: 15px;
+  position: sticky;
+  top: 0;
+}
+
+.modal--table__itemlist tbody {
+  font-size: 15px;
+}
+
+.modal--table__itemlist :hover {
+  cursor: pointer;
+}
+
+.modal--table__itemlist td {
+  padding: 2px 5px;
+}
+
+.button--add__item {
+  color: #ffffff;
+  background-color: midnightblue;
+  height: 35px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.input--search {
+  width: 500px;
+  padding: 2px 5px;
+  margin-left: 20px;
+}
+
+.close--modal {
+  color: red;
+  font-weight: bold;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.close--modal:hover {
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+
+.modal--table__itemlist tr:hover {
+  background-color: lightgray;
+}
+
+/* Item Code */
+.modal--table__itemlist th:nth-child(1) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(1) {
+  text-align: center;
+}
+
+/* Item Name */
+.modal--table__itemlist th:nth-child(2) {
+  width: 30%;
+}
+
+.modal--table__itemlist td:nth-child(2) {
+  text-align: left;
+}
+
+/* Quantity */
+.modal--table__itemlist th:nth-child(3) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(3) {
+  text-align: center;
+}
+
+/* Unit */
+.modal--table__itemlist th:nth-child(4) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(4) {
+  text-align: center;
+}
+
+/* Location */
+.modal--table__itemlist th:nth-child(5) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(5) {
+  text-align: center;
+}
+
+/* Cost */
+.modal--table__itemlist th:nth-child(6) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(6) {
+  text-align: right;
+}
+
+.button__add--item {
+  color: white;
+  cursor: pointer;
+  background-color: midnightblue;
+}
+
+/* .table1 td,
+    th {
+      border: 1px solid black;
+    } */
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #eaeaea;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 40%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+/* The Close Button */
+.close {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 20px 20px;
+  background-color: none;
+  color: red;
+}
+
+.modal-body {
+  padding: 2px 16px;
+  background-color: #eaeaea;
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+input {
+  border: 1px solid lightgrey;
+  height: 35px;
+  text-shadow: aliceblue;
+}
+
+div#search {
+  position: relative;
+  width: 80%;
+  left: 0;
+}
+
+#relative {
+  position: relative;
+}
+
+#item-list {
+  position: absolute;
+  width: 800px;
+  margin: auto;
+  z-index: 1;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 0;
+  margin-right: 50px;
+  margin-left: 50px;
+  display: block;
+  padding-left: 5px;
+  width: 800px;
+}
+
+li:hover {
+  background-color: lightgrey;
+}
+
+li {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid lightgrey;
+  width: 780px;
+}
+
+li.selected {
+  background: lightgrey;
+}
+
+ul {
+  background-color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Style for crud-table */
+#crud_table {
+  font-size: 12px;
+}
+
+/* Style for Order ID Input box */
+.newID {
+  margin-left: 5px;
+  color: red;
+}
+
+.postb {
+  border: 1px solid #d3d3d3;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+input#item-name {
+  position: relative;
+  width: 430px;
+}
+
+.hidden {
+  display: none;
+}
+
+.delete {
+  background-color: none;
+}
+
+.addCont {
+  border: 1px solid lightgray;
+  padding: 50px;
+  height: auto;
+  margin-bottom: 20px;
+  font-size: 20px;
+}

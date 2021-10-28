@@ -1,16 +1,12 @@
-<?php include_once 'header.php';
+<?php
+include_once 'header.php';
 
-if (!$_SESSION['user']) {
+if (!isset($_SESSION['user'])) {
   header("location: login-page.php");
 }
-
 ?>
 
-
-
-
 <div class='container'>
-
 
 </div>
 

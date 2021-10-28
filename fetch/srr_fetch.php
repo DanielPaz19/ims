@@ -1,4 +1,3 @@
-
 <?php
 
 $connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "@Dmin898");
@@ -17,32 +16,28 @@ $total_record = get_total_row($connect);*/
 
 $limit = '10';
 $page = 1;
-if($_POST['page'] > 1)
-{
+if ($_POST['page'] > 1) {
   $start = (($_POST['page'] - 1) * $limit);
   $page = $_POST['page'];
-}
-else
-{
+} else {
   $start = 0;
 }
 
 $query = "
-SELECT srr_tb.srr_id, srr_tb.srr_no, employee_tb.emp_name
+SELECT srr_tb.srr_id, srr_tb.srr_no, employee_tb.emp_name, employee_tb.emp_id
 FROM srr_tb
-INNER JOIN employee_tb 
+LEFT JOIN employee_tb 
 ON srr_tb.emp_id = employee_tb.emp_id ";
 
-if($_POST['query'] != '')
-{
+if ($_POST['query'] != '') {
   $query .= '
-  WHERE srr_no LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" 
+  WHERE srr_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
   ';
 }
 
 $query .= 'ORDER BY srr_id DESC ';
 
-$filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
+$filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
 $statement = $connect->prepare($query);
 $statement->execute();
@@ -62,20 +57,18 @@ $output = '
     <th width="15%"><center>Action</th>
   </tr>
 ';
-if($total_data > 0)
-{
-  foreach($result as $row)
-  {
- 
+if ($total_data > 0) {
+  foreach ($result as $row) {
+
 
     $output .= '
     <tr>
-      <td>'.$row["srr_no"].'</td>
-      <td>'.$row["emp_name"].'</td>
+      <td>' . $row["srr_no"] . '</td>
+      <td>' . $row["emp_name"] . '</td>
       <td><center>
-                <a href="#" onclick="alertEdit()"><font color="gray"><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></font></a>
+                <a href="../edit/srr_edit.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empId=' . $row["emp_id"] . '&empName=' . $row["emp_name"] . '" ><font color="midnightblue"><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></font></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../view/viewsrr.php?id='.$row["srr_id"].'&srrNo='.$row["srr_no"].'&empName='.$row["emp_name"].'">
+                <a href="../view/viewsrr.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empName=' . $row["emp_name"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
@@ -83,9 +76,7 @@ if($total_data > 0)
     </tr>
     ';
   }
-}
-else
-{
+} else {
   $output .= '
   <tr>
     <td colspan="10" align="center"><font color="red"><b>No Data Found ! </b></font></td>
@@ -96,81 +87,63 @@ else
 $output .= '
 </table>
 <br />
-<label class="tableLabel" style="float:right; color:gray;">Total Records - '.$total_data.'</label>
+<label class="tableLabel" style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">
 ';
 
-$total_links = ceil($total_data/$limit);
+$total_links = ceil($total_data / $limit);
 $previous_link = '';
 $next_link = '';
 $page_link = '';
 
 //echo $total_links;
 
-if($total_links > 4)
-{
-  if($page < 5)
-  {
-    for($count = 1; $count <= 5; $count++)
-    {
+if ($total_links > 4) {
+  if ($page < 5) {
+    for ($count = 1; $count <= 5; $count++) {
       $page_array[] = $count;
     }
     $page_array[] = '...';
     $page_array[] = $total_links;
-  }
-  else
-  {
+  } else {
     $end_limit = $total_links - 5;
-    if($page > $end_limit)
-    {
+    if ($page > $end_limit) {
       $page_array[] = 1;
       $page_array[] = '...';
-      for($count = $end_limit; $count <= $total_links; $count++)
-      {
+      for ($count = $end_limit; $count <= $total_links; $count++) {
         $page_array[] = $count;
       }
-    }
-    else
-    {
+    } else {
       $page_array[] = 1;
       $page_array[] = '...';
-      for($count = $page - 1; $count <= $page + 1; $count++)
-      {
+      for ($count = $page - 1; $count <= $page + 1; $count++) {
         $page_array[] = $count;
       }
       $page_array[] = '...';
       $page_array[] = $total_links;
     }
   }
-}
-else
-{
-  for($count = 1; $count <= $total_links; $count++)
-  {
+} else {
+  for ($count = 1; $count <= $total_links; $count++) {
     $page_array[] = $count;
   }
 }
 
-for($count = 0; $count < count($page_array); $count++)
-{
+for ($count = 0; $count < count($page_array); $count++) {
 
-  if($page == $page_array[$count])
-  {
+  if ($page == $page_array[$count]) {
     $page_link .= '
     <li class="page-item active">
-      <a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
     </li>
     ';
 
     $previous_id = $page_array[$count] - 1;
-    if($previous_id > 0)
-    {
-      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="'.$previous_id.'">Previous</a></li>';
-    }
-    else
-    {
+    if ($previous_id > 0) {
+      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
+    } else {
       $previous_link = '
       <li class="page-item disabled">
         <a class="page-link" href="#">Previous</a>
@@ -178,33 +151,25 @@ for($count = 0; $count < count($page_array); $count++)
       ';
     }
     $next_id = $page_array[$count] + 1;
-    if($next_id >= $total_links)
-    {
+    if ($next_id >= $total_links) {
       $next_link = '
       <li class="page-item disabled">
         <a class="page-link" href="#">Next</a>
       </li>
         ';
+    } else {
+      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
     }
-    else
-    {
-      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="'.$next_id.'">Next</a></li>';
-    }
-  }
-  else
-  {
-    if($page_array[$count] == '...')
-    {
+  } else {
+    if ($page_array[$count] == '...') {
       $page_link .= '
       <li class="page-item disabled">
           <a class="page-link" href="#">...</a>
       </li>
       ';
-    }
-    else
-    {
+    } else {
       $page_link .= '
-      <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="'.$page_array[$count].'">'.$page_array[$count].'</a></li>
+      <li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $page_array[$count] . '">' . $page_array[$count] . '</a></li>
       ';
     }
   }
@@ -223,30 +188,29 @@ echo $output;
 ?>
 
 <script>
-      
-      function confirmAction() {
-        let confirmAction = confirm("Are you sure you want to delete?");
-        if (confirmAction) {
-          alert("Deleted item successfully!!!");
-        } else {
+  function confirmAction() {
+    let confirmAction = confirm("Are you sure you want to delete?");
+    if (confirmAction) {
+      alert("Deleted item successfully!!!");
+    } else {
 
-          alert("Action canceled");
-        }
-      }
-
-      function confirmUpdate() {
-        let confirmUpdate = confirm("Are you sure you want to CONFIRM record?\n \nNote: Double Check Input Records");
-        if (confirmUpdate) {
-          alert("CONFIRM Record successfully!");
-        } else {
-          
-          alert("Action Canceled");
-        }
-      }
-    </script>
-
-    <script>
-    function alertEdit() {
-      alert("Under Maintenance !");
+      alert("Action canceled");
     }
-    </script>
+  }
+
+  function confirmUpdate() {
+    let confirmUpdate = confirm("Are you sure you want to CONFIRM record?\n \nNote: Double Check Input Records");
+    if (confirmUpdate) {
+      alert("CONFIRM Record successfully!");
+    } else {
+
+      alert("Action Canceled");
+    }
+  }
+</script>
+
+<script>
+  function alertEdit() {
+    alert("Under Maintenance !");
+  }
+</script>

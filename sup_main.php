@@ -1,36 +1,11 @@
-<?php
-include('../header.php');
+<?php include('header.php');
+
+if (!isset($_SESSION['user'])) {
+  header("location: ../login-page.php");
+}
+
 ?>
-<html>
-<title>Philippine Acrylic & Chemical Corporation </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="img/pacclogo.png" type="image/x-icon">
-
-<body style="margin: 0px;" bgcolor="#B0C4DE">
-  <div class="con-form">
-    <div class="content-area">
-      <fieldset style="border: none;">
-        <legend>
-          <h2 style="letter-spacing: 5px;">
-            <font color="midnightblue">STOCK INVENTORY IN</font>
-          </h2>
-        </legend>
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-        <?php include('../table/stin_table.html') ?>
-    </div>
-    <?php include "../footer.php"; ?>
-</body>
-</fieldset>
-</div>
-
-
 <style>
-  .tableLabel {
-    font-weight: bold;
-    float: right;
-    color: lightgray;
-  }
-
   .content-area {
     border-radius: 10px;
     padding: 20px;
@@ -206,12 +181,6 @@ include('../header.php');
   }
 
 
-  select {
-
-    background-image: url(img/bg.jpg);
-    /* Add custom arrow */
-    background-repeat: no-repeat;
-  }
 
   em {
     color: red;
@@ -219,11 +188,39 @@ include('../header.php');
   }
 </style>
 
+<div class="con-form">
+  <fieldset style="border: none;">
+    <legend>
+      <h2 style="letter-spacing: 5px;">
+        <font color="midnightblue">SUPPLIER</font>
+      </h2>
+    </legend>
+    <?php include('../table/sup_table.html') ?>
+</div>
+
+
+
+
+
+<!--SCRIPTS STARTS HERE-->
+
+
+<script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+</script>
+
+
 <script type='text/javascript'>
   function showadditem() {
     //set the width and height of the 
     //pop up window in pixels
-    var width = 500;
+    var width = 1400;
     var height = 500;
 
     //Get the TOP coordinate by
@@ -241,16 +238,12 @@ include('../header.php');
     //title of the pop up
     //and other parameter where we will use the
     //values of the variables above
-    window.open('../main/addrecord/addstin.php',
+    window.open('../main/addrecord/addsup.php',
       "Contact The Code Ninja",
-      "menubar=no,resizable=yes,width=1300,height=600,scrollbars=yes,left=" +
+      "menubar=no,resizable=no,width=500,height=1500,scrollbars=yes,left=" +
       left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
   }
 </script>
 
 
-
-
-
-
-</html>
+<?php include_once '../footer.php'; ?>

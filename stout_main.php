@@ -1,26 +1,10 @@
-<?php include('../navbar.php'); ?>
-<html>
-<title>Philippine Acrylic & Chemical Corporation </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="img/pacclogo.png" type="image/x-icon">
+<?php include('header.php');
 
-<body style="margin: 0px;" bgcolor="#B0C4DE">
-  <div class="con-form">
-    <div class="content-area">
-      <fieldset style="border: none;">
-        <legend>
-          <h2 style="letter-spacing: 5px;">
-            <font color="midnightblue">PURCHASE ORDER</font>
-          </h2>
-        </legend>
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-        <?php include('../table/porder_table.html') ?>
-    </div>
-    <?php include "../footer.php"; ?>
-</body>
-</fieldset>
-</div>
+if (!isset($_SESSION['user'])) {
+  header("location: login-page.php");
+}
 
+?>
 
 <style>
   .content-area {
@@ -190,7 +174,6 @@
     font-size: 18px;
     color: white;
     background-color: midnightblue;
-
   }
 
   td {
@@ -198,12 +181,7 @@
     padding: 5px;
   }
 
-  select {
 
-    background-image: url(img/bg.jpg);
-    /* Add custom arrow */
-    background-repeat: no-repeat;
-  }
 
   em {
     color: red;
@@ -211,12 +189,29 @@
   }
 </style>
 
+<div class="con-form">
+  <div class="content-area">
+    <fieldset style="border: none;">
+      <legend>
+        <h2 style="letter-spacing: 5px;">
+          <font color="midnightblue">STOCK INVENTORY OUT</font>
+        </h2>
+      </legend>
+      <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+      <?php include('table/stout_table.html') ?>
+  </div>
+  </fieldset>
+</div>
+
+
+
+
 <script type='text/javascript'>
   function showadditem() {
     //set the width and height of the 
     //pop up window in pixels
-    var width = 1700;
-    var height = 800;
+    var width = 500;
+    var height = 500;
 
     //Get the TOP coordinate by
     //getting the 50% of the screen height minus
@@ -233,15 +228,11 @@
     //title of the pop up
     //and other parameter where we will use the
     //values of the variables above
-    window.open('../main/addrecord/addpo.php',
+    window.open('main/addrecord/addstout.php',
       "Contact The Code Ninja",
-      "menubar=no,resizable=no,width=1900,height=1000,scrollbars=yes,left=" +
+      "menubar=no,resizable=yes,width=1800,height=600,scrollbars=yes,left=" +
       left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
   }
 </script>
 
-
-
-
-
-</html>
+<?php include "footer.php"; ?>
