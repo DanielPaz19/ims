@@ -26,7 +26,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed
+SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id
                         FROM po_tb LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id ";
 
 if ($_POST['query'] != '') {
@@ -84,7 +84,7 @@ if ($total_data > 0) {
       <td>' . $row["sup_name"] . '</td>
       <td>' . $row["po_remarks"] . '</td>
       <td><center>
-                <a href="../edit/po_edit.php?id=' . $row["po_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="../edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;

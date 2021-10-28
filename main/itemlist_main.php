@@ -53,7 +53,7 @@
         .content-area {
             border-radius: 5px;
             padding: 20px;
-            height: 1000px;
+            height: 100%;
             width: 100%;
             background-color: #EAEAEA;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
