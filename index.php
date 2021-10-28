@@ -2,6 +2,9 @@
 if (!isset($_SESSION['user'])) {
   header("location: login-page.php");
 };
+
+$_SESSION['user'];
+
 include_once 'header.php';
 ?>
 

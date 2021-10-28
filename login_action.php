@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
   if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
       if ($pwd !== $row['user_pass']) {
-        header("location: index.php?error=invalidpwd");
+        header("location: login-page.php?error=invalidpwd");
 
         exit();
       }
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
       exit();
     }
   } else {
-    header("location: index.php?error=username");
+    header("location: login-page.php?error=username");
     exit();
   }
 }
