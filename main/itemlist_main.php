@@ -1,4 +1,4 @@
-<?php include('../navbar.php'); ?>
+<?php include('../header.php'); ?>
 <?php include('../php/config.php'); ?>
 <html>
 <title>Itemlist</title>

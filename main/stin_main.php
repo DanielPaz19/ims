@@ -1,7 +1,4 @@
 <?php
-if (!isset($_SESSION['user'])) {
-  header("location: ../login-page.php");
-};
 include('../header.php');
 ?>
 <html>
