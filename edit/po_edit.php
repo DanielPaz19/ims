@@ -423,7 +423,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <th>Total Cost</th>
             <th>Discount Amount</th>
             <th>Incomming Qty</th>
-            <th>Action</th>
+            <th>&nbsp;</th>
           </tr>
 
           <?php
@@ -458,10 +458,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <td style="text-align: left;"><?php echo $irow['qty'] + $irow['item_qtyorder'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['item_qtyorder'] ?>" class='po--incoming__qty'></td>
                 <td>
                   <center>
-                    <a href="../edit/item_edit/po_itemedit.php?<?php echo 'id=' . $id . '&prodId=' . $irow['product_id'] . '&Tot=' . $irow['po_temp_tot']; ?>"> <i class='fas fa-edit' style="font-size:17px" title="Edit"></i></a>
-                    &nbsp;
+
                     <a href="po_itemdelete.php?id=<?php echo $irow['temp_id']; ?>">
-                      <font color="red"><i class='fas fa-trash-alt' style="font-size:17px" title="Remove"></i></font>
+                      <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                     </a>
                   </center>
                 </td>

@@ -15,7 +15,7 @@ if (isset($_POST['stout_submit'])) {
 
 
   mysqli_query($db, "UPDATE stout_tb SET stout_code='$stout_code', stout_title='$stout_title',stout_date='$stout_date'  WHERE stout_id='$id'");
-  header("Location:../main/stout_main.php");
+  header("Location:../stout_main.php");
 }
 
 
@@ -341,7 +341,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   <body style="margin: 0px;" bgcolor="#B0C4DE">
 
     <div class="container">
-      <a href="../main/stout_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:red"></i></a><br>
+      <a href="../stout_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:red"></i></a><br>
       <fieldset>
         <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory OUT: Editing Record&nbsp;&nbsp;&nbsp;</legend>
         <form autocomplete="off" method="post">
@@ -425,8 +425,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </td>
                     <td>
                       <center>
-                        <a href="stout_item_delete.php?id=<?php echo $id; ?>">
-                          <font color="red">X</font>
+                        <a href="item_delete/stout_item_delete.php?stoutProdId=<?php echo $irow["product_id"] ?>" title="Remove">
+                          <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                         </a>
                       </center>
                     </td>
@@ -541,6 +541,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stout--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stout--discount'></td>
       <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='stout--incoming__qty'></td>
+      <td><center><a href="item_delete/stout_item_delete.php?stoutProdId=<?php echo $irow["product_id"] ?>" title="Remove">
+                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      </a></center></td>
       </tr>
       `)
         };

@@ -3,7 +3,7 @@ if (isset($_POST['submit'])) {
   $userName = $_POST['username'];
   $pwd = $_POST['pwd'];
 
-  require_once 'php/config.php';
+  require_once 'config.php';
 
   $sql = "SELECT * FROM user WHERE user_name = '$userName'";
   $result = mysqli_query($db, $sql);
@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
   if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
       if ($pwd !== $row['user_pass']) {
-        header("location: login-page.php?error=invalidpwd");
+        header("location: ../login-page.php?error=invalidpwd");
 
         exit();
       }
@@ -22,11 +22,11 @@ if (isset($_POST['submit'])) {
       $_SESSION['user'] = $row['user_name'];
       $_SESSION['level'] = $row['user_level'];
 
-      header("location: index.php");
+      header("location: ../index.php");
       exit();
     }
   } else {
-    header("location: login-page.php?error=username");
+    header("location: ../login-page.php?error=username");
     exit();
   }
 }

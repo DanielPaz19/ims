@@ -1,39 +1,12 @@
-<?php
+<?php include('header.php');
+
 if (!isset($_SESSION['user'])) {
-  header("location: ../login-page.php");
-};
-include('../header.php');
+  header("location: login-page.php");
+}
+
 ?>
-<html>
-<title>Philippine Acrylic & Chemical Corporation </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="img/pacclogo.png" type="image/x-icon">
-
-<body style="margin: 0px;" bgcolor="#B0C4DE">
-  <div class="con-form">
-    <div class="content-area">
-      <fieldset style="border: none;">
-        <legend>
-          <h2 style="letter-spacing: 5px;">
-            <font color="midnightblue">STOCK INVENTORY IN</font>
-          </h2>
-        </legend>
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-        <?php include('../table/stin_table.html') ?>
-    </div>
-    <?php include "../footer.php"; ?>
-</body>
-</fieldset>
-</div>
-
 
 <style>
-  .tableLabel {
-    font-weight: bold;
-    float: right;
-    color: lightgray;
-  }
-
   .content-area {
     border-radius: 10px;
     padding: 20px;
@@ -209,18 +182,29 @@ include('../header.php');
   }
 
 
-  select {
-
-    background-image: url(img/bg.jpg);
-    /* Add custom arrow */
-    background-repeat: no-repeat;
-  }
 
   em {
     color: red;
 
   }
 </style>
+
+<div class="con-form">
+  <div class="content-area">
+    <fieldset style="border: none;">
+      <legend>
+        <h2 style="letter-spacing: 5px;">
+          <font color="midnightblue">STOCK INVENTORY OUT</font>
+        </h2>
+      </legend>
+      <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+      <?php include('table/stout_table.html') ?>
+  </div>
+  </fieldset>
+</div>
+
+
+
 
 <script type='text/javascript'>
   function showadditem() {
@@ -244,16 +228,11 @@ include('../header.php');
     //title of the pop up
     //and other parameter where we will use the
     //values of the variables above
-    window.open('../main/addrecord/addstin.php',
+    window.open('main/addrecord/addstout.php',
       "Contact The Code Ninja",
-      "menubar=no,resizable=yes,width=1300,height=600,scrollbars=yes,left=" +
+      "menubar=no,resizable=yes,width=1800,height=600,scrollbars=yes,left=" +
       left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
   }
 </script>
 
-
-
-
-
-
-</html>
+<?php include "footer.php"; ?>

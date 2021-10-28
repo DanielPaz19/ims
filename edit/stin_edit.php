@@ -50,7 +50,7 @@ if (isset($_POST['stin_submit'])) {
 
 
 
-  header("Location:../main/stin_main.php");
+  header("Location:../stin_main.php");
 }
 
 
@@ -346,7 +346,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
   <div class="container">
-    <a href="../main/stin_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
+    <a href="../stin_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
     <fieldset>
       <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory IN: Editing Record&nbsp;&nbsp;&nbsp;</legend>
       <form autocomplete="off" method="post">
@@ -414,7 +414,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <?php
             include "../php/config.php";
             $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
-            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount 
+            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id
             FROM product 
             INNER JOIN stin_product ON stin_product.product_id=product.product_id 
             INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
@@ -445,8 +445,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <center>
 
                       &nbsp;
-                      <a href="stin_item_delete.php?id=<?php echo $id; ?>" title="Remove">
-                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
+                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                       </a>
                   </td>
 
@@ -562,6 +562,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stin--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stin--discount'></td>
       <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
+      <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
+                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      </a></center></td>
       </tr>
       `)
     };
