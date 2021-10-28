@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php
+
+session_start();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,20 +11,101 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> <!-- navbar icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/header-style.css">
-  <link rel="stylesheet" href="css/login-style.css">
-  <link rel="stylesheet" href="css/footer-style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
   <title>Document</title>
+  <style>
+    .navbar {
+      overflow: hidden;
+      background-color: midnightblue;
+      height: 40px;
+      letter-spacing: 3px;
+    }
+
+    .navbar a {
+      margin-left: 5px;
+      float: left;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 7px 8px;
+      text-decoration: none;
+      font-family: sans-serif;
+    }
+
+    .dropdown {
+      float: left;
+      overflow: hidden;
+      font-family: sans-serif;
+      margin-left: 20px;
+
+    }
+
+    .dropdown .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 7px 8px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+      letter-spacing: 2px;
+      position: sticky;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+      background-color: white;
+      color: midnightblue;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      padding-bottom: 10px;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 0;
+      height: auto;
+
+
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-submenu {
+      position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -1px;
+    }
+  </style>
 </head>
 
 <body>
+
   <div class="navbar">
     <a href="#"><i class="fas fa-home"></i>&nbspHome</a>
 
@@ -75,5 +160,5 @@
         <a href="register.php"><i class="fa fa-users"></i>&nbsp;Add New Users</a>
       </div>
     </div>
-    <a href="php/logout-inc.php" style="float:right;"><i class="fas fa-sign-out-alt"></i>&nbspSign-Out</a>
+    <a href="logout-inc.php" style="float:right;"><i class="fas fa-sign-out-alt"></i>&nbspSign-Out</a>
   </div>
