@@ -18,10 +18,11 @@ if (isset($_POST['submit'])) {
       }
 
       session_start();
+
       $_SESSION['user'] = $row['user_name'];
       $_SESSION['level'] = $row['user_level'];
 
-      header("location: home2.php");
+      header("location: index.php");
       exit();
     }
   } else {

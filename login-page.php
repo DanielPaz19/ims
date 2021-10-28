@@ -1,5 +1,4 @@
-<?php include_once 'header.php' ?>
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -111,24 +110,24 @@
   </style>
 </head>
 
-<body> -->
-<div class="loading">
-  <div class="circle light"></div>
-  <div class="circle dark"></div>
-  <div class="branding"></div>
+<body>
+  <div class="loading">
+    <div class="circle light"></div>
+    <div class="circle dark"></div>
+    <div class="branding"></div>
 
-</div>
-<center>
-  <h2 style="color: white; letter-spacing: 2px;">PACC IMS</h2>
-</center><br>
+  </div>
+  <center>
+    <h2 style="color: white; letter-spacing: 2px;">PACC IMS</h2>
+  </center><br>
 
-<div class="login">
-  <form action="login_action.php" method="POST">
-    <input type="text" id="login-username" name="username" placeholder="👤 Username" required="required" />
-    <input type="password" id="login-password" name="pwd" placeholder="🔑 Password" required="required" />
-    <button type="submit" name="submit" class="btn btn-primary btn-block btn-large">Login</button>
-  </form>
-</div>
+  <div class="login">
+    <form action="login_action.php" method="POST">
+      <input type="text" id="login-username" name="username" placeholder="👤 Username" required="required" />
+      <input type="password" id="login-password" name="pwd" placeholder="🔑 Password" required="required" />
+      <button type="submit" name="submit" class="btn btn-primary btn-block btn-large">Login</button>
+    </form>
+  </div>
 </body>
 
 </html>

@@ -426,7 +426,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <td>
                       <center>
                         <a href="stout_item_delete.php?id=<?php echo $id; ?>">
-                          <font color="red"><i class='fas fa-trash-alt' style="font-size:17px" title="Remove"></i></font>
+                          <font color="red">X</font>
                         </a>
                       </center>
                     </td>
