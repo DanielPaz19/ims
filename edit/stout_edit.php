@@ -524,11 +524,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           const selectedId = e.target.closest('tr').dataset.id;
           const selectedName = e.target.closest('tr').querySelector('.item-name').innerHTML;
           const selectedQty = e.target.closest('tr').querySelector('.qty').innerHTML;
-          const qtyOut = prompt("Enter Qty-out:");
+          const qtyIn = prompt("Enter Qty-out:");
           const selectedUnit = e.target.closest('tr').querySelector('.unit').innerHTML;
           const selectedCost = prompt("Enter Cost Amount:");
           const selectedDiscount = prompt("Enter Discount Amount:");
-          const incomingQty = +selectedQty - +qtyOut;
+          const incomingQty = +selectedQty - +qtyIn;
 
           modalClose();
 
@@ -536,7 +536,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stout--product__id'></td>
       <td>${selectedName}</td>
       <td>${selectedQty}</td>
-      <td>${qtyOut}<input type="hidden" name="stoutTempQty[]" value="${qtyOut}" class='stout--qty__out'></td>
+      <td>${qtyIn}<input type="hidden" name="stoutTempQty[]" value="${qtyIn}" class='stout--qty__out'></td>
       <td>${selectedUnit}</td>
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stout--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stout--discount'></td>
