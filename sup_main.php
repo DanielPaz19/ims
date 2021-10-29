@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
   .content-area {
     border-radius: 10px;
     padding: 20px;
-    height: 100%;
+    height: 1000px;
     background-color: #EAEAEA;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -188,14 +188,19 @@ if (!isset($_SESSION['user'])) {
   }
 </style>
 
+
 <div class="con-form">
-  <fieldset style="border: none;">
-    <legend>
-      <h2 style="letter-spacing: 5px;">
-        <font color="midnightblue">SUPPLIER</font>
-      </h2>
-    </legend>
-    <?php include('../table/sup_table.html') ?>
+  <div class="content-area">
+    <fieldset style="border: none;">
+      <legend>
+        <h2 style="letter-spacing: 5px;">
+          <font color="midnightblue">STOCK INVENTORY OUT</font>
+        </h2>
+      </legend>
+      <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+      <?php include('table/sup_table.html') ?>
+  </div>
+  </fieldset>
 </div>
 
 

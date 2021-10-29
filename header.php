@@ -24,7 +24,11 @@
 <body style="margin: 0px;" bgcolor="#B0C4DE">
 
 
-  <div class="navbar">
+  <div class="navbar" <?php
+                      if (!isset($_SESSION['user'])) {
+                        echo "hidden";
+                      }
+                      ?>>
     <a href="../index.php"><i class="fas fa-home"></i>&nbspHome</a>
 
     <div class="dropdown">
@@ -70,13 +74,5 @@
       </div>
     </div>
 
-    <div class="dropdown">
-      <button class="dropbtn"><i class="fa fa-gear"></i>&nbspTools&nbsp<i class="fa fa-caret-down"></i>
-      </button>
-
-      <div class="dropdown-content">
-        <a href="register.php"><i class="fa fa-users"></i>&nbsp;Add New Users</a>
-      </div>
-    </div>
-    <a href="php/logout-inc.php" style="float:right;"><i class="fas fa-sign-out-alt"></i><?php echo $_SESSION["user"]; ?></a>
+    <a href="php/logout-inc.php" style="float:right;" title="Sign-Out"><i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
   </div>

@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
     padding-right: 200px;
     padding-bottom: 50px;
     padding-left: 200px;
-    height: 100%;
+    height: 1000px;
     background-color: #EAEAEA;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);

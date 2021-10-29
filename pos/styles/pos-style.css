@@ -5,9 +5,10 @@
 }
 
 body {
-  background-color: #ced6e0;
+  background-color: #b0c4de;
   padding: 0px;
   margin: 0;
+  font-family: sans-serif;
 }
 
 /* POS Tab style */
@@ -26,14 +27,16 @@ h1 {
   text-align: center;
 }
 
-input, select {
+input,
+select {
   width: 200px;
   border-radius: 10px;
   border: 1px solid #70a1ff;
   padding-left: 10px;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: none !important;
   border-color: #70a1ff;
   box-shadow: 0 0 10px #70a1ff;
@@ -41,14 +44,12 @@ input:focus, select:focus {
 
 .nav-bar {
   height: 35px;
-  background-color: #3742fa;
+  background-color: midnightblue;
 }
 
 .nav--options {
   height: 100%;
 }
-
-
 
 .nav__button {
   width: 100px;
@@ -58,11 +59,12 @@ input:focus, select:focus {
   color: #ffffff;
   font-size: 13px;
   font-weight: bold;
+  letter-spacing: 2px;
 }
 
 .nav__button--active {
-  background-color: #ced6e0;
-  color: #3742fa;
+  background-color: #b0c4de;
+  color: midnightblue;
 }
 
 .nav__button:hover {
@@ -80,6 +82,7 @@ a {
   float: right;
   color: #ffffff;
   font-size: 13px;
+  width: 50%;
 }
 
 /* Left side container */
@@ -115,7 +118,7 @@ a {
 }
 
 .container-customer_details label {
-  color: #3742fa;
+  color: midnightblue;
   width: 100%;
   text-align: left;
   padding-left: 2px;
@@ -191,8 +194,9 @@ a {
 
 [for="transactionNumber"],
 [for="transactionDate"] {
-  color: #2f3542;
+  color: midnightblue;
   font-weight: bold;
+  letter-spacing: 2px;
 }
 
 #transactionNumber {
@@ -252,7 +256,7 @@ table.order-list {
 }
 
 .order-list th {
-  background-color: #3742fa;
+  background-color: midnightblue;
   color: #ffffff;
   padding: 5px 10px;
 }
@@ -360,7 +364,7 @@ table.item-list th {
   position: sticky;
   top: 0;
   padding: 5px 0px;
-  background-color: #3742fa;
+  background-color: midnightblue;
   color: #ffffff;
 }
 
@@ -409,8 +413,9 @@ table.item-list td {
 
 legend {
   color: #3742fa;
-  font-size: 15px;
+  font-size: 24px;
   font-weight: bold;
+  letter-spacing: 2px;
 }
 
 .summary_label-container {

@@ -325,6 +325,7 @@ input[type="date"] {
 }
 
 input {
+  padding-left: 10px;
   border: 1px solid lightgrey;
   height: 35px;
   text-shadow: aliceblue;
@@ -336,25 +337,33 @@ div#search {
   left: 0;
 }
 
+input#item-name {
+  padding-left: 10px;
+  width: 100%;
+}
+
 #relative {
   position: relative;
 }
 
 #item-list {
+  opacity: 0;
   position: absolute;
-  width: 800px;
-  margin: auto;
+  width: 100%;
+  z-index: -1;
+}
+
+#item-list.active {
+  opacity: 1;
   z-index: 1;
 }
 
 ul {
+  padding-left: 0px;
   list-style-type: none;
   margin-top: 0;
-  margin-right: 50px;
-  margin-left: 50px;
   display: block;
-  padding-left: 5px;
-  width: 800px;
+  width: 100%;
 }
 
 li:hover {
@@ -363,9 +372,11 @@ li:hover {
 
 li {
   text-align: left;
-  padding: 10px;
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 5px;
   border: 1px solid lightgrey;
-  width: 780px;
 }
 
 li.selected {
@@ -395,11 +406,6 @@ ul {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   margin-top: 20px;
-}
-
-input#item-name {
-  position: relative;
-  width: 430px;
 }
 
 .hidden {

@@ -503,7 +503,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     const stinEdit = function(e) {
       const target = e.target.closest('td').children[0];
       const changeValue = function(promptMessage) {
-        newValue = prompt(promptMessage);
+        let newValue = prompt(promptMessage);
         target.closest('td').childNodes[0].textContent = newValue;
         target.value = newValue;
       }
@@ -529,7 +529,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     const modalOpen = function(e) {
       e.preventDefault();
       containerModalAddItem.classList.add('modal--active');
-      showData("../pos/php/search-product.php", "", containerItemList);
+      showData("../php/searchitem.php", "", containerItemList);
     };
 
     const modalClose = function() {
@@ -538,7 +538,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     const searchItem = function() {
       const queue = inputSearch.value;
-      showData("../pos/php/search-product.php", `${queue}`, containerItemList);
+      showData("../php/searchitem.php", `${queue}`, containerItemList);
     };
 
     const selectItem = function(e) {

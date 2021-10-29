@@ -52,7 +52,7 @@ if (!isset($_SESSION['user'])) {
     .content-area {
         border-radius: 5px;
         padding: 20px;
-        height: 100%;
+        height: 1000px;
         width: 100%;
         background-color: #EAEAEA;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -339,7 +339,7 @@ if (!isset($_SESSION['user'])) {
                                     <option></option>
                                     <?php
 
-                                    $records = mysqli_query($db, "SELECT * FROM unit_tb");
+                                    $records = mysqli_query($db, "SELECT * FROM unit_tb ORDER BY unit_name ASC");
 
                                     while ($data = mysqli_fetch_array($records)) {
                                         echo "<option value='" . $data['unit_id'] . "'>" . $data['unit_name'] . "</option>";

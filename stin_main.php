@@ -18,7 +18,7 @@ if (!isset($_SESSION['user'])) {
   .content-area {
     border-radius: 10px;
     padding: 20px;
-    height: 100%;
+    height: 1000px;
     background-color: #EAEAEA;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);

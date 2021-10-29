@@ -6,14 +6,34 @@ if (isset($_POST['srr_submit'])) {
     $id = $_POST['id'];
     $srr_no = mysqli_real_escape_string($db, $_POST['srr_no']);
     $emp_id = mysqli_real_escape_string($db, $_POST['emp_id']);
-    $srr_qty = mysqli_real_escape_string($db, $_POST['srr_qty']);
-    $sup_id = mysqli_real_escape_string($db, $_POST['sup_id']);
-    $srr_date = mysqli_real_escape_string($db, $_POST['srr_date']);
+    $srrQty =  $_POST['qty'];
+    $srrSup =  $_POST['sup'];
+    $srrDate =  $_POST['date'];
+    $srrItem = $_POST['item'];
+    $srrRef =  $_POST['ref'];
+
 
     mysqli_query($db, "UPDATE srr_tb SET srr_no='$srr_no', emp_id='$emp_id'
                        WHERE srr_id='$id'");
 
-    header("Location:../main/srr_main.php");
+    function addSrrProdRecord($srrItem, $id, $srrQty, $srrRef, $srrSup, $srrDate)
+    {
+        include('../php/config.php');
+        mysqli_query($db, "INSERT INTO srr_product(product_id, srr_id, srr_qty, srr_ref, sup_id, srr_date)
+        VALUES ('$srrItem', '$id', '$srrQty', '$srrRef', '$srrSup', '$srrDate')");
+    }
+
+    $counter = 0;
+    while (count($srrItem) !== $counter) {
+        $result =  mysqli_query($db, "SELECT * FROM srr_product  WHERE product_id = $srrItem[$counter] AND srr_id = $id");
+        $row = mysqli_fetch_assoc($result);
+        if (!$row && $srrItem) {
+            addSrrProdRecord($srrItem[$counter], $id, $srrQty[$counter], $srrRef[$counter], $srrSup[$counter], $srrDate[$counter]);
+        }
+        $counter++;
+    }
+
+    header("Location:../srr_main.php");
 }
 
 
@@ -50,7 +70,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <body style="margin: 0px;" bgcolor="#B0C4DE">
 
     <div class="container">
-        <a href="../main/srr_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
+        <a href="../srr_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
         <fieldset>
             <legend>&nbsp;&nbsp;&nbsp;Stock Reciept Register: Editing Record&nbsp;&nbsp;&nbsp;</legend>
             <button id="myBtn" title="Add Entry" style="font-size: 18px; padding: 8px; float:right;"><i class="fa fa-plus-circle"></i>&nbsp;Add Entry</button>
@@ -100,7 +120,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <?php
-                        $sql = "SELECT  srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks
+                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id
 
    				 FROM srr_product
    				 LEFT JOIN sup_tb ON srr_product.sup_id = sup_tb.sup_id
@@ -116,13 +136,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             while ($irow = $result->fetch_assoc()) {
                                 $count = $count + 1;
                         ?>
-                                <td><?php echo $irow['srr_date'] ?></td>
-                                <td><?php echo $irow['sup_name'] ?></td>
-                                <td><?php echo $irow['srr_ref'] ?></td>
-                                <td><?php echo $irow['product_name'] ?></td>
-                                <td><?php echo $irow['srr_qty'] ?></td>
-                                <td><?php echo $irow['unit_name'] ?></td>
-                                <td><?php echo $irow['pro_remarks'] ?></td>
+                                <td><?php echo $irow['srr_date'] ?> <input type="hidden" name="date[]" value="<?php echo $irow['srr_date']; ?>"></td>
+                                <td><?php echo $irow['sup_name'] ?><input type="hidden" name="sup[]" value="<?php echo $irow['sup_id']; ?>"></td>
+                                <td><?php echo $irow['srr_ref'] ?><input type="hidden" name="ref[]" value="<?php echo $irow['srr_ref']; ?>"></td>
+                                <td><?php echo $irow['product_name'] ?><input type="hidden" name="item[]" value="<?php echo $irow['product_id']; ?>"></td>
+                                <td><?php echo $irow['srr_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['srr_qty']; ?>"></td>
+                                <td><?php echo $irow['unit_name'] ?><input type="hidden" name="unit[]" value="<?php echo $irow['unit_id']; ?>"></td>
+                                <td><?php echo $irow['pro_remarks'] ?><input type="hidden" name="remarks[]" value="<?php echo $irow['pro_remarks']; ?>"></td>
                                 <td> <a href="#" title="Remove">
                                         <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                                     </a></td>
@@ -151,12 +171,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </div>
             <div class="modal-body">
                 <div class="addCont">
+                    <label>Description:&nbsp;&nbsp;</label> <br>
                     <div id="search">
-                        <label>Description:&nbsp;&nbsp;</label>
-                        <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
-                        <div id="item-list"></div><!-- Dont Remove this -->
+                        <input autocomplete="off" type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
+                        <div id="item-list">
+                            <ul>
+                            </ul>
+                        </div><!-- Dont Remove this -->
                     </div>
-
                     <br>
                     <!-- input for item qty -->
                     <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -197,6 +219,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
     <script>
+        'use strict';
+
+        const selectedItem = {};
         // Get the modal
         var modal = document.getElementById("myModal");
 
@@ -205,6 +230,77 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
+
+        const inputSearch = document.querySelector('#item-name');
+        const inputItemQty = document.querySelector('.item-qty');
+        const inputItemRef = document.querySelector('.item-ref');
+        const inputItemSup = document.querySelector('.item-sup');
+        const containerItemList = document.querySelector('#item-list');
+        const buttonAddItem = document.querySelector('.add-button');
+        const containerItemRow = document.querySelector('.itemtb');
+        const inputItemDate = document.querySelector('.item-date');
+
+        const getData = function(data) {
+            return
+        }
+
+
+
+        const addItemRow = function() {
+            containerItemRow.insertAdjacentHTML('beforeend', `<tr>
+                                <td>${inputItemDate.value} <input type="hidden" name="date[]" value="${inputItemDate.value}" ></td>
+                                <td>${inputItemSup.selectedOptions[0].outerText} <input type="hidden" name="sup[]" value="${inputItemSup.value}" ></td>
+                                <td>${inputItemRef.value} <input type="hidden" name="ref[]" value="${inputItemRef.value}" ></td>
+                                <td>${inputSearch.value}<input type="hidden" name="item[]" value="${selectedItem.id}" ></td>
+                                <td>${inputItemQty.value}<input type="hidden" name="qty[]" value="${inputItemQty.value}" ></td>
+                                <td>${selectedItem.unit}<input type="hidden" name="unit[]" value="${selectedItem.unitId}" ></td>
+                                <td>${selectedItem.remarks}<input type="hidden" name="remarks[]" value="${selectedItem.remarks}" ></td>
+                                <td> <a href="#" title="Remove">
+                                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                                    </a></td>
+                                </tr>`);
+
+            modal.style.display = 'none';
+
+        };
+
+        const selectItem = function(e) {
+            const target = e.target.closest('li')
+            selectedItem.id = target.dataset.product;
+            selectedItem.unitId = target.dataset.unit_id;
+            selectedItem.qty = target.dataset.qty;
+            selectedItem.unit = target.dataset.unit;
+            selectedItem.remarks = target.dataset.remarks;
+            inputSearch.value = target.innerHTML;
+        };
+
+        const itemSearch = function() {
+            const item = this.value;
+            // Create an XMLHttpRequest object
+            const search = new XMLHttpRequest();
+            containerItemList.children[0].innerHTML = "";
+
+            // Define a callback function
+            search.addEventListener('load', function() {
+                const data = JSON.parse(this.responseText);
+                // showTableData(data, container);
+
+                data.forEach(data => {
+                    containerItemList.children[0].insertAdjacentHTML('beforeend', `<li 
+                    data-product='${data.product_id}' 
+                    data-qty='${data.qty}' 
+                    data-unit='${data.unit_name}' 
+                    data-unit_id='${data.unit_id}' 
+                    data-remarks='${data.pro_remarks}'>${data.product_name}</li>`);
+                });
+
+            });
+
+            // Send a request
+            search.open("POST", "../php/searchitem.php" + `?q=${item}`);
+            search.send();
+        };
+
 
         // When the user clicks the button, open the modal 
         btn.onclick = function() {
@@ -216,10 +312,27 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             modal.style.display = "none";
         }
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        // // When the user clicks anywhere outside of the modal, close it
+        // window.onclick = function(event) {
+        //     if (event.target == modal) {
+        //         modal.style.display = "none";
+        //     }
+        // }
+
+
+        inputSearch.addEventListener('keyup', itemSearch.bind(inputSearch));
+
+        inputSearch.addEventListener('focus', function() {
+            containerItemList.classList.toggle('active');
+        });
+
+        inputSearch.addEventListener('blur', function() {
+            setTimeout(function() {
+                containerItemList.classList.toggle('active')
+            }, 100);
+        });
+
+        containerItemList.children[0].addEventListener('click', selectItem);
+
+        buttonAddItem.addEventListener('click', addItemRow);
     </script>

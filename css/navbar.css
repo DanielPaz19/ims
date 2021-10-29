@@ -1,5 +1,4 @@
-
-.navbar{
+.navbar {
   background: midnightblue;
   height: 50px;
   width: 100%;
@@ -8,9 +7,5 @@
 
 .navbar a:hover {
   background-color: white;
-  color:#6495ed;
+  color: #6495ed;
 }
-
-
-
-

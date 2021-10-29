@@ -5,7 +5,12 @@ if (isset($_POST['submit'])) {
 
   require_once 'config.php';
 
-  $sql = "SELECT * FROM user WHERE user_name = '$userName'";
+  $sql = "SELECT user.user_id, user.user_name, user.user_pass, user.user_level, employee_tb.emp_name, employee_tb.emp_id
+          FROM user 
+          INNER JOIN employee_tb ON user.emp_id = employee_tb.emp_id
+          WHERE user_name = '$userName'";
+
+
   $result = mysqli_query($db, $sql);
 
   // Check username and password
@@ -18,11 +23,27 @@ if (isset($_POST['submit'])) {
       }
 
       session_start();
-
+      $_SESSION['empName'] = $row['emp_name'];
       $_SESSION['user'] = $row['user_name'];
       $_SESSION['level'] = $row['user_level'];
 
-      header("location: ../index.php");
+      if ($_SESSION['level'] == 1) {
+        header('location: ../index.php');
+        exit();
+      }
+      if ($_SESSION['level'] == 2) {
+        header("Location: ../pos/index.php");
+        exit();
+      }
+
+      // else{
+      //  echo "<script>alert('Invalid Username  or Password !');
+      // window.location='index.php';
+      // </script>";
+      // }
+
+
+
       exit();
     }
   } else {

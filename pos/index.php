@@ -1,7 +1,7 @@
 <?php include_once 'header.php';
 
 if (!$_SESSION['user']) {
-  header("location: login.php");
+  header("location: ../login-page.php");
 }
 
 ?>
@@ -20,7 +20,7 @@ if (!$_SESSION['user']) {
           <label for="customerName">Customer Name</label><br />
           <input type="text" id="customerName" class="input-customer_name" placeholder="PHILIPPINE ACRYLIC AND CHEMICAL CORP." />
         </span>
-        <span><button class="btn-search_customer">Search</button></span><br />
+        <span><button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search</button></span><br />
 
         <label for="customerAddress">Address</label><br />
         <input type="text" id="customerAddress" class="input-customer_address" placeholder="635 Mercedes Ave, Brgy. San Miguel, Pasig City" /><br />

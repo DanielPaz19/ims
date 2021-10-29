@@ -90,6 +90,8 @@ if ($total_data > 0) {
       <a href="../edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . '" title="Edit Item"><i class="fa fa-edit" style="font-size:25px"></i></a>
       &nbsp;
       <a href="../item_movement.php?id=' . $row["product_id"] . '" title="View History"><i class="fa fa-history" style="font-size:25px"></i></a>
+      &nbsp;
+    
 </center>
       </td>
     </tr>

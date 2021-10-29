@@ -109,7 +109,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
 <body>
-  <a href="main/itemlist_main.php" style="float:right; margin-right: 50px; margin-top: 50px;"><i class="fa fa-close" style="font-size:24px"></i></a>
+  <a href="itemlist_main.php" style="float:right; margin-right: 50px; margin-top: 50px;"><i class="fa fa-close" style="font-size:24px"></i></a>
   <div class="content">
     <h1 style="letter-spacing: 3px;">ITEM MOVEMENT : <?php echo $product_name; ?></h1>
     <input type="hidden" name="id" value="<?php echo $id; ?>" />

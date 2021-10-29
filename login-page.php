@@ -86,7 +86,7 @@
   }
 
   button.btn-primary {
-    background: linear-gradient(to bottom, #009EFF 0px, #0075BC 100%) repeat scroll 0 0 transparent;
+    background: linear-gradient(to bottom, midnightblue 0px, #0075BC 100%) repeat scroll 0 0 transparent;
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.55);
     border-radius: 6px 6px 6px 6px;
@@ -103,13 +103,14 @@
 </style>
 
 <div class="loading">
-  <div class="circle light"></div>
-  <div class="circle dark"></div>
+  <div class=""></div>
+  <div class=""></div>
   <div class="branding"></div>
 
 </div>
 <center>
-  <h2 style="color: white; letter-spacing: 2px;">PACC IMS</h2>
+  <img src="../img/pacclogo.png" style="width: 85px; height: 80px">
+  <h2 style="color: midnightblue; letter-spacing: 2px; text-shadow: 1px 1px midnightblue;">PACC IMS</h2>
 </center><br>
 
 <div class="login">
@@ -119,6 +120,3 @@
     <button type="submit" name="submit" class="btn btn-primary btn-block btn-large">Login</button>
   </form>
 </div>
-
-
-<?php include "footer.php"; ?>

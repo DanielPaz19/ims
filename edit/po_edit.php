@@ -27,7 +27,7 @@ if (isset($_POST['po_submit'])) {
   item_disamount = '$discount', po_temp_tot = '$incomintQty' WHERE po_id = '$id' AND product_id = '$productId'");
   }
 
-  function addStinProdRecord($productId, $id, $poTempQty, $cost, $discount,  $incomintQty)
+  function addPoProdRecord($productId, $id, $poTempQty, $cost, $discount,  $incomintQty)
   {
     include('../php/config.php');
     mysqli_query($db, "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, po_temp_tot)
@@ -42,16 +42,16 @@ if (isset($_POST['po_submit'])) {
     $result =  mysqli_query($db, "SELECT * FROM po_product  WHERE product_id = $productId[$counter] AND po_id = $id");
     $row = mysqli_fetch_assoc($result);
     if (!$row) {
-      addStinProdRecord($productId[$counter], $id, $poTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
+      addPoProdRecord($productId[$counter], $id, $poTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
     } else {
-      updateStinProd($id, $productId[$counter], $poTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
+      updatePoProd($id, $productId[$counter], $poTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
     }
     $counter++;
   }
 
 
 
-  header("Location:../main/po_main.php");
+  header("Location: ../po_main.php");
 }
 
 
@@ -347,7 +347,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
   <div class="container">
-    <a href="../main/po_main.php"> <i class="fa fa-close" style="font-size:24px; color: red; float: right;"></i></a>
+    <a href="../po_main.php"> <i class="fa fa-close" style="font-size:24px; color: red; float: right;"></i></a>
     <br>
     <fieldset>
       <legend>&nbsp;&nbsp;&nbsp;Purchase Order: Editing Record&nbsp;&nbsp;&nbsp;</legend>
@@ -420,8 +420,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <th>Qty PO</th>
             <th>Unit</th>
             <th>Cost</th>
-            <th>Total Cost</th>
             <th>Discount Amount</th>
+            <th>Total Cost</th>
             <th>Incomming Qty</th>
             <th>&nbsp;</th>
           </tr>
@@ -453,8 +453,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <td><?php echo $irow['item_qtyorder'] ?><input type="hidden" name="poTempQty[]" value="<?php echo $irow['item_qtyorder'] ?>" class='po--qty__in'></td>
                 <td><?php echo $irow['unit_name'] ?></td>
                 <td><?php echo $irow['item_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['item_cost'] ?>" class='po--cost'></td>
-                <td><?php echo $irow['po_temp_tot'] ?></td>
                 <td><?php echo $irow['item_disamount'] ?></td>
+                <td><?php echo $irow['po_temp_tot'] ?><input type="hidden" name="totalCost[]" value="<?php echo $irow['po_temp_tot'] ?>" class='po--total_cost'></td>
                 <td style="text-align: left;"><?php echo $irow['qty'] + $irow['item_qtyorder'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['item_qtyorder'] ?>" class='po--incoming__qty'></td>
                 <td>
                   <center>
@@ -543,7 +543,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       const modalOpen = function(e) {
         e.preventDefault();
         containerModalAddItem.classList.add('modal--active');
-        showData("../pos/php/search-product.php", "", containerItemList);
+        showData("../php/searchitem.php", "", containerItemList);
       };
 
       const modalClose = function() {
@@ -552,7 +552,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
       const searchItem = function() {
         const queue = inputSearch.value;
-        showData("../pos/php/search-product.php", `${queue}`, containerItemList);
+        showData("../php/searchitem.php", `${queue}`, containerItemList);
       };
 
       const selectItem = function(e) {
@@ -575,7 +575,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <td>${selectedUnit}</td>
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='po--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='po--discount'></td>
+      <td>${+qtyIn * +selectedCost - +selectedDiscount}<input type="hidden" name="totalCost[]" value="${+qtyIn * +selectedCost - +selectedDiscount}" class='po--total_cost'></td>
       <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='po--incoming__qty'></td>
+      <td>
+                  <center>
+
+                    <a href="po_itemdelete.php?id=<?php echo $irow['temp_id']; ?>">
+                      <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                    </a>
+                  </center>
+                </td>
       </tr>
       `)
       };

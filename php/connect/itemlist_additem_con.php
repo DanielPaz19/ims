@@ -45,5 +45,5 @@ if (isset($_GET['add'])) {
     echo '<script type="text/javascript"> alert("Error Uploading Data!"); </script>';  // when error occur
   }
 
-  header('location: ../../main/itemlist_main.php');
+  header('location: ../../itemlist_main.php');
 }

@@ -143,7 +143,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <form method="GET" action="../commit/que/stin_commit_que.php">
         <input type="hidden" name="stin_id" value="<?php echo $_GET['id'] ?>">
         <input type="hidden" name='mov_date' class='date'>
-        <table class="item-details">
+        <table class="item-details" width="100%">
           <tr>
             <th width="5%">Item No.</th>
             <th width="40%">Item Name</th>
