@@ -516,13 +516,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
       const stinEdit = function(e) {
         const target = e.target.closest('td').children[0];
+        const prevValue = target.closest('td').childNodes[0].textContent;
+        console.log(prevValue);
         const changeValue = function(promptMessage) {
-          newValue = prompt(promptMessage);
+          let newValue = prompt(promptMessage);
+
+          if (newValue.includes(' ') || !newValue) return;
+
           target.closest('td').childNodes[0].textContent = newValue;
           target.value = newValue;
         }
-
-        let newValue;
 
         if (!target) return;
 
