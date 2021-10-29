@@ -8,8 +8,8 @@ if (isset($_POST['stout_submit'])) {
   $stout_title = mysqli_real_escape_string($db, $_POST['stout_title']);
   $stout_date = mysqli_real_escape_string($db, $_POST['stout_date']);
   $productId = $_POST['productId'];
-  $stoutTempQty = $_POST['stoutTempQty'];
-  $cost = $_POST['stout_cost'];
+  $stoutTempQty = $_POST['qty'];
+  $cost = $_POST['cost'];
   $discount = $_POST['discount'];
   $incomintQty = $_POST['incomingQty'];
 
@@ -41,9 +41,9 @@ while (count($productId) !== $counter) {
   $result =  mysqli_query($db, "SELECT * FROM stout_product  WHERE product_id = $productId[$counter] AND stout_id = $id");
   $row = mysqli_fetch_assoc($result);
   if (!$row) {
-    addStoutProdRecord($productId[$counter], $id, $stout_TempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
+    addStoutProdRecord($productId[$counter], $id, $stoutTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
   } else {
-    updateStoutProd($id, $productId[$counter], $stout_TempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
+    updateStoutProd($id, $productId[$counter], $stoutTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
   }
   $counter++;
 }
@@ -334,13 +334,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   </style>
 
 </head>
-<title>Edit STOCK-IN</title>
+<title>Edit STOCK-OUT</title>
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
   <div class="container">
-    <a href="../stin_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
+    <a href="../stout_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
     <fieldset>
-      <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory IN: Editing Record&nbsp;&nbsp;&nbsp;</legend>
+      <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory OUT: Editing Record&nbsp;&nbsp;&nbsp;</legend>
       <form autocomplete="off" method="post">
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <table class="table1" width="100%">
@@ -424,10 +424,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             ?>
                 <tr>
 
-                  <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
+                  <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stout--product__id"></td>
                   <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
                   <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['stout_temp_qty'] ?><input type="hidden" name="stoutTempQty[]" value="<?php echo $irow['stout_temp_qty'] ?>" class='stout--qty__out'></td>
+                  <td style="text-align: left;"><?php echo $irow['stout_temp_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" class='stout--qtyout'></td>
                   <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
                   <td style="text-align: left;"><?php echo $irow['stout_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stout_temp_cost'] ?>" class='stout--cost'></td>
                   <td style="text-align: left;"><?php echo $irow['stout_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stout_temp_disamount'] ?>" class='stout--discount'></td>
@@ -436,9 +436,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <center>
 
                       &nbsp;
-                      <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stout_product_id"] ?>" title="Remove">
+                      <!-- <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stout_product_id"] ?>" title="Remove">
                         <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                      </a>
+                      </a> -->
                   </td>
 
 
@@ -448,7 +448,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           </tbody>
         </table>
         <br>
-        <button class="butLink" name="stin_submit" onclick="alert('Edit Records Successfully !')">Update</button>
+        <button class="butLink" name="stout_submit" onclick="alert('Edit Records Successfully !')">Update</button>
       </form>
       <br>
     </fieldset>
@@ -510,7 +510,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       if (!target) return;
 
 
-      if (target.classList.contains('stout--qty__out')) {
+      if (target.classList.contains('stout--qtyout')) {
         changeValue("Enter New Qty-Out");
       }
 
@@ -547,15 +547,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       const selectedUnit = e.target.closest('tr').querySelector('.unit').innerHTML;
       const selectedCost = prompt("Enter Cost Amount:");
       const selectedDiscount = prompt("Enter Discount Amount:");
-      const incomingQty = +selectedQty + +qtyIn;
+      const incomingQty = +selectedQty - +qtyIn;
 
       modalClose();
 
       tableItemTb.querySelector('tbody').insertAdjacentHTML('beforeend', `<tr>
-      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stin--product__id'></td>
+      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stout--product__id'></td>
       <td>${selectedName}</td>
       <td>${selectedQty}</td>
-      <td>${qtyIn}<input type="hidden" name="stoutTempQty[]" value="${qtyIn}" class='stout--qty__out'></td>
+      <td>${qtyIn}<input type="hidden" name="qty[]" value="${qtyIn}" class='stout--qtyout'></td>
       <td>${selectedUnit}</td>
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stout--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stout--discount'></td>
