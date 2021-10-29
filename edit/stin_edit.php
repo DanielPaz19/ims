@@ -510,7 +510,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       const changeValue = function(promptMessage) {
         let newValue = prompt(promptMessage);
 
-        if (newValue.includes(' ') || !newValue) return;
+        if (!newValue || newValue.includes(' ')) return;
 
         target.closest('td').childNodes[0].textContent = newValue;
         target.value = newValue;
