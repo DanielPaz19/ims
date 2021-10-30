@@ -69,8 +69,23 @@ if ($total_data > 0) {
 
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px"></i></font>';
+      $disable = ' <a href="../edit/stin_edit.php?id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+      &nbsp;&nbsp;&nbsp;
+                <a href="../delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+      &nbsp;&nbsp;&nbsp;
+                <a href="../commit/stin_commit.php?id=' . $row["stin_id"] . '">
+                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
+      &nbsp;&nbsp;&nbsp;';
     } else {
       $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px"></i></font>';
+      $disable = ' 
+      
+      <button style="border: none" disabled><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></button>
+      
+      <button style="border: none" disabled><i class="fa fa-trash-o" style="font-size:26px"></i></button>
+      
+      <button style="border: none" disabled><i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></button>
+      &nbsp;&nbsp;&nbsp;';
     }
     $output .= '
     <tr>
@@ -80,13 +95,7 @@ if ($total_data > 0) {
       <td>' . $row["emp_name"] . '</td>
       <td>' . $row["stin_date"] . '</td>
       <td><center>
-                <a href="../edit/stin_edit.php?id=' . $row["stin_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="../delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="../commit/stin_commit.php?id=' . $row["stin_id"] . '">
-                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
-      &nbsp;&nbsp;&nbsp;
+               ' . $disable . '
                 <a href="../view/viewstin.php?id=' . $row["stin_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
