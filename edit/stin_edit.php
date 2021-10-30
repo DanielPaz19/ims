@@ -341,6 +341,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       cursor: pointer;
     }
 
+    .form-control {
+      border: 2px solid lightgray;
+    }
+
     /* .table1 td,
     th {
       border: 1px solid black;

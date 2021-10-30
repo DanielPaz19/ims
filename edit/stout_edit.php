@@ -327,6 +327,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     }
 
 
+    .highlight {
+      font-weight: bolder;
+      color: orangered;
+      cursor: pointer;
+    }
+
+    .form-control {
+      border: 2px solid lightgray;
+    }
+
     /* .table1 td,
     th {
       border: 1px solid black;
@@ -427,18 +437,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                   <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stout--product__id"></td>
                   <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
                   <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['stout_temp_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" class='stout--qtyout'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stout_temp_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" class='stout--qtyout'></td>
                   <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['stout_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stout_temp_cost'] ?>" class='stout--cost'></td>
-                  <td style="text-align: left;"><?php echo $irow['stout_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stout_temp_disamount'] ?>" class='stout--discount'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stout_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stout_temp_cost'] ?>" class='stout--cost'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stout_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stout_temp_disamount'] ?>" class='stout--discount'></td>
                   <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stout_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stout_temp_qty'] ?>" class='stin--incoming__qty'></td>
                   <td>
                     <center>
 
                       &nbsp;
-                      <!-- <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stout_product_id"] ?>" title="Remove">
+                      <a href="item_delete/stout_item_delete.php?stoutProdId=<?php echo $irow["product_id"] ?>" title="Remove">
                         <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                      </a> -->
+                      </a>
                   </td>
 
 
@@ -452,6 +462,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       </form>
       <br>
     </fieldset>
+    <p style="float: left;">*&nbsp;<i>Editable Row</i> <button style="background-color: orangered" disabled>&nbsp;&nbsp;</button> </p>
     <!-- EDIT PO END -->
   </div>
 

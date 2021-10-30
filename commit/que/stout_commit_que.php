@@ -72,8 +72,5 @@ include "../../php/config.php";
     $status = "Transaction Closed, Viewing Purpose Only !";
     echo "<script> alert('" .$status ."')</script>";
   }
-   header("location: ../../main/stout_main.php");
+   header("location: ../../stout_main.php");
 }
-
-
-?>

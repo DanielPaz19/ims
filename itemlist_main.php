@@ -51,9 +51,9 @@ if (!isset($_SESSION['user'])) {
 
     .content-area {
         border-radius: 5px;
+        width: fit-content;
+        height: fit-content;
         padding: 20px;
-        height: 1000px;
-        width: 100%;
         background-color: #EAEAEA;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);

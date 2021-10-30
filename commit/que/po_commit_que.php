@@ -75,8 +75,5 @@ if (isset($_GET['submit'])){
     echo "<script> alert('" .$status ."')</script>";
     
   }
- header("location: ../../main/po_main.php");
+ header("location: ../../po_main.php");
 }
-
-
-?>
