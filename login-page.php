@@ -1,4 +1,9 @@
-<?php include_once 'header.php'; ?>
+<?php include_once 'header.php';
+
+if (isset($_SESSION['user'])) {
+  header("location: ../php/logout-inc.php");
+}
+?>
 
 <style>
   @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
