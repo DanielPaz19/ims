@@ -11,7 +11,7 @@ if (isset($_POST['po_submit'])) {
   $sup_id = mysqli_real_escape_string($db, $_POST['sup_id']);
   $productId = $_POST['productId'];
   $poTempQty = $_POST['poTempQty'];
-  $cost = $_POST['item_cost'];
+  $cost = $_POST['cost'];
   $discount = $_POST['discount'];
   $incomintQty = $_POST['incomingQty'];
 
@@ -429,7 +429,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           <?php
 
           $sql = "SELECT product.product_name, product.qty, po_product.item_qtyorder, unit_tb.unit_name, product.cost, po_product.po_temp_tot, po_product.item_cost,
-          po_product.item_disamount, product.product_id
+          po_product.item_disamount, product.product_id, po_product.po_id
            FROM product
            INNER JOIN po_product 
            ON product.product_id = po_product.product_id
@@ -459,7 +459,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <td>
                   <center>
 
-                    <a href="po_itemdelete.php?id=<?php echo $irow['temp_id']; ?>">
+                    <a href="item_delete/po_item_delete.php?id=<?php echo $irow['product_id']; ?>&poId=<?php echo $irow['po_id'] ?>">
                       <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                     </a>
                   </center>

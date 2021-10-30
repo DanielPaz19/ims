@@ -1,19 +1,27 @@
+
 <?php
+
 include "../../php/config.php";
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-?>
-<?php
 
-if (isset($_GET['stinProdId'])) {
 
-    $result = mysqli_query($db, "DELETE FROM stin_product WHERE stin_product_id=" . $_GET['stinProdId']);
+if (isset($_GET['id'])) {
+
+    $stinId = $_GET['stinId'];
+    $id = $_GET['id'];
+
+
+    $result = mysqli_query($db, "DELETE FROM stin_product 
+                                 WHERE product_id = '$id' 
+                                 AND
+                                 stin_id = '$stinId'");
     if ($result == true)
         mysqli_close($db); // Close connection
 
     header('Location: ' . $_SERVER['HTTP_REFERER']);
+
     exit;
 }
+
+
 
 ?>

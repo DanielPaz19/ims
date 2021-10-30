@@ -26,8 +26,10 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id
-                        FROM po_tb LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id ";
+SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name
+FROM po_tb 
+LEFT JOIN user ON user.user_id = po_tb.user_id
+LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id ";
 
 if ($_POST['query'] != '') {
   $query .= '
@@ -59,8 +61,9 @@ $output = '
     <th width="20%">Supplier</th>
     <th width="10%">Remarks</th>
     <th width="15%"><center>Action</th>
+    <th width="15%"><center>Created By</th>
     <th width="5%"><center>Status</th>
-    <th width="15%"><center>Recived Date</th>
+    
   </tr>
 ';
 if ($total_data > 0) {
@@ -68,11 +71,25 @@ if ($total_data > 0) {
     $closed = $row["closed"];
 
     if ($closed == 0) {
-      $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px"></i></font>';
-    } elseif ($closed == 3) {
-      $str = '<font color="red">PARTIAL</font>';
+      $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
+      $disable = '              
+                <a href="../edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+      &nbsp;&nbsp;&nbsp;
+                <a href="../delete/po_delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+      &nbsp;&nbsp;&nbsp;
+                <a href="../commit/po_commit.php?id=' . $row["po_id"] . '">
+                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
+      &nbsp;&nbsp;&nbsp;';
     } else {
-      $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px"></i></font>';
+      $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
+      $disable = ' 
+      
+      <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
+       &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
+      &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
+      &nbsp;&nbsp;&nbsp;';
     }
 
     $output .= '
@@ -84,20 +101,15 @@ if ($total_data > 0) {
       <td>' . $row["sup_name"] . '</td>
       <td>' . $row["po_remarks"] . '</td>
       <td><center>
-                <a href="../edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="../commit/po_commit.php?id=' . $row["po_id"] . '">
-                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
-      &nbsp;&nbsp;&nbsp;
+      ' . $disable . '
                 <a href="../view/viewpo.php?id=' . $row["po_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
       </td>
+      <td><center>' . $row["user_name"] . '</center></td>
       <td><center>' . $str . '</center></td>
-      <td><center>------</center></td>
+      
     </tr>
     ';
   }

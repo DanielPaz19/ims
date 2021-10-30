@@ -73,7 +73,7 @@ if ($total_data > 0) {
       $disable = ' 
                 <a href="../edit/stout_edit.php?id=' . $row["stout_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="stout_delete.php?id= ' . $row["stout_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
+                <a href="../delete/stout_delete.php?id= ' . $row["stout_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="../commit/stout_commit.php?id=' . $row["stout_id"] . '">
                     <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>

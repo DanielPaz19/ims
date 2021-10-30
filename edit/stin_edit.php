@@ -14,23 +14,23 @@ if (isset($_POST['stin_submit'])) {
   $stinTempQty = $_POST['stinTempQty'];
   $cost = $_POST['cost'];
   $discount = $_POST['discount'];
-  $incomintQty = $_POST['incomingQty'];
+  $incomingQty = $_POST['incomingQty'];
 
   mysqli_query($db, "UPDATE stin_tb SET stin_code='$stin_code', stin_title='$stin_title' ,stin_remarks='$stin_remarks',stin_date='$stin_date'  WHERE stin_id='$id'");
 
 
-  function updateStinProd($id, $productId, $stinTempQty, $cost, $discount, $incomintQty)
+  function updateStinProd($id, $productId, $stinTempQty, $cost, $discount, $incomingQty)
   {
     include('../php/config.php');
     mysqli_query($db, "UPDATE stin_product SET stin_temp_qty = '$stinTempQty',  stin_temp_cost = '$cost', 
-    stin_temp_disamount = '$discount', stin_temp_tot = '$incomintQty' WHERE stin_id = '$id' AND product_id = '$productId'");
+    stin_temp_disamount = '$discount', stin_temp_tot = '$incomingQty' WHERE stin_id = '$id' AND product_id = '$productId'");
   }
 
-  function addStinProdRecord($productId, $id, $stinTempQty, $cost, $discount,  $incomintQty)
+  function addStinProdRecord($productId, $id, $stinTempQty, $cost, $discount,  $incomingQty)
   {
     include('../php/config.php');
     mysqli_query($db, "INSERT INTO stin_product(product_id, stin_id, stin_temp_qty, stin_temp_cost, stin_temp_disamount, stin_temp_tot)
-    VALUES ('$productId', '$id', '$stinTempQty', '$cost', '$discount',  '$incomintQty')");
+    VALUES ('$productId', '$id', '$stinTempQty', '$cost', '$discount',  '$incomingQty')");
   }
 
 
@@ -41,9 +41,9 @@ if (isset($_POST['stin_submit'])) {
     $result =  mysqli_query($db, "SELECT * FROM stin_product  WHERE product_id = $productId[$counter] AND stin_id = $id");
     $row = mysqli_fetch_assoc($result);
     if (!$row) {
-      addStinProdRecord($productId[$counter], $id, $stinTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
+      addStinProdRecord($productId[$counter], $id, $stinTempQty[$counter], $cost[$counter], $discount[$counter],  $incomingQty[$counter]);
     } else {
-      updateStinProd($id, $productId[$counter], $stinTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
+      updateStinProd($id, $productId[$counter], $stinTempQty[$counter], $cost[$counter], $discount[$counter], $incomingQty[$counter]);
     }
     $counter++;
   }
@@ -424,7 +424,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <?php
             include "../php/config.php";
             $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
-            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id
+            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id, stin_product.stin_id
             FROM product 
             INNER JOIN stin_product ON stin_product.product_id=product.product_id 
             INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
@@ -455,8 +455,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <center>
 
                       &nbsp;
-                      <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
-                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      <a href="item_delete/stin_item_delete.php?id=<?php echo $irow['product_id']; ?>&stinId=<?php echo $irow['stin_id'] ?>">
+                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                       </a>
                   </td>
 
@@ -511,6 +511,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     const containerItemList = document.querySelector('.container--itemlist');
     const inputSearch = document.querySelector('.input--search');
     const tableItemTb = document.querySelector('.itemTb');
+
+
+    const hasDuplicateOrder = function(productId) {
+      console.log(productId);
+      const orderRow = tableItemTb.querySelector("tbody").querySelectorAll('.stin--product__id');
+      // There's no order in the table
+      if (!orderRow.length) return false;
+
+      let duplicate;
+      orderRow.forEach((row) => {
+        if (+row.value === productId) duplicate = true;
+      });
+
+      return duplicate;
+    };
 
     const stinEdit = function(e) {
       const target = e.target.closest('td').children[0];
@@ -570,6 +585,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       const selectedDiscount = prompt("Enter Discount Amount:");
       const incomingQty = +selectedQty + +qtyIn;
 
+      if (hasDuplicateOrder(+selectedId))
+        return alert(`${selectedName} is already added.`);
+
       modalClose();
 
       tableItemTb.querySelector('tbody').insertAdjacentHTML('beforeend', `<tr>
@@ -580,7 +598,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <td>${selectedUnit}</td>
       <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stin--cost'></td>
       <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stin--discount'></td>
-      <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
+      <td>${incomingQty}<input type="hidden" name="incomingQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
       <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
                         <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                       </a></center></td>

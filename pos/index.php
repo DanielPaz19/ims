@@ -22,7 +22,7 @@ if (!$_SESSION['user']) {
         </span>
         <span><button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search</button></span><br />
 
-        <label for="customerAddress">Address</label><br />
+        <!-- <label for="customerAddress">Address</label><br />
         <input type="text" id="customerAddress" class="input-customer_address" placeholder="635 Mercedes Ave, Brgy. San Miguel, Pasig City" /><br />
 
         <span>
@@ -34,7 +34,7 @@ if (!$_SESSION['user']) {
             <label for="customerTelephone"> Telephone</label><br />
             <input type="text" id="customerTelephone" class="input-customer_telephobe" placeholder="1234-5678" />
           </span>
-        </span>
+        </span> -->
       </div>
       <div class="container-nav_buttons">
         <span class="container-transaction_number"><label for="transactionNumber">Transaction Number:</label>

@@ -418,7 +418,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             include "../php/config.php";
 
             $sql = "SELECT product.product_id,product.product_name, product.qty, stout_product.stout_temp_qty, unit_tb.unit_name, stout_product.stout_temp_cost, 
-            stout_product.stout_temp_disamount
+            stout_product.stout_temp_disamount, stout_product.stout_id
            FROM product
            INNER JOIN stout_product
            ON product.product_id = stout_product.product_id
@@ -446,8 +446,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <center>
 
                       &nbsp;
-                      <a href="item_delete/stout_item_delete.php?stoutProdId=<?php echo $irow["product_id"] ?>" title="Remove">
-                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      <a href="item_delete/stout_item_delete.php?id=<?php echo $irow['product_id']; ?>&stoutId=<?php echo $irow['stout_id'] ?>">
+                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                       </a>
                   </td>
 

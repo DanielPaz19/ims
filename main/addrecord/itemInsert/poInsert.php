@@ -51,8 +51,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     $limit++;
   }
 
-  $sql = "INSERT INTO po_tb (po_id,po_code, po_title ,po_date ,po_remarks, po_terms, sup_id)
-            VALUES ('$poId','$poCode','$poTitle','$poDate','$poRemarks','$poTerms','$supId')";
+  $sql = "INSERT INTO po_tb (po_id,po_code, po_title ,po_date ,po_remarks, po_terms, sup_id, user_id)
+            VALUES ('$poId','$poCode','$poTitle','$poDate','$poRemarks','$poTerms','$supId','" . $_SESSION['id'] . "')";
 
   if (mysqli_query($db, $sql)) {
     echo "<script>alert('New Record Added')</script>";

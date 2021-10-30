@@ -194,7 +194,7 @@ if (!isset($_SESSION['user'])) {
     <fieldset style="border: none;">
       <legend>
         <h2 style="letter-spacing: 5px;">
-          <font color="midnightblue">STOCK INVENTORY OUT</font>
+          <font color="midnightblue">SUPPLIER</font>
         </h2>
       </legend>
       <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
