@@ -93,7 +93,7 @@ a {
   margin: auto;
 }
 .left-side-content {
-  width: 100%;
+  width: 95%;
   margin: auto;
   padding: 0px 20px;
 }
@@ -244,6 +244,8 @@ a {
   height: 400px;
   margin-top: 5px;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  padding: 10px;
 }
 
 table.order-list {
@@ -333,11 +335,12 @@ td.delete:hover {
 .right-side {
   float: right;
   width: 30%;
-  padding-right: 20px;
+  padding-right: 50px;
 }
 
 .container-item_list {
   margin-top: 20px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); */
 }
 
 .input-search_item {
