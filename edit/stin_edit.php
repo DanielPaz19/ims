@@ -290,6 +290,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     .modal--table__itemlist td:nth-child(2) {
       text-align: left;
+
     }
 
     /* Quantity */
@@ -334,6 +335,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       background-color: midnightblue;
     }
 
+    .highlight {
+      font-weight: bolder;
+      color: orangered;
+      cursor: pointer;
+    }
 
     /* .table1 td,
     th {
@@ -436,10 +442,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                   <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
                   <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
                   <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>" class='stin--qty__in'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>" class='stin--qty__in'></td>
                   <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['stin_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stin_temp_cost'] ?>" class='stin--cost'></td>
-                  <td style="text-align: left;"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>" class='stin--discount'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stin_temp_cost'] ?>" class='stin--cost'></td>
+                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>" class='stin--discount'></td>
                   <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>" class='stin--incoming__qty'></td>
                   <td>
                     <center>
@@ -461,6 +467,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       </form>
       <br>
     </fieldset>
+
+    <p style="float: left;">*&nbsp;<i>Editable Row</i> <button style="background-color: orangered" disabled>&nbsp;&nbsp;</button> </p>
     <!-- EDIT PO END -->
   </div>
 

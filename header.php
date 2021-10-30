@@ -74,5 +74,5 @@
       </div>
     </div>
 
-    <a href="php/logout-inc.php" style="float:right;" title="Sign-Out"><i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
+    <a href="php/logout-inc.php" style="float:right;" title="Sign-Out">Welcome &nbsp; <i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
   </div>
