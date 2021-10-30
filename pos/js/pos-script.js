@@ -129,6 +129,20 @@ const inputChequeNumber = document.querySelector(".cheque-number");
 
 // ---------------------------------- FUNCTION ---------------------------------
 
+const hasDuplicateOrder = function (productId) {
+  console.log(productId);
+  const orderRow = containerOrderList.querySelectorAll("tr");
+  // There's no order in the table
+  if (!orderRow.length) return false;
+
+  let duplicate;
+  orderRow.forEach((row) => {
+    if (+row.children[0].innerHTML === productId) duplicate = true;
+  });
+
+  return duplicate;
+};
+
 const orderCancel = function (orderId) {
   // Pop up Message for confirmation
   const confirmAcion = confirm(
@@ -504,6 +518,9 @@ containerProductList.addEventListener("dblclick", function (e) {
   const inputDiscount = 0;
   const total = selectedPrice * inputQty - inputDiscount;
   console.log(selectedItemCode, selectedItemName, selectedPrice, selectedUnit);
+
+  if (hasDuplicateOrder(+selectedItemCode))
+    return alert(`${selectedItemName} is already added.`);
 
   containerOrderList.innerHTML += `
   <tr>
