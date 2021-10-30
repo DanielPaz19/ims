@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once "../../../php/config.php";
 
 //function for removing comma
@@ -73,8 +74,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-  $sql = "INSERT INTO stout_tb (stout_id,stout_code, stout_title ,stout_date , itemdesc, emp_id)
-            VALUES ('$stoutID','$stoutCode','$stoutTitle','$stoutDate','$itemdesc','$emp_id')";
+  $sql = "INSERT INTO stout_tb (stout_id,stout_code, stout_title ,stout_date , itemdesc, emp_id, user_id)
+            VALUES ('$stoutID','$stoutCode','$stoutTitle','$stoutDate','$itemdesc','$emp_id','" . $_SESSION['id'] . "')";
 
   if (mysqli_query($db, $sql)) {
     echo "<script>alert('New Record Added')</script>";

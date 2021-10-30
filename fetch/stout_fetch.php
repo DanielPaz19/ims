@@ -24,8 +24,9 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, employee_tb.emp_name, stout_tb.stout_date, stout_tb.closed
+SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, employee_tb.emp_name, stout_tb.stout_date, stout_tb.closed, user.user_name
 FROM stout_tb
+LEFT JOIN user ON user.user_id = stout_tb.user_id
 INNER JOIN employee_tb 
 ON stout_tb.emp_id = employee_tb.emp_id ";
 
@@ -101,7 +102,7 @@ if ($total_data > 0) {
       </center>
                
       </td>
-      <td><center>admin</center></td>
+      <td><center>' . $row["user_name"] . '</center></td>
       <td><center>' . $str . '</center></td>
       
     </tr>
