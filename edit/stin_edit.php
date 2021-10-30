@@ -424,7 +424,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <?php
             include "../php/config.php";
             $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
-            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id
+            unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id, stin_product.stin_id
             FROM product 
             INNER JOIN stin_product ON stin_product.product_id=product.product_id 
             INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
@@ -455,8 +455,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <center>
 
                       &nbsp;
-                      <a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
-                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      <a href="item_delete/stin_item_delete.php?id=<?php echo $irow['product_id']; ?>&stinId=<?php echo $irow['stin_id'] ?>">
+                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                       </a>
                   </td>
 

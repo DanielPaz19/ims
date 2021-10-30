@@ -120,7 +120,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <?php
-                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id
+                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id, srr_product.srr_id
 
    				 FROM srr_product
    				 LEFT JOIN sup_tb ON srr_product.sup_id = sup_tb.sup_id
@@ -143,7 +143,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td><?php echo $irow['srr_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['srr_qty']; ?>"></td>
                                 <td><?php echo $irow['unit_name'] ?><input type="hidden" name="unit[]" value="<?php echo $irow['unit_id']; ?>"></td>
                                 <td><?php echo $irow['pro_remarks'] ?><input type="hidden" name="remarks[]" value="<?php echo $irow['pro_remarks']; ?>"></td>
-                                <td> <a href="item_delete/srr_item_delete.php?srrProdId=<?php echo $irow["product_id"] ?>" title="Remove">
+                                <td> <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>&srrId=<?php echo $irow['srr_id'] ?>">
                                         <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                                     </a></td>
 
@@ -171,7 +171,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </div>
             <div class="modal-body">
                 <div class="addCont">
-                    <label>Description:&nbsp;&nbsp;</label> <br>
+                    <label>Description:&nbsp;&nbsp;</label>
                     <div id="search">
                         <input autocomplete="off" type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
                         <div id="item-list">
@@ -181,16 +181,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </div>
                     <br>
                     <!-- input for item qty -->
-                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label><br>
                     <input name="srr_qty" class="item-qty" type="number" placeholder="Quantity" value="1" />
 
                     <!-- input for refno -->
-
-                    <label>Reference No.&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <br><br>
+                    <label>Reference No.&nbsp;&nbsp;&nbsp;&nbsp;</label><br>
                     <input name="srr_ref" class="item-ref" type="text" style="height: 30px;" />
                     <br /><br />
                     <!-- input for supplier -->
-                    <label>Supplier: &nbsp;&nbsp;</label>
+                    <label>Supplier: &nbsp;&nbsp;</label><br>
                     <select name="sup_id" class="item-sup" style="width:auto; height: 26px; height: 30px;">
                         <option></option>
                         <?php
@@ -202,10 +202,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         }
                         ?>
                     </select>
+                    <br><br>
                     <!-- input for date -->
                     <label>Date&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input name="srr_date" class="item-date" type="date" style="height: 30px;" /> <br><br>
-
+                    <br>
                     <button class="add-button" title="Add Item"><i class="fa fa-plus"></i>&nbsp; Add</button>
                 </div>
             </div>

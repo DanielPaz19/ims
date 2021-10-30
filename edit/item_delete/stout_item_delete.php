@@ -4,13 +4,22 @@
 include "../../php/config.php";
 
 
-if (isset($_GET['stoutProdId'])) {
+if (isset($_GET['id'])) {
 
-    $result = mysqli_query($db, "DELETE FROM stout_product WHERE product_id=" . $_GET['stoutProdId']);
+    $stoutId = $_GET['stoutId'];
+    $id = $_GET['id'];
+
+
+    $result = mysqli_query($db, "DELETE FROM stout_product 
+                                 WHERE product_id = '$id' 
+                                 AND
+                                 stout_id = '$stoutId'");
     if ($result == true)
         mysqli_close($db); // Close connection
 
     header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+
     exit;
 }
 
