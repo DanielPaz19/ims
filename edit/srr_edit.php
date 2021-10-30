@@ -120,7 +120,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <?php
-                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id
+                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id
 
    				 FROM srr_product
    				 LEFT JOIN sup_tb ON srr_product.sup_id = sup_tb.sup_id
@@ -143,7 +143,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td><?php echo $irow['srr_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['srr_qty']; ?>"></td>
                                 <td><?php echo $irow['unit_name'] ?><input type="hidden" name="unit[]" value="<?php echo $irow['unit_id']; ?>"></td>
                                 <td><?php echo $irow['pro_remarks'] ?><input type="hidden" name="remarks[]" value="<?php echo $irow['pro_remarks']; ?>"></td>
-                                <td> <a href="#" title="Remove">
+                                <td> <a href="item_delete/srr_item_delete.php?srrProdId=<?php echo $irow["product_id"] ?>" title="Remove">
                                         <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
                                     </a></td>
 
@@ -255,9 +255,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td>${inputItemQty.value}<input type="hidden" name="qty[]" value="${inputItemQty.value}" ></td>
                                 <td>${selectedItem.unit}<input type="hidden" name="unit[]" value="${selectedItem.unitId}" ></td>
                                 <td>${selectedItem.remarks}<input type="hidden" name="remarks[]" value="${selectedItem.remarks}" ></td>
-                                <td> <a href="#" title="Remove">
-                                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                                    </a></td>
+                                <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
+                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                      </a></center></td>
                                 </tr>`);
 
             modal.style.display = 'none';
