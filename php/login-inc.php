@@ -23,6 +23,7 @@ if (isset($_POST['submit'])) {
       }
 
       session_start();
+      $_SESSION['id'] = $row['user_id'];
       $_SESSION['empName'] = $row['emp_name'];
       $_SESSION['user'] = $row['user_name'];
       $_SESSION['level'] = $row['user_level'];

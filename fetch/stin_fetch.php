@@ -24,9 +24,10 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, employee_tb.emp_name, stin_tb.stin_date, stin_tb.closed
+SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, employee_tb.emp_name, stin_tb.stin_date, stin_tb.closed, user.user_name
 FROM stin_tb
-INNER JOIN employee_tb 
+LEFT JOIN user ON user.user_id = stin_tb.user_id
+LEFT JOIN employee_tb 
 ON stin_tb.emp_id = employee_tb.emp_id ";
 
 if ($_POST['query'] != '') {
@@ -60,7 +61,7 @@ $output = '
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
-    <th width="10%"><center>Close Date</th>
+    
   </tr>
 ';
 if ($total_data > 0) {
@@ -68,7 +69,7 @@ if ($total_data > 0) {
     $closed = $row["closed"];
 
     if ($closed == 0) {
-      $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px"></i></font>';
+      $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
       $disable = ' <a href="../edit/stin_edit.php?id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="../delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
@@ -77,14 +78,14 @@ if ($total_data > 0) {
                     <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
       &nbsp;&nbsp;&nbsp;';
     } else {
-      $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px"></i></font>';
+      $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
       $disable = ' 
       
-      <button style="border: none" disabled><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></button>
-      
-      <button style="border: none" disabled><i class="fa fa-trash-o" style="font-size:26px"></i></button>
-      
-      <button style="border: none" disabled><i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></button>
+      <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
+       &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
+      &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
     }
     $output .= '
@@ -101,9 +102,9 @@ if ($total_data > 0) {
       </center>
                
       </td>
-      <td><center>admin</center></td>
+      <td><center>' . $row["user_name"] . '</center></td>
       <td><center>' . $str . '</center></td>
-      <td><center>------</center></td>
+      
     </tr>
     ';
   }
