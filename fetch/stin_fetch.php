@@ -70,11 +70,11 @@ if ($total_data > 0) {
 
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
-      $disable = ' <a href="../edit/stin_edit.php?id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+      $disable = ' <a href="edit/stin_edit.php?id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+                <a href="delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../commit/stin_commit.php?id=' . $row["stin_id"] . '">
+                <a href="commit/stin_commit.php?id=' . $row["stin_id"] . '">
                     <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
       &nbsp;&nbsp;&nbsp;';
     } else {
@@ -97,7 +97,7 @@ if ($total_data > 0) {
       <td>' . $row["stin_date"] . '</td>
       <td><center>
                ' . $disable . '
-                <a href="../view/viewstin.php?id=' . $row["stin_id"] . '">
+                <a href="view/viewstin.php?id=' . $row["stin_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
@@ -129,6 +129,7 @@ $total_links = ceil($total_data / $limit);
 $previous_link = '';
 $next_link = '';
 $page_link = '';
+$page_array = [];
 
 //echo $total_links;
 

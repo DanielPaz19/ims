@@ -114,7 +114,7 @@ if (isset($_SESSION['user'])) {
 
 </div>
 <center>
-  <img src="../img/pacclogo.png" style="width: 85px; height: 80px">
+  <img src="img/pacclogo.png" style="width: 85px; height: 80px">
   <h2 style="color: midnightblue; letter-spacing: 2px; text-shadow: 1px 1px midnightblue;">PACC IMS</h2>
 </center><br>
 

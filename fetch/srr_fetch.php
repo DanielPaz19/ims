@@ -66,9 +66,9 @@ if ($total_data > 0) {
       <td>' . $row["srr_no"] . '</td>
       <td>' . $row["emp_name"] . '</td>
       <td><center>
-                <a href="../edit/srr_edit.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empId=' . $row["emp_id"] . '&empName=' . $row["emp_name"] . '" ><font color="midnightblue"><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></font></a>
+                <a href="edit/srr_edit.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empId=' . $row["emp_id"] . '&empName=' . $row["emp_name"] . '" ><font color="midnightblue"><i class="fa fa-edit" style="font-size:26px" title="Edit"></i></font></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../view/viewsrr.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empName=' . $row["emp_name"] . '">
+                <a href="view/viewsrr.php?id=' . $row["srr_id"] . '&srrNo=' . $row["srr_no"] . '&empName=' . $row["emp_name"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
@@ -97,6 +97,8 @@ $total_links = ceil($total_data / $limit);
 $previous_link = '';
 $next_link = '';
 $page_link = '';
+$page_array = [];
+
 
 //echo $total_links;
 
