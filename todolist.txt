@@ -1,0 +1,3 @@
+-------- ITEM LIST PAGE -------------
+[1] Change Supplier & Unit Select to Search Bar
+[2] Add button beside Supplier & Unit Search bar for Adding new record
