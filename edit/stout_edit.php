@@ -15,41 +15,40 @@ if (isset($_POST['stout_submit'])) {
 
 
   mysqli_query($db, "UPDATE stout_tb SET stout_code='$stout_code', stout_title='$stout_title',stout_date='$stout_date'  WHERE stout_id='$id'");
+
+
+
+  function updateStoutProd($id, $productId, $stoutTempQty, $cost, $discount, $incomintQty)
+  {
+    include('../php/config.php');
+    mysqli_query($db, "UPDATE stout_product SET stout_temp_qty = '$stoutTempQty',  stout_temp_cost = '$cost', 
+  stout_temp_disamount = '$discount', stout_temp_tot = '$incomintQty' WHERE stout_id = '$id' AND product_id = '$productId'");
+  }
+
+  function addStoutProdRecord($productId, $id, $stoutTempQty, $cost, $discount,  $incomintQty)
+  {
+    include('../php/config.php');
+    mysqli_query($db, "INSERT INTO stout_product(product_id, stout_id, stout_temp_qty, stout_temp_cost, stout_temp_disamount, stout_temp_tot)
+  VALUES ('$productId', '$id', '$stoutTempQty', '$cost', '$discount',  '$incomintQty')");
+  }
+
+
+  // If product ID exist, update the record
+  // If product ID doesnt exist, add record
+  $counter = 0;
+  while (count($productId) !== $counter) {
+    $result =  mysqli_query($db, "SELECT * FROM stout_product  WHERE product_id = $productId[$counter] AND stout_id = $id");
+    $row = mysqli_fetch_assoc($result);
+    if (!$row) {
+      addStoutProdRecord($productId[$counter], $id, $stoutTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
+    } else {
+      updateStoutProd($id, $productId[$counter], $stoutTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
+    }
+    $counter++;
+  }
+
   header("Location:../stout_main.php");
 }
-
-
-function updateStoutProd($id, $productId, $stoutTempQty, $cost, $discount, $incomintQty)
-{
-  include('../php/config.php');
-  mysqli_query($db, "UPDATE stout_product SET stout_temp_qty = '$stoutTempQty',  stout_temp_cost = '$cost', 
-  stout_temp_disamount = '$discount', stout_temp_tot = '$incomintQty' WHERE stout_id = '$id' AND product_id = '$productId'");
-}
-
-function addStoutProdRecord($productId, $id, $stoutTempQty, $cost, $discount,  $incomintQty)
-{
-  include('../php/config.php');
-  mysqli_query($db, "INSERT INTO stout_product(product_id, stout_id, stout_temp_qty, stout_temp_cost, stout_temp_disamount, stout_temp_tot)
-  VALUES ('$productId', '$id', '$stoutTempQty', '$cost', '$discount',  '$incomintQty')");
-}
-
-
-// If product ID exist, update the record
-// If product ID doesnt exist, add record
-$counter = 0;
-while (count($productId) !== $counter) {
-  $result =  mysqli_query($db, "SELECT * FROM stout_product  WHERE product_id = $productId[$counter] AND stout_id = $id");
-  $row = mysqli_fetch_assoc($result);
-  if (!$row) {
-    addStoutProdRecord($productId[$counter], $id, $stoutTempQty[$counter], $cost[$counter], $discount[$counter],  $incomintQty[$counter]);
-  } else {
-    updateStoutProd($id, $productId[$counter], $stoutTempQty[$counter], $cost[$counter], $discount[$counter], $incomintQty[$counter]);
-  }
-  $counter++;
-}
-
-
-
 
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
