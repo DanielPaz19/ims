@@ -1,66 +1,30 @@
-<html>
- <?php include("header.php"); ?>
+<?php include_once 'header.php';
 
- <title>Add User</title>
-  <body>
-    <div class="container">    
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
-            <div class="panel panel-info" >
-                    <div class="panel-heading">
-                        <div class="panel-title">Registration Page</div>
-                    </div>     
+if (!isset($_SESSION['user'])) {
+    header("location: login.php");
+    exit();
+}
 
-                    <div style="padding-top:30px" class="panel-body" > 
-                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+if ($_SESSION['level'] !== '1') {
+    header("location: login.php?access=denied");
+    exit();
+}
+?>
 
-                        <form action="insert.php" method="post">
-                                    
-                            <div style="margin-bottom: 25px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username"  autofocus required>                                        
-                                    </div>
-                                
-                            <div style="margin-bottom: 25px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input id="login-password" type="password" class="form-control" name="password" placeholder="password" required>
-                                    </div>
-         <center>
-                                <div style="margin-bottom: 25px" class="input-group">
-                                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <select name="userlevel" class="form-control">
-                                    <option disabled selected>---Select User Type---</option>
-                                        <?php
-                                        include "log_connect.php";  
-                                        $records = mysqli_query($dbhandle, "SELECT * FROM user_levels ORDER BY userlevel LIMIT 10");  
+<div class='container--add__user'>
+    <h1>ADD USER</h1>
+    <form action="php/adduser-inc.php" method="POST">
+        <input type="text" name='username' placeholder="Username..."></br>
+        <input type="password" name='pwd' placeholder="Password..." minlength="6"></br>
+        <input type="password" name='repeatpwd' placeholder="Repeat Password..."></br>
+        <select name="level" id="levels">
+            <option value="">Select Level...</option>
+            <option value="1">master</option>
+            <option value="2">admin</option>
+            <option value="3">user</option>
+        </select><br>
+        <input type="submit" name='submit'>
+    </form>
+</div>
 
-                                        while($data = mysqli_fetch_array($records))
-                                        {
-                                            echo "<option value='". $data['userlevel'] ."'>" .$data['username'] ."</option>"; 
-                                            
-                                        } 
-                                        ?>  
-</select>
-
-                                    </div> 
-</center>
-                                <div style="margin-top:10px" class="form-group">
-                                    <!-- Button -->
-
-                                    <div class="col-sm-12 controls">
-                                
-         <input type="button" class="btn btn-success pull-right" style='margin-left:25px' value="Cancel" 
-          title="Click to return to main page." onclick="location.href = 'home.php';">                           
-           <button type="submit" class="btn btn-success pull-right" title="Click here to save the records in the database." >
-           <span class="glyphicon glyphicon-check"></span> Ok</button>
-                                          
-            </div>
-        </div>
-       </form>
-                         </div>
-     </div>
-    </div> 
-   </div> <!-- /container -->
-<?php include ('footer.php')?>
-
-
- </html>
+<?php include_once 'footer.php'; ?>
