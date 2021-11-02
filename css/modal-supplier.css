@@ -6,9 +6,9 @@
 }
 
 .modal--supplier {
-  opacity: 1;
+  opacity: 0;
   position: fixed;
-  z-index: 1;
+  z-index: -1;
   left: 0;
   top: 0;
   width: 100%;
@@ -36,17 +36,18 @@
   transition: 0.3s;
 }
 
-.table--container {
-  height: 90%;
-  overflow-y: scroll;
-}
-
-.modal--table__itemlist {
-  table-layout: fixed;
+.modal__table__container {
+  height: 95%;
   width: 100%;
+  overflow: scroll;
 }
 
-.modal--table__itemlist th {
+.modal__table--supplier {
+  table-layout: fixed;
+  width: 150%;
+}
+
+.modal__table--supplier th {
   height: 30px;
   background-color: midnightblue;
   color: #ffffff;
@@ -55,19 +56,19 @@
   top: 0;
 }
 
-.modal--table__itemlist tbody {
+.modal__table--supplier tbody {
   font-size: 15px;
 }
 
-.modal--table__itemlist :hover {
+.modal__table--supplier :hover {
   cursor: pointer;
 }
 
-.modal--table__itemlist td {
+.modal__table--supplier td {
   padding: 2px 5px;
 }
 
-.button--add__item {
+.button__add--supplier {
   color: #ffffff;
   background-color: midnightblue;
   height: 35px;
@@ -75,13 +76,13 @@
   margin-bottom: 10px;
 }
 
-.input--search {
+.modal__input__search--supplier {
   width: 500px;
   padding: 2px 5px;
   margin-left: 20px;
 }
 
-.close--modal {
+.modal__button__close {
   color: red;
   font-weight: bold;
   position: absolute;
@@ -89,71 +90,79 @@
   top: 10px;
 }
 
-.close--modal:hover {
+.modal__button__close:hover {
   cursor: pointer;
   color: black;
   font-weight: bold;
 }
 
-.modal--table__itemlist tr:hover {
+.modal__table--supplier tr:hover {
   background-color: lightgray;
 }
 
 /* Item Code */
-.modal--table__itemlist th:nth-child(1) {
+.modal__table--supplier th:nth-child(1) {
   width: 10%;
 }
 
-.modal--table__itemlist td:nth-child(1) {
+.modal__table--supplier td:nth-child(1) {
   text-align: center;
 }
 
 /* Item Name */
-.modal--table__itemlist th:nth-child(2) {
+.modal__table--supplier th:nth-child(2) {
   width: 30%;
 }
 
-.modal--table__itemlist td:nth-child(2) {
+.modal__table--supplier td:nth-child(2) {
   text-align: left;
 }
 
 /* Quantity */
-.modal--table__itemlist th:nth-child(3) {
+.modal__table--supplier th:nth-child(3) {
   width: 10%;
 }
 
-.modal--table__itemlist td:nth-child(3) {
-  text-align: center;
+.modal__table--supplier td:nth-child(3) {
+  text-align: left;
 }
 
 /* Unit */
-.modal--table__itemlist th:nth-child(4) {
+.modal__table--supplier th:nth-child(4) {
   width: 10%;
 }
 
-.modal--table__itemlist td:nth-child(4) {
+.modal__table--supplier td:nth-child(4) {
   text-align: center;
 }
 
 /* Location */
-.modal--table__itemlist th:nth-child(5) {
-  width: 10%;
+.modal__table--supplier th:nth-child(5) {
+  width: 30%;
 }
 
-.modal--table__itemlist td:nth-child(5) {
-  text-align: center;
+.modal__table--supplier td:nth-child(5) {
+  text-align: lefts;
 }
 
 /* Cost */
-.modal--table__itemlist th:nth-child(6) {
-  width: 10%;
+.modal__table--supplier th:nth-child(6) {
+  width: 20%;
 }
 
-.modal--table__itemlist td:nth-child(6) {
-  text-align: right;
+.modal__table--supplier td:nth-child(6) {
+  text-align: left;
+}
+/* Cost */
+.modal__table--supplier th:nth-child(7) {
+  width: 20%;
 }
 
-.button__add--item {
+.modal__table--supplier td:nth-child(7) {
+  text-align: center;
+}
+
+.modal__button__add--supplier {
   color: white;
   cursor: pointer;
   background-color: midnightblue;
