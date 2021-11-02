@@ -47,7 +47,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/addclass.php',
+      window.open('utilities/addclass.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=800,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -77,7 +77,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/adddept.php',
+      window.open('utilities/adddept.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1000,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -107,7 +107,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/addunit.php',
+      window.open('utilities/addunit.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1200,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -137,7 +137,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/addlocation.php',
+      window.open('utilities/addlocation.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1200,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -168,7 +168,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/addemployee.php',
+      window.open('utilities/addemployee.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1200,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -199,7 +199,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/bo_payments.php',
+      window.open('utilities/bo_payments.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1000,height=800,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -229,7 +229,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/bo_bank.php',
+      window.open('utilities/bo_bank.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1000,height=800,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
@@ -260,7 +260,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('../utilities/bo_customer.php',
+      window.open('utilities/bo_customer.php',
          "Contact The Code Ninja",
          "menubar=no,resizable=no,width=1200,height=820,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
