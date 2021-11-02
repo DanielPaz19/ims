@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/modal-supplier.css">
 
-<button class="button__show--modal">Show Modal</button>
+<!-- <button class="button__show--modal">Show Modal</button> -->
 
 <div class="modal--supplier">
   <div class='modal__content--supplier'>
@@ -8,7 +8,7 @@
     <a href=""><button class="modal__button__add--supplier">Add Supplier</button></a>
 
     <input type="text" class='modal__input__search--supplier' placeholder="Search Item..."><br>
-    <span class='modal__button__close' style="float: right;"'><i class="fa fa-close"></i></span>
+    <span class='modal__button__close' style="float: right;"'>X</span>
     <div class="modal__table__container">
       <table class="modal__table--supplier">
         <thead>
@@ -38,4 +38,4 @@
     </div>
   </div>
 </div>
-<script src="js/modal-supplier.js"></script>
+<script  src="js/modal-supplier.js"></script>

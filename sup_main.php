@@ -226,7 +226,7 @@ if (!isset($_SESSION['user'])) {
     //set the width and height of the 
     //pop up window in pixels
     var width = 1400;
-    var height = 500;
+    var height = 1400;
 
     //Get the TOP coordinate by
     //getting the 50% of the screen height minus
@@ -243,9 +243,9 @@ if (!isset($_SESSION['user'])) {
     //title of the pop up
     //and other parameter where we will use the
     //values of the variables above
-    window.open('../main/addrecord/addsup.php',
+    window.open('main/addrecord/addsup.php',
       "Contact The Code Ninja",
-      "menubar=no,resizable=no,width=500,height=1500,scrollbars=yes,left=" +
+      "menubar=no,resizable=no,width=500,height=800,scrollbars=yes,left=" +
       left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
   }
 </script>

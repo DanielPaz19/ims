@@ -146,10 +146,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                                 <td>
                                     <center>
-                                        <a href="#" style="text-decoration: none;">
-                                            <font color="midnightblue"><i class="fa fa-edit" style="font-size:24px" title="Remove Item"></i></font>
-                                        </a>
-                                        &nbsp;
+
                                         <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>&srrId=<?php echo $irow['srr_id']; ?>">
                                             <font color="red"><i class="fa fa-trash-o" style="font-size:24px" title="Remove Item"></i></font>
                                         </a>

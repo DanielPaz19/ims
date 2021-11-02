@@ -58,53 +58,56 @@ const modalTbody = document.querySelector(".modal__tbody--supplier");
 
 const modalOpen = function (e) {
   e.preventDefault();
-  modalSupplier.classList.add("modal--active");
+  modalInputSearch.focus();
+  modalSupplier.classList.toggle("modal--active");
   showData("php/searchsupplier.php", "", modalTbody);
 };
 
-const modalClose = function () {
-  modalSupplier.classList.remove("modal--active");
+const modalClose = function (e) {
+  modalSupplier.classList.toggle("modal--active");
 };
 
 const searchItem = function () {
-  const queue = inputSearch.value;
+  const queue = modalInputSearch.value;
   showData("php/searchsupplier.php", `${queue}`, modalTbody);
 };
 
 const selectItem = function (e) {
-  const selectedId = e.target.closest("tr").dataset.id;
-  const selectedName = e.target
-    .closest("tr")
-    .querySelector(".item-name").innerHTML;
-  const selectedQty = e.target.closest("tr").querySelector(".qty").innerHTML;
-  const qtyIn = prompt("Enter Qty-in:");
-  const selectedUnit = e.target.closest("tr").querySelector(".unit").innerHTML;
-  const selectedCost = prompt("Enter Cost Amount:");
-  const selectedDiscount = prompt("Enter Discount Amount:");
-  const incomingQty = +selectedQty + +qtyIn;
+  e.target.closest("tr").classList.add("selected--supplier");
+  console.log(e.target.closest("tr"));
+  // const selectedId = e.target.closest("tr").dataset.id;
+  // const selectedName = e.target
+  //   .closest("tr")
+  //   .querySelector(".item-name").innerHTML;
+  // const selectedQty = e.target.closest("tr").querySelector(".qty").innerHTML;
+  // const qtyIn = prompt("Enter Qty-in:");
+  // const selectedUnit = e.target.closest("tr").querySelector(".unit").innerHTML;
+  // const selectedCost = prompt("Enter Cost Amount:");
+  // const selectedDiscount = prompt("Enter Discount Amount:");
+  // const incomingQty = +selectedQty + +qtyIn;
 
-  if (hasDuplicateOrder(+selectedId))
-    return alert(`${selectedName} is already added.`);
+  // if (hasDuplicateOrder(+selectedId))
+  //   return alert(`${selectedName} is already added.`);
 
-  modalClose();
+  // modalClose();
 
-  tableItemTb.querySelector("tbody").insertAdjacentHTML(
-    "beforeend",
-    `<tr>
-      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stin--product__id'></td>
-      <td>${selectedName}</td>
-      <td>${selectedQty}</td>
-      <td>${qtyIn}<input type="hidden" name="stinTempQty[]" value="${qtyIn}" class='stin--qty__in'></td>
-      <td>${selectedUnit}</td>
-      <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stin--cost'></td>
-      <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stin--discount'></td>
-      <td>${incomingQty}<input type="hidden" name="incomingQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
-      <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
-                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                      </a></center></td>
-      </tr>
-      `
-  );
+  // tableItemTb.querySelector("tbody").insertAdjacentHTML(
+  //   "beforeend",
+  //   `<tr>
+  //     <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stin--product__id'></td>
+  //     <td>${selectedName}</td>
+  //     <td>${selectedQty}</td>
+  //     <td>${qtyIn}<input type="hidden" name="stinTempQty[]" value="${qtyIn}" class='stin--qty__in'></td>
+  //     <td>${selectedUnit}</td>
+  //     <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='stin--cost'></td>
+  //     <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stin--discount'></td>
+  //     <td>${incomingQty}<input type="hidden" name="incomingQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
+  //     <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["stin_product_id"] ?>" title="Remove">
+  //                       <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+  //                     </a></center></td>
+  //     </tr>
+  //     `
+  // );
 };
 
 const showData = function (file, input, container) {
@@ -128,9 +131,7 @@ const showTableData = (data, container) => {
   console.log(data);
 
   data.forEach((data, index) => {
-    let row = `<tr class='product-data product${index}' data-id ='${
-      data.product_id
-    }'>
+    let row = `<tr class=supplier-row data-id ='${data.sup_id}'>
                           <td class='item-code'>${data.sup_id.padStart(
                             8,
                             0
@@ -146,13 +147,13 @@ const showTableData = (data, container) => {
   });
 };
 
-buttonShowModal.addEventListener("click", modalOpen);
+// buttonShowModal.addEventListener("click", modalOpen);
 
 modalButtonClose.addEventListener("click", modalClose);
 
 modalInputSearch.addEventListener("keyup", searchItem);
 
-modalSupplier.addEventListener("dblclick", selectItem);
+modalSupplier.addEventListener("click", selectItem);
 
 modalTableContainer
   .querySelector("tbody")

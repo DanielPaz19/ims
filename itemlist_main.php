@@ -309,18 +309,9 @@ if (!isset($_SESSION['user'])) {
                         <tr>
                             <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required></td>
 
-                            <td colspan="4"><select name="sup_id" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;">
-
-                                    <option></option>
-                                    <?php
-
-                                    $records = mysqli_query($db, "SELECT * FROM sup_tb ORDER BY sup_name ASC");
-
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select></td>
+                            <td colspan="4"><input name="sup_id" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;" class="input__search--supplier">
+                                </select>
+                            </td>
                             <td></td>
                         </tr>
                     </table>
@@ -335,7 +326,8 @@ if (!isset($_SESSION['user'])) {
                         </tr>
                         <tr>
                             <td><input required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required></td>
-                            <td><select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
+                            <td>
+                                <select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                     <option></option>
                                     <?php
 
@@ -345,7 +337,8 @@ if (!isset($_SESSION['user'])) {
                                         echo "<option value='" . $data['unit_id'] . "'>" . $data['unit_name'] . "</option>";
                                     }
                                     ?>
-                                </select></td>
+                                </select>
+                            </td>
                             <td><input type="text" name="barcode" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
 
                         </tr>
@@ -430,6 +423,7 @@ if (!isset($_SESSION['user'])) {
     </div>
 </div>
 
+<?php include_once 'modal/modal-supplier.php'; ?>
 
 
 
@@ -455,6 +449,10 @@ if (!isset($_SESSION['user'])) {
     });
 </script>
 <script>
+    'use strict';
+
+    const inputSearchSupplier = document.querySelector('.input__search--supplier');
+
     // Get the modal
     const modal = document.getElementById("myModal");
 
@@ -480,6 +478,8 @@ if (!isset($_SESSION['user'])) {
             modal.style.display = "none";
         }
     }
+
+    inputSearchSupplier.addEventListener('focus', modalOpen);
 </script>
 
 <?php include "footer.php"; ?>
