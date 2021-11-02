@@ -1,0 +1,175 @@
+/* Modal Style */
+
+.modal--supplier * {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.modal--supplier {
+  opacity: 1;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  background-color: rgb(0, 0, 0);
+  transition: 0.3s;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal__content--supplier {
+  position: relative;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.modal--active {
+  z-index: 1;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.table--container {
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.modal--table__itemlist {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.modal--table__itemlist th {
+  height: 30px;
+  background-color: midnightblue;
+  color: #ffffff;
+  font-size: 15px;
+  position: sticky;
+  top: 0;
+}
+
+.modal--table__itemlist tbody {
+  font-size: 15px;
+}
+
+.modal--table__itemlist :hover {
+  cursor: pointer;
+}
+
+.modal--table__itemlist td {
+  padding: 2px 5px;
+}
+
+.button--add__item {
+  color: #ffffff;
+  background-color: midnightblue;
+  height: 35px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.input--search {
+  width: 500px;
+  padding: 2px 5px;
+  margin-left: 20px;
+}
+
+.close--modal {
+  color: red;
+  font-weight: bold;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.close--modal:hover {
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+
+.modal--table__itemlist tr:hover {
+  background-color: lightgray;
+}
+
+/* Item Code */
+.modal--table__itemlist th:nth-child(1) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(1) {
+  text-align: center;
+}
+
+/* Item Name */
+.modal--table__itemlist th:nth-child(2) {
+  width: 30%;
+}
+
+.modal--table__itemlist td:nth-child(2) {
+  text-align: left;
+}
+
+/* Quantity */
+.modal--table__itemlist th:nth-child(3) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(3) {
+  text-align: center;
+}
+
+/* Unit */
+.modal--table__itemlist th:nth-child(4) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(4) {
+  text-align: center;
+}
+
+/* Location */
+.modal--table__itemlist th:nth-child(5) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(5) {
+  text-align: center;
+}
+
+/* Cost */
+.modal--table__itemlist th:nth-child(6) {
+  width: 10%;
+}
+
+.modal--table__itemlist td:nth-child(6) {
+  text-align: right;
+}
+
+.button__add--item {
+  color: white;
+  cursor: pointer;
+  background-color: midnightblue;
+}
+
+.highlight {
+  font-weight: bolder;
+  color: orangered;
+  cursor: pointer;
+}
+
+.form-control {
+  border: 2px solid lightgray;
+}
+
+/* .table1 td,
+    th {
+      border: 1px solid black;
+    } */

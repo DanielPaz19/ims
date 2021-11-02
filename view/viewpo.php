@@ -30,8 +30,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <title><?php echo $po_code; ?></title>
 
 <head>
-  <link rel="stylesheet" href="../../css/viewpo.css" type="text/css" media="print">
-  <link rel="stylesheet" href="../../css/viewpo.css" type="text/css">
+  <link rel="stylesheet" href="../css/viewpo.css" type="text/css" media="print">
+  <link rel="stylesheet" href="../css/viewpo.css" type="text/css">
 </head>
 <script>
   function printDiv() {
