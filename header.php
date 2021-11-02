@@ -29,7 +29,7 @@
                         echo "hidden";
                       }
                       ?>>
-    <a href="../index.php"><i class="fas fa-home"></i>&nbspHome</a>
+    <a href="index.php"><i class="fas fa-home"></i>&nbspHome</a>
 
     <div class="dropdown">
       <button class="dropbtn"><i class="fas fa-box"></i>&nbspInventory

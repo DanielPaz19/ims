@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     if ($result == true)
         mysqli_close($db); // Close connection
 
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ../srr_edit.php?id=' . $srrId);
 
     exit;
 }

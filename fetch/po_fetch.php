@@ -73,11 +73,11 @@ if ($total_data > 0) {
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
       $disable = '              
-                <a href="../edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../delete/po_delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+                <a href="delete/po_delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="../commit/po_commit.php?id=' . $row["po_id"] . '">
+                <a href="commit/po_commit.php?id=' . $row["po_id"] . '">
                     <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
       &nbsp;&nbsp;&nbsp;';
     } else {
@@ -102,7 +102,7 @@ if ($total_data > 0) {
       <td>' . $row["po_remarks"] . '</td>
       <td><center>
       ' . $disable . '
-                <a href="../view/viewpo.php?id=' . $row["po_id"] . '">
+                <a href="view/viewpo.php?id=' . $row["po_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
@@ -134,6 +134,8 @@ $total_links = ceil($total_data / $limit);
 $previous_link = '';
 $next_link = '';
 $page_link = '';
+$page_array = [];
+
 
 //echo $total_links;
 

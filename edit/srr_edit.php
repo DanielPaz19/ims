@@ -40,7 +40,7 @@ if (isset($_POST['srr_submit'])) {
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
-    $result = mysqli_query($db, "SELECT   srr_tb.srr_id, srr_tb.srr_no, employee_tb.emp_name
+    $result = mysqli_query($db, "SELECT   srr_tb.srr_id, srr_tb.srr_no, employee_tb.emp_name, srr_tb.emp_id
                                 FROM srr_tb
                                 LEFT JOIN employee_tb ON srr_tb.emp_id = employee_tb.emp_id
                                 WHERE srr_tb.srr_id=" . $_GET['id']);
@@ -113,14 +113,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <th width="30%">SUPPLIER</th>
                         <th width="10%">REF NO.</th>
                         <th width="20%">DESCRIPTION</th>
-                        <th width="10%">QTY</th>
+                        <th width="5%">QTY</th>
                         <th width="10%">UNIT</th>
                         <th width="10%">Remarks</th>
-                        <th>&nbsp;</th>
+                        <th width="10%"></th>
                     </tr>
                     <tr>
                         <?php
-                        $sql = "SELECT  srr_product.sup_id, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id, srr_product.srr_id
+                        $sql = "SELECT  srr_product.sup_id, sup_tb.sup_name, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id, srr_product.srr_id
 
    				 FROM srr_product
    				 LEFT JOIN sup_tb ON srr_product.sup_id = sup_tb.sup_id
@@ -136,16 +136,26 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             while ($irow = $result->fetch_assoc()) {
                                 $count = $count + 1;
                         ?>
-                                <td><?php echo $irow['srr_date'] ?> <input type="hidden" name="date[]" value="<?php echo $irow['srr_date']; ?>"></td>
-                                <td><?php echo $irow['sup_name'] ?><input type="hidden" name="sup[]" value="<?php echo $irow['sup_id']; ?>"></td>
-                                <td><?php echo $irow['srr_ref'] ?><input type="hidden" name="ref[]" value="<?php echo $irow['srr_ref']; ?>"></td>
-                                <td><?php echo $irow['product_name'] ?><input type="hidden" name="item[]" value="<?php echo $irow['product_id']; ?>"></td>
-                                <td><?php echo $irow['srr_qty'] ?><input type="hidden" name="qty[]" value="<?php echo $irow['srr_qty']; ?>"></td>
-                                <td><?php echo $irow['unit_name'] ?><input type="hidden" name="unit[]" value="<?php echo $irow['unit_id']; ?>"></td>
-                                <td><?php echo $irow['pro_remarks'] ?><input type="hidden" name="remarks[]" value="<?php echo $irow['pro_remarks']; ?>"></td>
-                                <td> <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>&srrId=<?php echo $irow['srr_id'] ?>">
-                                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                                    </a></td>
+                                <td><?php echo $irow['srr_date']; ?> <input type="hidden" name="date[]" value="<?php echo $irow['srr_date']; ?>"></td>
+                                <td><?php echo $irow['sup_name']; ?><input type="hidden" name="sup[]" value="<?php echo $irow['sup_id']; ?>"></td>
+                                <td><?php echo $irow['srr_ref']; ?><input type="hidden" name="ref[]" value="<?php echo $irow['srr_ref']; ?>"></td>
+                                <td><?php echo $irow['product_name']; ?><input type="hidden" name="item[]" value="<?php echo $irow['product_id']; ?>"></td>
+                                <td><?php echo $irow['srr_qty']; ?><input type="hidden" name="qty[]" value="<?php echo $irow['srr_qty']; ?>"></td>
+                                <td><?php echo $irow['unit_name']; ?><input type="hidden" name="unit[]" value="<?php echo $irow['unit_id']; ?>"></td>
+                                <td><?php echo $irow['pro_remarks']; ?><input type="hidden" name="remarks[]" value="<?php echo $irow['pro_remarks']; ?>"></td>
+
+                                <td>
+                                    <center>
+                                        <a href="#" style="text-decoration: none;">
+                                            <font color="midnightblue"><i class="fa fa-edit" style="font-size:24px" title="Remove Item"></i></font>
+                                        </a>
+                                        &nbsp;
+                                        <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>&srrId=<?php echo $irow['srr_id']; ?>">
+                                            <font color="red"><i class="fa fa-trash-o" style="font-size:24px" title="Remove Item"></i></font>
+                                        </a>
+                                    </center>
+                                </td>
+
 
                     </tr>
             <?php }
@@ -224,13 +234,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         const selectedItem = {};
         // Get the modal
-        var modal = document.getElementById("myModal");
+        const modal = document.getElementById("myModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+        const btn = document.getElementById("myBtn");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        const span = document.getElementsByClassName("close")[0];
 
         const inputSearch = document.querySelector('#item-name');
         const inputItemQty = document.querySelector('.item-qty');
@@ -247,7 +257,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
 
-        const addItemRow = function() {
+        const addItemRow = function(e) {
+            console.log(e.target);
             containerItemRow.insertAdjacentHTML('beforeend', `<tr>
                                 <td>${inputItemDate.value} <input type="hidden" name="date[]" value="${inputItemDate.value}" ></td>
                                 <td>${inputItemSup.selectedOptions[0].outerText} <input type="hidden" name="sup[]" value="${inputItemSup.value}" ></td>
@@ -337,3 +348,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         buttonAddItem.addEventListener('click', addItemRow);
     </script>
+
+
+
+</body>
