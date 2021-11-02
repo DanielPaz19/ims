@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
 
 
-    header("Location:../main/itemlist_main.php");
+    header("Location:../itemlist_main.php");
 }
 
 
