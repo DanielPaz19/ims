@@ -97,7 +97,8 @@
 }
 
 .modal__table--supplier tr:hover {
-  background-color: lightgray;
+  /* background-color: lightgray; */
+  font-weight: bold;
 }
 
 /* Item Code */
@@ -176,6 +177,17 @@
 
 .form-control {
   border: 2px solid lightgray;
+}
+
+.selected--supplier {
+  background-color: gainsboro;
+  font-weight: bold;
+}
+
+.modal__note {
+  margin-left: 50px;
+  color: red;
+  font-style: italic;
 }
 
 /* .table1 td,

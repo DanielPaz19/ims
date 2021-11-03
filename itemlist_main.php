@@ -535,13 +535,6 @@ if (!isset($_SESSION['user'])) {
         modal.style.display = "none";
     }
 
-    // // When the user clicks anywhere outside of the modal, close it
-    // window.onclick = function(event) {
-    //     if (event.target == modal) {
-    //         modal.style.display = "none";
-    //     }
-    // }
-
     // Show Supplier list
     inputSearchSupplier.addEventListener('keyup', function() {
         containerSupplierList.classList.add('active__list')
@@ -556,7 +549,7 @@ if (!isset($_SESSION['user'])) {
 
     inputSearchSupplier.addEventListener('keyup', searchSupplier.bind(inputSearchSupplier))
 
-    supplierList.addEventListener('click', selectSupplier)
+    supplierList.addEventListener('click', selectSupplier);
 </script>
 
 

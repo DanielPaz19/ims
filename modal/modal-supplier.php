@@ -1,13 +1,16 @@
 <link rel="stylesheet" href="css/modal-supplier.css">
+<script defer src="js/modal-supplier.js"></script>
+
 
 <!-- <button class="button__show--modal">Show Modal</button> -->
 
 <div class="modal--supplier">
   <div class='modal__content--supplier'>
 
-    <a href=""><button class="modal__button__add--supplier">Add Supplier</button></a>
+    <a href=""><button class="modal__button__add--supplier" disabled>Add Supplier</button></a>
 
-    <input type="text" class='modal__input__search--supplier' placeholder="Search Item..."><br>
+    <input type="text" class='modal__input__search--supplier' placeholder="Search Item...">
+    <span class="modal__note"> Select Row and Press Enter </span>
     <span class='modal__button__close' style="float: right;"'>X</span>
     <div class="modal__table__container">
       <table class="modal__table--supplier">
@@ -38,4 +41,3 @@
     </div>
   </div>
 </div>
-<script  src="js/modal-supplier.js"></script>

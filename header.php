@@ -16,7 +16,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-  <script defer src="js/modal-supplier.js"></script>
+
+
 
   <title>PACC IMS</title>
 </head>
@@ -39,6 +40,7 @@
         <a href="itemlist_main.php"><i class="fas fa-box"></i>&nbspItemList</a>
         <a href="stin_main.php"><i class="fas fa-arrow-circle-down"></i>&nbspStock-In</a>
         <a href="stout_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspStock-Out</a>
+        <a href="#"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="po_main.php"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
         <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a>
       </div>

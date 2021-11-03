@@ -337,6 +337,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       background-color: midnightblue;
     }
 
+    .highlight {
+      font-weight: bolder;
+      color: orangered;
+      cursor: pointer;
+    }
+
 
     /* .table1 td,
     th {
@@ -416,13 +422,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           <tr>
             <th>Prod. ID</th>
             <th>Item Description</th>
-            <th>On-Hand</th>
-            <th>Qty PO</th>
+            <th>Qty-Order</th>
             <th>Unit</th>
             <th>Cost</th>
-            <th>Discount Amount</th>
             <th>Total Cost</th>
-            <th>Incomming Qty</th>
+            <th>Discount %</th>
+            <th>Discount Value</th>
+            <th>Sub Total</th>
             <th>&nbsp;</th>
           </tr>
 
@@ -435,27 +441,34 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
            ON product.product_id = po_product.product_id
            INNER JOIN unit_tb
            ON product.unit_id = unit_tb.unit_id
-           WHERE po_product.po_id='$id'";
+           WHERE po_product.po_id='$id'
+           ORDER BY product.product_id ASC";
 
           $result = $db->query($sql);
           $count = 0;
+
           if ($result->num_rows >  0) {
 
             while ($irow = $result->fetch_assoc()) {
               $count = $count + 1;
+
+              $totCost = $irow['item_qtyorder'] * $irow['item_cost'];
+              $totDiscount = ($irow['item_disamount'] / 100) * $totCost;
+              $subTot = $totCost - $totDiscount;
           ?>
 
               <tr>
 
                 <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
                 <td><?php echo $irow['product_name'] ?></td>
-                <td><?php echo $irow['qty'] ?></td>
-                <td><?php echo $irow['item_qtyorder'] ?><input type="hidden" name="poTempQty[]" value="<?php echo $irow['item_qtyorder'] ?>" class='po--qty__in'></td>
+                <td class="highlight"><?php echo $irow['item_qtyorder'] ?><input type="hidden" name="poTempQty[]" value="<?php echo $irow['item_qtyorder'] ?>" class='po--qty__in'></td>
                 <td><?php echo $irow['unit_name'] ?></td>
-                <td><?php echo $irow['item_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['item_cost'] ?>" class='po--cost'></td>
-                <td><?php echo $irow['item_disamount'] ?></td>
-                <td><?php echo $irow['po_temp_tot'] ?><input type="hidden" name="totalCost[]" value="<?php echo $irow['po_temp_tot'] ?>" class='po--total_cost'></td>
-                <td style="text-align: left;"><?php echo $irow['qty'] + $irow['item_qtyorder'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['item_qtyorder'] ?>" class='po--incoming__qty'></td>
+                <td class="highlight"><?php echo $irow['item_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['item_cost'] ?>" class='po--cost'></td>
+                <td><?php echo $totCost ?><input type="hidden" name="totalCost[]" value="<?php echo $irow['po_temp_tot'] ?>" class='po--total_cost'></td>
+                <td class="highlight"><?php echo $irow['item_disamount'] ?><input type="hidden" name="totalCost[]" value="<?php echo $irow['po_temp_tot'] ?>" class='po--disamount'></td>
+                <td><?php echo $totDiscount ?></td>
+                <td><?php echo $subTot ?></td>
+
                 <td>
                   <center>
 

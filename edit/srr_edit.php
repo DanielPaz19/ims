@@ -120,14 +120,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <?php
+                        $ids = $_GET['id'];
                         $sql = "SELECT  srr_product.sup_id, sup_tb.sup_name, srr_product.srr_date, sup_tb.sup_name, srr_product.srr_ref, product.product_name, srr_product.srr_qty, unit_tb.unit_name, product.pro_remarks, product.unit_id, product.product_id, srr_product.srr_id
 
    				 FROM srr_product
    				 LEFT JOIN sup_tb ON srr_product.sup_id = sup_tb.sup_id
    				 LEFT JOIN product ON srr_product.product_id = product.product_id
    				 LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+   				 WHERE srr_product.srr_id= $ids
+                 ORDER BY sup_tb.sup_name ASC";
 
-   				 WHERE srr_product.srr_id=" . $_GET['id'];
+
 
                         $result = $db->query($sql);
                         $count = 0;
@@ -287,7 +290,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             const item = this.value;
             // Create an XMLHttpRequest object
             const search = new XMLHttpRequest();
-            containerItemList.children[0].innerHTML = "";
+
 
             // Define a callback function
             search.addEventListener('load', function() {

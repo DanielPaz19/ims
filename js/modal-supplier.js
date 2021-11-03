@@ -1,4 +1,7 @@
 "user strict";
+
+const selectedSupplier = {};
+
 const buttonShowModal = document.querySelector(".button__show--modal");
 const modalSupplier = document.querySelector(".modal--supplier");
 const modalContent = document.querySelector(".modal__content--supplier");
@@ -9,6 +12,8 @@ const modalInputSearch = document.querySelector(
 );
 const tableItemTb = document.querySelector(".itemTb");
 const modalTbody = document.querySelector(".modal__tbody--supplier");
+const modalTrigger = document.querySelector(".modal__trigger--supplier");
+const nextTab = document.querySelector(".next__tab");
 
 // const hasDuplicateOrder = function (productId) {
 //   console.log(productId);
@@ -21,10 +26,10 @@ const modalTbody = document.querySelector(".modal__tbody--supplier");
 //   let duplicate;
 //   orderRow.forEach((row) => {
 //     if (+row.value === productId) duplicate = true;
-//   });
 
 //   return duplicate;
 // };
+//   });
 
 // const stinEdit = function (e) {
 //   const target = e.target.closest("td").children[0];
@@ -50,11 +55,23 @@ const modalTbody = document.querySelector(".modal__tbody--supplier");
 //   if (target.classList.contains("stin--cost")) {
 //     changeValue("Enter New Cost");
 //   }
-
 //   if (target.classList.contains("stin--discount")) {
 //     changeValue("Enter New Discount");
 //   }
 // };
+
+const setSuppId = function (className) {
+  const container = document.querySelector(className);
+  if (!container) return;
+
+  container.value = selectedSupplier.id;
+};
+
+const cancelSelection = function () {
+  modalSupplier.classList.toggle("modal--active");
+
+  nextTab.focus();
+};
 
 const modalOpen = function (e) {
   e.preventDefault();
@@ -65,6 +82,24 @@ const modalOpen = function (e) {
 
 const modalClose = function (e) {
   modalSupplier.classList.toggle("modal--active");
+
+  const selectedRow = document.querySelector(".selected--supplier");
+
+  selectedSupplier.id = +selectedRow.children[0].textContent;
+  selectedSupplier.name = selectedRow.children[1].textContent;
+
+  if (modalTrigger.nodeName === "INPUT" && modalTrigger.type === "text") {
+    modalTrigger.value = selectedSupplier.name;
+  }
+
+  // modalTrigger.insertAdjacentHTML(
+  //   "afterend",
+  //   `<input type='hidden' value='${selectedSupplier.id}' name='sup_id'>`
+  // );
+
+  setSuppId(".container--supplier__id");
+
+  nextTab.focus();
 };
 
 const searchItem = function () {
@@ -73,8 +108,14 @@ const searchItem = function () {
 };
 
 const selectItem = function (e) {
+  // Remove selected--supplier class
+
+  const selected = document.querySelectorAll(".selected--supplier");
+
+  if (!e.target.closest("tr")) return;
+  selected.forEach((row) => row.classList.remove("selected--supplier"));
   e.target.closest("tr").classList.add("selected--supplier");
-  console.log(e.target.closest("tr"));
+
   // const selectedId = e.target.closest("tr").dataset.id;
   // const selectedName = e.target
   //   .closest("tr")
@@ -117,7 +158,6 @@ const showData = function (file, input, container) {
   // Define a callback function
   xhttp.addEventListener("load", function () {
     const data = JSON.parse(this.responseText);
-    console.log(data);
     showTableData(data, container);
   });
 
@@ -128,7 +168,6 @@ const showData = function (file, input, container) {
 
 const showTableData = (data, container) => {
   container.innerHTML = "";
-  console.log(data);
 
   data.forEach((data, index) => {
     let row = `<tr class=supplier-row data-id ='${data.sup_id}'>
@@ -149,12 +188,21 @@ const showTableData = (data, container) => {
 
 // buttonShowModal.addEventListener("click", modalOpen);
 
-modalButtonClose.addEventListener("click", modalClose);
+modalButtonClose.addEventListener("click", cancelSelection);
 
 modalInputSearch.addEventListener("keyup", searchItem);
 
 modalSupplier.addEventListener("click", selectItem);
 
-modalTableContainer
-  .querySelector("tbody")
-  .addEventListener("dblclick", stinEdit);
+// modalTableContainer
+//   .querySelector("tbody")
+//   .addEventListener("dblclick", stinEdit);
+
+modalTrigger.addEventListener("focus", modalOpen);
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    modalClose();
+  }
+});
