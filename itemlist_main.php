@@ -259,6 +259,36 @@ if (!isset($_SESSION['user'])) {
   line-height: 1.1;
   background-color: #fff;
 }*/
+
+    /* SUPPLIER LIST STYLE */
+
+    .input__container {
+        position: relative;
+    }
+
+    .container--supplier__list {
+        opacity: 0;
+        z-index: -1;
+        position: absolute;
+        width: 80%;
+        background-color: #fefefe;
+        transition: all 0.1s;
+    }
+
+    .supplier__list {
+        list-style-type: none;
+        padding-left: 10px;
+        cursor: pointer;
+    }
+
+    .supplier__list li:hover {
+        background-color: lightgrey;
+    }
+
+    .active__list {
+        opacity: 1;
+        z-index: 1;
+    }
 </style>
 
 
@@ -307,20 +337,17 @@ if (!isset($_SESSION['user'])) {
 
                         </tr>
                         <tr>
-                            <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required></td>
+                            <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required tabindex="1"></td>
 
-                            <td colspan="4"><select name="sup_id" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;">
+                            <td colspan="4" class='input__container'><input type="hidden" name="sup_id" class="container--supplier__id"><input name="sup_name" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;" class="input__search--supplier modal__trigger--supplier" tabindex="-1">
+                                </select>
+                                <div class="container--supplier__list">
+                                    <ul class="supplier__list">
 
-                                    <option></option>
-                                    <?php
+                                    </ul>
 
-                                    $records = mysqli_query($db, "SELECT * FROM sup_tb ORDER BY sup_name ASC");
-
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select></td>
+                                </div>
+                            </td>
                             <td></td>
                         </tr>
                     </table>
@@ -334,8 +361,9 @@ if (!isset($_SESSION['user'])) {
 
                         </tr>
                         <tr>
-                            <td><input required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required></td>
-                            <td><select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
+                            <td><input class='next__tab' tabindex="2" required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required></td>
+                            <td>
+                                <select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                     <option></option>
                                     <?php
 
@@ -345,7 +373,8 @@ if (!isset($_SESSION['user'])) {
                                         echo "<option value='" . $data['unit_id'] . "'>" . $data['unit_name'] . "</option>";
                                     }
                                     ?>
-                                </select></td>
+                                </select>
+                            </td>
                             <td><input type="text" name="barcode" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
 
                         </tr>
@@ -433,10 +462,9 @@ if (!isset($_SESSION['user'])) {
 
 
 
-
 <!-- Scripts Starts here -->
 
-</script>
+
 <script>
     function setDecimal(event) {
         this.value = parseFloat(this.value).toFixed(13);
@@ -454,7 +482,18 @@ if (!isset($_SESSION['user'])) {
 
     });
 </script>
+
 <script>
+    'use strict';
+
+
+    const selectedData = {}
+
+    const inputSearchSupplier = document.querySelector('.input__search--supplier');
+    const containerSupplierList = document.querySelector('.container--supplier__list');
+    const supplierList = document.querySelector('.supplier__list');
+    const containerSupplierId = document.querySelector('.container--supplier__id');
+
     // Get the modal
     const modal = document.getElementById("myModal");
 
@@ -463,6 +502,28 @@ if (!isset($_SESSION['user'])) {
 
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName("close")[0];
+
+    const selectSupplier = function(e) {
+        const target = e.target.closest('li');
+        selectedData.supId = target.dataset.supid;
+        selectedData.supName = target.dataset.supname;
+        inputSearchSupplier.value = target.textContent;
+        containerSupplierId.value = selectedData.supId;
+    };
+
+    const searchSupplier = function() {
+        supplierList.innerHTML = "";
+        fetch(`php/searchsupplier.php?q=${this.value}`).then(function(response) {
+                console.log(response);
+                return response.json();
+            })
+            .then(function(data) {
+                data.forEach(data => {
+                    console.log(data.sup_name, data.sup_id);
+                    supplierList.insertAdjacentHTML('beforeend', `<li data-supId='${data.sup_id}' data-supName='${data.sup_name}'>${data.sup_name}</li>`)
+                });
+            });
+    };
 
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
@@ -474,12 +535,25 @@ if (!isset($_SESSION['user'])) {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+    // Show Supplier list
+    inputSearchSupplier.addEventListener('keyup', function() {
+        containerSupplierList.classList.add('active__list')
+    });
+
+    // Hide Supplier List
+    inputSearchSupplier.addEventListener('blur', function() {
+        setTimeout(function() {
+            containerSupplierList.classList.remove('active__list')
+        }, 100);
+    });
+
+    inputSearchSupplier.addEventListener('keyup', searchSupplier.bind(inputSearchSupplier))
+
+    supplierList.addEventListener('click', selectSupplier);
 </script>
+
+
+
+
 
 <?php include "footer.php"; ?>

@@ -430,7 +430,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
             INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
             WHERE stin_tb.stin_id='$id' 
-            ORDER BY product.product_id DESC";
+            ORDER BY product.product_id ASC";
 
             $result = $db->query($sql);
             $count = 0;
