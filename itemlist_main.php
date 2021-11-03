@@ -533,7 +533,7 @@ if (!isset($_SESSION['user'])) {
         selectedData.classId = target.dataset.classid;
         selectedData.className = target.dataset.classname;
         inputSearchClass.value = target.textContent;
-        containerClassList.value = selectedData.classid;
+        containerClassId.value = selectedData.classId;
     };
 
     // Search Supplier
