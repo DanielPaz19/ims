@@ -24,13 +24,15 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date
+SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, customers.customers_name, ep_tb.closed, user.user_name
 FROM ep_tb
+LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
+LEFT JOIN user ON user.user_id = ep_tb.user_id
 ";
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE ep_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
+  WHERE ep_tb.ep_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
   ';
 }
 
