@@ -243,7 +243,7 @@ if (!isset($_SESSION['user'])) {
     //title of the pop up
     //and other parameter where we will use the
     //values of the variables above
-    window.open('../main/addrecord/addsup.php',
+    window.open('main/addrecord/addsup.php',
       "Contact The Code Ninja",
       "menubar=no,resizable=no,width=500,height=1500,scrollbars=yes,left=" +
       left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
