@@ -318,11 +318,20 @@
                     <label>Date:&nbsp;&nbsp;</label>
                     <input type="date" name="ep_date"><br><br>
 
-
-
                     <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <textarea name="stout_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <textarea name="ep_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>Customer Name:</label>
+                    <select name="customers_id" style="width: 400px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
+                        <option></option>
+                        <?php
+                        include "../../php/config.php";
+                        $records = mysqli_query($db, "SELECT * FROM customers");
 
+                        while ($data = mysqli_fetch_array($records)) {
+                            echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                        }
+                        ?>
+                    </select>
 
                     <div>
                         <!--Add item for order-->

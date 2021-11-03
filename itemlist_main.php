@@ -266,22 +266,30 @@ if (!isset($_SESSION['user'])) {
         position: relative;
     }
 
-    .container--supplier__list {
+    .list__container {
         opacity: 0;
         z-index: -1;
         position: absolute;
-        width: 80%;
         background-color: #fefefe;
         transition: all 0.1s;
     }
 
-    .supplier__list {
+    .list__container--supplier {
+        width: 80%;
+    }
+
+    .list__container--class {
+        width: 50%;
+    }
+
+
+    .list {
         list-style-type: none;
         padding-left: 10px;
         cursor: pointer;
     }
 
-    .supplier__list li:hover {
+    .list li:hover {
         background-color: lightgrey;
     }
 
@@ -340,9 +348,8 @@ if (!isset($_SESSION['user'])) {
                             <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required tabindex="1"></td>
 
                             <td colspan="4" class='input__container'><input type="hidden" name="sup_id" class="container--supplier__id"><input name="sup_name" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;" class="input__search--supplier modal__trigger--supplier" tabindex="-1">
-                                </select>
-                                <div class="container--supplier__list">
-                                    <ul class="supplier__list">
+                                <div class="list__container--supplier list__container">
+                                    <ul class="list list--supplier">
 
                                     </ul>
 
@@ -387,18 +394,15 @@ if (!isset($_SESSION['user'])) {
                             <th style="text-align: left;">Location &nbsp;<i style="color: red;" class='fas fa-exclamation-circle'></i></th>
                     </tr>
                     <tr>
-                        <td><select name="class_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
-                                <option></option>
-                                <?php
+                        <td class='input__container'><input type="hidden" name="class_id" class="container--class__id"><input name="class_name" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required class="input__search--class">
+                            <div class="list__container--class list__container">
+                                <ul class="list list--class">
 
-                                $records = mysqli_query($db, "SELECT * FROM class_tb");
+                                </ul>
 
-                                while ($data = mysqli_fetch_array($records)) {
-                                    echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
-                                }
-                                ?>
-                            </select></td>
-                        <td><select name="dept_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
+                            </div>
+                        </td>
+                        <td><select name=" dept_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                 <option></option>
                                 <?php
 
@@ -408,7 +412,8 @@ if (!isset($_SESSION['user'])) {
                                     echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
                                 }
                                 ?>
-                            </select></td>
+                            </select>
+                        </td>
                         <td><select name="loc_id" id="select-state" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                 <option value=""></option>
                                 <?php
@@ -489,10 +494,20 @@ if (!isset($_SESSION['user'])) {
 
     const selectedData = {}
 
+    // Supplier Searching
     const inputSearchSupplier = document.querySelector('.input__search--supplier');
-    const containerSupplierList = document.querySelector('.container--supplier__list');
-    const supplierList = document.querySelector('.supplier__list');
+    const containerSupplierList = document.querySelector('.list__container--supplier');
+    const supplierList = document.querySelector('.list--supplier');
     const containerSupplierId = document.querySelector('.container--supplier__id');
+
+    // Class Searching
+    const inputSearchClass = document.querySelector('.input__search--class');
+    const containerClassList = document.querySelector('.list__container--class');
+    const classList = document.querySelector('.list--class');
+    const containerClassId = document.querySelector('.container--class__id');
+
+
+
 
     // Get the modal
     const modal = document.getElementById("myModal");
@@ -503,6 +518,7 @@ if (!isset($_SESSION['user'])) {
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName("close")[0];
 
+    // Select Supplier
     const selectSupplier = function(e) {
         const target = e.target.closest('li');
         selectedData.supId = target.dataset.supid;
@@ -511,6 +527,16 @@ if (!isset($_SESSION['user'])) {
         containerSupplierId.value = selectedData.supId;
     };
 
+    // Select Class
+    const selectClass = function(e) {
+        const target = e.target.closest('li');
+        selectedData.classId = target.dataset.classid;
+        selectedData.className = target.dataset.classname;
+        inputSearchClass.value = target.textContent;
+        containerClassList.value = selectedData.classid;
+    };
+
+    // Search Supplier
     const searchSupplier = function() {
         supplierList.innerHTML = "";
         fetch(`php/searchsupplier.php?q=${this.value}`).then(function(response) {
@@ -521,6 +547,20 @@ if (!isset($_SESSION['user'])) {
                 data.forEach(data => {
                     console.log(data.sup_name, data.sup_id);
                     supplierList.insertAdjacentHTML('beforeend', `<li data-supId='${data.sup_id}' data-supName='${data.sup_name}'>${data.sup_name}</li>`)
+                });
+            });
+    };
+
+    // Search Class
+    const searchClass = function() {
+        classList.innerHTML = "";
+        fetch(`php/searchclass.php?q=${this.value}`).then(function(response) {
+                console.log(response);
+                return response.json();
+            })
+            .then(function(data) {
+                data.forEach(data => {
+                    classList.insertAdjacentHTML('beforeend', `<li data-classid='${data.class_id}' data-classname='${data.class_name}'>${data.class_name}</li>`)
                 });
             });
     };
@@ -550,6 +590,23 @@ if (!isset($_SESSION['user'])) {
     inputSearchSupplier.addEventListener('keyup', searchSupplier.bind(inputSearchSupplier))
 
     supplierList.addEventListener('click', selectSupplier);
+
+
+    // Show Class list
+    inputSearchClass.addEventListener('keyup', function() {
+        containerClassList.classList.add('active__list')
+    });
+
+    // Hide Class List
+    inputSearchClass.addEventListener('blur', function() {
+        setTimeout(function() {
+            containerClassList.classList.remove('active__list')
+        }, 100);
+    });
+
+    inputSearchClass.addEventListener('keyup', searchClass.bind(inputSearchClass));
+
+    classList.addEventListener('click', selectClass);
 </script>
 
 

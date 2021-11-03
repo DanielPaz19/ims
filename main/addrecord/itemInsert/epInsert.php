@@ -19,7 +19,9 @@ $price = $_GET['price'];
 $total = $_GET['total'];
 $epNo = $_GET['ep_no'];
 $epTitle = $_GET['ep_title'];
+$epRemarks = $_GET['ep_remarks'];
 $epDate = $_GET['ep_date'];
+$custID = $_GET['customers_id'];
 
 
 
@@ -38,7 +40,7 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
         $sql = "INSERT INTO ep_product (product_id, ep_id, ep_qty, ep_price, ep_tot)
 
-            VALUES (" . $productId[$limit] . "," . $epID . "," . $qty[$limit] . "," . removeComma($price[$limit]) . "," . removeComma($disamount[$limit]) . "," . removeComma($total[$limit]) . ")";
+            VALUES (" . $productId[$limit] . "," . $epID . "," . $qty[$limit] . "," . removeComma($price[$limit]) . "," . removeComma($total[$limit]) . ")";
 
 
         if (mysqli_query($db, $sql)) {
@@ -71,8 +73,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-    $sql = "INSERT INTO ep_tb (ep_id,ep_no, ep_title ,ep_date ,user_id)
-            VALUES ('$epID','$epNo','$epTitle','$epDate','" . $_SESSION['id'] . "')";
+    $sql = "INSERT INTO ep_tb (ep_id,ep_no, ep_title, ep_remarks, ep_date, customers_id ,user_id)
+            VALUES ('$epID','$epNo','$epTitle','$epRemarks','$epDate','$custID','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
         // echo "<script>alert('New Record Added')</script>";
