@@ -131,7 +131,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                  ORDER BY sup_tb.sup_name ASC";
 
 
-
                         $result = $db->query($sql);
                         $count = 0;
                         if ($result->num_rows >  0) {
@@ -149,8 +148,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                                 <td>
                                     <center>
-
-                                        <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>&srrId=<?php echo $irow['srr_id']; ?>">
+                                        <!-- &srrId=<?php echo $irow['srr_id']; ?> -->
+                                        <a href="item_delete/srr_item_delete.php?id=<?php echo $irow['product_id']; ?>">
                                             <font color="red"><i class="fa fa-trash-o" style="font-size:24px" title="Remove Item"></i></font>
                                         </a>
                                     </center>
@@ -185,7 +184,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <div id="search">
                         <input autocomplete="off" type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
                         <div id="item-list">
-                            <ul>
+                            <ul class='container--item__list'>
                             </ul>
                         </div><!-- Dont Remove this -->
                     </div>
@@ -250,9 +249,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         const buttonAddItem = document.querySelector('.add-button');
         const containerItemRow = document.querySelector('.itemtb');
         const inputItemDate = document.querySelector('.item-date');
+        const itemList = document.querySelector('.container--item__list');
 
         const getData = function(data) {
-            return
+            return;
         }
 
 
@@ -288,6 +288,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         const itemSearch = function() {
             const item = this.value;
+            itemList.innerHTML = "";
             // Create an XMLHttpRequest object
             const search = new XMLHttpRequest();
 
@@ -298,7 +299,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 // showTableData(data, container);
 
                 data.forEach(data => {
-                    containerItemList.children[0].insertAdjacentHTML('beforeend', `<li 
+                    itemList.insertAdjacentHTML('beforeend', `<li 
                     data-product='${data.product_id}' 
                     data-qty='${data.qty}' 
                     data-unit='${data.unit_name}' 

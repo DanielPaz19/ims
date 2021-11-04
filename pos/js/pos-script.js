@@ -60,9 +60,8 @@ const tabContent = document.querySelectorAll(".tab__content");
 //customers
 const inputCustomerId = document.querySelector("#customerId");
 const inputCustomerName = document.querySelector("#customerName");
-const inuptCustomerAddress = document.querySelector("#customerAddress");
-const inputCustomerMobile = document.querySelector("#customerMobile");
-const inputCustomerTelephone = document.querySelector("#customeTelephone");
+const inputCustomerAddress = document.querySelector("#customerAddress");
+const inputCustomerContact = document.querySelector("#customerContact");
 const btnSearchCustomer = document.querySelector(".btn-search_customer");
 const containerCustomerList = document.querySelector("#customer-list");
 const inputSearchCustomer = document.querySelector("#searchCustomer");
@@ -126,8 +125,49 @@ const onlineReferenceNumber = document.querySelector(".reference-number");
 const selectBankName = document.querySelector("#bankName");
 const inputChequeDate = document.querySelector(".cheque-date");
 const inputChequeNumber = document.querySelector(".cheque-number");
+const inputSummary = document.querySelectorAll(".input__summary");
 
 // ---------------------------------- FUNCTION ---------------------------------
+
+const updateSummary = function () {};
+
+const editOrderPrice = function (e) {
+  const targetPrice = e.target.closest("tr").querySelector(".price");
+  let newValue = prompt("Enter New Value");
+
+  if (
+    !newValue ||
+    newValue === "null" ||
+    newValue.includes(" ") ||
+    isNaN(newValue)
+  )
+    return;
+
+  targetPrice.innerHTML = formatNumber(newValue);
+};
+
+const renderCustomer = function (data, container) {
+  container.innerHTML = "";
+  data.forEach((data, index) => {
+    container.insertAdjacentHTML(
+      "beforeend",
+      `<tr class='customer-data' id='customer${index}'>
+            <td>${data.customers_id.padStart(8, 0)}</td>
+            <td>${data.customers_name}</td>
+            <td>${data.customers_address}</td>
+            <td>${data.customers_contact}</td>
+            </tr>`
+    );
+  });
+};
+
+const fetchData = (file, container, input = "") => {
+  fetch(file + `?q=${encodeURIComponent(input)}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCustomer(data, container);
+    });
+};
 
 const hasDuplicateOrder = function (productId) {
   console.log(productId);
@@ -229,7 +269,7 @@ const init = function () {
 
   document.querySelector("#transactionDate").value = getCurrDate();
 
-  showData("php/search-product.php", "", containerProductList);
+  showData("php/search-product.php", containerProductList);
 };
 
 const getTransNumber = function () {
@@ -250,13 +290,26 @@ const getCurrDate = function () {
   return currDate.toDateString();
 };
 
-const openModal = function (file, input, container, modal) {
-  modal.style.display = "block";
-  //show all data on table
-  showData(file, input, container);
+const openCustModal = function () {
+  modalCustomer.classList.add("modal--active");
+
+  fetchData("php/search-customer.php", containerCustomerList);
 };
 
-const showData = function (file, input, container) {
+const closeCustModal = function () {
+  const selectedData = document.querySelector(".customer-data.selected");
+
+  modalCustomer.classList.remove("modal--active");
+
+  if (!selectedData) return;
+
+  inputCustomerId.value = selectedData.children[0].innerHTML;
+  inputCustomerName.value = selectedData.children[1].innerHTML;
+  inputCustomerContact.value = selectedData.children[3].innerHTML;
+  inputCustomerAddress.value = selectedData.children[2].innerHTML;
+};
+
+const showData = function (file, container, input = "") {
   // Create an XMLHttpRequest object
   const xhttp = new XMLHttpRequest();
 
@@ -273,7 +326,6 @@ const showData = function (file, input, container) {
 
 const showTableData = (data, container) => {
   container.innerHTML = "";
-  console.log(data);
   if (container == containerProductList) {
     data.forEach((data, index) => {
       let row = `<tr class='product-data product${index}'>
@@ -292,10 +344,18 @@ const showTableData = (data, container) => {
   } else {
     data.forEach((data, index) => {
       let row = `<tr class='customer-data' id='customer${index}'>
-                          <td class="customer-id">${data.customers_id}</td>
-                          <td class="customer-name">${data.customers_name}</td>
-                          <td class="customer-address">${data.customers_address}</td>
-                          <td class="customer-contact">${data.customers_contact}</td>
+                          <td class="customer-id">
+                          ${data.customers_id}
+                          </td>
+                          <td class="customer-name">
+                          ${data.customers_name}
+                          </td>
+                          <td class="customer-address">
+                          ${data.customers_address}
+                          </td>
+                          <td class="customer-contact">
+                          ${data.customers_contact}
+                          </td>
                     </tr>`;
       container.innerHTML += row;
     });
@@ -305,22 +365,19 @@ const showTableData = (data, container) => {
 const search = function (inputSearch, container, file, modal) {
   const q = inputSearch.value;
   container.innerHTML = "";
-
-  console.log(q);
-  openModal(file, String(q), container, modal);
+  openCustModal();
 };
 
 const selectRow = function (target) {
-  const checkSelected = document.querySelectorAll("tr.customer-data.selected");
-  const selectedRow = target.closest("tr");
-  console.log(selectedRow, checkSelected);
+  // Remove selected
+  const checkSelected = document.querySelectorAll("tr.customer-data");
+  checkSelected.forEach((row) => {
+    row.classList.remove("selected");
+  });
 
-  if (checkSelected.length) {
-    checkSelected[0].classList.remove("selected");
-    selectedRow.classList.add("selected");
-  } else {
-    selectedRow.classList.add("selected");
-  }
+  // Add selected
+  const selectedRow = target.closest("tr");
+  selectedRow.classList.add("selected");
 };
 
 //remove comma and convert string to number
@@ -337,7 +394,6 @@ const showPaymentData = function (file, input, container) {
   // Define a callback function
   xhttp.onload = function () {
     const data = JSON.parse(this.responseText);
-    console.log(data);
     showPendingPayments(data, container);
   };
 
@@ -439,32 +495,16 @@ nav.addEventListener("click", function (e) {
 });
 
 //show customer modal on btn click
-btnSearchCustomer.addEventListener("click", function (e) {
-  e.preventDefault();
-  modalCustomer.classList.add("active");
-  openModal(
-    "php/search-customer.php",
-    "",
-    containerCustomerList,
-    modalCustomer
-  );
-});
+btnSearchCustomer.addEventListener("click", openCustModal);
 
 //close customer modal
 btnCustomerClose.addEventListener("click", function () {
-  modalCustomer.style.display = "none";
-  modalCustomer.classList.remove("active");
+  closeCustModal();
 });
 
 //search customer on customer modal
 inputSearchCustomer.addEventListener("keyup", function (e) {
-  e.preventDefault();
-  search(
-    inputSearchCustomer,
-    containerCustomerList,
-    "php/search-customer.php",
-    modalCustomer
-  );
+  fetchData("php/search-customer.php", containerCustomerList, this.value);
 });
 
 //select customer from customer modal
@@ -475,28 +515,29 @@ containerCustomerList.addEventListener("click", function (e) {
 
 //add customer details to customer form on key press (Enter)
 document.addEventListener("keyup", function (e) {
-  if (modalCustomer.classList.contains("active")) {
-    const selectedId = document.querySelector("tr.customer-data.selected")
-      .children[0].textContent;
-    const selectedName = document.querySelector("tr.customer-data.selected")
-      .children[1].textContent;
-    const selectedAddress = document.querySelector("tr.customer-data.selected")
-      .children[2].textContent;
-    const selectedContact = document.querySelector("tr.customer-data.selected")
-      .children[3].textContent;
-    if (e.key === "Enter") {
-      modalCustomer.style.display = "none";
-      modalCustomer.classList.remove("active");
-      console.log(
-        `${selectedId}, ${selectedName}, ${selectedAddress}, ${selectedContact}`
-      );
+  if (e.key === "Enter") closeCustModal();
+  // if (modalCustomer.classList.contains("active")) {
+  //   const selectedId = document.querySelector("tr.customer-data.selected")
+  //     .children[0].textContent;
+  //   const selectedName = document.querySelector("tr.customer-data.selected")
+  //     .children[1].textContent;
+  //   const selectedAddress = document.querySelector("tr.customer-data.selected")
+  //     .children[2].textContent;
+  //   const selectedContact = document.querySelector("tr.customer-data.selected")
+  //     .children[3].textContent;
+  //   if (e.key === "Enter") {
+  //     modalCustomer.style.display = "none";
+  //     modalCustomer.classList.remove("active");
+  //     console.log(
+  //       `${selectedId}, ${selectedName}, ${selectedAddress}, ${selectedContact}`
+  //     );
 
-      inputCustomerId.value = selectedId;
-      inputCustomerName.value = selectedName;
-      inuptCustomerAddress.value = selectedAddress;
-      inputCustomerMobile.value = selectedContact;
-    }
-  }
+  //     inputCustomerId.value = selectedId;
+  //     inputCustomerName.value = selectedName;
+  //     inputCustomerAddress.value = selectedAddress;
+  //     inputCustomerContact.value = selectedContact;
+  //   }
+  // }
 });
 
 //search product from product table
@@ -504,7 +545,11 @@ inputSearchProduct.addEventListener("keyup", function () {
   const searchVal = inputSearchProduct.value;
   console.log(inputSearchProduct.value);
 
-  showData("php/search-product.php", searchVal, containerProductList);
+  showData(
+    "php/search-product.php",
+    containerProductList,
+    encodeURIComponent(searchVal)
+  );
 });
 
 //add product to order list
@@ -673,6 +718,10 @@ containerOrderList.addEventListener("click", function (e) {
       //delete row
       e.target.closest("tr").remove();
       break;
+
+    case "price":
+      editOrderPrice(e);
+      break;
   }
 });
 
@@ -838,3 +887,5 @@ containerPayOption.addEventListener("mouseout", function (e) {
 
 //save Button
 btnSavePayment.addEventListener("click", savePayment);
+
+updateSummary();

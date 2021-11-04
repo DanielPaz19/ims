@@ -16,17 +16,31 @@ if (!$_SESSION['user']) {
         <div class="container__customer--content">
           <div class="container-customer_id">
             <div class="container__customer--label">
-              <label for="customerId">Customer ID</label>
+              <label for="customerId">Customer ID:</label>
             </div>
-            <input type="text" id="customerId" class="input-customer_id" placeholder="000001" />
+            <input type="text" id="customerId" class="input-customer_id" />
           </div>
-          <div class="container-customer_name">
+          <span class="container-customer_name">
             <div class="container__customer--label">
-              <label for="customerName">Customer Name</label>
+              <label for="customerName">Customer Name:</label>
             </div>
-            <input type="text" id="customerName" class="input-customer_name" placeholder="PHILIPPINE ACRYLIC AND CHEMICAL CORP." />
+            <input type="text" id="customerName" class="input-customer_name" />
+          </span>
+          <span class="container-customer_contact">
+            <div class="container__customer--label">
+              <label for="customerContact">Contact Number:</label>
+            </div>
+            <input type="text" id="customerContact" class="input-customer_contact" />
+          </span>
+          <div class="container-customer_address">
+            <div class="container__customer--label">
+              <label for="customerAddress">Contact Address:</label>
+            </div>
+            <input type="text" id="customerAddress" class="input-customer_address" />
           </div>
-          <span><button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search</button></span><br />
+          <span>
+            <button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search Customer</button>
+          </span>
         </div>
 
         <!-- <label for="customerAddress">Address</label><br />
@@ -43,13 +57,16 @@ if (!$_SESSION['user']) {
           </span>
         </span> -->
       </div>
-      <div class="container-nav_buttons">
-        <span class="container-transaction_number"><label for="transactionNumber">Transaction Number:</label>
-          <input type="text" id="transactionNumber" value="0000000001" /></span>
-        <span class="container-transaction_date"><label for="transactionDate">Transaction Date:</label>
-          <input type="text" id="transactionDate" disabled value="01-01-2021" /></span>
-      </div>
+
+      <h1 class="heading heading--transaction">Order Details</h1>
+
       <div class="order-list-container">
+        <span class="container-transaction_number">
+          <label for="transactionNumber">Transaction Number:</label>
+          <input type="text" id="transactionNumber" value="0000000001" /></span>
+        <span class="container-transaction_date">
+          <label for="transactionDate">Transaction Date:</label>
+          <input type="text" id="transactionDate" disabled value="01-01-2021" /></span>
         <table class="order-list">
           <thead>
             <tr>
@@ -108,41 +125,41 @@ if (!$_SESSION['user']) {
         <div class="summary_label-container">
           <span class="summary-label">Sub-Total</span>
           <span class="subtotal-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--subtotal " type="text" value="0.00" disabled />
           </span>
         </div>
         <div class="summary_label-container">
           <span class="summary-label">Tax</span>
           <span class="tax-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--tax" type="text" value="0.00" disabled />
           </span>
         </div>
 
         <div class="summary_label-container">
           <span class="summary-label">Net-sales</span>
           <span class="netsales-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--netsales" type="text" value="0.00" disabled />
           </span>
         </div>
 
         <div class="summary_label-container">
           <span class="summary-label">Discount Amount</span>
           <span class="disc_amount-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--discount" type="text" value="0.00" disabled />
           </span>
         </div>
 
         <div class="summary_label-container">
           <span class="summary-label">Total Quantity</span>
           <span class="total_qty-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--qty" type="text" value="0.00" disabled />
           </span>
         </div>
 
         <div class="summary_label-container">
           <span class="summary-label">Gross Amount</span>
           <span class="gross_amount-value">
-            <input type="text" value="0.00" disabled />
+            <input class="input__summary input__summary--gross" type="text" value="0.00" disabled />
           </span>
         </div>
         <div class="container-total_payable">
@@ -154,14 +171,16 @@ if (!$_SESSION['user']) {
       <button class="btn-save">SAVE</button>
     </div>
   </div>
+
+
   <!--  CUSTOMER MODAL -->
   <div id="customerModal" class="customer-modal modal">
     <!-- Modal content -->
     <div class="customer-modal-content">
       <div class="customer-nav">
         <span class="customer-search-container">
-          <input type="text" id="searchCustomer" placeholder="Search Customer...   " />
-        </span>
+          <input autocomplete="off" type="text" id="searchCustomer" placeholder="Search Customer...   " />
+        </span><span class="modal__note">CLICK ROW AND PRESS ENTER</span>
         <span class="customer__modal--close"> X </span>
       </div>
       <div class="customer-table-container">

@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, customers.customers_name, ep_tb.closed, user.user_name
+SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, customers.customers_name, ep_tb.closed, user.user_name, customers.customers_id
 FROM ep_tb
 LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
 LEFT JOIN user ON user.user_id = ep_tb.user_id
@@ -68,10 +68,11 @@ if ($total_data > 0) {
     foreach ($result as $row) {
         $closed = $row["closed"];
 
+
         if ($closed == 0) {
             $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
             $disable = ' 
-                <a href="edit/ep_edit.php?id=' . $row["ep_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="edit/ep_edit.php?id= ' . $row["ep_id"] . '&customerName=' .  $row["customers_name"] . '&customerId=' .  $row["customers_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete/ep_delete.php?id= ' . $row["ep_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
       &nbsp;&nbsp;&nbsp;
