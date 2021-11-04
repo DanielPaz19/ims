@@ -12,22 +12,15 @@ if (!$_SESSION['user']) {
   <div class="left-side">
     <div class="left-side-content">
       <div class="container-customer_details">
-        <h1 class="heading heading--customer">Customer Details</h1>
-        <div class="container__customer--content">
-          <div class="container-customer_id">
-            <div class="container__customer--label">
-              <label for="customerId">Customer ID</label>
-            </div>
-            <input type="text" id="customerId" class="input-customer_id" placeholder="000001" />
-          </div>
-          <div class="container-customer_name">
-            <div class="container__customer--label">
-              <label for="customerName">Customer Name</label>
-            </div>
-            <input type="text" id="customerName" class="input-customer_name" placeholder="PHILIPPINE ACRYLIC AND CHEMICAL CORP." />
-          </div>
-          <span><button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search</button></span><br />
-        </div>
+        <span class="container-customer_id">
+          <label for="customerId">Customer ID</label><br />
+          <input type="text" id="customerId" class="input-customer_id" placeholder="000001" />
+        </span>
+        <span class="container-customer_name">
+          <label for="customerName">Customer Name</label><br />
+          <input type="text" id="customerName" class="input-customer_name" placeholder="PHILIPPINE ACRYLIC AND CHEMICAL CORP." />
+        </span>
+        <span><button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search</button></span><br />
 
         <!-- <label for="customerAddress">Address</label><br />
         <input type="text" id="customerAddress" class="input-customer_address" placeholder="635 Mercedes Ave, Brgy. San Miguel, Pasig City" /><br />
