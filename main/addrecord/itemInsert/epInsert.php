@@ -38,7 +38,7 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     $limit = 0;
     while (sizeof($productId) !== $limit) {
 
-        $sql = "INSERT INTO ep_product (product_id, ep_id, ep_qty, ep_price, ep_tot)
+        $sql = "INSERT INTO ep_product (product_id, ep_id, ep_qty, ep_price, ep_totPrice)
 
             VALUES (" . $productId[$limit] . "," . $epID . "," . $qty[$limit] . "," . removeComma($price[$limit]) . "," . removeComma($total[$limit]) . ")";
 
@@ -52,24 +52,24 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
         $limit++;
     }
 
-    $limiter = 0;
-    while (sizeof($productId) !== $limiter) {
-        $sql = "UPDATE stout_product 
-                     SET stout_temp_remarks ='" . $stout_temp_remarks[$limiter]
-            . "' WHERE product_id = " . $productId[$limiter] . " AND ep_id =" . $epID;
+    // $limiter = 0;
+    // while (sizeof($productId) !== $limiter) {
+    //     $sql = "UPDATE ep_product 
+    //                  SET stout_temp_remarks ='" . $stout_temp_remarks[$limiter]
+    //         . "' WHERE product_id = " . $productId[$limiter] . " AND ep_id =" . $epID;
 
 
 
 
 
-        if (mysqli_query($db, $sql)) {
-            echo "New record created successfully " . "<br>" . "<br>";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
-        }
+    //     if (mysqli_query($db, $sql)) {
+    //         echo "New record created successfully " . "<br>" . "<br>";
+    //     } else {
+    //         echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+    //     }
 
-        $limiter++;
-    }
+    //     $limiter++;
+    // }
 
 
 
@@ -77,8 +77,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
             VALUES ('$epID','$epNo','$epTitle','$epRemarks','$epDate','$custID','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
-        // echo "<script>alert('New Record Added')</script>";
-        // echo "<script>window.close();</script>";
+        echo "<script>alert('New Record Added')</script>";
+        echo "<script>window.close();</script>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>";
     }
