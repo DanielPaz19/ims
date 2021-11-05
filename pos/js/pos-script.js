@@ -83,6 +83,7 @@ const containerOrderList = document.querySelector(".container-order-list");
 const btnDeleteRow = document.querySelector(".delete");
 
 //summary
+const containerSummary = document.querySelector(".fieldset-summary");
 const labelSubtotal = document.querySelector(".subtotal-value").children[0];
 const labelGrossAmount = document.querySelector(".gross_amount-value")
   .children[0];
@@ -125,25 +126,33 @@ const onlineReferenceNumber = document.querySelector(".reference-number");
 const selectBankName = document.querySelector("#bankName");
 const inputChequeDate = document.querySelector(".cheque-date");
 const inputChequeNumber = document.querySelector(".cheque-number");
-const inputSummary = document.querySelectorAll(".input__summary");
 
 // ---------------------------------- FUNCTION ---------------------------------
+const fetchData = (file, container, input = "") => {
+  fetch(file + `?q=${encodeURIComponent(input)}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCustomer(data, container);
+    });
+};
 
-const updateSummary = function () {};
+const openCustModal = function () {
+  modalCustomer.classList.add("modal--active");
 
-const editOrderPrice = function (e) {
-  const targetPrice = e.target.closest("tr").querySelector(".price");
-  let newValue = prompt("Enter New Value");
+  fetchData("php/search-customer.php", containerCustomerList);
+};
 
-  if (
-    !newValue ||
-    newValue === "null" ||
-    newValue.includes(" ") ||
-    isNaN(newValue)
-  )
-    return;
+const closeCustModal = function () {
+  const selectedData = document.querySelector(".customer-data.selected");
 
-  targetPrice.innerHTML = formatNumber(newValue);
+  modalCustomer.classList.remove("modal--active");
+
+  if (!selectedData) return;
+
+  inputCustomerId.value = selectedData.children[0].innerHTML;
+  inputCustomerName.value = selectedData.children[1].innerHTML;
+  inputCustomerContact.value = selectedData.children[3].innerHTML;
+  inputCustomerAddress.value = selectedData.children[2].innerHTML;
 };
 
 const renderCustomer = function (data, container) {
@@ -161,13 +170,73 @@ const renderCustomer = function (data, container) {
   });
 };
 
-const fetchData = (file, container, input = "") => {
-  fetch(file + `?q=${encodeURIComponent(input)}`)
-    .then((response) => response.json())
-    .then((data) => {
-      renderCustomer(data, container);
-    });
+// Update total
+const updateRowTotal = (rowIndex) => {
+  const targetRow = containerOrderList.rows[rowIndex - 1];
+
+  const rowTotal = targetRow.querySelector(".total");
+  const rowPrice = removeComma(targetRow.querySelector(".price").innerHTML);
+  const rowDiscount = removeComma(
+    targetRow.querySelector(".discount").innerHTML
+  );
+  const rowQty = removeComma(targetRow.querySelector(".qty").innerHTML);
+
+  rowTotal.innerHTML = formatNumber(rowPrice * rowQty - rowDiscount);
 };
+
+const editOrderPrice = function (e) {
+  const targetPrice = e.target.closest("tr").querySelector(".price");
+  const targetIndex = e.target.closest("tr").rowIndex;
+  let newValue = prompt("Enter New Value");
+
+  if (
+    !newValue ||
+    newValue === "null" ||
+    newValue.includes(" ") ||
+    isNaN(newValue)
+  )
+    return;
+
+  targetPrice.innerHTML = formatNumber(newValue);
+
+  updateRowTotal(targetIndex);
+};
+
+const editOrderQty = function (e) {
+  const targetQty = e.target.closest("tr").querySelector(".qty");
+  const targetIndex = e.target.closest("tr").rowIndex;
+  let newValue = prompt("Enter New Value");
+
+  if (
+    !newValue ||
+    newValue === "null" ||
+    newValue.includes(" ") ||
+    isNaN(newValue)
+  )
+    return;
+
+  targetQty.innerHTML = formatNumber(newValue);
+
+  updateRowTotal(targetIndex);
+};
+
+// Update the summary based
+function updateSummary(e) {
+  const smrySubtotal = containerSummary.querySelector(
+    ".input__summary--subtotal"
+  );
+  const smryTax = containerSummary.querySelector(".input__summary--tax");
+  const smryNetsales = containerSummary.querySelector(
+    ".input__summary--netsales"
+  );
+  const smryDiscount = containerSummary.querySelector(
+    ".input__summary--discount"
+  );
+  const smryQty = containerSummary.querySelector(".input__summary--qty");
+  const smryGross = containerSummary.querySelector(".input__summary--gross");
+  const smryTotal = containerSummary.querySelector(".label-total_payable");
+  console.log(containerSummary);
+}
 
 const hasDuplicateOrder = function (productId) {
   console.log(productId);
@@ -288,25 +357,6 @@ const getTransNumber = function () {
 const getCurrDate = function () {
   const currDate = new Date();
   return currDate.toDateString();
-};
-
-const openCustModal = function () {
-  modalCustomer.classList.add("modal--active");
-
-  fetchData("php/search-customer.php", containerCustomerList);
-};
-
-const closeCustModal = function () {
-  const selectedData = document.querySelector(".customer-data.selected");
-
-  modalCustomer.classList.remove("modal--active");
-
-  if (!selectedData) return;
-
-  inputCustomerId.value = selectedData.children[0].innerHTML;
-  inputCustomerName.value = selectedData.children[1].innerHTML;
-  inputCustomerContact.value = selectedData.children[3].innerHTML;
-  inputCustomerAddress.value = selectedData.children[2].innerHTML;
 };
 
 const showData = function (file, container, input = "") {
@@ -516,28 +566,6 @@ containerCustomerList.addEventListener("click", function (e) {
 //add customer details to customer form on key press (Enter)
 document.addEventListener("keyup", function (e) {
   if (e.key === "Enter") closeCustModal();
-  // if (modalCustomer.classList.contains("active")) {
-  //   const selectedId = document.querySelector("tr.customer-data.selected")
-  //     .children[0].textContent;
-  //   const selectedName = document.querySelector("tr.customer-data.selected")
-  //     .children[1].textContent;
-  //   const selectedAddress = document.querySelector("tr.customer-data.selected")
-  //     .children[2].textContent;
-  //   const selectedContact = document.querySelector("tr.customer-data.selected")
-  //     .children[3].textContent;
-  //   if (e.key === "Enter") {
-  //     modalCustomer.style.display = "none";
-  //     modalCustomer.classList.remove("active");
-  //     console.log(
-  //       `${selectedId}, ${selectedName}, ${selectedAddress}, ${selectedContact}`
-  //     );
-
-  //     inputCustomerId.value = selectedId;
-  //     inputCustomerName.value = selectedName;
-  //     inputCustomerAddress.value = selectedAddress;
-  //     inputCustomerContact.value = selectedContact;
-  //   }
-  // }
 });
 
 //search product from product table
@@ -610,44 +638,7 @@ containerOrderList.addEventListener("click", function (e) {
   switch (selectedEdit) {
     //Edit qty order
     case "qty":
-      userInput = window.prompt("Enter new qty:");
-      newQty = !isFinite(userInput) || !userInput ? prevQty : userInput;
-
-      //update order qty
-      e.target.innerHTML = newQty;
-
-      //update total
-      inputTotal.innerHTML = Number(price * newQty - prevDiscount).toFixed(2);
-
-      //update summary total qty
-      labelTotalQty.value = +labelTotalQty.value - +prevQty + +newQty;
-
-      //update summary gross Amount
-      labelGrossAmount.value = (
-        +labelGrossAmount.value -
-        +prevTotal +
-        Number(e.target.closest("tr").children[6].innerHTML)
-      ).toFixed(2);
-
-      //update summary subtotal
-      labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-
-      //update summary tax value
-      labelTaxAmount.value = (
-        +labelGrossAmount.value - +labelSubtotal.value
-      ).toFixed(2);
-
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
-
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      console.log(userInput, inputTotal);
+      editOrderQty(e);
       break;
 
     //Edit Discount
@@ -887,5 +878,3 @@ containerPayOption.addEventListener("mouseout", function (e) {
 
 //save Button
 btnSavePayment.addEventListener("click", savePayment);
-
-updateSummary();
