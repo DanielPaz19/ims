@@ -97,6 +97,7 @@ if (!$_SESSION['user']) {
 
       <div class="container-item_list">
         <input type="text" class="input-search_item" placeholder="Search Item Name" />
+        <span class="modal__note"> Double-click item to ADD item</span>
         <div class="container table item_list">
           <table class="item-list">
             <thead>
