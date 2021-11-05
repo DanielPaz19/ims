@@ -307,7 +307,7 @@
                 <br><br><br>
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/epInsert.php">
 
-                    <label>EP ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId"></span><br><br>
+                    <label style="display: none;">EP ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId" style="display: none;"></span><br><br>
 
                     <label>EP No.: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="number" name="ep_no" placeholder="Exit-Pass-No">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
