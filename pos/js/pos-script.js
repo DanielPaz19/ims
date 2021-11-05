@@ -207,44 +207,57 @@ const editOrder = function (e, selector) {
   return [selector, prevValue, newValue, ...updateRowTotal(targetIndex)];
 };
 
-const deleteOrder = function () {
-  //subtract values of the deleted row form the summary details
+const deleteOrder = function (e) {
+  const target = e.target.closest("tr");
 
-  //subract qty
-  labelTotalQty.value = +labelTotalQty.value - +prevQty;
+  const targetQty = document.querySelector(".qty");
+  const targetDiscount = document.querySelector(".discount");
+  const targetTotal = document.querySelector(".total");
 
-  //subract discount
-  labelDiscount.value = Number(+labelDiscount.value - +prevDiscount).toFixed(2);
+  console.log(
+    targetQty.innerHTML,
+    targetDiscount.innerHTML,
+    targetTotal.innerHTML
+  );
 
-  //subract gross
-  labelGrossAmount.value = Number(
-    +labelGrossAmount.value - +prevQty * +price
-  ).toFixed(2);
+  target.remove();
+  // //subtract values of the deleted row form the summary details
 
-  //update summary subtotal
-  labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
+  // //subract qty
+  // labelTotalQty.value = +labelTotalQty.value - +prevQty;
 
-  //update summary tax value
-  labelTaxAmount.value = (
-    +labelGrossAmount.value - +labelSubtotal.value
-  ).toFixed(2);
+  // //subract discount
+  // labelDiscount.value = Number(+labelDiscount.value - +prevDiscount).toFixed(2);
 
-  //update summary netsales
-  labelNetSales.value = (
-    +labelSubtotal.value +
-    +labelTaxAmount.value -
-    +labelDiscount.value
-  ).toFixed(2);
+  // //subract gross
+  // labelGrossAmount.value = Number(
+  //   +labelGrossAmount.value - +prevQty * +price
+  // ).toFixed(2);
 
-  //update total payable
-  labelTotalPayable.innerHTML = labelNetSales.value;
+  // //update summary subtotal
+  // labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
 
-  //delete row
-  e.target.closest("tr").remove();
+  // //update summary tax value
+  // labelTaxAmount.value = (
+  //   +labelGrossAmount.value - +labelSubtotal.value
+  // ).toFixed(2);
+
+  // //update summary netsales
+  // labelNetSales.value = (
+  //   +labelSubtotal.value +
+  //   +labelTaxAmount.value -
+  //   +labelDiscount.value
+  // ).toFixed(2);
+
+  // //update total payable
+  // labelTotalPayable.innerHTML = labelNetSales.value;
+
+  // //delete row
+  // e.target.closest("tr").remove();
 };
 
 // Update the summary based
-function updateSummary(array) {
+function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
   const smrySubtotal = containerSummary.querySelector(
     ".input__summary--subtotal"
   );
@@ -268,17 +281,17 @@ function updateSummary(array) {
 
   const updateGrossVal = function () {
     prevGrossVal = removeComma(smryGross.value); // 0
-    newRowTotal = array[3] - removeComma(array[4]); // 23 - 0 = 0
+    newRowTotal = newTotal - removeComma(prevTotal); // 23 - 0 = 0
     console.log(newRowTotal);
     newGrossVal = smryGross.value; // 0
     smryGross.value = formatNumber(+prevGrossVal + +newRowTotal);
     console.log(array);
   };
 
-  switch (array[0]) {
+  switch (selector) {
     case "qty":
       // Add newValue to qty summary
-      newQtyVal = removeComma(array[2]) - removeComma(array[1]);
+      newQtyVal = removeComma(newValue) - removeComma(prevValue);
       prevQtyVal = removeComma(smryQty.value);
 
       smryQty.value = formatNumber(+prevQtyVal + newQtyVal);
@@ -291,7 +304,7 @@ function updateSummary(array) {
       break;
     case "discount":
       // Add newValue to discount summary
-      newDiscountVal = removeComma(array[2]) - removeComma(array[1]);
+      newDiscountVal = removeComma(newValue) - removeComma(prevValue);
       prevDiscountVal = removeComma(smryDiscount.value);
 
       smryDiscount.value = formatNumber(+prevDiscountVal + newDiscountVal);
@@ -300,28 +313,6 @@ function updateSummary(array) {
     default:
       break;
   }
-  // const smrySubtotal = containerSummary.querySelector(
-  //   ".input__summary--subtotal"
-  // );
-  // const smryTax = containerSummary.querySelector(".input__summary--tax");
-  // const smryNetsales = containerSummary.querySelector(
-  //   ".input__summary--netsales"
-  // );
-  // const smryDiscount = containerSummary.querySelector(
-  //   ".input__summary--discount"
-  // );
-  // const smryQty = containerSummary.querySelector(".input__summary--qty");
-  // const smryGross = containerSummary.querySelector(".input__summary--gross");
-  // const smryTotal = containerSummary.querySelector(".label-total_payable");
-  // console.log(
-  //   smrySubtotal.value,
-  //   smryNetsales.value,
-  //   smryTax.value,
-  //   smryDiscount.value,
-  //   (smryQty.value = +smryQty.value + +addQty),
-  //   smryGross.value,
-  //   smryTotal.textContent
-  // );
 }
 
 const hasDuplicateOrder = function (productId) {
@@ -736,40 +727,40 @@ containerOrderList.addEventListener("click", function (e) {
     // delete row
     case "delete":
       //subtract values of the deleted row form the summary details
+      deleteOrder(e);
+      // //subract qty
+      // labelTotalQty.value = +labelTotalQty.value - +prevQty;
 
-      //subract qty
-      labelTotalQty.value = +labelTotalQty.value - +prevQty;
+      // // //subract discount
+      // // labelDiscount.value = Number(
+      // //   +labelDiscount.value - +prevDiscount
+      // // ).toFixed(2);
 
-      //subract discount
-      labelDiscount.value = Number(
-        +labelDiscount.value - +prevDiscount
-      ).toFixed(2);
+      // // //subract gross
+      // // labelGrossAmount.value = Number(
+      // //   +labelGrossAmount.value - +prevQty * +price
+      // ).toFixed(2);
 
-      //subract gross
-      labelGrossAmount.value = Number(
-        +labelGrossAmount.value - +prevQty * +price
-      ).toFixed(2);
+      // //update summary subtotal
+      // labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
 
-      //update summary subtotal
-      labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
+      // //update summary tax value
+      // labelTaxAmount.value = (
+      //   +labelGrossAmount.value - +labelSubtotal.value
+      // ).toFixed(2);
 
-      //update summary tax value
-      labelTaxAmount.value = (
-        +labelGrossAmount.value - +labelSubtotal.value
-      ).toFixed(2);
+      // //update summary netsales
+      // labelNetSales.value = (
+      //   +labelSubtotal.value +
+      //   +labelTaxAmount.value -
+      //   +labelDiscount.value
+      // ).toFixed(2);
 
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
+      // //update total payable
+      // labelTotalPayable.innerHTML = labelNetSales.value;
 
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      //delete row
-      e.target.closest("tr").remove();
+      // //delete row
+      // e.target.closest("tr").remove();
       break;
 
     case "price":
