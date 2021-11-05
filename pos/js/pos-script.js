@@ -184,8 +184,8 @@ const updateRowTotal = (rowIndex) => {
   rowTotal.innerHTML = formatNumber(rowPrice * rowQty - rowDiscount);
 };
 
-const editOrderPrice = function (e) {
-  const targetPrice = e.target.closest("tr").querySelector(".price");
+const editOrder = function (e, selector) {
+  const targetPrice = e.target.closest("tr").querySelector(`.${selector}`);
   const targetIndex = e.target.closest("tr").rowIndex;
   let newValue = prompt("Enter New Value");
 
@@ -198,24 +198,6 @@ const editOrderPrice = function (e) {
     return;
 
   targetPrice.innerHTML = formatNumber(newValue);
-
-  updateRowTotal(targetIndex);
-};
-
-const editOrderQty = function (e) {
-  const targetQty = e.target.closest("tr").querySelector(".qty");
-  const targetIndex = e.target.closest("tr").rowIndex;
-  let newValue = prompt("Enter New Value");
-
-  if (
-    !newValue ||
-    newValue === "null" ||
-    newValue.includes(" ") ||
-    isNaN(newValue)
-  )
-    return;
-
-  targetQty.innerHTML = formatNumber(newValue);
 
   updateRowTotal(targetIndex);
 };
@@ -638,37 +620,13 @@ containerOrderList.addEventListener("click", function (e) {
   switch (selectedEdit) {
     //Edit qty order
     case "qty":
-      editOrderQty(e);
+      editOrder(e, "qty");
+
       break;
 
     //Edit Discount
     case "discount":
-      userInput = Number(window.prompt("Enter new qty:")).toFixed(2);
-      newDiscount =
-        !isFinite(userInput) || !userInput ? prevDiscount : userInput;
-
-      //update order discount
-      e.target.innerHTML = newDiscount;
-
-      //update order total
-      inputTotal.innerHTML = Number(price * prevQty - newDiscount).toFixed(2);
-
-      //update summary total discount
-      labelDiscount.value = Number(
-        +labelDiscount.value - +prevDiscount + +newDiscount
-      ).toFixed(2);
-
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
-
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      console.log(userInput, inputTotal);
+      editOrder(e, "discount");
       break;
 
     // delete row
@@ -711,7 +669,7 @@ containerOrderList.addEventListener("click", function (e) {
       break;
 
     case "price":
-      editOrderPrice(e);
+      editOrder(e, "price");
       break;
   }
 });
