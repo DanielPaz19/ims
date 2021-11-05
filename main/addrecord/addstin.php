@@ -16,6 +16,7 @@
       padding: 20px;
       font-family: sans-serif;
       border: 5px solid lightgrey;
+      height: 97vmax;
     }
 
     legend {
@@ -48,6 +49,8 @@
       color: whitesmoke;
       cursor: pointer;
       padding: 5px;
+      height: 30px;
+      width: 30px;
 
     }
 
@@ -122,10 +125,10 @@
       font-family: Arial, Helvetica, sans-serif;
       border-collapse: collapse;
       margin-top: 20px;
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); */
     }
 
     input#item-name {
@@ -154,12 +157,22 @@
       -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      height: 100%;
       color: black;
+      height: 100vmax;
     }
 
     .delete {
       background-color: none;
+    }
+
+
+    .stin-button-save {
+      width: 300px;
+      height: 40px;
+      font-size: 15px;
+      letter-spacing: 5px;
+      float: right;
+      font-weight: initial;
     }
   </style>
 
@@ -313,13 +326,15 @@
           <label>Discount: &nbsp;&nbsp;</label>
           <input class="item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
         </div>
-        <hr><br>
+        <br><br>
+        <hr>
+        <br><br>
         <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
           <label style="display:none;">STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span style="display:none" class="newStinId"></span>
           <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" name="stin_code" placeholder="TON-00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_title"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" name="stin_title" placeholder="JO21-00000"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Date:&nbsp;&nbsp;</label>
           <input type="date" name="stin_date"> <br><br>
           <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -342,7 +357,8 @@
             <!--Add item for order-->
 
             <br /><br />
-            <legend style="font-size: 20px;">Item Details</legend>
+
+            <button name="btnsave" class="stin-button-save">&nbsp;Save Record</button> <br> <br>
             <table id="crud_table" width="100%" class="postb">
               <tr>
                 <th style="padding: 10px; text-align: left" width="50%">
@@ -358,7 +374,7 @@
               </tr>
             </table>
             <br>
-            <button class="button" name="btnsave"><i class="fa fa-save"></i>&nbsp;Save </button>
+
         </form>
     </div>
     </fieldset>

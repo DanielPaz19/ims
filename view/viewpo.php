@@ -56,7 +56,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
               <font style="font-size: 25px; letter-spacing: 4px;">Philippine Acrylic & Chemical Corporation</font><br>
               <center>
                 <font style="font-size: 20px; letter-spacing: 3px;"> 635 Mercedes Ave. San Miguel, Pasig City</font><br>
-                <font style="font-size: 15px; letter-spacing: 3px;">Tel. Nos.<input type="text" style="border: none; width: 80px;" value="7894-5612">&nbsp;<input type="text" style="border: none; width: 80px;" value="3216-5478">&nbsp;<input type="text" style="border: none; width: 100px;" value="+6391234287"></font>
+                <font style="font-size: 15px; letter-spacing: 3px;">Tel. Nos.<input type="text" style="border: none; width: 80px;" value="8330-8847">&nbsp;<input type="text" style="border: none; width: 80px;" value="7501-6844">&nbsp;<input type="text" style="border: none; width: 100px;" value="+63922838116"></font>
               </center>
             </td>
           </tr>
@@ -70,7 +70,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <table width="100%">
           <tr>
             <td>
-              <h4 style="text-align: left; margin-right:20px;"><label>Puchase Order :</label> <?php echo $po_title; ?></h4>
+              <h4 style="text-align: left; margin-right:20px;"><label>Puchase Order :</label> <?php echo $po_code; ?></h4>
             </td>
             <td>
               <h4 style="text-align: right; margin-right:20px;">Date: <?php echo $po_date; ?></h4>
