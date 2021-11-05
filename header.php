@@ -40,9 +40,9 @@
         <a href="itemlist_main.php"><i class="fas fa-box"></i>&nbspItemList</a>
         <a href="stin_main.php"><i class="fas fa-arrow-circle-down"></i>&nbspStock-In</a>
         <a href="stout_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspStock-Out</a>
-        <a href="#"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
+        <a href="ep_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="#"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
-        <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a>
+        <!-- <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a> -->
       </div>
     </div>
 
