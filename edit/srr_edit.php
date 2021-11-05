@@ -197,7 +197,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <!-- input for refno -->
                     <br><br>
                     <label>Reference No.&nbsp;&nbsp;&nbsp;&nbsp;</label><br>
-                    <input name="srr_ref" class="item-ref" type="text" style="height: 30px;" />
+                    <input autocomplete="off" name="srr_ref" class="item-ref" type="text" style="height: 30px;" />
                     <br /><br />
                     <!-- input for supplier -->
                     <label>Supplier: &nbsp;&nbsp;</label><br>
@@ -205,7 +205,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <option></option>
                         <?php
                         include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM sup_tb");
+                        $records = mysqli_query($db, "SELECT * FROM sup_tb ORDER BY sup_name ASC");
 
                         while ($data = mysqli_fetch_array($records)) {
                             echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
