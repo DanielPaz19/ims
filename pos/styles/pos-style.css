@@ -455,15 +455,14 @@ legend {
 }
 
 .container-total_payable {
-  width: 33%;
+  text-align: right;
+  width: 100%;
   right: 0;
-  float: right;
   margin-right: 50px;
   margin-top: 30px;
 }
 
-p.label-total_payable {
-  text-align: center;
+span.label-total_payable {
   margin: 0;
   font-size: 30px;
   color: #ff4757;

@@ -164,7 +164,7 @@ if (!$_SESSION['user']) {
           </span>
         </div>
         <div class="container-total_payable">
-          <p class="label-total_payable">0.00</p>
+          <span class="label-total_payable">0.00 PHP</span>
         </div>
       </fieldset>
     </div>

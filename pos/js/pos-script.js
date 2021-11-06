@@ -91,12 +91,19 @@ const labelTotalQty = document.querySelector(".total_qty-value").children[0];
 const labelTaxAmount = document.querySelector(".tax-value").children[0];
 const labelNetSales = document.querySelector(".netsales-value").children[0];
 const labelDiscount = document.querySelector(".disc_amount-value").children[0];
-const labelTotalPayable = document.querySelector(".label-total_payable");
+const smryLabelPayable = document.querySelector(".label-total_payable");
 const smryDiscount = containerSummary.querySelector(
   ".input__summary--discount"
 );
 const smryQty = containerSummary.querySelector(".input__summary--qty");
 const smryGross = containerSummary.querySelector(".input__summary--gross");
+const smrySubtotal = containerSummary.querySelector(
+  ".input__summary--subtotal"
+);
+const smryTax = containerSummary.querySelector(".input__summary--tax");
+const smryNetSales = containerSummary.querySelector(
+  ".input__summary--netsales"
+);
 
 //buttons
 const btnSaveTransaction = document.querySelector(".btn-save");
@@ -194,6 +201,8 @@ const updateRowTotal = (rowIndex) => {
 };
 
 const editOrder = function (e, selector) {
+  if (selector === "delete") return deleteOrder(e);
+
   const target = e.target.closest("tr").querySelector(`.${selector}`);
   const targetIndex = e.target.closest("tr").rowIndex;
   const prevValue = removeComma(target.innerHTML);
@@ -214,16 +223,12 @@ const editOrder = function (e, selector) {
 
 const deleteOrder = function (e) {
   const target = e.target.closest("tr");
-
-  const targetQty = document.querySelector(".qty");
-  const targetDiscount = document.querySelector(".discount");
-  const targetTotal = document.querySelector(".total");
-
-  console.log(
-    targetQty.innerHTML,
-    targetDiscount.innerHTML,
-    targetTotal.innerHTML
-  );
+  const targetQty = target.querySelector(".qty");
+  const targetDiscount = target.querySelector(".discount");
+  const targetPrice = target.querySelector(".price");
+  const targetTotal = target.querySelector(".total");
+  const totalItemGross =
+    removeComma(targetPrice.innerHTML) * removeComma(targetQty.innerHTML);
 
   // Subtract Qty, Discount, and Total from summary
   const newSmryQty = subtractNFormat(smryQty.value, targetQty.innerHTML);
@@ -231,16 +236,30 @@ const deleteOrder = function (e) {
     smryDiscount.value,
     targetDiscount.innerHTML
   );
-  const newSmryGross = subtractNFormat(smryGross.value, targetTotal.innerHTML);
+  const newSmryGross = smryGross.value - totalItemGross;
+  const newNetSales = subtractNFormat(
+    smryNetSales.value,
+    targetTotal.innerHTML
+  );
 
-  console.log(newSmryQty, newSmryDiscount, newSmryGross);
   // Display Value
   smryQty.value = newSmryQty;
   smryDiscount.value = newSmryDiscount;
-  smryGross.value = newSmryGross;
+  smryGross.value = formatNumber(newSmryGross);
+  smryNetSales.value = newNetSales;
 
   // Remove row
+  computeTax();
   target.remove();
+};
+
+const computeTax = function () {
+  const totalGross = removeComma(smryGross.value);
+  const subTotal = totalGross / 1.12;
+  const totalTax = totalGross - subTotal;
+
+  smrySubtotal.value = formatNumber(subTotal.toFixed(2));
+  smryTax.value = formatNumber(totalTax.toFixed(2));
 };
 
 // Update the summary based
@@ -250,12 +269,14 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
     prevGrossVal,
     newDiscountVal,
     prevDiscountVal,
-    newRowTotal;
+    newRowTotal,
+    newPriceVal,
+    prevNetVal;
 
-  const updateGrossVal = function () {
-    prevGrossVal = removeComma(smryGross.value); // 0
+  const updateNetVal = function () {
+    prevNetVal = removeComma(smryNetSales.value); // 0
     newRowTotal = newTotal - removeComma(prevTotal); // 23 - 0 = 0
-    smryGross.value = formatNumber(+prevGrossVal + +newRowTotal);
+    smryNetSales.value = formatNumber(+prevNetVal + +newRowTotal);
   };
 
   switch (selector) {
@@ -266,10 +287,25 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
 
       smryQty.value = formatNumber(+prevQtyVal + newQtyVal);
 
-      updateGrossVal();
+      updateNetVal();
+      computeTax();
       break;
     case "price":
-      updateGrossVal();
+      newPriceVal = removeComma(newValue) - removeComma(prevValue);
+      prevGrossVal = removeComma(smryGross.value);
+
+      smryGross.value = formatNumber(+prevGrossVal + newPriceVal);
+      console.log(
+        newValue,
+        prevValue,
+        newPriceVal,
+        prevGrossVal,
+        smryGross.value
+      );
+
+      updateNetVal();
+      computeTax();
+
       break;
     case "discount":
       // Add newValue to discount summary
@@ -277,11 +313,15 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
       prevDiscountVal = removeComma(smryDiscount.value);
 
       smryDiscount.value = formatNumber(+prevDiscountVal + newDiscountVal);
-      updateGrossVal();
+      updateNetVal();
+      computeTax();
+
       break;
     default:
       break;
   }
+
+  smryLabelPayable.textContent = `${smryNetSales.value}  PHP`;
 }
 
 const hasDuplicateOrder = function (productId) {
@@ -693,7 +733,7 @@ containerOrderList.addEventListener("click", function (e) {
     // delete row
     case "delete":
       //subtract values of the deleted row form the summary details
-      deleteOrder(e);
+      editOrder(e, "delete");
       // //subract qty
       // labelTotalQty.value = +labelTotalQty.value - +prevQty;
 
@@ -752,7 +792,7 @@ btnSaveTransaction.addEventListener("click", function (e) {
     transaction.customerId = +inputCustomerId.value;
     transaction.transactionId = +inputTransNumber.value;
     transaction.transDate = new Date().toISOString();
-    order.total = +labelTotalPayable.innerHTML.replace(",", "");
+    order.total = +smryLabelPayable.innerHTML.replace(",", "");
 
     const orderRow = containerOrderList.querySelectorAll("tr");
 
