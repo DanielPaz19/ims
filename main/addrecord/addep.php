@@ -325,7 +325,7 @@
                         <option></option>
                         <?php
                         include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM customers");
+                        $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
 
                         while ($data = mysqli_fetch_array($records)) {
                             echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
