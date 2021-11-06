@@ -42,7 +42,6 @@ if (!$_SESSION['user']) {
             <button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search Customer</button>
           </span>
         </div>
-
         <!-- <label for="customerAddress">Address</label><br />
         <input type="text" id="customerAddress" class="input-customer_address" placeholder="635 Mercedes Ave, Brgy. San Miguel, Pasig City" /><br />
 
