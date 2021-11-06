@@ -77,8 +77,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
             VALUES ('$epID','$epNo','$epTitle','$epRemarks','$epDate','$custID','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
-        // echo "<script>alert('New Record Added')</script>";
-        // echo "<script>window.close();</script>";
+        echo "<script>alert('New Record Added')</script>";
+        echo "<script>window.close();</script>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>";
     }

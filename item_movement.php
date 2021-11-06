@@ -175,7 +175,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                   case '5':
                     echo 'Beginning';
                     break;
-                  case '':
+                  case '6':
                     echo $irow['ep_no'];
                     break;
                   default:
