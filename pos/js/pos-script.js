@@ -187,6 +187,10 @@ const updateRowTotal = (rowIndex) => {
   const targetRow = containerOrderList.rows[rowIndex - 1];
 
   const rowTotal = targetRow.querySelector(".total");
+  const newRowGross =
+    +removeComma(targetRow.querySelector(".price").innerHTML) *
+    +removeComma(targetRow.querySelector(".qty").innerHTML);
+  console.log(newRowGross);
   const prevTotal = rowTotal.innerHTML;
   const rowPrice = removeComma(targetRow.querySelector(".price").innerHTML);
   const rowDiscount = removeComma(
@@ -197,7 +201,7 @@ const updateRowTotal = (rowIndex) => {
   const newTotal = rowPrice * rowQty - rowDiscount;
   rowTotal.innerHTML = formatNumber(newTotal);
 
-  return [newTotal, prevTotal];
+  return [newTotal, prevTotal, newRowGross];
 };
 
 const editOrder = function (e, selector) {
@@ -205,6 +209,12 @@ const editOrder = function (e, selector) {
 
   const target = e.target.closest("tr").querySelector(`.${selector}`);
   const targetIndex = e.target.closest("tr").rowIndex;
+  const targetRow = containerOrderList.rows[targetIndex - 1];
+  const prevRowGross =
+    +removeComma(targetRow.querySelector(".price").innerHTML) *
+    +removeComma(targetRow.querySelector(".qty").innerHTML);
+
+  console.log(prevRowGross);
   const prevValue = removeComma(target.innerHTML);
   let newValue = prompt("Enter New Value");
 
@@ -218,7 +228,13 @@ const editOrder = function (e, selector) {
 
   target.innerHTML = formatNumber(newValue);
 
-  return [selector, prevValue, newValue, ...updateRowTotal(targetIndex)];
+  return [
+    selector,
+    prevValue,
+    newValue,
+    prevRowGross,
+    ...updateRowTotal(targetIndex),
+  ];
 };
 
 const deleteOrder = function (e) {
@@ -228,33 +244,36 @@ const deleteOrder = function (e) {
   const targetPrice = target.querySelector(".price");
   const targetTotal = target.querySelector(".total");
   const totalItemGross =
-    removeComma(targetPrice.innerHTML) * removeComma(targetQty.innerHTML);
+    +removeComma(targetPrice.innerHTML) * +removeComma(targetQty.innerHTML);
 
   // Subtract Qty, Discount, and Total from summary
-  const newSmryQty = subtractNFormat(smryQty.value, targetQty.innerHTML);
+  const newSmryQty =
+    +removeComma(smryQty.value) - +removeComma(targetQty.innerHTML);
   const newSmryDiscount = subtractNFormat(
     smryDiscount.value,
     targetDiscount.innerHTML
   );
-  const newSmryGross = smryGross.value - totalItemGross;
+  const newSmryGross = +removeComma(smryGross.value) - +totalItemGross;
   const newNetSales = subtractNFormat(
     smryNetSales.value,
     targetTotal.innerHTML
   );
 
   // Display Value
-  smryQty.value = newSmryQty;
+  smryQty.value = formatNumber(newSmryQty);
   smryDiscount.value = newSmryDiscount;
   smryGross.value = formatNumber(newSmryGross);
   smryNetSales.value = newNetSales;
+  smryLabelPayable.textContent = `${smryNetSales.value}  PHP`;
+
+  computeTax();
 
   // Remove row
-  computeTax();
   target.remove();
 };
 
 const computeTax = function () {
-  const totalGross = removeComma(smryGross.value);
+  const totalGross = +removeComma(smryGross.value);
   const subTotal = totalGross / 1.12;
   const totalTax = totalGross - subTotal;
 
@@ -263,7 +282,15 @@ const computeTax = function () {
 };
 
 // Update the summary based
-function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
+const updateSummary = function ([
+  selector,
+  prevValue,
+  newValue,
+  prevRowGross,
+  newTotal,
+  prevTotal,
+  newRowGross,
+]) {
   let newQtyVal,
     prevQtyVal,
     prevGrossVal,
@@ -279,6 +306,14 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
     smryNetSales.value = formatNumber(+prevNetVal + +newRowTotal);
   };
 
+  const updateGross = function () {
+    // Gross formula : Gross amount * qty
+    const newGrossVal = newRowGross - prevRowGross;
+    const prevGrossVal = +removeComma(smryGross.value);
+
+    smryGross.value = formatNumber(+prevGrossVal + +newGrossVal);
+  };
+
   switch (selector) {
     case "qty":
       // Add newValue to qty summary
@@ -287,22 +322,12 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
 
       smryQty.value = formatNumber(+prevQtyVal + newQtyVal);
 
+      updateGross();
       updateNetVal();
       computeTax();
       break;
     case "price":
-      newPriceVal = removeComma(newValue) - removeComma(prevValue);
-      prevGrossVal = removeComma(smryGross.value);
-
-      smryGross.value = formatNumber(+prevGrossVal + newPriceVal);
-      console.log(
-        newValue,
-        prevValue,
-        newPriceVal,
-        prevGrossVal,
-        smryGross.value
-      );
-
+      updateGross();
       updateNetVal();
       computeTax();
 
@@ -313,6 +338,8 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
       prevDiscountVal = removeComma(smryDiscount.value);
 
       smryDiscount.value = formatNumber(+prevDiscountVal + newDiscountVal);
+      updateGross();
+
       updateNetVal();
       computeTax();
 
@@ -322,7 +349,7 @@ function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
   }
 
   smryLabelPayable.textContent = `${smryNetSales.value}  PHP`;
-}
+};
 
 const hasDuplicateOrder = function (productId) {
   console.log(productId);
@@ -539,7 +566,7 @@ const showPaymentData = function (file, input, container) {
 };
 
 const subtractNFormat = function (n1, n2) {
-  const diff = removeComma(n1) - removeComma(n2);
+  const diff = +removeComma(n1) - +removeComma(n2);
 
   return formatNumber(diff);
 };
@@ -673,45 +700,45 @@ inputSearchProduct.addEventListener("keyup", function () {
 
 //add product to order list
 containerProductList.addEventListener("dblclick", function (e) {
-  const selectedData = e.target.closest("tr").children;
-  const selectedItemCode = selectedData[0].innerHTML;
-  const selectedItemName = selectedData[1].innerHTML;
-  const selectedPrice = selectedData[2].innerHTML;
-  const inputQty = 1;
-  const selectedUnit = selectedData[4].innerHTML;
-  const inputDiscount = 0;
-  const total = selectedPrice * inputQty - inputDiscount;
-  console.log(selectedItemCode, selectedItemName, selectedPrice, selectedUnit);
+  // Select Row
+  const targetItem = e.target.closest("tr");
+  // Get Values to add on Order List
+  const itemCode = targetItem.querySelector(".item-code").innerHTML;
+  const price = targetItem.querySelector(".price").innerHTML;
+  const itemName = targetItem.querySelector(".item-name").innerHTML;
+  const unit = targetItem.querySelector(".location").innerHTML;
+  // Get values to add automatically to summary
 
-  if (hasDuplicateOrder(+selectedItemCode))
-    return alert(`${selectedItemName} is already added.`);
+  // console.log(selectedItemCode, selectedItemName, selectedPrice, selectedUnit);
 
-  containerOrderList.innerHTML += `
-  <tr>
-  <td class="item-code">${selectedItemCode.padStart(8, 0)}</td>
-  <td class="item-description">${selectedItemName}</td>
-  <td class="price">${selectedPrice}</td>
-  <td class="qty">${inputQty}</td>
-  <td class="unit">${selectedUnit}</td>
-  <td class="discount">${inputDiscount.toFixed(2)}</td>
-  <td class="total">${total.toFixed(2)}</td>
-  <td class="delete">X</td>
-</tr>`;
+  if (hasDuplicateOrder(+itemCode))
+    return alert(`${itemName} is already added.`);
 
-  // //add to summary
-  // labelGrossAmount.value = (+labelGrossAmount.value + +total).toFixed(2);
-  labelTotalQty.value = +labelTotalQty.value + inputQty;
-  // labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-  // labelTaxAmount.value = (
-  //   +labelGrossAmount.value - +labelSubtotal.value
-  // ).toFixed(2);
-  // labelNetSales.value = (
-  //   +labelSubtotal.value +
-  //   +labelTaxAmount.value -
-  //   +labelDiscount.value
-  // ).toFixed(2);
+  containerOrderList.insertAdjacentHTML(
+    "beforeend",
+    `<tr>
+    <td class="item-code">${itemCode}</td>
+    <td class="item-description">${itemName}</td>
+    <td class="price">${formatNumber(price)}</td>
+    <td class="qty">1</td>
+    <td class="unit">${unit}</td>
+    <td class="discount">0.00</td>
+    <td class="total">${formatNumber(price)}</td>
+    <td class="delete">X</td>
+  </tr>`
+  );
 
-  // labelTotalPayable.innerHTML = labelNetSales.value;
+  // Add to Summary Gross Amount, Qty,
+  const prevGross = removeComma(smryGross.value);
+  const prevQty = removeComma(smryQty.value);
+  const prevNetSales = removeComma(smryNetSales.value);
+
+  smryGross.value = formatNumber(+prevGross + +price);
+  smryQty.value = formatNumber(+prevQty + 1);
+  smryNetSales.value = formatNumber(+prevNetSales + +price);
+
+  // Add default value of item to the Label
+  smryLabelPayable.textContent = `${smryNetSales.value} PHP`;
 });
 
 //click events inside order list
