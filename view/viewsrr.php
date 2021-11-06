@@ -99,7 +99,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 		</center>
 	</div>
-	<button id="printpagebutton" onclick="printpage()" class="butLink">Print &nbsp;<i class="fa fa-print"></i></button>
+
+<button id="printpagebutton" onclick="printpage()" class="butLink">Print &nbsp;<i class="fa fa-print"></i></button>
 	<h4 style="float:right">SRR No.: &nbsp;<?php echo $srrNo; ?></h4>
 
 	<div class="content">
@@ -150,6 +151,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		<h5 style="float:right">Prepared By: &nbsp;<?php echo $empName ?></h5>
 		<br>
 
+		<button id="printpagebutton" onclick="printpage()" class="butLink">Print &nbsp;<i class="fa fa-print"></i></button>
 
 	</div>
 	<script>

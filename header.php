@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="../img/pacclogo.ico" />
+  <link rel="shortcut icon" href="../img/pacclogo.png" />
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/header-style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> <!-- navbar icon -->
@@ -40,9 +40,10 @@
         <a href="itemlist_main.php"><i class="fas fa-box"></i>&nbspItemList</a>
         <a href="stin_main.php"><i class="fas fa-arrow-circle-down"></i>&nbspStock-In</a>
         <a href="stout_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspStock-Out</a>
-        <a href="#"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
+
+        <a href="ep_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="#"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
-        <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a>
+        <!-- <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a> -->
       </div>
     </div>
 

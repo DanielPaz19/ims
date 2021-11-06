@@ -72,7 +72,8 @@ if ($total_data > 0) {
         if ($closed == 0) {
             $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
             $disable = ' 
-                <a href="edit/ep_edit.php?id= ' . $row["ep_id"] . '&customerName=' .  $row["customers_name"] . '&customerId=' .  $row["customers_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+
+                <a href="#" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete/ep_delete.php?id= ' . $row["ep_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
       &nbsp;&nbsp;&nbsp;

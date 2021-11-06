@@ -33,7 +33,7 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
         echo "product id :" . $x . "<br>";
     }
 
-    echo "stout id:" . $epID . "<br>" . "<br>";
+    echo "EP ID:" . $epID . "<br>" . "<br>";
 
     $limit = 0;
     while (sizeof($productId) !== $limit) {
@@ -55,7 +55,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     // $limiter = 0;
     // while (sizeof($productId) !== $limiter) {
     //     $sql = "UPDATE ep_product 
-    //                  SET stout_temp_remarks ='" . $stout_temp_remarks[$limiter]
+
+    //                  SET stout_temp_remarks ='" . $ep_remarks[$limiter]
     //         . "' WHERE product_id = " . $productId[$limiter] . " AND ep_id =" . $epID;
 
 
