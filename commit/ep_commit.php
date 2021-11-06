@@ -134,7 +134,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <!-- Stock-Out Details -->
         <fieldset class="fieldset">
             <legend>
-                <h2>Stock-Out Details</h2>
+                <h2>Exit-Pass Details</h2>
             </legend>
             <table class="stock-details" width="100%">
                 <tr>
@@ -152,7 +152,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </table>
             <!-- Items Details -->
             <form method="GET" action="../commit/que/ep_commit_que.php">
-                <input type="hidden" name="stout_id" value="<?php echo $_GET['id'] ?>">
+                <input type="hidden" name="ep_id" value="<?php echo $_GET['id'] ?>">
                 <input type="hidden" name='mov_date' class='date'>
                 <table class="item-details">
                     <tr>
@@ -187,7 +187,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 </td>
                                 <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
                                 <td contenteditable="false"><?php echo $irow['ep_price'] ?></td>
-                                <td class="stout_temp_tot"><input type="number" name="ep_totPrice[]" style="border: none" value="<?php echo $irow["ep_qty"] * $irow["ep_price"]; ?>" contenteditable="false"></td>
+                                <td class="ep_totPrice"><input type="number" name="ep_totPrice[]" style="border: none" value="<?php echo $irow["ep_qty"] * $irow["ep_price"]; ?>" contenteditable="false"></td>
 
                             </tr>
                             <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
