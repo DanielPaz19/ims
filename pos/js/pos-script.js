@@ -734,39 +734,7 @@ containerOrderList.addEventListener("click", function (e) {
     case "delete":
       //subtract values of the deleted row form the summary details
       editOrder(e, "delete");
-      // //subract qty
-      // labelTotalQty.value = +labelTotalQty.value - +prevQty;
 
-      // // //subract discount
-      // // labelDiscount.value = Number(
-      // //   +labelDiscount.value - +prevDiscount
-      // // ).toFixed(2);
-
-      // // //subract gross
-      // // labelGrossAmount.value = Number(
-      // //   +labelGrossAmount.value - +prevQty * +price
-      // ).toFixed(2);
-
-      // //update summary subtotal
-      // labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-
-      // //update summary tax value
-      // labelTaxAmount.value = (
-      //   +labelGrossAmount.value - +labelSubtotal.value
-      // ).toFixed(2);
-
-      // //update summary netsales
-      // labelNetSales.value = (
-      //   +labelSubtotal.value +
-      //   +labelTaxAmount.value -
-      //   +labelDiscount.value
-      // ).toFixed(2);
-
-      // //update total payable
-      // labelTotalPayable.innerHTML = labelNetSales.value;
-
-      // //delete row
-      // e.target.closest("tr").remove();
       break;
 
     case "price":
@@ -779,44 +747,48 @@ containerOrderList.addEventListener("click", function (e) {
 btnSaveTransaction.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
+
   //customer is empty
-  if (!inputCustomerId.value) {
-    alert("Invalid Customer Details");
-  }
+  if (!inputCustomerId.value) return alert("Invalid Customer Details");
 
   //order list is empty
-  else if (!containerOrderList.children.length) {
-    alert("No orders selected");
-  } else {
-    //add to objects
-    transaction.customerId = +inputCustomerId.value;
-    transaction.transactionId = +inputTransNumber.value;
-    transaction.transDate = new Date().toISOString();
-    order.total = +smryLabelPayable.innerHTML.replace(",", "");
+  if (!containerOrderList.children.length) return alert("No orders selected");
 
-    const orderRow = containerOrderList.querySelectorAll("tr");
+  //add to objects
+  transaction.customerId = +inputCustomerId.value;
+  transaction.transactionId = +inputTransNumber.value;
+  transaction.transDate = new Date().toISOString();
+  order.total = +removeComma(smryNetSales.value);
 
-    orderRow.forEach((element) => {
-      order.productId.push(+element.children[0].innerHTML);
-      order.qty.push(+element.children[3].innerHTML);
-      order.discount.push(+element.children[5].innerHTML);
-      order.price.push(+element.children[2].innerHTML);
-    });
+  const orderRow = containerOrderList.querySelectorAll("tr");
 
-    const save = new XMLHttpRequest();
-    const saveJSON = { ...transaction, ...order };
+  orderRow.forEach((element) => {
+    order.productId.push(+element.children[0].innerHTML);
+    order.qty.push(+removeComma(element.children[3].innerHTML));
+    order.discount.push(+removeComma(element.children[5].innerHTML));
+    order.price.push(+removeComma(element.children[2].innerHTML));
+  });
 
-    save.open("POST", "php/save-transaction.php");
-    save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    save.send(`json=${JSON.stringify(saveJSON)}`);
+  const saveJSON = { ...transaction, ...order };
 
-    console.log(JSON.stringify(saveJSON));
-    console.log(saveJSON);
+  // const save = new XMLHttpRequest();
+  // save.open("POST", "php/save-transaction.php");
+  // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // save.send(`json=${JSON.stringify(saveJSON)}`);
+  // console.log(JSON.stringify(saveJSON));
+  // console.log(saveJSON);
 
-    alert("Transaction Saved");
+  fetch("php/save-transaction.php", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `json=${JSON.stringify(saveJSON)}`,
+  });
 
-    location.reload();
-  }
+  alert("Transaction Saved");
+
+  location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------
