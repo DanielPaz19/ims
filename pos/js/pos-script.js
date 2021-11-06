@@ -706,7 +706,7 @@ containerProductList.addEventListener("dblclick", function (e) {
   const itemCode = targetItem.querySelector(".item-code").innerHTML;
   const price = targetItem.querySelector(".price").innerHTML;
   const itemName = targetItem.querySelector(".item-name").innerHTML;
-  const unit = targetItem.querySelector(".location").innerHTML;
+  const unit = targetItem.querySelector(".unit").innerHTML;
   // Get values to add automatically to summary
 
   // console.log(selectedItemCode, selectedItemName, selectedPrice, selectedUnit);
