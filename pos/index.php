@@ -97,7 +97,7 @@ if (!$_SESSION['user']) {
 
       <div class="container-item_list">
         <input type="text" class="input-search_item" placeholder="Search Item Name" />
-        <span class="modal__note"> Double-click item to ADD item</span>
+        <span class="modal__note"> Double-click to ADD item</span>
         <div class="container table item_list">
           <table class="item-list">
             <thead>
@@ -181,7 +181,7 @@ if (!$_SESSION['user']) {
       <div class="customer-nav">
         <span class="customer-search-container">
           <input autocomplete="off" type="text" id="searchCustomer" placeholder="Search Customer...   " />
-        </span><span class="modal__note">CLICK ROW AND PRESS ENTER</span>
+        </span><span class="modal__note">Select Customer then Press ENTER</span>
         <span class="customer__modal--close"> X </span>
       </div>
       <div class="customer-table-container">
