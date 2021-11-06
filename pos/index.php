@@ -253,17 +253,16 @@ if (!$_SESSION['user']) {
 
   <div id="payment-modal">
     <div class="container-payment-details">
-      <h1>Payment</h1>
 
       <div class="payment__modal--close">
         <p>X</p>
       </div>
 
       <form class="payment" method="get" action="payment.php">
-        <fieldset class="payment-type">
-          <legend>Payment Type</legend>
-          <div>
-            <span class="container-radio-button">
+        <div class="payment-type">
+          <h1>Payment Type</h1>
+          <div class="container-radio-button">
+            <span>
               <input type="radio" id="cash" name="payment-type" value="" checked class="radio--payment-type" />
               <label for="cash" class="label--payment-type">CASH</label>
               <input type="radio" id="online" value="" name="payment-type" class="radio--payment-type" />
@@ -272,7 +271,7 @@ if (!$_SESSION['user']) {
               <label for="cheque" class="label--payment-type">CHEQUE</label>
             </span>
           </div>
-        </fieldset>
+        </div>
 
         <fieldset class="online-details">
           <div class="online-details">
