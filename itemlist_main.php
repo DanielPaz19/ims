@@ -394,9 +394,7 @@ if (!isset($_SESSION['user'])) {
                             <th style="text-align: left;">Location &nbsp;<i style="color: red;" class='fas fa-exclamation-circle'></i></th>
                     </tr>
                     <tr>
-                        <td class='input__container'>
-                            <input type="hidden" name="class_id" class="container--class__id">
-                            <input name="class_name" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required class="input__search--class">
+                        <td class='input__container'><input type="hidden" name="class_id" class="container--class__id"><input name="class_name" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required class="input__search--class">
                             <div class="list__container--class list__container">
                                 <ul class="list list--class">
 

@@ -55,7 +55,6 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     // $limiter = 0;
     // while (sizeof($productId) !== $limiter) {
     //     $sql = "UPDATE ep_product 
-
     //                  SET stout_temp_remarks ='" . $ep_remarks[$limiter]
     //         . "' WHERE product_id = " . $productId[$limiter] . " AND ep_id =" . $epID;
 
