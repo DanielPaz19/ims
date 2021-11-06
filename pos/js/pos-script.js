@@ -60,9 +60,8 @@ const tabContent = document.querySelectorAll(".tab__content");
 //customers
 const inputCustomerId = document.querySelector("#customerId");
 const inputCustomerName = document.querySelector("#customerName");
-const inuptCustomerAddress = document.querySelector("#customerAddress");
-const inputCustomerMobile = document.querySelector("#customerMobile");
-const inputCustomerTelephone = document.querySelector("#customeTelephone");
+const inputCustomerAddress = document.querySelector("#customerAddress");
+const inputCustomerContact = document.querySelector("#customerContact");
 const btnSearchCustomer = document.querySelector(".btn-search_customer");
 const containerCustomerList = document.querySelector("#customer-list");
 const inputSearchCustomer = document.querySelector("#searchCustomer");
@@ -84,6 +83,7 @@ const containerOrderList = document.querySelector(".container-order-list");
 const btnDeleteRow = document.querySelector(".delete");
 
 //summary
+const containerSummary = document.querySelector(".fieldset-summary");
 const labelSubtotal = document.querySelector(".subtotal-value").children[0];
 const labelGrossAmount = document.querySelector(".gross_amount-value")
   .children[0];
@@ -91,7 +91,19 @@ const labelTotalQty = document.querySelector(".total_qty-value").children[0];
 const labelTaxAmount = document.querySelector(".tax-value").children[0];
 const labelNetSales = document.querySelector(".netsales-value").children[0];
 const labelDiscount = document.querySelector(".disc_amount-value").children[0];
-const labelTotalPayable = document.querySelector(".label-total_payable");
+const smryLabelPayable = document.querySelector(".label-total_payable");
+const smryDiscount = containerSummary.querySelector(
+  ".input__summary--discount"
+);
+const smryQty = containerSummary.querySelector(".input__summary--qty");
+const smryGross = containerSummary.querySelector(".input__summary--gross");
+const smrySubtotal = containerSummary.querySelector(
+  ".input__summary--subtotal"
+);
+const smryTax = containerSummary.querySelector(".input__summary--tax");
+const smryNetSales = containerSummary.querySelector(
+  ".input__summary--netsales"
+);
 
 //buttons
 const btnSaveTransaction = document.querySelector(".btn-save");
@@ -128,6 +140,189 @@ const inputChequeDate = document.querySelector(".cheque-date");
 const inputChequeNumber = document.querySelector(".cheque-number");
 
 // ---------------------------------- FUNCTION ---------------------------------
+const fetchData = (file, container, input = "") => {
+  fetch(file + `?q=${encodeURIComponent(input)}`)
+    .then((response) => response.json())
+    .then((data) => {
+      renderCustomer(data, container);
+    });
+};
+
+const openCustModal = function () {
+  modalCustomer.classList.add("modal--active");
+
+  fetchData("php/search-customer.php", containerCustomerList);
+};
+
+const closeCustModal = function () {
+  const selectedData = document.querySelector(".customer-data.selected");
+
+  modalCustomer.classList.remove("modal--active");
+
+  if (!selectedData) return;
+
+  inputCustomerId.value = selectedData.children[0].innerHTML;
+  inputCustomerName.value = selectedData.children[1].innerHTML;
+  inputCustomerContact.value = selectedData.children[3].innerHTML;
+  inputCustomerAddress.value = selectedData.children[2].innerHTML;
+};
+
+const renderCustomer = function (data, container) {
+  container.innerHTML = "";
+  data.forEach((data, index) => {
+    container.insertAdjacentHTML(
+      "beforeend",
+      `<tr class='customer-data' id='customer${index}'>
+            <td>${data.customers_id.padStart(8, 0)}</td>
+            <td>${data.customers_name}</td>
+            <td>${data.customers_address}</td>
+            <td>${data.customers_contact}</td>
+            </tr>`
+    );
+  });
+};
+
+// Update total
+const updateRowTotal = (rowIndex) => {
+  const targetRow = containerOrderList.rows[rowIndex - 1];
+
+  const rowTotal = targetRow.querySelector(".total");
+  const prevTotal = rowTotal.innerHTML;
+  const rowPrice = removeComma(targetRow.querySelector(".price").innerHTML);
+  const rowDiscount = removeComma(
+    targetRow.querySelector(".discount").innerHTML
+  );
+  const rowQty = removeComma(targetRow.querySelector(".qty").innerHTML);
+
+  const newTotal = rowPrice * rowQty - rowDiscount;
+  rowTotal.innerHTML = formatNumber(newTotal);
+
+  return [newTotal, prevTotal];
+};
+
+const editOrder = function (e, selector) {
+  if (selector === "delete") return deleteOrder(e);
+
+  const target = e.target.closest("tr").querySelector(`.${selector}`);
+  const targetIndex = e.target.closest("tr").rowIndex;
+  const prevValue = removeComma(target.innerHTML);
+  let newValue = prompt("Enter New Value");
+
+  if (
+    !newValue ||
+    newValue === "null" ||
+    newValue.includes(" ") ||
+    isNaN(newValue)
+  )
+    return;
+
+  target.innerHTML = formatNumber(newValue);
+
+  return [selector, prevValue, newValue, ...updateRowTotal(targetIndex)];
+};
+
+const deleteOrder = function (e) {
+  const target = e.target.closest("tr");
+  const targetQty = target.querySelector(".qty");
+  const targetDiscount = target.querySelector(".discount");
+  const targetPrice = target.querySelector(".price");
+  const targetTotal = target.querySelector(".total");
+  const totalItemGross =
+    removeComma(targetPrice.innerHTML) * removeComma(targetQty.innerHTML);
+
+  // Subtract Qty, Discount, and Total from summary
+  const newSmryQty = subtractNFormat(smryQty.value, targetQty.innerHTML);
+  const newSmryDiscount = subtractNFormat(
+    smryDiscount.value,
+    targetDiscount.innerHTML
+  );
+  const newSmryGross = smryGross.value - totalItemGross;
+  const newNetSales = subtractNFormat(
+    smryNetSales.value,
+    targetTotal.innerHTML
+  );
+
+  // Display Value
+  smryQty.value = newSmryQty;
+  smryDiscount.value = newSmryDiscount;
+  smryGross.value = formatNumber(newSmryGross);
+  smryNetSales.value = newNetSales;
+
+  // Remove row
+  computeTax();
+  target.remove();
+};
+
+const computeTax = function () {
+  const totalGross = removeComma(smryGross.value);
+  const subTotal = totalGross / 1.12;
+  const totalTax = totalGross - subTotal;
+
+  smrySubtotal.value = formatNumber(subTotal.toFixed(2));
+  smryTax.value = formatNumber(totalTax.toFixed(2));
+};
+
+// Update the summary based
+function updateSummary([selector, prevValue, newValue, newTotal, prevTotal]) {
+  let newQtyVal,
+    prevQtyVal,
+    prevGrossVal,
+    newDiscountVal,
+    prevDiscountVal,
+    newRowTotal,
+    newPriceVal,
+    prevNetVal;
+
+  const updateNetVal = function () {
+    prevNetVal = removeComma(smryNetSales.value); // 0
+    newRowTotal = newTotal - removeComma(prevTotal); // 23 - 0 = 0
+    smryNetSales.value = formatNumber(+prevNetVal + +newRowTotal);
+  };
+
+  switch (selector) {
+    case "qty":
+      // Add newValue to qty summary
+      newQtyVal = removeComma(newValue) - removeComma(prevValue);
+      prevQtyVal = removeComma(smryQty.value);
+
+      smryQty.value = formatNumber(+prevQtyVal + newQtyVal);
+
+      updateNetVal();
+      computeTax();
+      break;
+    case "price":
+      newPriceVal = removeComma(newValue) - removeComma(prevValue);
+      prevGrossVal = removeComma(smryGross.value);
+
+      smryGross.value = formatNumber(+prevGrossVal + newPriceVal);
+      console.log(
+        newValue,
+        prevValue,
+        newPriceVal,
+        prevGrossVal,
+        smryGross.value
+      );
+
+      updateNetVal();
+      computeTax();
+
+      break;
+    case "discount":
+      // Add newValue to discount summary
+      newDiscountVal = removeComma(newValue) - removeComma(prevValue);
+      prevDiscountVal = removeComma(smryDiscount.value);
+
+      smryDiscount.value = formatNumber(+prevDiscountVal + newDiscountVal);
+      updateNetVal();
+      computeTax();
+
+      break;
+    default:
+      break;
+  }
+
+  smryLabelPayable.textContent = `${smryNetSales.value}  PHP`;
+}
 
 const hasDuplicateOrder = function (productId) {
   console.log(productId);
@@ -229,7 +424,7 @@ const init = function () {
 
   document.querySelector("#transactionDate").value = getCurrDate();
 
-  showData("php/search-product.php", "", containerProductList);
+  showData("php/search-product.php", containerProductList);
 };
 
 const getTransNumber = function () {
@@ -250,13 +445,7 @@ const getCurrDate = function () {
   return currDate.toDateString();
 };
 
-const openModal = function (file, input, container, modal) {
-  modal.style.display = "block";
-  //show all data on table
-  showData(file, input, container);
-};
-
-const showData = function (file, input, container) {
+const showData = function (file, container, input = "") {
   // Create an XMLHttpRequest object
   const xhttp = new XMLHttpRequest();
 
@@ -273,7 +462,6 @@ const showData = function (file, input, container) {
 
 const showTableData = (data, container) => {
   container.innerHTML = "";
-  console.log(data);
   if (container == containerProductList) {
     data.forEach((data, index) => {
       let row = `<tr class='product-data product${index}'>
@@ -292,39 +480,43 @@ const showTableData = (data, container) => {
   } else {
     data.forEach((data, index) => {
       let row = `<tr class='customer-data' id='customer${index}'>
-                          <td class="customer-id">${data.customers_id}</td>
-                          <td class="customer-name">${data.customers_name}</td>
-                          <td class="customer-address">${data.customers_address}</td>
-                          <td class="customer-contact">${data.customers_contact}</td>
+                          <td class="customer-id">
+                          ${data.customers_id}
+                          </td>
+                          <td class="customer-name">
+                          ${data.customers_name}
+                          </td>
+                          <td class="customer-address">
+                          ${data.customers_address}
+                          </td>
+                          <td class="customer-contact">
+                          ${data.customers_contact}
+                          </td>
                     </tr>`;
       container.innerHTML += row;
     });
   }
 };
 
-const search = function (inputSearch, container, file, modal) {
-  const q = inputSearch.value;
+const search = function (inputSearch, container) {
   container.innerHTML = "";
-
-  console.log(q);
-  openModal(file, String(q), container, modal);
+  openCustModal();
 };
 
 const selectRow = function (target) {
-  const checkSelected = document.querySelectorAll("tr.customer-data.selected");
-  const selectedRow = target.closest("tr");
-  console.log(selectedRow, checkSelected);
+  // Remove selected
+  const checkSelected = document.querySelectorAll("tr.customer-data");
+  checkSelected.forEach((row) => {
+    row.classList.remove("selected");
+  });
 
-  if (checkSelected.length) {
-    checkSelected[0].classList.remove("selected");
-    selectedRow.classList.add("selected");
-  } else {
-    selectedRow.classList.add("selected");
-  }
+  // Add selected
+  const selectedRow = target.closest("tr");
+  selectedRow.classList.add("selected");
 };
 
 //remove comma and convert string to number
-const removeComma = (string) => (+string.replace(",", "")).toFixed(2);
+const removeComma = (string) => (+string.replaceAll(",", "")).toFixed(2);
 
 const formatNumber = (string) =>
   new Intl.NumberFormat("en-US", NumOptions).format(string);
@@ -337,7 +529,6 @@ const showPaymentData = function (file, input, container) {
   // Define a callback function
   xhttp.onload = function () {
     const data = JSON.parse(this.responseText);
-    console.log(data);
     showPendingPayments(data, container);
   };
 
@@ -347,11 +538,17 @@ const showPaymentData = function (file, input, container) {
   xhttp.send(`q=${input}`);
 };
 
+const subtractNFormat = function (n1, n2) {
+  const diff = removeComma(n1) - removeComma(n2);
+
+  return formatNumber(diff);
+};
+
 //show requested data from database on table
 const showPendingPayments = (data, container) => {
   container.innerHTML = "";
 
-  data.forEach((data, index) => {
+  data.forEach((data) => {
     paymentId.push(data.order_payment_id);
     const transDate = new Date(data.pos_date).toLocaleString();
     let row = `<tr>
@@ -439,32 +636,16 @@ nav.addEventListener("click", function (e) {
 });
 
 //show customer modal on btn click
-btnSearchCustomer.addEventListener("click", function (e) {
-  e.preventDefault();
-  modalCustomer.classList.add("active");
-  openModal(
-    "php/search-customer.php",
-    "",
-    containerCustomerList,
-    modalCustomer
-  );
-});
+btnSearchCustomer.addEventListener("click", openCustModal);
 
 //close customer modal
 btnCustomerClose.addEventListener("click", function () {
-  modalCustomer.style.display = "none";
-  modalCustomer.classList.remove("active");
+  closeCustModal();
 });
 
 //search customer on customer modal
-inputSearchCustomer.addEventListener("keyup", function (e) {
-  e.preventDefault();
-  search(
-    inputSearchCustomer,
-    containerCustomerList,
-    "php/search-customer.php",
-    modalCustomer
-  );
+inputSearchCustomer.addEventListener("keyup", function () {
+  fetchData("php/search-customer.php", containerCustomerList, this.value);
 });
 
 //select customer from customer modal
@@ -475,28 +656,7 @@ containerCustomerList.addEventListener("click", function (e) {
 
 //add customer details to customer form on key press (Enter)
 document.addEventListener("keyup", function (e) {
-  if (modalCustomer.classList.contains("active")) {
-    const selectedId = document.querySelector("tr.customer-data.selected")
-      .children[0].textContent;
-    const selectedName = document.querySelector("tr.customer-data.selected")
-      .children[1].textContent;
-    const selectedAddress = document.querySelector("tr.customer-data.selected")
-      .children[2].textContent;
-    const selectedContact = document.querySelector("tr.customer-data.selected")
-      .children[3].textContent;
-    if (e.key === "Enter") {
-      modalCustomer.style.display = "none";
-      modalCustomer.classList.remove("active");
-      console.log(
-        `${selectedId}, ${selectedName}, ${selectedAddress}, ${selectedContact}`
-      );
-
-      inputCustomerId.value = selectedId;
-      inputCustomerName.value = selectedName;
-      inuptCustomerAddress.value = selectedAddress;
-      inputCustomerMobile.value = selectedContact;
-    }
-  }
+  if (e.key === "Enter") closeCustModal();
 });
 
 //search product from product table
@@ -504,7 +664,11 @@ inputSearchProduct.addEventListener("keyup", function () {
   const searchVal = inputSearchProduct.value;
   console.log(inputSearchProduct.value);
 
-  showData("php/search-product.php", searchVal, containerProductList);
+  showData(
+    "php/search-product.php",
+    containerProductList,
+    encodeURIComponent(searchVal)
+  );
 });
 
 //add product to order list
@@ -534,144 +698,47 @@ containerProductList.addEventListener("dblclick", function (e) {
   <td class="delete">X</td>
 </tr>`;
 
-  //add to summary
-  labelGrossAmount.value = (+labelGrossAmount.value + +total).toFixed(2);
+  // //add to summary
+  // labelGrossAmount.value = (+labelGrossAmount.value + +total).toFixed(2);
   labelTotalQty.value = +labelTotalQty.value + inputQty;
-  labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-  labelTaxAmount.value = (
-    +labelGrossAmount.value - +labelSubtotal.value
-  ).toFixed(2);
-  labelNetSales.value = (
-    +labelSubtotal.value +
-    +labelTaxAmount.value -
-    +labelDiscount.value
-  ).toFixed(2);
+  // labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
+  // labelTaxAmount.value = (
+  //   +labelGrossAmount.value - +labelSubtotal.value
+  // ).toFixed(2);
+  // labelNetSales.value = (
+  //   +labelSubtotal.value +
+  //   +labelTaxAmount.value -
+  //   +labelDiscount.value
+  // ).toFixed(2);
 
-  labelTotalPayable.innerHTML = labelNetSales.value;
+  // labelTotalPayable.innerHTML = labelNetSales.value;
 });
 
 //click events inside order list
 containerOrderList.addEventListener("click", function (e) {
   const selectedEdit = e.target.className;
-  const prevQty = e.target.closest("tr").children[3].innerHTML;
-  const prevDiscount = e.target.closest("tr").children[5].innerHTML;
-  const inputTotal = e.target.closest("tr").children[6];
-  const price = e.target.closest("tr").children[2].innerHTML;
-  const prevTotal = e.target.closest("tr").children[6].innerHTML;
-  let newQty;
-  let newDiscount;
-  let userInput;
 
   switch (selectedEdit) {
     //Edit qty order
     case "qty":
-      userInput = window.prompt("Enter new qty:");
-      newQty = !isFinite(userInput) || !userInput ? prevQty : userInput;
+      updateSummary(editOrder(e, "qty"));
 
-      //update order qty
-      e.target.innerHTML = newQty;
-
-      //update total
-      inputTotal.innerHTML = Number(price * newQty - prevDiscount).toFixed(2);
-
-      //update summary total qty
-      labelTotalQty.value = +labelTotalQty.value - +prevQty + +newQty;
-
-      //update summary gross Amount
-      labelGrossAmount.value = (
-        +labelGrossAmount.value -
-        +prevTotal +
-        Number(e.target.closest("tr").children[6].innerHTML)
-      ).toFixed(2);
-
-      //update summary subtotal
-      labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-
-      //update summary tax value
-      labelTaxAmount.value = (
-        +labelGrossAmount.value - +labelSubtotal.value
-      ).toFixed(2);
-
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
-
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      console.log(userInput, inputTotal);
       break;
 
     //Edit Discount
     case "discount":
-      userInput = Number(window.prompt("Enter new qty:")).toFixed(2);
-      newDiscount =
-        !isFinite(userInput) || !userInput ? prevDiscount : userInput;
-
-      //update order discount
-      e.target.innerHTML = newDiscount;
-
-      //update order total
-      inputTotal.innerHTML = Number(price * prevQty - newDiscount).toFixed(2);
-
-      //update summary total discount
-      labelDiscount.value = Number(
-        +labelDiscount.value - +prevDiscount + +newDiscount
-      ).toFixed(2);
-
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
-
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      console.log(userInput, inputTotal);
+      updateSummary(editOrder(e, "discount"));
       break;
 
     // delete row
     case "delete":
       //subtract values of the deleted row form the summary details
+      editOrder(e, "delete");
 
-      //subract qty
-      labelTotalQty.value = +labelTotalQty.value - +prevQty;
+      break;
 
-      //subract discount
-      labelDiscount.value = Number(
-        +labelDiscount.value - +prevDiscount
-      ).toFixed(2);
-
-      //subract gross
-      labelGrossAmount.value = Number(
-        +labelGrossAmount.value - +prevQty * +price
-      ).toFixed(2);
-
-      //update summary subtotal
-      labelSubtotal.value = (+labelGrossAmount.value / 1.12).toFixed(2);
-
-      //update summary tax value
-      labelTaxAmount.value = (
-        +labelGrossAmount.value - +labelSubtotal.value
-      ).toFixed(2);
-
-      //update summary netsales
-      labelNetSales.value = (
-        +labelSubtotal.value +
-        +labelTaxAmount.value -
-        +labelDiscount.value
-      ).toFixed(2);
-
-      //update total payable
-      labelTotalPayable.innerHTML = labelNetSales.value;
-
-      //delete row
-      e.target.closest("tr").remove();
+    case "price":
+      updateSummary(editOrder(e, "price"));
       break;
   }
 });
@@ -680,44 +747,48 @@ containerOrderList.addEventListener("click", function (e) {
 btnSaveTransaction.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
+
   //customer is empty
-  if (!inputCustomerId.value) {
-    alert("Invalid Customer Details");
-  }
+  if (!inputCustomerId.value) return alert("Invalid Customer Details");
 
   //order list is empty
-  else if (!containerOrderList.children.length) {
-    alert("No orders selected");
-  } else {
-    //add to objects
-    transaction.customerId = +inputCustomerId.value;
-    transaction.transactionId = +inputTransNumber.value;
-    transaction.transDate = new Date().toISOString();
-    order.total = +labelTotalPayable.innerHTML.replace(",", "");
+  if (!containerOrderList.children.length) return alert("No orders selected");
 
-    const orderRow = containerOrderList.querySelectorAll("tr");
+  //add to objects
+  transaction.customerId = +inputCustomerId.value;
+  transaction.transactionId = +inputTransNumber.value;
+  transaction.transDate = new Date().toISOString();
+  order.total = +removeComma(smryNetSales.value);
 
-    orderRow.forEach((element) => {
-      order.productId.push(+element.children[0].innerHTML);
-      order.qty.push(+element.children[3].innerHTML);
-      order.discount.push(+element.children[5].innerHTML);
-      order.price.push(+element.children[2].innerHTML);
-    });
+  const orderRow = containerOrderList.querySelectorAll("tr");
 
-    const save = new XMLHttpRequest();
-    const saveJSON = { ...transaction, ...order };
+  orderRow.forEach((element) => {
+    order.productId.push(+element.children[0].innerHTML);
+    order.qty.push(+removeComma(element.children[3].innerHTML));
+    order.discount.push(+removeComma(element.children[5].innerHTML));
+    order.price.push(+removeComma(element.children[2].innerHTML));
+  });
 
-    save.open("POST", "php/save-transaction.php");
-    save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    save.send(`json=${JSON.stringify(saveJSON)}`);
+  const saveJSON = { ...transaction, ...order };
 
-    console.log(JSON.stringify(saveJSON));
-    console.log(saveJSON);
+  // const save = new XMLHttpRequest();
+  // save.open("POST", "php/save-transaction.php");
+  // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // save.send(`json=${JSON.stringify(saveJSON)}`);
+  // console.log(JSON.stringify(saveJSON));
+  // console.log(saveJSON);
 
-    alert("Transaction Saved");
+  fetch("php/save-transaction.php", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `json=${JSON.stringify(saveJSON)}`,
+  });
 
-    location.reload();
-  }
+  alert("Transaction Saved");
+
+  location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------
@@ -752,7 +823,7 @@ containPendingTrans.addEventListener("click", function (e) {
   }
 });
 
-paymentModalClose.addEventListener("click", function (e) {
+paymentModalClose.addEventListener("click", function () {
   modalPayment.style.display = "none";
 });
 
