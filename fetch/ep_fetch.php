@@ -98,7 +98,7 @@ if ($total_data > 0) {
       <td>' . $row["ep_date"] . '</td>
       <td><center>
                ' . $disable . '
-                <a href="view/viewstout.php?id=' . $row["ep_id"] . '">
+                <a href="view/viewep.php?id=' . $row["ep_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
