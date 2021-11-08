@@ -18,25 +18,25 @@ if (!$_SESSION['user']) {
             <div class="container__customer--label">
               <label for="customerId">Customer ID:</label>
             </div>
-            <input type="text" id="customerId" class="input-customer_id" />
+            <input type="text" id="customerId" class="input-customer_id" disabled />
           </div>
           <span class="container-customer_name">
             <div class="container__customer--label">
               <label for="customerName">Customer Name:</label>
             </div>
-            <input type="text" id="customerName" class="input-customer_name" />
+            <input type="text" id="customerName" class="input-customer_name" disabled />
           </span>
           <span class="container-customer_contact">
             <div class="container__customer--label">
               <label for="customerContact">Contact Number:</label>
             </div>
-            <input type="text" id="customerContact" class="input-customer_contact" />
+            <input type="text" id="customerContact" class="input-customer_contact" disabled />
           </span>
           <div class="container-customer_address">
             <div class="container__customer--label">
               <label for="customerAddress">Contact Address:</label>
             </div>
-            <input type="text" id="customerAddress" class="input-customer_address" />
+            <input type="text" id="customerAddress" class="input-customer_address" disabled />
           </div>
           <span>
             <button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search Customer</button>
