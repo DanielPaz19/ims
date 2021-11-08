@@ -361,6 +361,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     }
 
+
+
     @media print {
         body {
             font-family: 'Courier New', Courier, monospace;
@@ -369,6 +371,26 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         .noprint {
             visibility: hidden;
         }
+    }
+
+    textarea {
+        border: none;
+        background-color: transparent;
+        resize: none;
+        outline: none;
+        font-size: 12px;
+    }
+
+
+    input[type=button] {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-weight: bolder;
     }
 </style>
 
@@ -391,6 +413,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 </head>
 
 <body>
+
 
 
     <div class="container" id="div_print">
@@ -423,34 +446,65 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <th>&nbsp;&nbsp;</th>
                 </tr>
                 <?php
-                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ep_product.ep_qty, ep_product.ep_price
+                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ep_product.ep_qty, ep_product.ep_price, ep_product.ep_totPrice, ep_tb.ep_remarks
                     FROM product 
+                    LEFT JOIN ep_tb ON ep_tb.ep_id = product.product_id
                     INNER JOIN ep_product ON product.product_id = ep_product.product_id
                     INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ep_product.ep_id='$id' ";
 
                 $result = $db->query($sql);
                 $count = 0;
+
                 if ($result->num_rows >  0) {
 
                     while ($irow = $result->fetch_assoc()) {
                         $count = $count + 1;
+                        $total[] = $irow["ep_qty"] * $irow["ep_price"];
+
                 ?>
                         <tr>
                             <td style="width: 165px;"><?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 450px;"><?php echo $irow['product_name'] ?></td>
-                            <td style="width: 50px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                            <td style="width: 379px;"><?php echo $irow['product_name'] ?></td>
+                            <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                            <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_totPrice'] ?>.00</td>
                         </tr>
                 <?php }
                 } ?>
+
             </table>
+
+            <table style="float: right;">
+                <?php
+
+                $limit = 0;
+                $subTot = 0;
+                $disTot = 0;
+
+                while ($limit != count($total)) {
+                    $subTot += $total[$limit];
+                    // $disTot += $totaldisamount[$limit];
+                    $limit += 1;
+                }
+
+                $grandTot = $subTot - $disTot;
+
+                ?>
+                <tr>
+                    <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                    <td style="text-decoration: overline;">
+                        &#8369;<?php echo $grandTot ?>.00
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;<textarea cols="30" rows="10"><?php echo 'NOTE:' . $ep_remarks; ?></textarea></td>
+                </tr>
+            </table>
+
 
         </div>
 
 
-
-
-
 </body>
-<input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Print ">
+<input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Click Here to Print ! ">
 
 </html>
