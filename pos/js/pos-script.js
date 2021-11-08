@@ -737,6 +737,8 @@ containerProductList.addEventListener("dblclick", function (e) {
   smryQty.value = formatNumber(+prevQty + 1);
   smryNetSales.value = formatNumber(+prevNetSales + +price);
 
+  computeTax();
+
   // Add default value of item to the Label
   smryLabelPayable.textContent = `${smryNetSales.value} PHP`;
 });
