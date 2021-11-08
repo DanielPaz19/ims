@@ -359,6 +359,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         border-collapse: collapse;
 
     }
+
+    @media print {
+        .noprint {
+            visibility: hidden;
+        }
+    }
 </style>
 
 <head>
@@ -383,7 +389,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
     <div class="container" id="div_print">
-        <img src="../img/eptemplate.jpg">
+        <img src="../img/eptemplate.jpg" class="noprint">
 
         <div class="ep--no"><br><br><br> <br>
             <p style=" margin-right:15px"><?php echo $ep_no; ?></p>
@@ -439,6 +445,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
 </body>
-<input name="b_print" type="button" class="ipt" onClick="printdiv('div_print');" value=" Print ">
+<input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Print ">
 
 </html>
