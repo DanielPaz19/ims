@@ -71,7 +71,7 @@ if ($total_data > 0) {
       <td>' . $row["customers_contact"] . '</td>
       <td>' . $row["customers_note"] . '</td>
       <td><center>
-                <a href="edit/customer-edit.php?id=' . $row["customers_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="../edit/customer-edit.php?id=' . $row["customers_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       </center>
                
       </td>
