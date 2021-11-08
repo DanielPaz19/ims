@@ -140,18 +140,23 @@ const inputChequeDate = document.querySelector(".cheque-date");
 const inputChequeNumber = document.querySelector(".cheque-number");
 
 // ---------------------------------- FUNCTION ---------------------------------
-const fetchData = (file, container, input = "") => {
-  fetch(file + `?q=${encodeURIComponent(input)}`)
-    .then((response) => response.json())
+const fetchTableData = (tableType, container, renderFunction, input = "") => {
+  fetch(`php/search-${tableType}.php?q=${encodeURIComponent(input)}`)
+    .then((response) => {
+      return response.json();
+    })
     .then((data) => {
-      renderCustomer(data, container);
+      renderFunction(data, container);
+    })
+    .catch(() => {
+      container.innerHTML = "";
     });
 };
 
 const openCustModal = function () {
   modalCustomer.classList.add("modal--active");
 
-  fetchData("php/search-customer.php", containerCustomerList);
+  fetchTableData("customer", containerCustomerList, renderCustomer);
 };
 
 const closeCustModal = function () {
@@ -178,6 +183,26 @@ const renderCustomer = function (data, container) {
             <td>${data.customers_address}</td>
             <td>${data.customers_contact}</td>
             </tr>`
+    );
+  });
+};
+
+const renderItem = function (data, container) {
+  container.innerHTML = "";
+  data.forEach((data, index) => {
+    container.insertAdjacentHTML(
+      "beforeend",
+      `<tr class='product-data product${index}'>
+                          <td class='item-code'>${data.product_id.padStart(
+                            8,
+                            0
+                          )}</td>
+                          <td class='item-name'>${data.product_name}</td>
+                          <td class='price'>${(+data.price).toFixed(2)}</td>
+                          <td class='qty'>${data.qty}</td>
+                          <td class='unit'>${data.unit_name}</td>
+                          <td class='location'>${data.loc_name}</td>
+                    </tr>`
     );
   });
 };
@@ -451,7 +476,7 @@ const init = function () {
 
   document.querySelector("#transactionDate").value = getCurrDate();
 
-  showData("php/search-product.php", containerProductList);
+  fetchTableData("product", containerProductList, renderItem);
 };
 
 const getTransNumber = function () {
@@ -470,64 +495,6 @@ const getTransNumber = function () {
 const getCurrDate = function () {
   const currDate = new Date();
   return currDate.toDateString();
-};
-
-const showData = function (file, container, input = "") {
-  // Create an XMLHttpRequest object
-  const xhttp = new XMLHttpRequest();
-
-  // Define a callback function
-  xhttp.onload = function () {
-    const data = JSON.parse(this.responseText);
-    showTableData(data, container);
-  };
-
-  // Send a request
-  xhttp.open("POST", file + `?q=${input}`);
-  xhttp.send();
-};
-
-const showTableData = (data, container) => {
-  container.innerHTML = "";
-  if (container == containerProductList) {
-    data.forEach((data, index) => {
-      let row = `<tr class='product-data product${index}'>
-                          <td class='item-code'>${data.product_id.padStart(
-                            8,
-                            0
-                          )}</td>
-                          <td class='item-name'>${data.product_name}</td>
-                          <td class='price'>${(+data.price).toFixed(2)}</td>
-                          <td class='qty'>${data.qty}</td>
-                          <td class='unit'>${data.unit_name}</td>
-                          <td class='location'>${data.loc_name}</td>
-                    </tr>`;
-      container.innerHTML += row;
-    });
-  } else {
-    data.forEach((data, index) => {
-      let row = `<tr class='customer-data' id='customer${index}'>
-                          <td class="customer-id">
-                          ${data.customers_id}
-                          </td>
-                          <td class="customer-name">
-                          ${data.customers_name}
-                          </td>
-                          <td class="customer-address">
-                          ${data.customers_address}
-                          </td>
-                          <td class="customer-contact">
-                          ${data.customers_contact}
-                          </td>
-                    </tr>`;
-      container.innerHTML += row;
-    });
-  }
-};
-
-const search = function (inputSearch, container) {
-  container.innerHTML = "";
-  openCustModal();
 };
 
 const selectRow = function (target) {
@@ -645,7 +612,6 @@ init();
 // Nav Options
 nav.addEventListener("click", function (e) {
   const clicked = e.target.closest(".nav__button");
-  console.log(clicked);
 
   if (!clicked) return;
 
@@ -672,7 +638,7 @@ btnCustomerClose.addEventListener("click", function () {
 
 //search customer on customer modal
 inputSearchCustomer.addEventListener("keyup", function () {
-  fetchData("php/search-customer.php", containerCustomerList, this.value);
+  fetchTableData("customer", containerCustomerList, renderCustomer, this.value);
 });
 
 //select customer from customer modal
@@ -688,14 +654,7 @@ document.addEventListener("keyup", function (e) {
 
 //search product from product table
 inputSearchProduct.addEventListener("keyup", function () {
-  const searchVal = inputSearchProduct.value;
-  console.log(inputSearchProduct.value);
-
-  showData(
-    "php/search-product.php",
-    containerProductList,
-    encodeURIComponent(searchVal)
-  );
+  fetchTableData("product", containerProductList, renderItem, this.value);
 });
 
 //add product to order list
