@@ -157,7 +157,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                             <option value="<?php echo $_GET['deptId'] ?>"><?php echo $_GET['dept']; ?></option>
                             <?php
                             include "config.php";
-                            $records = mysqli_query($db, "SELECT * FROM dept_tb ORDER BY dept_id DESC LIMIT  0,6");
+                            $records = mysqli_query($db, "SELECT * FROM dept_tb ORDER BY dept_id DESC ");
 
                             while ($data = mysqli_fetch_array($records)) {
                                 echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
