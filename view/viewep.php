@@ -273,9 +273,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 ?>
 <html>
 <style>
-    * {
-        font-family: sans-serif;
+    body {
+        font-family: 'Courier New', Courier, monospace;
     }
+
 
     img {
         width: 808.81889764px;
@@ -351,7 +352,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     .ep_tb th,
     td {
         padding: 5px;
-        border: none;
+        /* border: 1px solid black; */
     }
 
     .ep_tb {
@@ -361,6 +362,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     }
 
     @media print {
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
         .noprint {
             visibility: hidden;
         }
@@ -432,7 +437,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 ?>
                         <tr>
                             <td style="width: 165px;"><?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 570px;"><?php echo $irow['product_name'] ?></td>
+                            <td style="width: 450px;"><?php echo $irow['product_name'] ?></td>
+                            <td style="width: 50px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
                         </tr>
                 <?php }
                 } ?>
