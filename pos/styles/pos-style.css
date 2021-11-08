@@ -752,6 +752,10 @@ legend {
   text-align: center;
 }
 
+.container-radio-button input {
+  width: 10px;
+}
+
 .container-radio-button input:hover,
 .container-radio-button label:hover {
   cursor: pointer;

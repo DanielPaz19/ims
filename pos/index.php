@@ -18,25 +18,25 @@ if (!$_SESSION['user']) {
             <div class="container__customer--label">
               <label for="customerId">Customer ID:</label>
             </div>
-            <input type="text" id="customerId" class="input-customer_id" />
+            <input type="text" id="customerId" class="input-customer_id" disabled />
           </div>
           <span class="container-customer_name">
             <div class="container__customer--label">
               <label for="customerName">Customer Name:</label>
             </div>
-            <input type="text" id="customerName" class="input-customer_name" />
+            <input type="text" id="customerName" class="input-customer_name" disabled />
           </span>
           <span class="container-customer_contact">
             <div class="container__customer--label">
               <label for="customerContact">Contact Number:</label>
             </div>
-            <input type="text" id="customerContact" class="input-customer_contact" />
+            <input type="text" id="customerContact" class="input-customer_contact" disabled />
           </span>
           <div class="container-customer_address">
             <div class="container__customer--label">
               <label for="customerAddress">Contact Address:</label>
             </div>
-            <input type="text" id="customerAddress" class="input-customer_address" />
+            <input type="text" id="customerAddress" class="input-customer_address" disabled />
           </div>
           <span>
             <button class="btn-search_customer"><i class="fa fa-search"></i>&nbsp;Search Customer</button>
@@ -253,17 +253,16 @@ if (!$_SESSION['user']) {
 
   <div id="payment-modal">
     <div class="container-payment-details">
-      <h1>Payment</h1>
 
       <div class="payment__modal--close">
         <p>X</p>
       </div>
 
       <form class="payment" method="get" action="payment.php">
-        <fieldset class="payment-type">
-          <legend>Payment Type</legend>
-          <div>
-            <span class="container-radio-button">
+        <div class="payment-type">
+          <h1>Payment Type</h1>
+          <div class="container-radio-button">
+            <span>
               <input type="radio" id="cash" name="payment-type" value="" checked class="radio--payment-type" />
               <label for="cash" class="label--payment-type">CASH</label>
               <input type="radio" id="online" value="" name="payment-type" class="radio--payment-type" />
@@ -272,7 +271,7 @@ if (!$_SESSION['user']) {
               <label for="cheque" class="label--payment-type">CHEQUE</label>
             </span>
           </div>
-        </fieldset>
+        </div>
 
         <fieldset class="online-details">
           <div class="online-details">
