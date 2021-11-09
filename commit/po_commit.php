@@ -173,9 +173,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           <?php
           $sql = "SELECT po_product.po_id, product.product_id ,product.product_name, product.qty, po_product.item_qtyorder, unit_tb.unit_name, product.cost, po_product.item_disamount 
                                   FROM product
-                                  INNER JOIN po_product
+                                  LEFT JOIN po_product
                                   ON product.product_id = po_product.product_id
-                                  INNER JOIN unit_tb
+                                  LEFT JOIN unit_tb
                                   ON product.unit_id = unit_tb.unit_id
                                   WHERE po_product.po_id = '$id' ";
 

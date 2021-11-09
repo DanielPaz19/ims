@@ -163,8 +163,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           </tr>
 
           <?php
-          $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount FROM product INNER JOIN stout_product ON product.product_id = stout_product.product_id
-   INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stout_product.stout_id='$id' ";
+          $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount 
+          FROM product 
+          LEFT JOIN stout_product ON product.product_id = stout_product.product_id
+          LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+          WHERE stout_product.stout_id='$id' ";
 
           $result = $db->query($sql);
           $count = 0;

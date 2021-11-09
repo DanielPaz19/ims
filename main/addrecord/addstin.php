@@ -174,6 +174,12 @@
       float: right;
       font-weight: initial;
     }
+
+    .add-button {
+      width: 31%;
+      letter-spacing: 2px;
+
+    }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -314,7 +320,7 @@
           <div class="container">
             <div id="search">
               <label>Enter Item:&nbsp;&nbsp;</label>
-              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." /> <button class="add-button" title="Add Item"><i class="fa fa-plus"></i></button>
+              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
               <div id="item-list"></div><!-- Dont Remove this -->
             </div>
           </div>
@@ -325,6 +331,7 @@
           <!-- input for discount -->
           <label>Discount: &nbsp;&nbsp;</label>
           <input class="item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
+          <button class="add-button" title="Add Item">Add item to table</button>
         </div>
         <br><br>
         <hr>
