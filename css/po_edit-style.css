@@ -1,0 +1,135 @@
+h1 {
+  text-align: center;
+  color: midnightblue;
+  font-weight: bold;
+}
+
+.container--po__details {
+  background-color: #eaeaea;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.po__label {
+  text-align: left;
+  width: 130px;
+  margin: 10px;
+  color: midnightblue;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.container--po__details input {
+  padding: 2px;
+  margin: 5px 10px;
+}
+
+#supplier_name {
+  width: 30%;
+}
+
+.button--add__item {
+  cursor: pointer;
+  float: right;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: midnightblue;
+  color: #ffffff;
+}
+
+/* Table Style */
+
+.container--po__table {
+  background-color: #eaeaea;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  width: 90%;
+  height: 500px;
+  margin: 20px auto;
+  border-radius: 10px;
+  table-layout: fixed;
+  padding: 10px;
+}
+
+.po__table {
+  table-layout: fixed;
+  width: 100%;
+  color: #ffffff;
+}
+
+.po__table thead {
+  background-color: midnightblue;
+  height: 30px;
+}
+
+.po__table--item {
+  color: midnightblue;
+}
+
+.container--po__table td {
+  text-align: right;
+  padding: 0px 10px;
+}
+
+.container--po__table th:nth-child(1) {
+  width: 8%;
+}
+.container--po__table th:nth-child(2) {
+  width: 25%;
+}
+.container--po__table th:nth-child(3) {
+  width: 10%;
+}
+.container--po__table th:nth-child(4) {
+  width: 10%;
+}
+.container--po__table th:nth-child(5) {
+  width: 10%;
+}
+.container--po__table th:nth-child(6) {
+  width: 10%;
+}
+.container--po__table th:nth-child(7) {
+  width: 10%;
+}
+.container--po__table th:nth-child(8) {
+  width: 10%;
+}
+.container--po__table th:nth-child(9) {
+  width: 5%;
+}
+
+.container--po__table td:nth-child(1),
+.container--po__table td:nth-child(9),
+.container--po__table td:nth-child(4) {
+  text-align: center;
+}
+.container--po__table td:nth-child(2) {
+  text-align: left;
+}
+
+.container--po__button {
+  margin: auto;
+  width: 90%;
+}
+
+.container--po__button button {
+  margin: 0px 5px;
+  cursor: pointer;
+  float: right;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: midnightblue;
+  color: #ffffff;
+}
+
+/* Item Modal */
+.container--modal {
+  display: none;
+}
