@@ -160,9 +160,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           $sql = "SELECT stin_tb.stin_id, product.product_id,product.product_name,product.qty,stin_product.stin_temp_qty,unit_tb.unit_name,product.cost,
    stin_product.stin_temp_disamount 
    FROM stin_product 
-   INNER JOIN product ON product.product_id = stin_product.product_id
-   INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
-   INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
+   LEFT JOIN product ON product.product_id = stin_product.product_id
+   LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
+   LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+   WHERE stin_product.stin_id='$id'";
 
           $result = $db->query($sql);
           $count = 0;

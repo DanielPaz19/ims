@@ -426,9 +426,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
             unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id, stin_product.stin_id
             FROM product 
-            INNER JOIN stin_product ON stin_product.product_id=product.product_id 
-            INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
-            INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+            LEFT JOIN stin_product ON stin_product.product_id=product.product_id 
+            LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
+            LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
             WHERE stin_tb.stin_id='$id' 
             ORDER BY product.product_id ASC";
 
