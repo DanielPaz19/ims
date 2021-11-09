@@ -31,7 +31,7 @@
                       }
                       ?>>
     <a href="index.php"><i class="fas fa-home"></i>&nbspHome</a>
-
+    <a href="jo_main.php" title="Create New Job-Order"><i class="fas fa-clipboard-list"></i>&nbspJob-Order</a>
     <div class="dropdown">
       <button class="dropbtn"><i class="fas fa-box"></i>&nbspInventory
         <i class="fa fa-caret-down"></i>
