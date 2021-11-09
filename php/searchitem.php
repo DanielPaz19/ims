@@ -12,8 +12,8 @@ $query = "SELECT product.pro_remarks,
             product.unit_id,
             product.cost
             FROM product 
-            RIGHT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-            RIGHT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
+            LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+            LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
             WHERE product_name LIKE '%" . $_GET['q'] . "%' ORDER BY product_id LIMIT 20";
 
 $output = [];
