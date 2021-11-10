@@ -1,5 +1,6 @@
 ---- PO Edit -----
-1) Delete Item 
-2) Editable Qty-In, Cost, Discount
-3) Auto Compute Total Cost, Dscnt Val, Sub-Total
-4) Confirmation Modal Before Update
+
+1) Delete Item Function (js) 
+2) Editable Qty-In, Cost, Discount (js)
+3) Auto Compute Total Cost, Dscnt Val, Sub-Total (js)
+4) Confirmation Modal Before Update (js)
