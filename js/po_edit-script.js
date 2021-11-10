@@ -1,14 +1,24 @@
 "use strict";
-const buttonAddItem = document.querySelector(".button__add--item");
+
+const buttonAddItem = document.querySelector(".button--insert__item");
 const containerModalAddItem = document.querySelector(".container--modal");
 const modalAddItem = document.querySelector(".modal--add__item");
 const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
-const tableItemTb = document.querySelector(".itemTb");
+const tableItemTb = document.querySelector(".po__table");
+
+const formatNumber = (string) => {
+  const NumOptions = {
+    style: "decimal",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  };
+  return new Intl.NumberFormat("en-US", NumOptions).format(string);
+};
 
 const fetchTableData = (tableType, container, renderFunction, input = "") => {
-  fetch(`php/search-${tableType}.php?q=${encodeURIComponent(input)}`)
+  fetch(`php/search${tableType}.php?q=${encodeURIComponent(input)}`)
     .then((response) => {
       return response.json();
     })
@@ -20,17 +30,22 @@ const fetchTableData = (tableType, container, renderFunction, input = "") => {
     });
 };
 
-const renderCustomer = function (data, container) {
+const renderItem = function (data, container) {
   container.innerHTML = "";
   data.forEach((data, index) => {
     container.insertAdjacentHTML(
       "beforeend",
-      `<tr class='customer-data' id='customer${index}'>
-            <td>${data.customers_id.padStart(8, 0)}</td>
-            <td>${data.customers_name}</td>
-            <td>${data.customers_address}</td>
-            <td>${data.customers_contact}</td>
-            </tr>`
+      `<tr class='product-data product${index}'>
+                          <td class='item-code'>${data.product_id.padStart(
+                            8,
+                            0
+                          )}</td>
+                          <td class='item-name'>${data.product_name}</td>
+                          <td class='qty'>${formatNumber(data.qty)}</td>
+                          <td class='unit'>${data.unit_name}</td>
+                          <td class='location'>${data.loc_name}</td>
+                          <td class='cost'>${formatNumber(data.cost)}</td>
+                    </tr>`
     );
   });
 };
@@ -68,7 +83,7 @@ const poEdit = function (e) {
 const modalOpen = function (e) {
   e.preventDefault();
   containerModalAddItem.classList.add("modal--active");
-  showData("../php/searchitem.php", "", containerItemList);
+  showData("php/searchitem.php", "", containerItemList);
 };
 
 const modalClose = function () {
@@ -77,7 +92,7 @@ const modalClose = function () {
 
 const searchItem = function () {
   const queue = inputSearch.value;
-  showData("../php/searchitem.php", `${queue}`, containerItemList);
+  fetchTableData("item", containerItemList, renderItem, queue);
 };
 
 const hasDuplicate = function (productId, table) {
@@ -120,17 +135,23 @@ const selectItem = function (e) {
     `<tr>
     <td class="item-code">${itemCode}</td>
     <td class="item-description">${itemName}</td>
-    <td class="qty-in">${poQty}</td>
+    <td class="qty-in">${formatNumber(poQty)}</td>
     <td class="unit">${itemUnit}</td>
-    <td class="cost">${itemCost}</td> 
-    <td class="total-cost">${totalCost}</td>
-    <td class="discount-percent">${itemDiscPercent}</td>
-    <td class="discount-value">${itemDiscVal}</td>
-    <td class="discount-value">${subTotal}</td>
+    <td class="cost">${formatNumber(itemCost)}</td> 
+    <td class="total-cost">${formatNumber(totalCost)}</td>
+    <td class="discount-percent">${formatNumber(itemDiscPercent)}</td>
+    <td class="discount-value"></td>
+    <td class="subtotal">${formatNumber(subTotal)}</td>
     <td class="delete">
     <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
     </td>
-    </tr>`
+    </tr>
+    <input type='hidden' name='productId[]' value='${itemCode}'>
+    <input type='hidden' name='qtyIn[]' value='${poQty}'>
+    <input type='hidden' name='itemCost[]' value='${itemCost}'>
+    <input type='hidden' name='itemDisamount[]' value='${itemDiscPercent}'>
+    <input type='hidden' name='itemTotal[]' value='>${subTotal}'>
+    `
   );
 
   // Close the modal
@@ -162,10 +183,10 @@ const showTableData = (data, container) => {
     }'>
                     <td class='item-code'>${data.product_id.padStart(8, 0)}</td>
                     <td class='item-name'>${data.product_name}</td>
-                    <td class='qty'>${data.qty}</td>
+                    <td class='qty'>${formatNumber(data.qty)}</td>
                     <td class='unit'>${data.unit_name}</td>
                     <td class='location'>${data.loc_name}</td>
-                    <td class='cost'>${(+data.cost).toFixed(2)}</td>
+                    <td class='cost'>${formatNumber(data.cost)}</td>
               </tr>`;
     container.innerHTML += row;
   });
