@@ -14,15 +14,19 @@ include 'php/po_edit-inc.php';
     <span class="po__label">
       PO ID:
     </span>
-    <input type="text" name="poId" id="po_id" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" disabled>
+    <input type="text" name="poId" id="po_id" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
     <span class="po__label">
       Supplier Name:
     </span>
-    <input type="text" name="supplierName" id="supplier_name" value="<?php echo $supName ?>">
-    <span class="po__label">
+    <select name="supplierId" id="supplier_name">
+      <option value=" <?php echo $supId ?>"><?php echo $supName ?></option>
+      <?php include 'php/render-supplier.php' ?>
+
+    </select>
+    <span class=" po__label">
       PO Title:
     </span>
-    <input type="text" name="poTitle" id="po_title" value="<?php echo $poTerms ?>"><br>
+    <input type="text" name="poTitle" id="po_title" value="<?php echo $poTitle ?>"><br>
     <span class="po__label">
       Terms:
     </span>
