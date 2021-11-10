@@ -240,7 +240,7 @@
                 ?>
                         <td style="text-align: left;"><?php echo $irow['jo_product_qty'] ?><?php echo $irow['unit_name'] ?></td>
                         <td style="width:235px"><?php echo $irow['product_name'] ?></td>
-                        <td style="width:100px">&#8369;&nbsp;<?php echo $irow['jo_product_price'] ?></td>
+                        <td style="width:100px">&#8369;&nbsp;<?php echo $irow['jo_product_price'] ?>/<?php echo $irow['unit_name'] ?></td>
 
                         </tr>
                 <?php }
