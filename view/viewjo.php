@@ -122,7 +122,7 @@
     td {
         padding: 2px;
         /* border: 1px solid black; */
-        font-size: 12px;
+        /* font-size: 12px; */
     }
 
     .ep_tb {
@@ -207,7 +207,7 @@
 <body>
 
     <div class="container" id="div_print">
-        <img src="../img/jotemplate.jpg" class="noprint">
+        <img src="../img/jotemplate.jpg">
 
         <div class="ep--no"><br>
             <p style=" margin-right:140px;font-size: 16px;"><?php echo $customers_name ?></p>
@@ -215,7 +215,7 @@
         </div>
 
         <div class="ep--date">
-            <p style=" margin-left:300px;font-size: 16px;"><?php echo $jo_date; ?></p>
+            <p style=" margin-left:300px;font-size: 14px;"><?php echo $jo_date; ?></p>
         </div>
 
 
