@@ -72,19 +72,19 @@
     .ep--customer {
         position: absolute;
         top: 8px;
-        left: 16px;
+        left: 0px;
     }
 
     .ep--customer--address {
         position: absolute;
         top: 8px;
-        left: 16px;
+        left: 0px;
     }
 
     .ep--no {
         position: absolute;
         top: 12px;
-        left: 25px;
+        left: 0px;
 
     }
 
@@ -115,7 +115,7 @@
     .ep--itemlist {
         position: absolute;
         top: 14px;
-        left: 16px;
+        left: 0px;
     }
 
     .ep_tb th,
@@ -126,7 +126,7 @@
     }
 
     .ep_tb {
-        margin-left: 2px;
+        /* margin-left: 0px; */
         border-collapse: collapse;
 
     }
