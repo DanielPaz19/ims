@@ -1,7 +1,5 @@
--------- ITEM LIST PAGE -------------
-[1] Supplier and Unit and Location Modal
-
-
-
--------- STOCK IN PAGE -------------
-[2] Display latest CODE 
+---- PO Edit -----
+1) Delete Item 
+2) Editable Qty-In, Cost, Discount
+3) Auto Compute Total Cost, Dscnt Val, Sub-Total
+4) Confirmation Modal Before Update
