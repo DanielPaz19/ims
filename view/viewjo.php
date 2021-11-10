@@ -207,7 +207,7 @@
 <body>
 
     <div class="container" id="div_print">
-        <img src="../img/jotemplate.jpg">
+        <img src="../img/jotemplate.jpg" class="noprint">
 
         <div class="ep--no"><br>
             <p style=" margin-right:140px;font-size: 16px;"><?php echo $customers_name ?></p>
