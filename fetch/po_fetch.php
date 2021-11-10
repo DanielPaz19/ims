@@ -73,7 +73,7 @@ if ($total_data > 0) {
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
       $disable = '              
-                <a href="edit/po_edit.php?id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="po_edit-page.php?editpo&id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete/po_delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;

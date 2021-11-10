@@ -1,0 +1,99 @@
+<?php
+
+// IF Edit button Click from PO Main
+if (isset($_GET['editpo'])) {
+
+  $poId = $_GET['id'];
+
+  require 'php/config.php';
+
+  $result = mysqli_query(
+    $db,
+    "SELECT po_tb.po_id, po_tb.po_terms, po_tb.po_remarks, po_tb.po_code,
+  po_tb.po_date, po_tb.po_title, po_tb.sup_id, po_product.item_qtyorder, po_product.item_cost, 
+  po_product.item_disamount, po_product.po_temp_tot, product.product_name, product.product_name,
+  product.class_id, product.unit_id, product.product_id, sup_tb.sup_name, unit_tb.unit_name
+ FROM po_tb  
+ LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
+ LEFT JOIN product ON po_product.product_id = product.product_id
+ LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
+ LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+ WHERE po_tb.po_id ='$poId'"
+  );
+
+
+  // PO Details
+  if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while ($row = mysqli_fetch_assoc($result)) {
+      $supId = $row['sup_id'];
+      $supName = $row['sup_name'];
+      $poTerms = $row['po_terms'];
+      $poRemarks = $row['po_remarks'];
+      $poDate = $row['po_date'];
+      $poCode = $row['po_code'];
+      $poTitle = $row['po_title'];
+      $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
+      $productName[] = $row['product_name'];
+      $qtyIn[] = $row['item_qtyorder'];
+      $unitId[] = $row['unit_id'];
+      $unitName[] = $row['unit_name'];
+      $itemCost[] = $row['item_cost'];
+      $itemDisamount[] = $row['item_disamount'];
+      $itemTotal[] = $row['po_temp_tot'];
+    }
+  } else {
+    echo "0 results";
+  }
+}
+
+// If po_edit-page.php update button is set
+if (isset($_POST['updatepo'])) {
+  $poId = $_POST['poId'];
+  $supId = $_POST['supplierId'];
+  $poTitle = $_POST['poTitle'];
+  $poTerms = $_POST['poTerms'];
+  $poRemarks = $_POST['poRemarks'];
+  $poDate = $_POST['poDate'];
+
+  $productId = $_POST['productId'];
+  $qtyIn = $_POST['qtyIn'];
+  $itemCost = $_POST['itemCost'];
+  $itemDisamount = $_POST['itemDisamount'];
+  $itemTotal = $_POST['itemTotal'];
+
+  require '../php/config.php';
+
+  // Update po_tb
+  mysqli_query(
+    $db,
+    "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' 
+    WHERE po_id = '" . number_format($poId) . "'"
+  );
+
+
+  // Update po_product
+  $limit = 0;
+  while (count($productId) !== $limit) {
+    // Check product id from po_product
+    $checkResult = mysqli_query($db, "SELECT product_id FROM po_product WHERE po_id = $poId AND product_id ='" . $productId[$limit] . "'");
+
+    if (mysqli_num_rows($checkResult) > 0) {
+      // If product id already exist on po_product, UPDATE
+      mysqli_query($db, "UPDATE po_id SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'");
+    } else {
+      // If product id dont exist on po_product, INSERT
+      mysqli_query($db, "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, po_temp_tot) 
+      VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemTotal[$limit]')");
+    }
+    $limit++;
+  }
+
+  // editpo&id=2&supId=107&supName=A.F.%20SA
+  header("location: ../po_edit-page.php?editpo&id=$poId");
+}
+
+// If po_edit-page.php update button is set
+if (isset($_POST['cancelupdate'])) {
+  header('location: ../po_main.php');
+}

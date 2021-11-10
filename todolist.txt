@@ -1,7 +1,6 @@
--------- ITEM LIST PAGE -------------
-[1] Supplier and Unit and Location Modal
+---- PO Edit -----
 
-
-
--------- STOCK IN PAGE -------------
-[2] Display latest CODE 
+1) Delete Item Function (js) 
+2) Editable Qty-In, Cost, Discount (js)
+3) Auto Compute Total Cost, Dscnt Val, Sub-Total (js)
+4) Confirmation Modal Before Update (js)
