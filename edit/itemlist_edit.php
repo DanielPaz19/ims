@@ -150,8 +150,8 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                     <th width="25%">Department</th>
                 </tr>
                 <tr>
-                    <td><input type="number" name="price" value="<?php echo $price; ?>" /></td>
-                    <td><input type="number" name="cost" value="<?php echo $cost; ?>" /></td>
+                    <td><input tabindex="2" required="number" type="number" name="price" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $price; ?>" /></td>
+                    <td><input tabindex="2" required="number" type="number" name="cost" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $cost; ?>" /></td>
                     <td>
                         <select name="dept_id" class="select--dept">
                             <option value="<?php echo $_GET['deptId'] ?>"><?php echo $_GET['dept']; ?></option>
