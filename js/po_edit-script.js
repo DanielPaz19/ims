@@ -7,6 +7,7 @@ const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
 const tableItemTb = document.querySelector(".po__table");
+const editableData = document.querySelectorAll(".td__edit");
 
 const formatNumber = (string) => {
   const NumOptions = {
@@ -51,31 +52,33 @@ const renderItem = function (data, container) {
 };
 
 const poEdit = function (e) {
-  const target = e.target.closest("td").querySelector("input");
-  const prevValue = target.closest("td").innerText;
+  const target = e.target.closest(".td__edit");
+
+  if (!target) return;
+
+  const prevValue = target.innerText;
+
   console.log(prevValue);
-  console.dir(target.closest("td"));
+  // console.dir(target.closest("td"));
 
   const changeValue = function (promptMessage) {
     let newValue = prompt(promptMessage);
 
     if (!newValue || newValue.includes(" ") || newValue === NaN) return;
 
-    target.value = newValue;
-    target.closest("td").childNodes[0].data = newValue;
+    target.innerHTML = newValue;
+    // target.closest("td").childNodes[0].data = newValue;
   };
 
-  if (!target) return;
-
-  if (target.classList.contains("po--qty__in")) {
+  if (target.classList.contains("td__edit--qty")) {
     changeValue("Enter New Qty-Order");
   }
 
-  if (target.classList.contains("po--cost")) {
+  if (target.classList.contains("td__edit--cost")) {
     changeValue("Enter New Cost");
   }
 
-  if (target.classList.contains("po--discount")) {
+  if (target.classList.contains("td__edit--discount")) {
     changeValue("Enter New Discount");
   }
 };
@@ -135,14 +138,16 @@ const selectItem = function (e) {
     `<tr>
     <td class="item-code">${itemCode}</td>
     <td class="item-description">${itemName}</td>
-    <td class="qty-in">${formatNumber(poQty)}</td>
+    <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
     <td class="unit">${itemUnit}</td>
-    <td class="cost">${formatNumber(itemCost)}</td> 
+    <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
     <td class="total-cost">${formatNumber(totalCost)}</td>
-    <td class="discount-percent">${formatNumber(itemDiscPercent)}</td>
+    <td class='td__edit td__edit--discount'>${formatNumber(
+      itemDiscPercent
+    )}</td>
     <td class="discount-value"></td>
     <td class="subtotal">${formatNumber(subTotal)}</td>
-    <td class="delete">
+    <td class='td__edit td__edit--delete'>
     <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
     </td>
     </tr>
@@ -200,7 +205,7 @@ inputSearch.addEventListener("keyup", searchItem);
 
 containerItemList.addEventListener("dblclick", selectItem);
 
-tableItemTb.querySelector("tbody").addEventListener("dblclick", poEdit);
+tableItemTb.querySelector("tbody").addEventListener("click", poEdit);
 
 function showadditem() {
   //set the width and height of the

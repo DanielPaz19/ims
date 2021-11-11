@@ -71,14 +71,14 @@ include 'php/po_edit-inc.php';
           "<tr>
          <td>$productId[$limit]</td>
          <td>$productName[$limit]</td>
-         <td>" . number_format($qtyIn[$limit], 2) . "</td>
+         <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
          <td>$unitName[$limit]</td>
-         <td>" . number_format($itemCost[$limit], 2) . "</td>
+         <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
          <td>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
-         <td>" . number_format($itemDisamount[$limit], 2) . "</td>
+         <td class='td__edit td__edit--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
          <td></td>
          <td>" . number_format($itemTotal[$limit], 2) . "</td>
-         <td>
+         <td class='td__edit td__edit--delete'>
             <font color='red'><i class='fa fa-trash-o' style='font-size:26px'></i></font>
           </td>
          </tr>
