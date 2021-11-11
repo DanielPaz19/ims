@@ -50,7 +50,7 @@ if (isset($_POST['stin_submit'])) {
 
 
 
-  header("Location:../stin_main.php");
+  // header("Location:../stin_main.php");
 }
 
 
