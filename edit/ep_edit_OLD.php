@@ -3,62 +3,54 @@
 include('../php/config.php');
 
 if (isset($_POST['ep_submit'])) {
+    //ep_tb
     $id = $_POST['id'];
-    $epNo = mysqli_real_escape_string($db, $_POST['ep_no']);
-    $epTitle = mysqli_real_escape_string($db, $_POST['ep_title']);
-    $epRemarks = mysqli_real_escape_string($db, $_POST['ep_remarks']);
+    $ep_no = mysqli_real_escape_string($db, $_POST['ep_no']);
+    $ep_title = mysqli_real_escape_string($db, $_POST['ep_title']);
+    $customers_id = mysqli_real_escape_string($db, $_POST['customers_id']);
     $ep_date = mysqli_real_escape_string($db, $_POST['ep_date']);
-    // $customersId = mysqli_real_escape_string($db, $_POST['customers_id']);
-    $productId = $_POST['productId'];
-    $epQty = $_POST['qty'];
-    $price = $_POST['price'];
-    // $incomintQty = $_POST['incomingQty'];
+    $ep_remarks = mysqli_real_escape_string($db, $_POST['ep_remarks']);
+    //ep_product
+    $product_id = $_POST['product_id'];
+    $ep_qty = $_POST['ep_qty'];
+    $ep_price = $_POST['ep_price'];
+    $ep_totPrice = $_POST['ep_totPrice'];
 
 
-    mysqli_query($db, "UPDATE ep_tb SET ep_no='$epNo', ep_title='$epTitle',ep_date='$ep_date'  WHERE ep_id='$id'");
+    mysqli_query($db, "UPDATE ep_tb SET ep_no='$ep_no', ep_title='$ep_title',customers_id='$customers_id',  ep_date='$ep_date', ep_remarks='$ep_remarks' WHERE ep_id='$id'");
 
 
 
-    function updateEpProd($id, $productId, $epQty, $price, $discount, $incomintQty)
-    {
-        include('../php/config.php');
-        mysqli_query($db, "UPDATE ep_product SET ep_qty = '$epQty',  ep_price = '$price', 
-   ep_totPrice = '$incomintQty' WHERE ep_id = '$id' AND product_id = '$productId'");
-    }
+    // Update po_product
+    $limit = 0;
+    while (count($product_id) !== $limit) {
+        // Check product id from po_product
+        $checkResult = mysqli_query($db, "SELECT product_id FROM ep_product WHERE ep_id = $id AND product_id ='" . $product_id[$limit] . "'");
 
-    function addEpProdRecord($productId, $id, $epQty, $price, $incomintQty)
-    {
-        include('../php/config.php');
-        mysqli_query($db, "INSERT INTO ep_product(product_id, ep_id, ep_qty, ep_price, ep_totPrice)
-  VALUES ('$productId', '$id', '$epQty', '$price', '$incomintQty')");
-    }
-
-
-    // If product ID exist, update the record
-    // If product ID doesnt exist, add record
-
-    $counter = 0;
-    while (count($productId) !== $counter) {
-        $result =  mysqli_query($db, "SELECT * FROM ep_product  WHERE product_id = $productId[$counter] AND stout_id = $id");
-        $row = mysqli_fetch_assoc($result);
-        if (!$row) {
-            addEpProdRecord($productId[$counter], $id, $epQty[$counter], $price[$counter], $discount[$counter],  $incomintQty[$counter]);
+        if (mysqli_num_rows($checkResult) > 0) {
+            // If product id already exist on po_product, UPDATE
+            mysqli_query($db, "UPDATE ep_product SET ep_qty = '$ep_qty[$limit]', ep_price = '$ep_price[$limit]' , ep_totPrice= '$ep_totPrice[$limit]' WHERE ep_id = '$id' AND product_id ='$product_id[$limit]'");
         } else {
-            updateEpProd($id, $productId[$counter], $epQty[$counter], $price[$counter], $discount[$counter], $incomintQty[$counter]);
+            // If product id dont exist on po_product, INSERT
+            mysqli_query($db, "INSERT INTO ep_product(ep_id, product_id, ep_qty, ep_price, ep_totPrice) 
+      VALUES ('$id','$product_id[$limit]','$ep_qty[$limit]','$ep_price[$limit]','$ep_totPrice[$limit]')");
         }
-        $counter++;
+        $limit++;
     }
 
-    // header("Location:../ep_main.php");
+
+
+
+    // header("Location:../stout_main.php");
 }
 
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
-    $result = mysqli_query($db, "SELECT ep_tb.ep_id ,ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, ep_tb.ep_remarks, customers.customers_name, customers.customers_id
-    FROM ep_tb
-    LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
-    WHERE ep_id=" . $_GET['id']);
+    $result = mysqli_query($db, "SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_remarks, ep_tb.ep_date, customers.customers_name
+                                 FROM ep_tb
+                                 LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
+                                 WHERE ep_id=" . $_GET['id']);
 
     $row = mysqli_fetch_array($result);
 
@@ -67,10 +59,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $id = $row['ep_id'];
         $ep_no = $row['ep_no'];
         $ep_title = $row['ep_title'];
-        $ep_date = $row['ep_date'];
         $ep_remarks = $row['ep_remarks'];
-        $customerId = $row['customers_id'];
-        $customerName = $row['customers_name'];
+        $customers_name = $row['customers_name'];
+        $ep_date = $row['ep_date'];
     } else {
         echo "No results!";
     }
@@ -112,37 +103,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             font-size: 24px;
         }
 
-        /* .container {
-            border-radius: 10px;
-            padding: 50px;
-            height: 750px;
-            background-color: transparent;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            margin-bottom: 10px;
-
-        } */
-
-
-        .table2 {
+        .itemTb {
             border: 3px solid lightgray;
             border-collapse: collapse;
-            width: 70%;
-            float: right;
+            width: 100%;
 
         }
 
-        .table2 tr:nth-child(even) {
+        .itemTb tr:nth-child(even) {
             background-color: #E7E8F8;
         }
 
-        .table2 tr:nth-child(odd) {
+        .itemTb tr:nth-child(odd) {
             background-color: white;
         }
 
-        .table2 th {
+        .itemTb th {
             border: 1px solid lightgrey;
             text-align: left;
             padding: 5px;
@@ -151,7 +127,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             background-color: midnightblue;
         }
 
-        .table2 td {
+        .itemTb td {
             border: 1px solid lightgray;
             padding: 5px;
         }
@@ -344,121 +320,238 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             border: 2px solid lightgray;
         }
 
-        .table1 td,
-        th {
-            border: 1px solid black;
+        /* .table1 td,
+    th {
+      border: 1px solid black;
+    } */
+
+
+
+
+        .container {
+            border-radius: 2px;
+            padding: 30px;
+            height: 100px;
+            background-color: #EAEAEA;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+
         }
 
-        .table2 td,
-        th {
-            border: 1px solid black;
+        .container1 {
+            border-radius: 2px;
+            padding: 50px;
+            height: 100%;
+            background-color: #EAEAEA;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            margin-bottom: 10px;
+
         }
 
-        .table1 {
-            float: left;
+        .button--update {
+            background-color: midnightblue;
+            color: white;
+            width: 300px;
+            height: 40px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 3px;
+            cursor: pointer;
+        }
+
+        input[type=text] {
+            width: 100%;
+            height: 35px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            height: 35px;
+            margin: 8px 0;
+            box-sizing: border-box;
+
+        }
+
+        input[type=text]:focus {
+            border: 3px solid lightgrey;
+        }
+
+        input[type=date] {
+            width: 100%;
+            height: 35px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type=date]:focus {
+            border: 3px solid lightgrey;
+        }
+
+        h1 {
+            letter-spacing: 3px;
+            color: black;
+            -webkit-text-underline-position: under;
+            -ms-text-underline-position: below;
+            text-underline-position: under;
+            -webkit-text-stroke: .3px white;
+            -webkit-text-fill-color: midnightblue;
+
+        }
+
+        font {
+            letter-spacing: 2px;
         }
     </style>
 
 </head>
-<title>Edit Exit-Pass-Records</title>
+<title>Edit STOCK-OUT</title>
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
+
+
+    <h1><u> Exit Pass: Editing Records</u></h1>
+
     <div class="container">
         <a href="../ep_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
-        <fieldset>
-            <legend>&nbsp;&nbsp;&nbsp;Exit-Pass: Editing Record&nbsp;&nbsp;&nbsp;</legend>
-            <form autocomplete="off" method="post">
-                <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                <table class="table1" width="20%">
-                    <tr>
-                        <td><b>
-                                <font color='midnightblue'>Ep No. :</font><br> <input type="text" class="form-control" name="ep_no" value="<?php echo $ep_no; ?>"> <br><br>
-                                <font color='midnightblue'>Title:</font><br> <input type="text" class="form-control" name="ep_title" value="<?php echo $ep_title; ?>" /><br><br>
-                                <font color='midnightblue'>Date:</font><br> <input type="date" class="form-control" name="stout_date" value="<?php echo $ep_date; ?>"><br><br>
-                                <label>Remarks</label><br>
-                                <textarea name="ep_remarks" cols="50" rows="10"><?php echo $ep_remarks; ?></textarea> <br> <br>
-                                <label>Customer </label><br>
-                                <select name="customers_id" class="select--customer">
-                                    <option value="<?php echo $_GET['customerId'] ?>"><?php echo $_GET['customerName']; ?></option>
-                                    <?php
+        <form autocomplete="off" method="post">
+            <input type="hidden" name="id" value="<?php echo $id; ?>" />
+            <table class="table1" width="100%">
+                <tr>
+                    <td><b>
+                            <font color='midnightblue'>EP No. </font><br>
+                            <input type="text" name="ep_no" value="<?php echo $ep_no; ?>">
+                        </b></td>
 
-                                    $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC ");
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select> <br> <br>
-                                <button class="butLink" name="stout_submit" onclick="alert('Edit Records Successfully !')">Update</button>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                        </td>
-                    </tr>
+                    <td><b>
+                            <font color='midnightblue'>Title</font> <br>
+                            <input type="text" name="ep_title" value="<?php echo $ep_title; ?>" />
+                        </b></td>
 
-                </table>
-                <br>
-                <button class="button__add--item" title="Add Item" style="font-size: 18px; padding: 8px; float:right"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button>
-                <br>
-                <table class="table2">
-                    <thead>
-                        <tr>
-                            <th style="text-align: left;">Prod. ID</th>
-                            <th>Item Description</th>
-                            <th>Qty</th>
-                            <th>Unit</th>
-                            <th>Price</th>
-                            <th>Subtotal Price</th>
-                            <th width="5%"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-                        <?php
-                        include "../php/config.php";
+                    <td><b>
+                            <font color='midnightblue'>Customer</font> <br>
+                            <select name="customers_id" class="select--location">
+                                <option value="<?php echo $customers_id ?>"><?php echo $customers_name; ?></option>
+                                <?php
+                                include "config.php";
+                                $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
 
-                        $sql = "SELECT product.product_id, product.product_name, ep_product.ep_qty, ep_product.ep_price, ep_product.ep_totPrice, unit_tb.unit_name 
+                                while ($data = mysqli_fetch_array($records)) {
+                                    echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+
+                        </b></td>
+
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                    <td><b>
+                            <font color='midnightblue'>Remarks</font> <br>
+                            <textarea name="ep_remarks" cols="30" rows="3"><?php echo $ep_remarks; ?></textarea>
+
+                        </b></td>
+
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                    <td><b>
+                            <font color='midnightblue'>Date</font> <br>
+                            <input type="date" name="ep_date" value="<?php echo $ep_date; ?>">
+                        </b></td>
+
+                    <td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </td>
+
+                </tr>
+
+            </table>
+    </div>
+
+    <br>
+    <div class="container1">
+        <button class="button__add--item" title="Add Item" style="font-size: 18px; padding: 8px; float:right;margin-bottom:10px"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button> <br><br>
+
+        <table class="itemTb">
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Prod. ID</th>
+                    <th style="text-align: left;">Item Description</th>
+                    <th style="text-align: left;">Qty</th>
+                    <th style="text-align: left;">Unit</th>
+                    <th style="text-align: left;">Price</th>
+                    <th style="text-align: left;">Total Price</th>
+                    <th width="5%"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php
+                include "../php/config.php";
+
+                $sql = "SELECT ep_product.ep_id, product.product_name, ep_product.ep_qty, unit_tb.unit_name, ep_product.ep_price, ep_product.ep_totPrice, product.product_id
                         FROM ep_product
                         LEFT JOIN product ON product.product_id = ep_product.product_id
                         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
                         WHERE ep_product.ep_id='$id' 
-                        ORDER BY product.product_id ASC
-                         ";
+                        ORDER BY product.product_id ASC";
 
-                        $result = $db->query($sql);
-                        $count = 0;
-                        if ($result->num_rows >  0) {
+                $result = $db->query($sql);
+                $count = 0;
+                if ($result->num_rows >  0) {
 
-                            while ($irow = $result->fetch_assoc()) {
-                                $count = $count + 1;
-                        ?>
-                                <tr>
-                                    <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stout--product__id"></td>
-                                    <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
-                                    <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['ep_qty'] ?>
-                                        <input type="hidden" name="qty[]" value="<?php echo $irow['ep_qty'] ?>" class='ep--qtyout'>
-                                    </td>
-                                    <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
-                                    <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['ep_price'] ?><input type="hidden" name="price[]" value="<?php echo $irow['ep_price'] ?>" class='ep--price'></td>
-                                    <td style="text-align: left;"><?php echo $irow['ep_qty'] * $irow['ep_price'] ?><input type="hidden" name="totPrice[]" value="<?php echo $irow['ep_qty'] * $irow['ep_qty'] ?>" class='stin--incoming__qty'></td>
+                    while ($irow = $result->fetch_assoc()) {
+                        $count = $count + 1;
+                ?>
+                        <tr>
+
+                            <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>" class="stout--product__id"></td>
+
+                            <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
+
+                            <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['ep_qty'] ?><input type="hidden" name="ep_qty[]" value="<?php echo $irow['ep_qty'] ?>" class='stout--qtyout'></td>
+
+                            <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
+
+                            <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['ep_price'] ?><input type="hidden" name="ep_price[]" value="<?php echo $irow['ep_price'] ?>" class='stout--cost'></td>
+
+                            <td style="text-align: left;"><?php echo $irow['ep_qty'] * $irow['ep_price'] ?>.00<input type="hidden" name="ep_totPrice[]" value="<?php echo $irow['ep_qty'] * $irow['ep_price'] ?>" class='stin--incoming__qty'></td>
+                            <td>
+                                <center>
+
+                                    &nbsp;
+                                    <!-- <a href="item_delete/stout_item_delete.php?id=<?php echo $irow['product_id']; ?>&stoutId=<?php echo $irow['stout_id'] ?>">
+                                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                                    </a> -->
+                            </td>
 
 
-                                    <td>
-                                        &nbsp;
-                                        <a href="item_delete/stout_item_delete.php?id=<?php echo $irow['product_id']; ?>&stoutId=<?php echo $irow['stout_id'] ?>">
-                                            <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                                        </a>
-                                    </td>
+                        </tr>
+                <?php }
+                } ?>
+            </tbody>
+        </table>
+        <br>
+        <button class="button--update" name="ep_submit" style="float: right;">Update Records</button>
+        </form>
+        <br><br>
 
-
-                                </tr>
-                        <?php }
-                        } ?>
-                    </tbody>
-                </table>
-                <br>
-
-            </form>
-            <br>
-        </fieldset>
-        <!-- <p style="float: left;">*&nbsp;<i>Editable Row</i> <button style="background-color: orangered" disabled>&nbsp;&nbsp;</button> </p> -->
+        <p style="float: left;">*&nbsp;<i>Editable Row</i> <button style="background-color: orangered" disabled>&nbsp;&nbsp;</button> </p>
         <!-- EDIT PO END -->
     </div>
 
@@ -478,7 +571,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <th>Quantity</th>
                             <th>Unit</th>
                             <th>Location</th>
-                            <th>Cost</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody class='container--itemlist'>
@@ -497,6 +590,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         const containerItemList = document.querySelector('.container--itemlist');
         const inputSearch = document.querySelector('.input--search');
         const tableItemTb = document.querySelector('.itemTb');
+
+        const hasDuplicateOrder = function(productId) {
+            console.log(productId);
+            const orderRow = tableItemTb.querySelector("tbody").querySelectorAll('.stin--product__id');
+            // There's no order in the table
+            if (!orderRow.length) return false;
+
+            let duplicate;
+            orderRow.forEach((row) => {
+                if (+row.value === productId) duplicate = true;
+            });
+
+            return duplicate;
+        };
+
+
 
         const stinEdit = function(e) {
             const target = e.target.closest('td').children[0];
@@ -517,16 +626,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             if (!target) return;
 
 
-            if (target.classList.contains('ep--qtyout')) {
+            if (target.classList.contains('stout--qtyout')) {
                 changeValue("Enter New Qty-Out");
             }
 
-            if (target.classList.contains('ep--price')) {
-                changeValue("Enter New Price");
-            }
-
-            if (target.classList.contains('stout--discount')) {
-                changeValue("Enter New Discount");
+            if (target.classList.contains('stout--cost')) {
+                changeValue("Enter New price");
             }
 
         };
@@ -549,26 +654,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         const selectItem = function(e) {
             const selectedId = e.target.closest('tr').dataset.id;
             const selectedName = e.target.closest('tr').querySelector('.item-name').innerHTML;
-            const selectedQty = e.target.closest('tr').querySelector('.qty').innerHTML;
             const qtyIn = prompt("Enter Qty-out:");
             const selectedUnit = e.target.closest('tr').querySelector('.unit').innerHTML;
-            const selectedCost = prompt("Enter Cost Amount:");
-            const selectedDiscount = prompt("Enter Discount Amount:");
-            const incomingQty = +selectedQty - +qtyIn;
+            const selectedPrice = prompt("Enter Price Amount:");
+            const epTotPrice = +qtyIn * +selectedPrice;
 
             modalClose();
 
             tableItemTb.querySelector('tbody').insertAdjacentHTML('beforeend', `<tr>
-      <td>${selectedId}<input type="hidden" name="productId[]" value="${selectedId}" class='stout--product__id'></td>
+      <td>${selectedId}<input type="hidden" name="product_id[]" value="${selectedId}" class='stout--product__id'></td>
       <td>${selectedName}</td>
-      <td>${selectedQty}</td>
-      <td>${qtyIn}<input type="hidden" name="qty[]" value="${qtyIn}" class='ep--qtyout'></td>
+      <td>${qtyIn}<input type="hidden" name="ep_qty[]" value="${qtyIn}" class='stout--qtyout'></td>
       <td>${selectedUnit}</td>
-      <td>${selectedCost}<input type="hidden" name="cost[]" value="${selectedCost}" class='ep--price'></td>
-      <td>${selectedDiscount}<input type="hidden" name="discount[]" value="${selectedDiscount}" class='stout--discount'></td>
-      <td>${incomingQty}<input type="hidden" name="incomintQty[]" value="${incomingQty}" class='stin--incoming__qty'></td>
-      <td><center><a href="item_delete/stin_item_delete.php?stinProdId=<?php echo $irow["ep_product_id"] ?>" title="Remove">
-                        <font color=" red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+      <td>${selectedPrice}<input type="hidden" name="ep_price[]" value="${selectedPrice}" class='stout--cost'></td>
+      <td>${epTotPrice}<input type="hidden" name="ep_totPrice[]" value="${epTotPrice}" class='stin--incoming__qty'></td>
+      <td><center><a href="#" title="Remove">
+                       
                       </a></center></td>
       </tr>
       `)
