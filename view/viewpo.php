@@ -67,27 +67,35 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
       <div class="suptab">
-        <table width="100%">
+        <!-- <table width="100%">
           <tr>
             <td>
-              <h4 style="text-align: left; margin-right:20px;"><label>Puchase Order :</label> <?php echo $po_code; ?></h4>
+              <h4 style="text-align: left; margin-right:20px;"><label></label> <?php echo $po_code; ?></h4>
             </td>
             <td>
               <h4 style="text-align: right; margin-right:20px;">Date: <?php echo $po_date; ?></h4>
             </td>
           </tr>
-        </table>
+        </table> -->
 
 
 
 
         <fieldset>
-          <legend style="letter-spacing: 3px; font-weight: bolder;">&nbsp;Supplier Information &nbsp;&nbsp;&nbsp;</legend>
+          <!-- <legend style="letter-spacing: 3px; font-weight: bolder;">&nbsp;Supplier Information &nbsp;&nbsp;&nbsp;</legend> -->
           <table width="100%">
             <tr>
-              <td style="font-size: 11px; "><label> Name :</label>
+              <td style="font-size: 18px;letter-spacing:2px;"><label> Purchase Order :</label>
+                <b><?php echo $po_code; ?></b>
+              </td>
+
+            </tr>
+            <tr>
+              <td style="font-size: 11px; "><label> Supplier :</label>
                 <?php echo $sup_name; ?>
               </td>
+              <td style="font-size: 13px; "><label> Date :</label>
+                <?php echo $po_date; ?></td>
             </tr>
             <tr>
               <td style="font-size: 11px; "><label> Addres :</label><?php echo $sup_address; ?></td>
@@ -103,16 +111,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <div class="itemTB">
         <table class="ordertable">
           <tr>
-            <th width="40%">Product Name</th>
+            <th width="25%">Product Name</th>
             <th width="10%">Qty Order</th>
             <th width="5%">Unit</th>
             <th width="10%">Cost</th>
             <th width="10%">Total Cost</th>
-            <th width="10%">Discount</th>
-            <th width="10%">Total Amount</th>
+            <th width="10%"> %Discount</th>
+            <th width="15%">Disc. Amount</th>
+            <th width="10%">Sub Total</th>
           </tr>
           <?php
-          $sql = "SELECT product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.cost, po_product.item_disamount 
+          $sql = "SELECT product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.cost, po_product.item_disamount, po_product.item_cost, po_product.item_discpercent
                                   FROM product
                                   LEFT JOIN po_product
                                   ON product.product_id = po_product.product_id
@@ -132,13 +141,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
           ?>
               <tr>
-                <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                <td contenteditable="false"><?php echo $irow['item_qtyorder'] ?></td>
-                <td contenteditable="true"><?php echo $irow['unit_name'] ?></td>
-                <td contenteditable="true"><?php echo $irow['cost'] ?></td>
+                <td><?php echo $irow['product_name'] ?></td>
+                <td><?php echo $irow['item_qtyorder'] ?></td>
+                <td><?php echo $irow['unit_name'] ?></td>
+                <td><?php echo $irow['item_cost'] ?></td>
                 <td class="item_totcost"><?php echo $irow["item_qtyorder"] * $irow["cost"]; ?></td>
-                <td contenteditable="true"><?php echo $irow['item_disamount'] ?></td>
-                <td class="po_temp_tot"><?php echo $irow["item_qtyorder"] * $irow["cost"] - $irow["item_disamount"]; ?></td>
+                <td><?php echo $irow['item_discpercent'] ?></td>
+                <td><?php echo $irow['item_disamount'] ?></td>
+                <td class="po_temp_tot"><?php echo $irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"]; ?></td>
               </tr>
               <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
           <?php }
@@ -162,29 +172,24 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
             ?>
             <tr>
-              <td><label for=""> Sub Total:</label>&nbsp;<?php echo $subTot; ?></td>
+              <td><label class="totDiv"> Sub Total:</label>&nbsp;&#8369;<?php echo $subTot; ?></td>
+            </tr>
+
+            <tr>
+              <td><label class="totDiv"> Total Discount:</label>&nbsp;&#8369;<?php echo $disTot ?></td>
             </tr>
             <tr>
-              <td><label for=""> Shipping:</label>&nbsp;0</td>
-            </tr>
-            <tr>
-              <td><label for=""> Total Discount:</label>&nbsp;<?php echo $disTot ?></td>
-            </tr>
-            <tr>
-              <td><label for=""> Total Amount:</label>&nbsp;<?php echo $grandTot ?></td>
+              <td><label class="totDivGrand"> Grand Total:&nbsp;<u> &#8369;<?php echo $grandTot ?></u></label></td>
             </tr>
           </table>
         </div>
+
       </div>
-      <table>
+
+      <table class="emptab">
         <tr>
-          <td>Prepared By:__________</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>Check By:__________</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>Approve By:__________</td>
+          <td>______________ <br>&nbsp;&nbsp;&nbsp;&nbsp;Prepared by</td>
+          <td>______________<br>&nbsp;&nbsp;&nbsp;&nbsp;Approved by</td>
         </tr>
       </table>
     </page>
