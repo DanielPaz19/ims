@@ -6,7 +6,7 @@ include 'php/jo_edit-inc.php';
 
 
 <link rel="stylesheet" href="css/po_edit-style.css">
-<script defer src="js/ep_edit-script.js"></script>
+<script defer src="js/jo_edit-script.js"></script>
 
 <h1 style="float: left; margin-left: 50px">Job Order: Editing Records</h1> <br><br><br>
 <hr>
@@ -43,7 +43,7 @@ include 'php/jo_edit-inc.php';
         </span>
         <textarea name="epRemarks" cols="30" rows="3"><?php echo $epRemarks; ?></textarea> -->
         <span class="po__label">
-            EP Date:
+            JO Date:
         </span>
         <input type="date" name="joDate" id="po_date" value="<?php echo $joDate ?>">
 
@@ -60,7 +60,6 @@ include 'php/jo_edit-inc.php';
                     <th>Qty</th>
                     <th>Unit</th>
                     <th>Price</th>
-                    <th>Total Price</th>
                     <th>
                     </th>
                 </tr>
@@ -86,7 +85,7 @@ include 'php/jo_edit-inc.php';
          <input type='hidden' name='productId[]' value='$productId[$limit]'>
          <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]'>
          <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]'>
-         <input type='hidden' name='itemTotal[]' value='" . $itemPrice[$limit] * $qtyIn[$limit] . "'>
+ 
          ";
 
                     $limit++;
@@ -97,7 +96,7 @@ include 'php/jo_edit-inc.php';
         </table>
     </div>
     <div class="container--po__button">
-        <button class="po__button button--po__update" name='updateep'>Update</button>
+        <button class="po__button button--po__update" name='updatejo'>Update</button>
         <button class="po__button button--po__cancel" name='cancelupdate'>Cancel</button>
     </div>
 </form>
