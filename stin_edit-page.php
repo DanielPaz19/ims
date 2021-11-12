@@ -16,7 +16,7 @@ include 'php/stin_edit-inc.php';
         <span class="po__label">
             STIN ID:
         </span>
-        <input type="text" name="stinId" id="po_id" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+        <input type="text" name="stinId" id="po_id" class="textId" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
 
         <span class="po__label">
             Prep. By:
