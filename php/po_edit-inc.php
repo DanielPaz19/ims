@@ -80,7 +80,7 @@ if (isset($_POST['updatepo'])) {
 
     if (mysqli_num_rows($checkResult) > 0) {
       // If product id already exist on po_product, UPDATE
-      mysqli_query($db, "UPDATE po_id SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'");
+      mysqli_query($db, "UPDATE po_product SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'");
     } else {
       // If product id dont exist on po_product, INSERT
       mysqli_query($db, "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, po_temp_tot) 

@@ -51,7 +51,7 @@ const renderItem = function (data, container) {
   });
 };
 
-const poEdit = function (e) {
+const rowEdit = function (e) {
   const target = e.target.closest(".td__edit");
 
   if (!target) return;
@@ -61,25 +61,27 @@ const poEdit = function (e) {
   console.log(prevValue);
   // console.dir(target.closest("td"));
 
-  const changeValue = function (promptMessage) {
+  const changeValue = function (inputName, promptMessage) {
     let newValue = prompt(promptMessage);
 
     if (!newValue || newValue.includes(" ") || newValue === NaN) return;
 
     target.innerHTML = newValue;
     // target.closest("td").childNodes[0].data = newValue;
+    target.closest("tr").querySelector(`.input__edit--${inputName}`).value =
+      newValue;
   };
 
   if (target.classList.contains("td__edit--qty")) {
-    changeValue("Enter New Qty-Order");
+    changeValue("qty", "Enter New Qty-Order");
   }
 
   if (target.classList.contains("td__edit--cost")) {
-    changeValue("Enter New Cost");
+    changeValue("cost", "Enter New Cost");
   }
 
   if (target.classList.contains("td__edit--discount")) {
-    changeValue("Enter New Discount");
+    changeValue("discount", "Enter New Discount");
   }
 };
 
@@ -150,12 +152,12 @@ const selectItem = function (e) {
     <td class='td__edit td__edit--delete'>
     <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
     </td>
-    </tr>
     <input type='hidden' name='productId[]' value='${itemCode}'>
-    <input type='hidden' name='qtyIn[]' value='${poQty}'>
-    <input type='hidden' name='itemCost[]' value='${itemCost}'>
-    <input type='hidden' name='itemDisamount[]' value='${itemDiscPercent}'>
-    <input type='hidden' name='itemTotal[]' value='>${subTotal}'>
+    <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
+    <input type='hidden' name='itemCost[]' value='${itemCost}' class='input__edit input__edit--cost'>
+    <input type='hidden' name='itemDisamount[]' value='${itemDiscPercent}' class='input__edit input__edit--discount'>
+    <input type='hidden' name='itemTotal[]' value='>${subTotal}' class='input__edit input__edit--total'>
+    </tr>
     `
   );
 
@@ -205,7 +207,7 @@ inputSearch.addEventListener("keyup", searchItem);
 
 containerItemList.addEventListener("dblclick", selectItem);
 
-tableItemTb.querySelector("tbody").addEventListener("click", poEdit);
+tableItemTb.querySelector("tbody").addEventListener("click", rowEdit);
 
 function showadditem() {
   //set the width and height of the

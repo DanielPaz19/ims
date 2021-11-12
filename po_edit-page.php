@@ -81,12 +81,12 @@ include 'php/po_edit-inc.php';
          <td class='td__edit td__edit--delete'>
             <font color='red'><i class='fa fa-trash-o' style='font-size:26px'></i></font>
           </td>
+          <input type='hidden' name='productId[]' value='$productId[$limit]' >
+          <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
+          <input type='hidden' name='itemCost[]' value='$itemCost[$limit]' class='input__edit input__edit--cost'>
+          <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]' class='input__edit input__edit--discount'>
+          <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
          </tr>
-         <input type='hidden' name='productId[]' value='$productId[$limit]'>
-         <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]'>
-         <input type='hidden' name='itemCost[]' value='$itemCost[$limit]'>
-         <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]'>
-         <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "'>
          ";
 
           $limit++;
