@@ -353,7 +353,7 @@
             </option>
             <?php
             include "../../php/config.php";
-            $records = mysqli_query($db, "SELECT * FROM employee_tb");
+            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
             while ($data = mysqli_fetch_array($records)) {
               echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
