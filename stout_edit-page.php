@@ -1,58 +1,55 @@
 <?php
 
 include_once 'header.php';
-include 'php/ep_edit-inc.php';
+include 'php/stout_edit-inc.php';
 ?>
 
 
 <link rel="stylesheet" href="css/po_edit-style.css">
-<script defer src="js/ep_edit-script.js"></script>
+<script defer src="js/stout_edit-script.js"></script>
 
-<h1 style="float: left; margin-left: 50px">Exit Pass: Editing Records</h1> <br><br><br>
+<h1 style="float: left; margin-left: 50px">Stock Inventory OUT: Editing Records</h1> <br><br><br>
 <hr>
-<form action="php/ep_edit-inc.php" method="POST">
+<form action="php/stout_edit-inc.php" method="POST">
     <div class='container--po__details'>
 
         <span class="po__label">
-            EP ID:
+            STOUT ID:
         </span>
-        <input type="text" name="epId" id="po_id" class="textId" value="<?php echo str_pad($epId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+        <input type="text" name="stoutId" id="po_id" class="textId" value="<?php echo str_pad($stoutId, 8, 0, STR_PAD_LEFT) ?>" readonly>
 
         <span class="po__label">
-            Customer:
+            Prep. By:
         </span>
-        <select name="customerId">
-            <option value="<?php echo $customerId ?>"><?php echo $customerName; ?></option>
+        <select name="empId">
+            <option value="<?php echo $empId ?>"><?php echo $empName; ?></option>
             <?php
             include "config.php";
-            $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
+            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
             while ($data = mysqli_fetch_array($records)) {
-                echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
             }
             ?>
-        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="po__label">
             Remarks:
         </span>
-        <textarea name="epRemarks" cols="30" rows="3"><?php echo $epRemarks; ?></textarea> <br>
+        <textarea name="stoutRemarks" cols="30" rows="3"><?php echo $stoutRemarks; ?></textarea> <br>
 
         <span class="po__label">
-            EP No. :
+            STOUT CODE :
         </span>
-        <input type="number" name="epNo" id="po_terms" value="<?php echo $epNo ?>">
+        <input type="text" name="stoutCode" id="po_terms" value="<?php echo $stoutCode ?>">
         <span class=" po__label">
-            EP Title:
+            STOUT Title:
         </span>
-        <input type="text" name="epTitle" id="po_title" value="<?php echo $epTitle ?>">
-        <!-- <span class="po__label">
-            Remarks:
-        </span>
-        <textarea name="epRemarks" cols="30" rows="3"><?php echo $epRemarks; ?></textarea> -->
+        <input type="text" name="stoutTitle" id="po_title" value="<?php echo $stoutTitle ?>">
+
         <span class="po__label">
-            EP Date:
+            STOUT Date:
         </span>
-        <input type="date" name="epDate" id="po_date" value="<?php echo $epDate ?>">
+        <input type="date" name="stoutDate" id="po_date" value="<?php echo $stoutDate ?>">
 
 
     </div>
@@ -66,8 +63,8 @@ include 'php/ep_edit-inc.php';
                     <th>Item Name</th>
                     <th>Qty</th>
                     <th>Unit</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
+                    <th>Cost</th>
+                    <th>Total Cost</th>
                     <th>
                     </th>
                 </tr>
@@ -105,7 +102,7 @@ include 'php/ep_edit-inc.php';
         </table>
     </div>
     <div class="container--po__button">
-        <button class="po__button button--po__update" name='updateep'>Update</button>
+        <button class="po__button button--po__update" name='updatestout'>Update</button>
         <button class="po__button button--po__cancel" name='cancelupdate'>Cancel</button>
     </div>
 </form>
