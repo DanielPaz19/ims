@@ -76,6 +76,10 @@ h1 {
   padding: 0px 10px;
 }
 
+.container--po__table tr:nth-child(even) {
+  background-color: lightgray;
+}
+
 .container--po__table th:nth-child(1) {
   width: 8%;
 }
@@ -130,6 +134,20 @@ h1 {
   border-radius: 5px;
   background-color: midnightblue;
   color: #ffffff;
+}
+
+.td__edit {
+  cursor: pointer;
+  color: orangered;
+  font-style: italic;
+}
+
+.td__edit:hover {
+  font-weight: bold;
+}
+
+.td__edit--delete:hover {
+  color: midnightblue;
 }
 
 /* Item Modal */
