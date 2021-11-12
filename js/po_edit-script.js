@@ -7,7 +7,6 @@ const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
 const tableItemTb = document.querySelector(".po__table");
-const editableData = document.querySelectorAll(".td__edit");
 
 const formatNumber = (string) => {
   const NumOptions = {
@@ -51,25 +50,63 @@ const renderItem = function (data, container) {
   });
 };
 
+// Editing Table values
 const rowEdit = function (e) {
   const target = e.target.closest(".td__edit");
+  const qty = target.closest("tr").querySelector(".input__edit--qty");
+  const cost = target.closest("tr").querySelector(".input__edit--cost");
+  const discpercent = target
+    .closest("tr")
+    .querySelector(".input__edit--discpercent");
+  const discount = target.closest("tr").querySelector(".input__edit--discount");
+  const subtotal = target.closest("tr").querySelector(".input__edit--total");
+  const tdTotalCost = target
+    .closest("tr")
+    .querySelector(".td__compute--totalcost");
+  const tdDiscount = target
+    .closest("tr")
+    .querySelector(".td__compute--discount");
+  const tdSubTotal = target
+    .closest("tr")
+    .querySelector(".td__compute--subtotal");
 
+  const computeTotalCost = (qty, cost) => {
+    return qty * cost;
+  };
+  const computeDiscountVal = (discpercent, totalCost) => {
+    discount.value = totalCost * (discpercent / 100);
+    return discount.value;
+  };
+  const computeSubTotal = (totalCost, DiscountVal) => {
+    subtotal.value = totalCost - DiscountVal;
+    return subtotal.value;
+  };
+
+  // Return if there's no target
   if (!target) return;
 
-  const prevValue = target.innerText;
-
-  console.log(prevValue);
-  // console.dir(target.closest("td"));
-
+  // Function -- changing value data
   const changeValue = function (inputName, promptMessage) {
     let newValue = prompt(promptMessage);
 
+    // Return if invalid input
     if (!newValue || newValue.includes(" ") || newValue === NaN) return;
 
-    target.innerHTML = newValue;
-    // target.closest("td").childNodes[0].data = newValue;
-    target.closest("tr").querySelector(`.input__edit--${inputName}`).value =
-      newValue;
+    target.innerHTML = formatNumber(newValue);
+
+    const targetInput = target
+      .closest("tr")
+      .querySelector(`.input__edit--${inputName}`);
+
+    targetInput.value = newValue;
+
+    const totalCost = computeTotalCost(qty.value, cost.value);
+    const discountValue = computeDiscountVal(discpercent.value, totalCost);
+    const subTotal = computeSubTotal(totalCost, discountValue);
+
+    tdTotalCost.innerHTML = formatNumber(totalCost);
+    tdDiscount.innerHTML = formatNumber(discountValue);
+    tdSubTotal.innerHTML = formatNumber(subTotal);
   };
 
   if (target.classList.contains("td__edit--qty")) {
@@ -80,11 +117,12 @@ const rowEdit = function (e) {
     changeValue("cost", "Enter New Cost");
   }
 
-  if (target.classList.contains("td__edit--discount")) {
-    changeValue("discount", "Enter New Discount");
+  if (target.classList.contains("td__edit--discpercent")) {
+    changeValue("discpercent", "Enter New Discount");
   }
 };
 
+// Modal Display
 const modalOpen = function (e) {
   e.preventDefault();
   containerModalAddItem.classList.add("modal--active");
@@ -143,19 +181,22 @@ const selectItem = function (e) {
     <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
     <td class="unit">${itemUnit}</td>
     <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
-    <td class="total-cost">${formatNumber(totalCost)}</td>
-    <td class='td__edit td__edit--discount'>${formatNumber(
+    <td class='td__compute td__compute--totalcost'>${formatNumber(
+      totalCost
+    )}</td>
+    <td class='td__edit td__edit--discpercent'>${formatNumber(
       itemDiscPercent
     )}</td>
-    <td class="discount-value"></td>
-    <td class="subtotal">${formatNumber(subTotal)}</td>
+    <td class='td__compute td__compute--discount'>0.00</td>
+    <td class='td__compute td__compute--subtotal'>${formatNumber(subTotal)}</td>
     <td class='td__edit td__edit--delete'>
     <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
     </td>
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
     <input type='hidden' name='itemCost[]' value='${itemCost}' class='input__edit input__edit--cost'>
-    <input type='hidden' name='itemDisamount[]' value='${itemDiscPercent}' class='input__edit input__edit--discount'>
+    <input type='hidden' name='itemDiscpercent[]' value='0' class='input__edit input__edit--discpercent'>
+    <input type='hidden' name='itemDisamount[]' value='0' class='input__edit input__edit--discount'>
     <input type='hidden' name='itemTotal[]' value='>${subTotal}' class='input__edit input__edit--total'>
     </tr>
     `

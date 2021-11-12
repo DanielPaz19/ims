@@ -132,6 +132,16 @@ h1 {
   color: #ffffff;
 }
 
+.td__edit {
+  cursor: pointer;
+  color: orangered;
+  font-style: italic;
+}
+
+.td__edit:hover {
+  font-weight: bold;
+}
+
 /* Item Modal */
 /* Modal Style */
 .container--modal {

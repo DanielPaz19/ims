@@ -11,7 +11,7 @@ if (isset($_GET['editpo'])) {
     $db,
     "SELECT po_tb.po_id, po_tb.po_terms, po_tb.po_remarks, po_tb.po_code,
   po_tb.po_date, po_tb.po_title, po_tb.sup_id, po_product.item_qtyorder, po_product.item_cost, 
-  po_product.item_disamount, po_product.po_temp_tot, product.product_name, product.product_name,
+  po_product.item_disamount, po_product.item_discpercent, po_product.po_temp_tot, product.product_name, product.product_name,
   product.class_id, product.unit_id, product.product_id, sup_tb.sup_name, unit_tb.unit_name
  FROM po_tb  
  LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
@@ -40,6 +40,7 @@ if (isset($_GET['editpo'])) {
       $unitName[] = $row['unit_name'];
       $itemCost[] = $row['item_cost'];
       $itemDisamount[] = $row['item_disamount'];
+      $itemDiscpercent[] = $row['item_discpercent'];
       $itemTotal[] = $row['po_temp_tot'];
     }
   } else {
@@ -60,6 +61,7 @@ if (isset($_POST['updatepo'])) {
   $qtyIn = $_POST['qtyIn'];
   $itemCost = $_POST['itemCost'];
   $itemDisamount = $_POST['itemDisamount'];
+  $itemDiscpercent = $_POST['itemDiscpercent'];
   $itemTotal = $_POST['itemTotal'];
 
   require '../php/config.php';
@@ -80,12 +82,15 @@ if (isset($_POST['updatepo'])) {
 
     if (mysqli_num_rows($checkResult) > 0) {
       // If product id already exist on po_product, UPDATE
-      mysqli_query($db, "UPDATE po_product SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'");
+      $sql = "UPDATE po_product SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', item_discpercent='$itemDiscpercent[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'";
     } else {
       // If product id dont exist on po_product, INSERT
-      mysqli_query($db, "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, po_temp_tot) 
-      VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemTotal[$limit]')");
+      $sql = "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, item_discpercent, po_temp_tot) 
+      VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemDiscpercent[$limit]','$itemTotal[$limit]')";
     }
+
+    mysqli_query($db, $sql);
+
     $limit++;
   }
 
