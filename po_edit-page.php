@@ -38,7 +38,7 @@ include 'php/po_edit-inc.php';
     <span class="po__label">
       PO Date:
     </span>
-    <input type="text" name="poDate" id="po_date" value="<?php echo $poDate ?>">
+    <input type="date" name="poDate" id="po_date" value="<?php echo $poDate ?>">
 
     <button class="po__button button--insert__item">Add item</button>
   </div>

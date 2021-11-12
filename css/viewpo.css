@@ -42,7 +42,6 @@ label {
   border: 1px solid black;
   font-size: 13px;
   padding: 5px;
-
   color: black;
   text-align: left;
 }
@@ -67,4 +66,19 @@ label {
   .print-area {
     width: 100%;
   }
+}
+
+.totDiv {
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+.totDivGrand {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.empTab {
+  margin-left: 30px;
+  width: 80%;
 }
