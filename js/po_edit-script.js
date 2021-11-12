@@ -7,6 +7,7 @@ const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
 const tableItemTb = document.querySelector(".po__table");
+const inputPoId = document.querySelector("#po_id");
 
 const formatNumber = (string) => {
   const NumOptions = {
@@ -53,6 +54,12 @@ const renderItem = function (data, container) {
 // Editing Table values
 const rowEdit = function (e) {
   const target = e.target.closest(".td__edit");
+  const itemName = target
+    .closest("tr")
+    .querySelector(".td__readonly--itemname");
+  const productId = target
+    .closest("tr")
+    .querySelector(".td__readonly--productid");
   const qty = target.closest("tr").querySelector(".input__edit--qty");
   const cost = target.closest("tr").querySelector(".input__edit--cost");
   const discpercent = target
@@ -120,6 +127,22 @@ const rowEdit = function (e) {
   if (target.classList.contains("td__edit--discpercent")) {
     changeValue("discpercent", "Enter New Discount");
   }
+
+  if (target.classList.contains("td__edit--delete")) {
+    const confirmDelete = confirm(
+      `ARE YOU SURE YOU WANT TO REMOVE THE FOLLOWING?\n\n${itemName.innerHTML}?`
+    );
+
+    if (!confirmDelete) return;
+
+    fetch("php/po_edit-inc.php", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `delete&productId=${productId.innerHTML}&poId=${inputPoId.value}`,
+    }).then(() => location.reload());
+  }
 };
 
 // Modal Display
@@ -176,8 +199,8 @@ const selectItem = function (e) {
   tableItemTb.querySelector("tbody").insertAdjacentHTML(
     "beforeend",
     `<tr>
-    <td class="item-code">${itemCode}</td>
-    <td class="item-description">${itemName}</td>
+    <td class='td__readonly td__readonly--productid'>${itemCode}</td>
+    <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
     <td class="unit">${itemUnit}</td>
     <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
@@ -249,38 +272,3 @@ inputSearch.addEventListener("keyup", searchItem);
 containerItemList.addEventListener("dblclick", selectItem);
 
 tableItemTb.querySelector("tbody").addEventListener("click", rowEdit);
-
-function showadditem() {
-  //set the width and height of the
-  //pop up window in pixels
-  var width = 1200;
-  var height = 500;
-
-  //Get the TOP coordinate by
-  //getting the 50% of the screen height minus
-  //the 50% of the pop up window height
-  var top = parseInt(screen.availHeight / 2 - height / 2);
-
-  //Get the LEFT coordinate by
-  //getting the 50% of the screen width minus
-  //the 50% of the pop up window width
-  var left = parseInt(screen.availWidth / 2 - width / 2);
-
-  //Open the window with the
-  //file to show on the pop up window
-  //title of the pop up
-  //and other parameter where we will use the
-  //values of the variables above
-  window.open(
-    "../edit/item_edit_addnew.php",
-    "Contact The Code Ninja",
-    "menubar=no,resizable=yes,width=1300,height=600,scrollbars=yes,left=" +
-      left +
-      ",top=" +
-      top +
-      ",screenX=" +
-      left +
-      ",screenY=" +
-      top
-  );
-}

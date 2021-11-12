@@ -102,3 +102,15 @@ if (isset($_POST['updatepo'])) {
 if (isset($_POST['cancelupdate'])) {
   header('location: ../po_main.php');
 }
+
+// If po_edit-page.php delete button is set
+if (isset($_POST['delete'])) {
+  $poId = $_POST['poId'];
+  $productId = $_POST['productId'];
+
+  require '../php/config.php';
+
+  mysqli_query($db, "DELETE FROM po_product WHERE po_id = '$poId' AND product_id = '$productId'");
+
+  echo "poId" . $poId . "productId" . $productId;
+}

@@ -67,8 +67,8 @@ include 'php/po_edit-inc.php';
         while (count($productId) !== $limit) {
           echo
           "<tr>
-         <td>$productId[$limit]</td>
-         <td>$productName[$limit]</td>
+         <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
+         <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
          <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
          <td>$unitName[$limit]</td>
          <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
