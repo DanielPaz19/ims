@@ -43,25 +43,22 @@ if (isset($_GET['editJo'])) {
 }
 
 // If po_edit-page.php update button is set
-if (isset($_POST['updateep'])) {
-    $epId = $_POST['epId'];
+if (isset($_POST['updatejo'])) {
+    $joId = $_POST['joId'];
     $customerId = $_POST['customerId'];
-    $epTitle = $_POST['epTitle'];
-    $epNo = $_POST['epNo'];
-    $epRemarks = $_POST['epRemarks'];
-    $epDate = $_POST['epDate'];
+    $joNo = $_POST['joNo'];
+    $joDate = $_POST['joDate'];
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemPrice = $_POST['itemPrice'];
-    $itemTotal = $_POST['itemTotal'];
 
     require '../php/config.php';
 
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE jo_tb SET ep_no='$epNo', ep_title='$epTitle',customers_id='$customerId',  ep_date='$epDate', ep_remarks='$epRemarks' WHERE ep_id='$epId' "
+        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate' WHERE jo_id='$joId' "
     );
 
 
@@ -69,27 +66,27 @@ if (isset($_POST['updateep'])) {
     $limit = 0;
     while (count($productId) !== $limit) {
         // Check product id from po_product
-        $checkResult = mysqli_query($db, "SELECT product_id FROM ep_product WHERE ep_id = $epId AND product_id ='" . $productId[$limit] . "'");
+        $checkResult = mysqli_query($db, "SELECT product_id FROM ep_product WHERE jo_id = $joId AND product_id ='" . $productId[$limit] . "'");
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on po_product, UPDATE
-            mysqli_query($db, "UPDATE ep_product SET ep_qty = '$qtyIn[$limit]', ep_price = '$itemPrice[$limit]', ep_totPrice= '$itemTotal[$limit]' WHERE ep_id = '$epId' AND product_id ='$productId[$limit]'");
+            mysqli_query($db, "UPDATE jo_product SET jo_product_qty = '$qtyIn[$limit]', jo_product_price = '$itemPrice[$limit]' WHERE jo_id = '$joId' AND product_id ='$productId[$limit]'");
         } else {
             // If product id dont exist on po_product, INSERT
-            mysqli_query($db, "INSERT INTO ep_product(product_id, ep_id, ep_qty, ep_price, ep_totPrice) 
-      VALUES ('$productId[$limit]','$epId','$qtyIn[$limit]','$itemPrice[$limit]','$itemTotal[$limit]')");
+            mysqli_query($db, "INSERT INTO jo_product(product_id, jo_id, jo_product_qty, jo_product_price) 
+      VALUES ('$productId[$limit]','$joId','$qtyIn[$limit]','$itemPrice[$limit]')");
         }
         $limit++;
     }
 
     // editpo&id=2&supId=107&supName=A.F.%20SA
 
-    header("location: ../ep_edit-page.php?editEp&id=$epId&update=success");
+    header("location: ../jo_edit-page.php?editJo&id=$joId&update=success");
 }
 
 // If po_edit-page.php update button is set
 if (isset($_POST['cancelupdate'])) {
-    header('location: ../ep_main.php');
+    header('location: ../jo_main.php');
 }
 
 

@@ -127,7 +127,7 @@ const selectItem = function (e) {
   const itemDiscPercent = 0;
   const itemDiscVal = 0;
   const totalCost = epQty * itemPrice;
-  const subTotal = +totalCost - +itemDiscVal;
+
 
   // Insert selected values into table
   tableItemTb.querySelector("tbody").insertAdjacentHTML(
@@ -138,7 +138,7 @@ const selectItem = function (e) {
     <td class="qty-in">${formatNumber(epQty)}</td>
     <td class="unit">${itemUnit}</td>
     <td class="price">${formatNumber(itemPrice)}</td> 
-    <td class="total-cost">${formatNumber(totalCost)}</td>
+    
     <td class="delete">
     <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
     </td>
@@ -146,7 +146,6 @@ const selectItem = function (e) {
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${epQty}'>
     <input type='hidden' name='itemPrice[]' value='${itemPrice}'>
-    <input type='hidden' name='itemTotal[]' value='>${subTotal}'>
     `
   );
 
