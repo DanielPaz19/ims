@@ -77,7 +77,7 @@ include 'php/po_edit-inc.php';
          <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
          <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
          <td class='td__edit td__edit--delete'>
-            <font color='red'><i class='fa fa-trash-o' style='font-size:26px'></i></font>
+            <i class='fa fa-trash-o' style='font-size:26px'></i>
           </td>
           <input type='hidden' name='productId[]' value='$productId[$limit]' >
           <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
