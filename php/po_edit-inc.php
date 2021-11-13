@@ -50,12 +50,15 @@ if (isset($_GET['editpo'])) {
 
 // If po_edit-page.php update button is set
 if (isset($_POST['updatepo'])) {
+
   $poId = $_POST['poId'];
   $supId = $_POST['supplierId'];
   $poTitle = $_POST['poTitle'];
   $poTerms = $_POST['poTerms'];
   $poRemarks = $_POST['poRemarks'];
   $poDate = $_POST['poDate'];
+  $poCode = $_POST['poCode'];
+
 
   $productId = $_POST['productId'];
   $qtyIn = $_POST['qtyIn'];
@@ -69,7 +72,7 @@ if (isset($_POST['updatepo'])) {
   // Update po_tb
   mysqli_query(
     $db,
-    "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' 
+    "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle',po_code = '$poCode', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' 
     WHERE po_id = '" . number_format($poId) . "'"
   );
 
@@ -95,14 +98,32 @@ if (isset($_POST['updatepo'])) {
   }
 
   // editpo&id=2&supId=107&supName=A.F.%20SA
-  header("location: ../po_edit-page.php?editpo&id=$poId&update=success");
-}
+
+  header("location: ../po_edit-page.php?editpo&updated&id=$poId");
+
 
 // If po_edit-page.php update button is set
 if (isset($_POST['cancelupdate'])) {
   header('location: ../po_main.php');
 }
 
-if (isset($_GET['update'])) {
-  echo '<script>alert("Update records successfully !")</script>';
+
+// If po_edit-page.php delete button is set
+if (isset($_POST['delete'])) {
+  $poId = $_POST['poId'];
+  $productId = $_POST['productId'];
+
+  require '../php/config.php';
+
+  mysqli_query($db, "DELETE FROM po_product WHERE po_id = '$poId' AND product_id = '$productId'");
+
+  echo "poId" . $poId . "productId" . $productId;
+}
+
+if (isset($_GET['updated'])) {
+  echo
+  '<script>
+  alert("Successfully updated!");
+  location.href = "po_edit-page.php?editpo&id=' . $_GET['id'] . '";
+  </script>';
 }

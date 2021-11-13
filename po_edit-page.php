@@ -16,21 +16,26 @@ include 'php/po_edit-inc.php';
     </span>
     <input type="text" name="poId" id="po_id" class="textId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
     <span class="po__label">
+      PO Code:
+    </span>
+    <input type="text" name="poCode" id="po_code" value="<?php echo $poCode ?>">
+    <span class=" po__label">
+      PO Title:
+    </span>
+    <input type="text" name="poTitle" id="po_title" value="<?php echo $poTitle ?>">
+    <span class="po__label">
+      Terms:
+    </span>
+    <input type="text" name="poTerms" id="po_terms" value="<?php echo $poTerms ?>"><br>
+    <span class="po__label po__label--supplier">
       Supplier Name:
     </span>
     <select name="supplierId" id="supplier_name">
       <option value=" <?php echo $supId ?>"><?php echo $supName ?></option>
+      // Show supplier name as options for Select input
       <?php include 'php/render-supplier.php' ?>
 
     </select>
-    <span class=" po__label">
-      PO Title:
-    </span>
-    <input type="text" name="poTitle" id="po_title" value="<?php echo $poTitle ?>"><br>
-    <span class="po__label">
-      Terms:
-    </span>
-    <input type="text" name="poTerms" id="po_terms" value="<?php echo $poTerms ?>">
     <span class="po__label">
       Remarks:
     </span>
@@ -40,6 +45,8 @@ include 'php/po_edit-inc.php';
     </span>
     <input type="date" name="poDate" id="po_date" value="<?php echo $poDate ?>">
 
+  </div>
+  <div class="button__container--insert_item">
     <button class="po__button button--insert__item">Add item</button>
   </div>
 
@@ -64,31 +71,36 @@ include 'php/po_edit-inc.php';
 
         <?php
         $limit = 0;
-        while (count($productId) !== $limit) {
-          echo
-          "<tr>
-         <td>$productId[$limit]</td>
-         <td>$productName[$limit]</td>
-         <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
-         <td>$unitName[$limit]</td>
-         <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
-         <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
-         <td class='td__edit td__edit--discpercent'>" . number_format($itemDiscpercent[$limit], 2) . "</td>
-         <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
-         <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
-         <td class='td__edit td__edit--delete'>
-            <i class='fa fa-trash-o' style='font-size:26px'></i>
-          </td>
-          <input type='hidden' name='productId[]' value='$productId[$limit]' >
-          <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-          <input type='hidden' name='itemCost[]' value='$itemCost[$limit]' class='input__edit input__edit--cost'>
-          <input type='hidden' name='itemDiscpercent[]' value='$itemDiscpercent[$limit]' class='input__edit input__edit--discpercent'>
-          <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]' class='input__edit input__edit--discount'>
-          <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
-         </tr>
-         ";
 
-          $limit++;
+        if (isset($productId)) {
+          while (count($productId) !== $limit) {
+            if ($productId[$limit] != '0') {
+              echo
+              "<tr>
+             <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
+             <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
+             <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
+             <td>$unitName[$limit]</td>
+             <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
+             <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+             <td class='td__edit td__edit--discpercent'>" . number_format($itemDiscpercent[$limit], 2) . "</td>
+             <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
+             <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
+             <td class='td__edit td__edit--delete'>
+                <i class='fa fa-trash-o' style='font-size:26px'></i>
+              </td>
+              <input type='hidden' name='productId[]' value='$productId[$limit]' >
+              <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
+              <input type='hidden' name='itemCost[]' value='$itemCost[$limit]' class='input__edit input__edit--cost'>
+              <input type='hidden' name='itemDiscpercent[]' value='$itemDiscpercent[$limit]' class='input__edit input__edit--discpercent'>
+              <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]' class='input__edit input__edit--discount'>
+              <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
+             </tr>
+             ";
+            }
+
+            $limit++;
+          }
         }
         ?>
 
@@ -127,5 +139,4 @@ include 'php/po_edit-inc.php';
     </div>
   </div>
 </div>
-
 <?php include_once 'footer.php' ?>
