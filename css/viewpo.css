@@ -40,8 +40,8 @@ label {
 
 .ordertable th {
   border: 1px solid black;
-  font-size: 13px;
-  padding: 5px;
+  font-size: 15px;
+  padding: 3px;
   color: black;
   text-align: left;
 }
@@ -49,10 +49,11 @@ label {
 .ordertable td {
   border: 1px solid black;
   padding: 5px;
+  font-size: 15px;
 }
 
 .itemTb {
-  padding: 10px;
+  padding: 5px;
 }
 
 .subtot {

@@ -91,19 +91,19 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
             </tr>
             <tr>
-              <td style="font-size: 11px; "><label> Supplier :</label>
+              <td style="font-size: 13px "><label> Supplier :</label>
                 <?php echo $sup_name; ?>
               </td>
               <td style="font-size: 13px; "><label> Date :</label>
                 <?php echo $po_date; ?></td>
             </tr>
             <tr>
-              <td style="font-size: 11px; "><label> Addres :</label><?php echo $sup_address; ?></td>
-              <td style="font-size: 11px; "><label> Contact :</label> <?php echo $sup_tel; ?></td>
+              <td style="font-size: 13px "><label> Addres :</label><?php echo $sup_address; ?></td>
+              <td style="font-size: 13px "><label> Contact :</label> <?php echo $sup_tel; ?></td>
             </tr>
             <tr>
-              <td style="font-size: 11px; "><label>TIN :</label><?php echo $sup_tin; ?></td>
-              <td style="font-size: 11px; "><label>Terms :</label><?php echo $po_terms; ?></td>
+              <td style="font-size: 13px "><label>TIN :</label><?php echo $sup_tin; ?></td>
+              <td style="font-size: 13px "><label>Terms :</label><?php echo $po_terms; ?></td>
             </tr>
           </table>
         </fieldset>
@@ -153,7 +153,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
               <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
           <?php }
           } ?>
-        </table><br>
+        </table><br><br><br><br>
         <div class="subtot">
           <table>
             <?php
@@ -182,8 +182,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
               <td><label class="totDivGrand"> Grand Total:&nbsp;<u> &#8369;<?php echo $grandTot ?></u></label></td>
             </tr>
           </table>
+          <br><br>
         </div>
-
+        <br><br>
       </div>
 
       <table class="emptab">
