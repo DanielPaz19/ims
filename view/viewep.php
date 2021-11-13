@@ -489,14 +489,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 $grandTot = $subTot - $disTot;
 
                 ?>
+
                 <tr>
-                    <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                    <td></td>
                     <td style="text-decoration: overline;">
                         &#8369;<?php echo $grandTot ?>.00
                     </td>
                 </tr>
+                <td>--------------<i>NOTHING FOLLOWS</i>--------------
+                </td>
                 <tr>
-                    <td>&nbsp;<textarea cols="30" rows="10"><?php echo 'NOTE:' . $ep_remarks; ?></textarea></td>
+                    <td>&nbsp;<textarea cols="30" rows="10"><?php echo $ep_remarks; ?></textarea></td>
                 </tr>
             </table>
 

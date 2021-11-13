@@ -95,10 +95,14 @@ if (isset($_POST['updatepo'])) {
   }
 
   // editpo&id=2&supId=107&supName=A.F.%20SA
-  header("location: ../po_edit-page.php?editpo&id=$poId");
+  header("location: ../po_edit-page.php?editpo&id=$poId&update=success");
 }
 
 // If po_edit-page.php update button is set
 if (isset($_POST['cancelupdate'])) {
   header('location: ../po_main.php');
+}
+
+if (isset($_GET['update'])) {
+  echo '<script>alert("Update records successfully !")</script>';
 }
