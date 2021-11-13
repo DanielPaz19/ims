@@ -100,10 +100,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     .head {
       color: midnightblue;
+      /* border: 1px solid black; */
+      border-collapse: collapse;
+    }
+
+    .stock-details {
+      border-collapse: collapse;
+    }
+
+    .stock-details th {
+      text-align: left;
+
     }
 
     .stock-details td {
-      padding: 15px;
+      padding: 10px;
 
     }
 
@@ -139,13 +150,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       </legend>
       <table class="stock-details" width="100%">
         <tr>
-          <td class="head"><b>PO Code</b> <?php echo $po_code; ?> </td>
-          <td class="head"><b>Supplier</b> <?php echo $sup_name; ?> </td>
-          <td class="head"><b>Remarks </b><?php echo $po_remarks; ?></td>
-          <td class="head"><b>PO Title </b><?php echo $po_title; ?></td>
-          <td class="head"><b>Address </b><?php echo $sup_address; ?></td>
-          <td class="head"><b>PO Date </b><?php echo $po_date; ?></td>
-          <td class="head"><b>TIN </b><?php echo $sup_tin; ?></td>
+          <th><b>PO Code</b></th>
+          <th><b>Supplier</b></th>
+          <th><b>Remarks </b></th>
+          <th><b>PO Title </b></th>
+          <th><b>Address </b></th>
+          <th><b>PO Date </b></th>
+          <th><b>TIN </b></th>
+        </tr>
+        <tr>
+          <td class="head"> <?php echo $po_code; ?> </td>
+          <td class="head"> <?php echo $sup_name; ?> </td>
+          <td class="head"><?php echo $po_remarks; ?></td>
+          <td class="head"><?php echo $po_title; ?></td>
+          <td class="head"><?php echo $sup_address; ?></td>
+          <td class="head"><?php echo $po_date; ?></td>
+          <td class="head"><?php echo $sup_tin; ?></td>
           <td></td>
         </tr>
       </table>

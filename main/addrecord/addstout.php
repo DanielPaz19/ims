@@ -165,6 +165,11 @@
       float: right;
       font-weight: initial;
     }
+
+    .add-button {
+      width: 31%;
+      letter-spacing: 2px;
+    }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -308,7 +313,9 @@
           <div class="container">
             <div id="search">
               <label>Enter Item:&nbsp;&nbsp;</label>
-              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." /> <button class="add-button" title="Add Item"><i class="fa fa-plus"></i></button>
+              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Item Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <textarea class="item-remarks" placeholder="Add Remarks Here...."></textarea>
+              <br>
               <div id="item-list"></div><!-- Dont Remove this -->
             </div>
           </div>
@@ -316,20 +323,20 @@
           <!-- input for item qty -->
           <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input class="item-qty" type="number" placeholder="Quantity" value="1" />
-
+          &nbsp;&nbsp;&nbsp;
           <!-- input for discount -->
           <label>Discount: &nbsp;&nbsp;</label>
           <input class="item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
 
-          <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <textarea class="item-remarks" value=""></textarea>
+
+          <button class="add-button" title="Add Item">Add item to table</button>
         </div>
         <br><br>
         <hr>
         <br>
         <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stoutInsert.php">
 
-          <label style="display:none;">STOUT ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span style="display:none;" class="newStoutId"></span><br><br>
+          <label>STOUT ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStoutId"></span><br><br>
 
           <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input type="text" name="stout_code" placeholder="RS-00001">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -349,11 +356,11 @@
           <label>Requested By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select name="emp_id" style="width: 15%; height: 32px; border: 1px solid #B8B8B8;">
             <option>
-              <center>---Select---</center>
+              <center>--- Select Employee ---</center>
             </option>
             <?php
             include "../../php/config.php";
-            $records = mysqli_query($db, "SELECT * FROM employee_tb");
+            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
             while ($data = mysqli_fetch_array($records)) {
               echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";

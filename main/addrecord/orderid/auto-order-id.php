@@ -7,11 +7,9 @@ if(mysqli_num_rows($result) > 0)
 {  
     while($row = mysqli_fetch_assoc($result)){
         $newOrderId = $row['stin_id'] + 1;
-        echo "<input style='border:none; font-weight:bolder; color:grey;' name='stin_id' value='" .$newOrderId ."' readonly>" ;
+        echo "<input style='border:none;background-color:transparent; font-weight:bolder; color:grey;' name='stin_id' value='" .$newOrderId ."' readonly>" ;
     }
 
 }  else {
         echo "No result.";
 }
-
-?>

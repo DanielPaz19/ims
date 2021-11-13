@@ -342,14 +342,14 @@
                     <!-- input for discount -->
                     <label>Price: &nbsp;&nbsp;</label>
                     <input class="item-price" type="number" placeholder="Price" value="0" />&nbsp;<br> <br>
-                    <button class="add-button" title="Add Item">Add item to table</button> <br /><br />
+                    <button class="add-button" title="Add Item">Add item to table</button> <br />
 
                 </div>
                 <br><br>
                 <hr>
-                <br>
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/joInsert.php">
-                    <label style="display: none;">STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class=" newStinId" style="display: none;"></span>
+                    <label>JO ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class=" newStinId"></span>
+                    <br> <br>
                     <table class="jotb">
                         <tr>
                             <td><label>JO-No : </label> <br>
