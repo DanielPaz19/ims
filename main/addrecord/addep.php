@@ -147,6 +147,22 @@
         .delete {
             background-color: none;
         }
+
+        .add-button {
+            width: 31%;
+            letter-spacing: 2px;
+
+        }
+
+        .stin-button-save {
+            width: 300px;
+            height: 40px;
+            font-size: 15px;
+            letter-spacing: 5px;
+            float: right;
+            font-weight: initial;
+            margin-bottom: 20px;
+        }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -290,7 +306,7 @@
                     <div class="container">
                         <div id="search">
                             <label>Enter Item:&nbsp;&nbsp;</label>
-                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." /> <button class="add-button" title="Add Item"><i class="fa fa-plus"></i></button>
+                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
                             <div id="item-list"></div><!-- Dont Remove this -->
                         </div>
                     </div>
@@ -302,27 +318,28 @@
                     <!-- input for discount -->
                     <label>Price: &nbsp;&nbsp;</label>
                     <input class="item-price" type="number" placeholder="Price" value="0" /> <br /><br />
-
+                    <button class="add-button" title="Add Item">Add item to table</button>
                 </div>
                 <br><br><br>
+                <hr> <br>
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/epInsert.php">
 
-                    <label style="display: none;">EP ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId" style="display: none;"></span><br><br>
+                    <label>EP ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId"></span><br><br>
 
                     <label>EP No.: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="number" name="ep_no" placeholder="Exit-Pass-No">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="number" name="ep_no" placeholder="Exit-Pass-No" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="text" name="ep_title" placeholder="Job-Order-No (If Have)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     <label>Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="ep_date"><br><br>
+                    <input type="date" name="ep_date" required><br><br>
 
-                    <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <textarea name="ep_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;
+                    <textarea name="ep_remarks" placeholder="Enter your note here....."></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <label>Customer Name:</label>
                     <select name="customers_id" style="width: 400px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
-                        <option></option>
+                        <option>--- Select Customer ---</option>
                         <?php
                         include "../../php/config.php";
                         $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
@@ -337,7 +354,8 @@
                         <!--Add item for order-->
 
                         <br /> <br />
-                        <legend style="font-size: 20px;">Item Details</legend>
+
+                        <button name="btnsave" class="stin-button-save">Save Record </button>
                         <table id="crud_table" width="100%" class="postb">
                             <tr>
                                 <th style="padding: 10px; text-align: left" width="50%">
@@ -358,7 +376,7 @@
                             </tr>
                         </table>
                         <br>
-                        <button name="btnsave"><i class="fa fa-save"></i>&nbsp;Save </button>
+
                 </form>
         </div>
         </fieldset>

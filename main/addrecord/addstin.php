@@ -337,9 +337,9 @@
         <hr>
         <br><br>
         <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
-          <label style="display:none;">STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span style="display:none" class="newStinId"></span>
+          <label>STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStinId"></span> <br> <br>
           <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_code" placeholder="TON-00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" name="stin_code" placeholder="TON-00000" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input type="text" name="stin_title" placeholder="JO21-00000"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Date:&nbsp;&nbsp;</label>
@@ -349,7 +349,7 @@
           <label>Prepared By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select name="emp_id" style="width: 32%; height: 32px; border: 1px solid #B8B8B8;">
             <option>
-              <center>---Select---</center>
+              <center>--- Select Employee---</center>
             </option>
             <?php
             include "../../php/config.php";
