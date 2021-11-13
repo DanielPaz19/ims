@@ -145,7 +145,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <td><?php echo $irow['item_qtyorder'] ?></td>
                 <td><?php echo $irow['unit_name'] ?></td>
                 <td><?php echo $irow['item_cost'] ?></td>
-                <td class="item_totcost"><?php echo $irow["item_qtyorder"] * $irow["cost"]; ?></td>
+                <td class="item_totcost"><?php echo $irow["item_qtyorder"] * $irow["item_cost"]; ?></td>
                 <td><?php echo $irow['item_discpercent'] ?></td>
                 <td><?php echo $irow['item_disamount'] ?></td>
                 <td class="po_temp_tot"><?php echo $irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"]; ?></td>
