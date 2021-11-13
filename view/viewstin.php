@@ -22,8 +22,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 	$id = $_GET['id'];
 	$result = mysqli_query($db, "SELECT  stin_tb.stin_id ,stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_remarks, stin_tb.stin_date, employee_tb.emp_name, dept_tb.dept_name
 														FROM stin_tb  
-														INNER JOIN employee_tb ON stin_tb.emp_id = employee_tb.emp_id
-														INNER JOIN dept_tb ON employee_tb.dept_id = dept_tb.dept_id
+														LEFT JOIN employee_tb ON stin_tb.emp_id = employee_tb.emp_id
+														LEFT JOIN dept_tb ON employee_tb.dept_id = dept_tb.dept_id
 														WHERE stin_id=" . $_GET['id']);
 
 	$row = mysqli_fetch_array($result);
@@ -157,9 +157,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 				include "../php/config.php";
 				$sql = "SELECT product.product_name,stin_product.stin_temp_qty,unit_tb.unit_name 
    FROM stin_product 
-   INNER JOIN product ON product.product_id = stin_product.product_id
-   INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
-   INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
+   LEFT JOIN product ON product.product_id = stin_product.product_id
+   LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
+   LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
 
 				$result = $db->query($sql);
 				$count = 0;

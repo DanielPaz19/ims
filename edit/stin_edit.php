@@ -50,7 +50,7 @@ if (isset($_POST['stin_submit'])) {
 
 
 
-  header("Location:../stin_main.php");
+  // header("Location:../stin_main.php");
 }
 
 
@@ -113,20 +113,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       color: midnightblue;
       font-size: 24px;
     }
-
-    .container {
-      border-radius: 10px;
-      padding: 50px;
-      height: 750px;
-      background-color: #EAEAEA;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      margin-bottom: 10px;
-
-    }
-
 
     .itemTb {
       border: 3px solid lightgray;
@@ -333,6 +319,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       color: white;
       cursor: pointer;
       background-color: midnightblue;
+      float: right;
+      margin-bottom: 10px;
     }
 
     .highlight {
@@ -349,127 +337,203 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     th {
       border: 1px solid black;
     } */
+
+
+
+    .container {
+      border-radius: 2px;
+      padding: 30px;
+      height: 100px;
+      background-color: #EAEAEA;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+
+    }
+
+    .container1 {
+      border-radius: 2px;
+      padding: 50px;
+      height: 100%;
+      background-color: #EAEAEA;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      margin-bottom: 10px;
+
+    }
+
+    .button--update {
+      background-color: midnightblue;
+      color: white;
+      width: 300px;
+      height: 40px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 3px;
+      cursor: pointer;
+
+    }
+
+    input[type=text] {
+      width: 100%;
+      height: 35px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    input[type=text]:focus {
+      border: 3px solid lightgrey;
+    }
+
+    input[type=date] {
+      width: 100%;
+      height: 35px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    input[type=date]:focus {
+      border: 3px solid lightgrey;
+    }
+
+    h1 {
+      letter-spacing: 3px;
+      color: black;
+      -webkit-text-underline-position: under;
+      -ms-text-underline-position: below;
+      text-underline-position: under;
+      -webkit-text-stroke: .3px white;
+      -webkit-text-fill-color: midnightblue;
+
+    }
+
+    font {
+      letter-spacing: 2px;
+    }
   </style>
 
 </head>
 <title>Edit STOCK-IN</title>
 
+
 <body style="margin: 0px;" bgcolor="#B0C4DE">
+  <h1> <u> Stock-Inventory IN: Editing Record </u></h1>
+
   <div class="container">
     <a href="../stin_main.php" style="float: right;"><i class="fa fa-close" style="font-size:24px; color: red;"></i></a><br>
-    <fieldset>
-      <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory IN: Editing Record&nbsp;&nbsp;&nbsp;</legend>
-      <form autocomplete="off" method="post">
-        <input type="hidden" name="id" value="<?php echo $id; ?>" />
-        <table class="table1" width="100%">
-          <tr>
-            <td><b>
-                <font color='midnightblue'>Code:</font>
-              </b></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><label>
-                <input type="text" class="form-control" name="stin_code" value="<?php echo $stin_code; ?>">
-              </label></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-            <td><b>
-                <font color='midnightblue'>Title:</font>
-              </b></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><label>
-                <input type="text" class="form-control" name="stin_title" value="<?php echo $stin_title; ?>" />
-              </label></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <form autocomplete="off" method="post">
+      <input type="hidden" name="id" value="<?php echo $id; ?>" />
+      <table class="table1" width="100%">
+        <tr>
+          <td><b>
+              <font color='midnightblue'>Code</font> <br>
+              <input type="text" class="form-control" name="stin_code" value="<?php echo $stin_code; ?>">
+            </b></td>
 
-            <td><b>
-                <font color='midnightblue'>Remarks:</font>
-              </b></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><label>
-                <input type="text" class="form-control" name="stin_remarks" value="<?php echo $stin_remarks; ?>">
-              </label></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-            <td><b>
-                <font color='midnightblue'>Date:</font>
-              </b></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><label>
-                <input type="date" class="form-control" name="stin_date" value="<?php echo $stin_date; ?>">
-              </label></td>
-            <td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </td>
-            <td style="text-align: right;"><button class="button__add--item" title="Add Item" style="font-size: 18px; padding: 8px"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button></td>
-          </tr>
+          <td><b>
+              <font color='midnightblue'>Title</font> <br>
+              <input type="text" class="form-control" name="stin_title" value="<?php echo $stin_title; ?>" />
+            </b></td>
 
-        </table>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-        <br>
-        <table class="itemTb">
-          <thead>
-            <tr>
-              <th style="text-align: left;" width="5%">Prod. ID</th>
-              <th style="text-align: left;" width="20%">Item Description</th>
-              <th style="text-align: left;" width="10%">On-Hand</th>
-              <th style="text-align: left;" width="10%">Qty-In</th>
-              <th style="text-align: left;" width="5%">Unit</th>
-              <th style="text-align: left;" width="5%">Cost</th>
-              <th style="text-align: left;" width="10%">Discount Amount</th>
-              <th style="text-align: left;" width="10%">Incomming Qty</th>
-              <th width="5%"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            include "../php/config.php";
-            $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
+          <td><b>
+              <font color='midnightblue'>Remarks</font> <br>
+              <input type="text" class="form-control" name="stin_remarks" value="<?php echo $stin_remarks; ?>">
+            </b></td>
+
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+          <td><b>
+              <font color='midnightblue'>Date:</font> <br>
+              <input type="date" class="form-control" name="stin_date" value="<?php echo $stin_date; ?>">
+            </b></td>
+          <td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </td>
+          <td style="text-align: right;"></td>
+        </tr>
+      </table>
+  </div>
+  <br>
+  <div class="container1">
+    <button class="button__add--item" title="Add Item" style="font-size: 18px; padding: 8px"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button>
+    <br>
+    <table class="itemTb">
+      <thead>
+        <tr>
+          <th style="text-align: left;" width="5%">Prod. ID</th>
+          <th style="text-align: left;" width="20%">Item Description</th>
+          <th style="text-align: left;" width="10%">On-Hand</th>
+          <th style="text-align: left;" width="10%">Qty-In</th>
+          <th style="text-align: left;" width="5%">Unit</th>
+          <th style="text-align: left;" width="5%">Cost</th>
+          <th style="text-align: left;" width="10%">Discount Amount</th>
+          <th style="text-align: left;" width="10%">Incomming Qty</th>
+          <th width="5%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        include "../php/config.php";
+        $sql = "SELECT product.product_id, product.product_name,product.qty,stin_product.stin_temp_qty,
             unit_tb.unit_name,stin_product.stin_temp_cost,stin_product.stin_temp_disamount, stin_product.stin_product_id, stin_product.stin_id
             FROM product 
-            INNER JOIN stin_product ON stin_product.product_id=product.product_id 
-            INNER JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
-            INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+            LEFT JOIN stin_product ON stin_product.product_id=product.product_id 
+            LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id 
+            LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
             WHERE stin_tb.stin_id='$id' 
             ORDER BY product.product_id ASC";
 
-            $result = $db->query($sql);
-            $count = 0;
-            if ($result->num_rows >  0) {
+        $result = $db->query($sql);
+        $count = 0;
+        if ($result->num_rows >  0) {
 
-              while ($irow = $result->fetch_assoc()) {
-                $count = $count + 1;
-                $total = $irow['qty'] + $irow['stin_temp_qty'];
-            ?>
+          while ($irow = $result->fetch_assoc()) {
+            $count = $count + 1;
+            $total = $irow['qty'] + $irow['stin_temp_qty'];
+        ?>
 
-                <tr>
+            <tr>
 
-                  <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
-                  <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
-                  <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
-                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>" class='stin--qty__in'></td>
-                  <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
-                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stin_temp_cost'] ?>" class='stin--cost'></td>
-                  <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>" class='stin--discount'></td>
-                  <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>" class='stin--incoming__qty'></td>
-                  <td>
-                    <center>
+              <td style="text-align: left;"><?php echo $irow['product_id'] ?><input type="hidden" name="productId[]" value="<?php echo $irow['product_id'] ?>" class="stin--product__id"></td>
+              <td style="text-align: left;"><?php echo $irow['product_name'] ?></td>
+              <td style="text-align: left;"><?php echo $irow['qty'] ?></td>
+              <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_qty'] ?><input type="hidden" name="stinTempQty[]" value="<?php echo $irow['stin_temp_qty'] ?>" class='stin--qty__in'></td>
+              <td style="text-align: left;"><?php echo $irow['unit_name'] ?></td>
+              <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_cost'] ?><input type="hidden" name="cost[]" value="<?php echo $irow['stin_temp_cost'] ?>" class='stin--cost'></td>
+              <td style="text-align: left;" class="highlight" title="Double Click to Edit"><?php echo $irow['stin_temp_disamount'] ?><input type="hidden" name="discount[]" value="<?php echo $irow['stin_temp_disamount'] ?>" class='stin--discount'></td>
+              <td style="text-align: left;"><?php echo $irow['qty'] + $irow['stin_temp_qty'] ?><input type="hidden" name="incomingQty[]" value="<?php echo $irow['qty'] + $irow['stin_temp_qty'] ?>" class='stin--incoming__qty'></td>
+              <td>
+                <center>
 
-                      &nbsp;
-                      <a href="item_delete/stin_item_delete.php?id=<?php echo $irow['product_id']; ?>&stinId=<?php echo $irow['stin_id'] ?>">
-                        <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
-                      </a>
-                  </td>
+                  &nbsp;
+                  <a href="item_delete/stin_item_delete.php?id=<?php echo $irow['product_id']; ?>&stinId=<?php echo $irow['stin_id'] ?>">
+                    <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+                  </a>
+              </td>
 
 
-                </tr>
-            <?php }
-            } ?>
-          </tbody>
-        </table>
-        <br>
-        <button class="butLink" name="stin_submit" onclick="alert('Edit Records Successfully !')">Update</button>
-      </form>
-      <br>
+            </tr>
+        <?php }
+        } ?>
+      </tbody>
+    </table>
+    <br>
+    <button class="button--update" name="stin_submit" style="float: right;">Update Records</button>
+    </form>
+    <br>
     </fieldset>
 
     <p style="float: left;">*&nbsp;<i>Editable Row</i> <button style="background-color: orangered" disabled>&nbsp;&nbsp;</button> </p>

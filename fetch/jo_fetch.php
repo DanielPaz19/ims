@@ -24,19 +24,20 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, customers.customers_name, ep_tb.closed, user.user_name, customers.customers_id
-FROM ep_tb
-LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
-LEFT JOIN user ON user.user_id = ep_tb.user_id
-";
+SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name
+FROM jo_tb
+LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
+LEFT JOIN user ON user.user_id = jo_tb.user_id
+LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
+ ";
 
 if ($_POST['query'] != '') {
     $query .= '
-  WHERE ep_tb.ep_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
+  WHERE jo_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
   ';
 }
 
-$query .= 'ORDER BY ep_id DESC ';
+$query .= 'ORDER BY jo_id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -53,14 +54,14 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th >ID</th>
-    <th>No.</th>
-    <th>Title</th>
-    <th>Customer</th>
-    <th>Date</th>
-    <th><center>Action</th>
-    <th><center>Created By</th>
-    <th><center>Status</th>
+    <th width="5%" style="display:none;">ID</th>
+    <th width="15%">Jo-No. </th>
+    <th width="20%">Customer</th>
+    <th width="10%">Prepared By</th>
+    <th width="10%">Create Date</th>
+    <th width="15%"><center>Action</th>
+    <th width="10%"><center>Created By</th>
+    <th width="5%"><center>Status</th>
     
   </tr>
 ';
@@ -68,22 +69,18 @@ if ($total_data > 0) {
     foreach ($result as $row) {
         $closed = $row["closed"];
 
-
         if ($closed == 0) {
             $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
-            $disable = ' 
-
-                <a href="../ims/ep_edit-page.php?editEp&id=' . $row["ep_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
+            $disable = ' <a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="delete/ep_delete.php?id=' . $row["ep_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="commit/ep_commit.php?id=' . $row["ep_id"] . '">
-                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
+                <a href="#"><font color="gray"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+               
       &nbsp;&nbsp;&nbsp;';
         } else {
             $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
-            $disable = '
-       <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
+            $disable = ' 
+      
+      <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
        &nbsp;&nbsp;&nbsp;
       <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;
@@ -92,15 +89,16 @@ if ($total_data > 0) {
         }
         $output .= '
     <tr>
-      <td>' . $row["ep_id"] . '</td>
-      <td>' . $row["ep_no"] . '</td>
-      <td>' . $row["ep_title"] . '</td>
+      <td style="display:none;">' . $row["jo_id"] . '</td>
+      <td>' . $row["jo_no"] . '</td>
       <td>' . $row["customers_name"] . '</td>
-      <td>' . $row["ep_date"] . '</td>
+      <td>' . $row["emp_name"] . '</td>
+      <td>' . $row["jo_date"] . '</td>
       <td><center>
                ' . $disable . '
-                <a href="view/viewep.php?id=' . $row["ep_id"] . '">
-                    <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
+                <a href="view/viewjo.php?id=' . $row["jo_id"] . '">
+                    <i class="fa fa-print" style="font-size:26px" title="Print"></i></a>
+                    
       </center>
                
       </td>
@@ -121,7 +119,7 @@ if ($total_data > 0) {
 $output .= '
 </table>
 <br />
-<label class="tableLabel" style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
+<label style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">
@@ -132,7 +130,6 @@ $previous_link = '';
 $next_link = '';
 $page_link = '';
 $page_array = [];
-
 
 //echo $total_links;
 

@@ -103,7 +103,7 @@ if ($total_data > 0) {
       <td><center>
       ' . $disable . '
                 <a href="view/viewpo.php?id=' . $row["po_id"] . '">
-                    <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
+                    <i class="fa fa-print" style="font-size:26px" title="Print Document"></i></a>
       </center>
                
       </td>

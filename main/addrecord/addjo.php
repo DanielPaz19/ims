@@ -2,21 +2,21 @@
 <html lang="en">
 
 <head>
-    <title>Add Stock-Out Records</title>
+    <title>Add Job-Order Records</title>
     <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
     <style>
         body {
-            padding: 50px;
+            padding: 10px;
         }
 
         fieldset {
             padding: 20px;
             font-family: sans-serif;
             border: 5px solid lightgrey;
-
+            height: 97vmax;
         }
 
         legend {
@@ -35,10 +35,10 @@
             background-color: #A5A4A4;
             color: white;
             border: 2px solid white;
+
         }
 
         td {
-
             border: 1px solid lightgrey;
             background-color: white;
             margin-left: 5px;
@@ -49,6 +49,9 @@
             color: whitesmoke;
             cursor: pointer;
             padding: 5px;
+            height: 30px;
+            width: 30px;
+
         }
 
         input {
@@ -122,6 +125,10 @@
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             margin-top: 20px;
+            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); */
         }
 
         input#item-name {
@@ -133,6 +140,16 @@
             display: none;
         }
 
+        /*   .Incontainer {
+        background-color: none;
+        padding: 20px;
+        box-shadow:  0 0 10px  rgba(0,0,0,0.6);
+      -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+      -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+      -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+        height: 700px;
+      }*/
+
         .inDetails {
             background-color: #EAEAEA;
             padding: 30px;
@@ -140,19 +157,14 @@
             -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            height: 100%;
             color: black;
+            height: 100vmax;
         }
 
         .delete {
             background-color: none;
         }
 
-        .add-button {
-            width: 31%;
-            letter-spacing: 2px;
-
-        }
 
         .stin-button-save {
             width: 300px;
@@ -161,7 +173,23 @@
             letter-spacing: 5px;
             float: right;
             font-weight: initial;
-            margin-bottom: 20px;
+        }
+
+        .jotb td {
+            border: none;
+            background-color: transparent;
+            /* border: 1px solid black; */
+            width: 50%;
+        }
+
+        .jotb {
+            width: 80%;
+        }
+
+        .add-button {
+            width: 31%;
+            letter-spacing: 2px;
+
         }
     </style>
 
@@ -207,11 +235,11 @@
             });
 
             // //Auto incrementing Order-ID
-            $(".newEpId").load("../addrecord/orderid/auto-order-id-ep.php");
+            $(".newStinId").load("../addrecord/orderid/auto-order-id-jo.php");
 
             //Get latest order ID
-            $.get("stoutlatest-id.php", function(data) {
-                $('.newEpId').html(data);
+            $.get("stinlatest-id.php", function(data) {
+                $('.newStinId').html(data);
             });
 
             //Search Items on Database
@@ -219,7 +247,7 @@
                 var query = $(this).val();
                 if (query != "") {
                     $.ajax({
-                        url: "search.php",
+                        url: "../addrecord/search.php",
                         method: "GET",
                         data: {
                             query: query
@@ -255,14 +283,12 @@
                 var id = $("li.selected p").text(); //gets the value id
                 var qty = $(".item-qty").val();
                 var price = $(".item-price").val();
-                var remarks = $(".item-remarks").val();
                 if (addOrder(id)) {
                     $.get(
-                        "../addrecord/addrow/add-item-row-ep.php", {
+                        "../addrecord/addrow/add-item-row-jo.php", {
                             id: id,
                             qty: qty,
                             price: price,
-                            remarks: remarks,
                         },
                         function(data, status) {
                             var noResult = "0 results";
@@ -282,7 +308,6 @@
                                 $("#item-name").val("");
                                 $(".item-qty").val(1);
                                 $(".item-price").val(0);
-                                $(".item-remarks").val("");
                                 $("li.selected").removeClass("selected");
                             }
                         }
@@ -298,9 +323,9 @@
     <div class="Incontainer">
         <div class="inDetails">
             <fieldset>
-                <legend>&nbsp;&nbsp;&nbsp;Exit Pass: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-
-                <br>
+                <legend>&nbsp;&nbsp;&nbsp;JOB-ORDER: Entering Record&nbsp;&nbsp;&nbsp;</legend>
+                <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); width:60%; float: left;">
+                <br><br>
                 <div>
                     <!-- Search Bar -->
                     <div class="container">
@@ -313,73 +338,90 @@
                     <br>
                     <!-- input for item qty -->
                     <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input class="item-qty" type="number" placeholder="Quantity" value="1" />
-
+                    <input class="item-qty" type="number" placeholder="Quantity" value="1" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <!-- input for discount -->
                     <label>Price: &nbsp;&nbsp;</label>
-                    <input class="item-price" type="number" placeholder="Price" value="0" /> <br /><br />
-                    <button class="add-button" title="Add Item">Add item to table</button>
+                    <input class="item-price" type="number" placeholder="Price" value="0" />&nbsp;<br> <br>
+                    <button class="add-button" title="Add Item">Add item to table</button> <br />
+
                 </div>
-                <br><br><br>
-                <hr> <br>
-                <form autocomplete="off" method="GET" action="../addrecord/itemInsert/epInsert.php">
+                <br><br>
+                <hr>
+                <form autocomplete="off" method="GET" action="../addrecord/itemInsert/joInsert.php">
+                    <label>JO ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class=" newStinId"></span>
+                    <br> <br>
+                    <table class="jotb">
+                        <tr>
+                            <td><label>JO-No : </label> <br>
+                                <input type="text" name="jo_no" placeholder="JO21-00000" style="width: 50%;">
+                            </td>
 
-                    <label>EP ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId"></span><br><br>
+                            <td><label>Date:</label> <br>
+                                <input type="date" name="jo_date" style="width: 50%;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Customer:</label> <br>
+                                <select name="customers_id" style="width: 50%; height: 32px; border: 1px solid #B8B8B8;">
+                                    <option>
+                                        <center>--- Select Customer ---</center>
+                                    </option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
 
-                    <label>EP No.: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="number" name="ep_no" placeholder="Exit-Pass-No" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </td>
+                            <td> <label>Prepared By:</label> <br>
+                                <select name="emp_id" style="width: 50%; height: 32px; border: 1px solid #B8B8B8;">
+                                    <option>
+                                        <center>--- Select Employee ---</center>
+                                    </option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
-                    <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="ep_title" placeholder="Job-Order-No (If Have)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="ep_date" required><br><br>
-
-                    <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;
-                    <textarea name="ep_remarks" placeholder="Enter your note here....."></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label>Customer Name:</label>
-                    <select name="customers_id" style="width: 400px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
-                        <option>--- Select Customer ---</option>
-                        <?php
-                        include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
-
-                        while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
-                        }
-                        ?>
-                    </select>
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
 
                     <div>
                         <!--Add item for order-->
 
-                        <br /> <br />
+                        <br /><br />
 
-                        <button name="btnsave" class="stin-button-save">Save Record </button>
+                        <button name="btnsave" class="stin-button-save">&nbsp;Save Record</button> <br> <br>
                         <table id="crud_table" width="100%" class="postb">
                             <tr>
                                 <th style="padding: 10px; text-align: left" width="50%">
                                     Item Description
                                 </th>
-                                <th style="padding: 10px; text-align: left" width="10%">
-                                    Quantity
+                                <th style="padding: 10px; text-align: left" width="5%">
+                                    Qty-Order
                                 </th>
                                 <th style="padding: 10px; text-align: left" width="10%">Price</th>
-
-                                <th style="padding: 10px; text-align: left" width="10%">
-                                    Total Amount
-                                </th>
-
-                                <th style="padding: 10px; text-align: left" width="10%">
-                                    &nbsp;
-                                </th>
+                                <th style="padding: 10px; text-align: left" width="10%">Total Amount</th>
+                                <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
                             </tr>
                         </table>
                         <br>
 
                 </form>
         </div>
-        </fieldset>
         </fieldset>
     </div>
     </div>

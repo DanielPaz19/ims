@@ -174,6 +174,12 @@
       float: right;
       font-weight: initial;
     }
+
+    .add-button {
+      width: 31%;
+      letter-spacing: 2px;
+
+    }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -314,7 +320,7 @@
           <div class="container">
             <div id="search">
               <label>Enter Item:&nbsp;&nbsp;</label>
-              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." /> <button class="add-button" title="Add Item"><i class="fa fa-plus"></i></button>
+              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
               <div id="item-list"></div><!-- Dont Remove this -->
             </div>
           </div>
@@ -325,14 +331,15 @@
           <!-- input for discount -->
           <label>Discount: &nbsp;&nbsp;</label>
           <input class="item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
+          <button class="add-button" title="Add Item">Add item to table</button>
         </div>
         <br><br>
         <hr>
         <br><br>
         <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
-          <label style="display:none;">STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span style="display:none" class="newStinId"></span>
+          <label>STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStinId"></span> <br> <br>
           <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_code" placeholder="TON-00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" name="stin_code" placeholder="TON-00000" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input type="text" name="stin_title" placeholder="JO21-00000"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Date:&nbsp;&nbsp;</label>
@@ -342,11 +349,11 @@
           <label>Prepared By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select name="emp_id" style="width: 32%; height: 32px; border: 1px solid #B8B8B8;">
             <option>
-              <center>---Select---</center>
+              <center>--- Select Employee---</center>
             </option>
             <?php
             include "../../php/config.php";
-            $records = mysqli_query($db, "SELECT * FROM employee_tb");
+            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
             while ($data = mysqli_fetch_array($records)) {
               echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";

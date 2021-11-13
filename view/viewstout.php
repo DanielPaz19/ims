@@ -22,8 +22,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 	$id = $_GET['id'];
 	$result = mysqli_query($db, "SELECT  stout_tb.stout_id ,stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_remarks, stout_tb.itemdesc, stout_tb.stout_date, employee_tb.emp_name, dept_tb.dept_name
 														FROM stout_tb  
-														INNER JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
-														INNER JOIN dept_tb ON employee_tb.dept_id = dept_tb.dept_id
+														LEFT JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
+														LEFT JOIN dept_tb ON employee_tb.dept_id = dept_tb.dept_id
 														WHERE stout_id=" . $_GET['id']);
 
 	$row = mysqli_fetch_array($result);
@@ -175,9 +175,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			<?php
 			$sql = "SELECT product.product_name,stout_product.stout_temp_qty,unit_tb.unit_name, stout_product.stout_temp_remarks 
 			   FROM stout_product 
-			   INNER JOIN product ON product.product_id = stout_product.product_id
-			   INNER JOIN stout_tb ON stout_product.stout_id=stout_tb.stout_id
-			   INNER JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stout_product.stout_id='$id'";
+			   LEFT JOIN product ON product.product_id = stout_product.product_id
+			   LEFT JOIN stout_tb ON stout_product.stout_id=stout_tb.stout_id
+			   LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stout_product.stout_id='$id'";
 
 			$result = $db->query($sql);
 			$count = 0;

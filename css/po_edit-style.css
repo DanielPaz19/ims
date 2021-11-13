@@ -1,7 +1,7 @@
 h1 {
   text-align: center;
   color: midnightblue;
-  font-weight: bold;
+  letter-spacing: 5px;
 }
 
 .container--po__details {
@@ -73,6 +73,7 @@ h1 {
   table-layout: fixed;
   width: 100%;
   color: #ffffff;
+  border-collapse: collapse;
 }
 
 .po__table thead {
@@ -87,6 +88,7 @@ h1 {
 .container--po__table td {
   text-align: right;
   padding: 0px 10px;
+  border: 1px solid white;
 }
 
 .container--po__table tr:nth-child(even) {
@@ -323,4 +325,10 @@ h1 {
   font-weight: bolder;
   color: orangered;
   cursor: pointer;
+}
+
+.textId {
+  color: gray;
+  border: none;
+  background-color: transparent;
 }
