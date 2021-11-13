@@ -5,63 +5,54 @@ include 'php/stin_edit-inc.php';
 ?>
 
 
-<link rel="stylesheet" href="css/po_edit-style.css">
+<link rel="stylesheet" href="css/stin_edit-style.css">
 <script defer src="js/stin_edit-script.js"></script>
 
-<h1 style="float: left; margin-left: 50px">Stock Inventory IN: Editing Records</h1> <br><br><br>
-<hr>
+<h1>Edit Stock-in</h1>
 <form action="php/stin_edit-inc.php" method="POST">
-    <div class='container--po__details'>
-
-        <span class="po__label">
+    <div class='container--details'>
+        <span class="input__label">
             STIN ID:
         </span>
-        <input type="text" name="stinId" id="po_id" class="textId" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
-
-        <span class="po__label">
-            Prep. By:
+        <input type="text" name="stinId" id="stin_id" class="textId" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+        <span class="input__label">
+            STIN Code:
         </span>
-        <select name="empId">
-            <option value="<?php echo $empId ?>"><?php echo $empName; ?></option>
-            <?php
-            include "config.php";
-            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
-
-            while ($data = mysqli_fetch_array($records)) {
-                echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
-            }
-            ?>
-        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="po__label">
-            Remarks:
-        </span>
-        <textarea name="stinRemarks" cols="30" rows="3"><?php echo $stinRemarks; ?></textarea> <br>
-
-        <span class="po__label">
-            STIN CODE :
-        </span>
-        <input type="text" name="stinCode" id="po_terms" value="<?php echo $stinCode ?>">
-        <span class=" po__label">
+        <input type="text" name="stinCode" id="stin_code" value="<?php echo $stinCode ?>">
+        <span class="input__label">
             STIN Title:
         </span>
-        <input type="text" name="stinTitle" id="po_title" value="<?php echo $stinTitle ?>">
-
-        <span class="po__label">
+        <input type="text" name="stinTitle" id="stin_title" value="<?php echo $stinTitle ?>">
+        <span class="input__label">
             STIN Date:
         </span>
-        <input type="date" name="stinDate" id="po_date" value="<?php echo $stinDate ?>">
+        <input type="date" name="stinDate" id="stin_date" value="<?php echo $stinDate ?>"><br>
 
+        <span class="input__label input__label--employee">
+            Employee Name:
+        </span>
+        <select name="employeeId" id="employee_name">
+            <option value=" <?php echo $empId ?>"><?php echo $empName ?></option>
+            // Show supplier name as options for Select input
+            <?php include 'php/render-employee.php' ?>
+        </select>
+        <span class="input__label">
+            Remarks:
+        </span>
+        <input type="text" name="stinRemarks" id="stin_remarks" value="<?php echo $stinRemarks ?>">
 
     </div>
+    <div class="button__container--insert_item">
+        <button class="edit__button edit__button--insert__item">Add item</button>
+    </div>
 
-    <div class="container--po__table">
-        <button class="po__button button--insert__item">Add item</button>
-        <table class='po__table'>
+    <div class="container--table">
+        <table class='table'>
             <thead>
                 <tr>
                     <th>Item Code</th>
                     <th>Item Name</th>
-                    <th>Qty</th>
+                    <th>Qty-In</th>
                     <th>Unit</th>
                     <th>Cost</th>
                     <th>Total Cost</th>
@@ -69,41 +60,72 @@ include 'php/stin_edit-inc.php';
                     </th>
                 </tr>
             </thead>
-            <tbody class='po__table--item'>
+            <tbody class='table--item'>
 
                 <?php
-
                 $limit = 0;
 
-                while (count($productId) !== $limit) {
-                    echo
-                    "<tr>
-         <td>$productId[$limit]</td>
-         <td>$productName[$limit]</td>
-         <td>" . number_format($qtyIn[$limit], 2) . "</td>
-         <td>$unitName[$limit]</td>
-         <td>" . number_format($itemPrice[$limit], 2) . "</td>
-         <td>" . number_format($itemTotal[$limit], 2) . "</td>
-         <td>
-            <font color='red'><i class='fa fa-trash-o' style='font-size:26px'></i></font>
-          </td>
-         </tr>
-         <input type='hidden' name='productId[]' value='$productId[$limit]'>
-         <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]'>
-         <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]'>
-         <input type='hidden' name='itemTotal[]' value='" . $itemPrice[$limit] * $qtyIn[$limit] . "'>
-         ";
+                if (isset($productId)) {
+                    while (count($productId) !== $limit) {
+                        if ($productId[$limit] != '0') {
+                            echo
+                            "<tr>
+             <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
+             <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
+             <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
+             <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
+             <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
+             <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+             <td class='td__edit td__edit--discpercent'>" . number_format($itemDiscpercent[$limit], 2) . "</td>
+             <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
+             <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
+             <td class='td__edit td__edit--delete'>
+                <i class='fa fa-trash-o' style='font-size:26px'></i>
+              </td>
+              <input type='hidden' name='productId[]' value='$productId[$limit]' >
+              <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
+              <input type='hidden' name='itemCost[]' value='$itemCost[$limit]' class='input__edit input__edit--cost'>
+              <input type='hidden' name='itemDiscpercent[]' value='$itemDiscpercent[$limit]' class='input__edit input__edit--discpercent'>
+              <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]' class='input__edit input__edit--discount'>
+              <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
+             </tr>
+             ";
+                        }
 
-                    $limit++;
+                        $limit++;
+                    }
                 }
                 ?>
+
+                <tr>
+                    <td class='td__readonly td__readonly--productid'>00000001</td>
+                    <td class='td__readonly td__readonly--itemname'>Sample Item</td>
+                    <td>100.00</td>
+                    <td class='td__readonly td__readonly--unit'>pcs</td>
+                    <td>100.00</td>
+                    <td>1,000.00</td>
+                    <td class='td__edit td__edit--delete'>
+                        <i class='fa fa-trash-o' style='font-size:26px'></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td__readonly td__readonly--productid'>00000002</td>
+                    <td class='td__readonly td__readonly--itemname'>Sample Item 2</td>
+                    <td>100.00</td>
+                    <td class='td__readonly td__readonly--productid'>pcs</td>
+                    <td>100.00</td>
+                    <td>1,000.00</td>
+                    <td class='td__edit td__edit--delete'>
+                        <i class='fa fa-trash-o' style='font-size:26px'></i>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
     </div>
-    <div class="container--po__button">
-        <button class="po__button button--po__update" name='updatestin'>Update</button>
-        <button class="po__button button--po__cancel" name='cancelupdate'>Cancel</button>
+    <div class="container--edit__button">
+        <button class="edit__button button--update" name='update'>Update</button>
+        <button class="edit__button button--cancelupdate" name='cancelupdate'>Cancel</button>
     </div>
 </form>
 
@@ -133,5 +155,4 @@ include 'php/stin_edit-inc.php';
         </div>
     </div>
 </div>
-
 <?php include_once 'footer.php' ?>
