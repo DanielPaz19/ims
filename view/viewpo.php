@@ -135,7 +135,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             while ($irow = $result->fetch_assoc()) {
               $count = $count + 1;
 
-              $total[] = $irow["item_qtyorder"] * $irow["cost"];
+              $total[] = $irow["item_qtyorder"] * $irow["item_cost"];
 
               $totaldisamount[] =  $irow["item_disamount"];
 
