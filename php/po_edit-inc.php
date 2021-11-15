@@ -88,8 +88,10 @@ if (isset($_POST['updatepo'])) {
       $sql = "UPDATE po_product SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', item_discpercent='$itemDiscpercent[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'";
     } else {
       // If product id dont exist on po_product, INSERT
-      $sql = "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, item_discpercent, po_temp_tot) 
-      VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemDiscpercent[$limit]','$itemTotal[$limit]')";
+      if ($productId[$limit] != 0) {
+        $sql = "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, item_discpercent, po_temp_tot) 
+        VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemDiscpercent[$limit]','$itemTotal[$limit]')";
+      }
     }
 
     mysqli_query($db, $sql);
