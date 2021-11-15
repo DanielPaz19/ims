@@ -37,6 +37,11 @@ if (isset($_POST['submit'])) {
         exit();
       }
 
+      if ($_SESSION['level'] == 3) {
+        header("Location: ../pos/test1.php");
+        exit();
+      }
+
       // else{
       //  echo "<script>alert('Invalid Username  or Password !');
       // window.location='index.php';
