@@ -70,6 +70,7 @@ const rowCustomerList = document.querySelector("tr.customer-data");
 //modal
 const modalCustomer = document.querySelector("#customerModal");
 const btnCustomerClose = document.querySelector(".customer__modal--close");
+const btnNewCustomer = document.querySelector(".button--new__customer");
 
 //transaction
 const inputTransNumber = document.querySelector("#transactionNumber");
@@ -170,6 +171,17 @@ const closeCustModal = function () {
   inputCustomerName.value = selectedData.children[1].innerHTML;
   inputCustomerContact.value = selectedData.children[3].innerHTML;
   inputCustomerAddress.value = selectedData.children[2].innerHTML;
+};
+
+// Open Add Customer Tab
+const addNewCustomer = function (e) {
+  e.preventDefault();
+
+  window.open(
+    "../utilities/bo_customer.php",
+    "Add Customer",
+    "toolbar=no,location=no,width=1500,height=1000,scrollbars=yes"
+  );
 };
 
 const renderCustomer = function (data, container) {
@@ -651,6 +663,8 @@ containerCustomerList.addEventListener("click", function (e) {
 document.addEventListener("keyup", function (e) {
   if (e.key === "Enter") closeCustModal();
 });
+
+btnNewCustomer.addEventListener("click", addNewCustomer);
 
 //search product from product table
 inputSearchProduct.addEventListener("keyup", function () {

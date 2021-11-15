@@ -180,7 +180,9 @@ if (!$_SESSION['user']) {
       <div class="customer-nav">
         <span class="customer-search-container">
           <input autocomplete="off" type="text" id="searchCustomer" placeholder="Search Customer...   " />
-        </span><span class="modal__note">Select Customer then Press ENTER</span>
+        </span>
+        <button class="button--new__customer">New Customer</button>
+        <span class="modal__note">Select Customer then Press ENTER</span>
         <span class="customer__modal--close"> X </span>
       </div>
       <div class="customer-table-container">
