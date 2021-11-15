@@ -174,8 +174,8 @@ if (isset($_GET['printPOS'])) {
 
 
     <div class="container" id="div_print">
-        <img src="../../img/drTemplate.jpg">
-        <!-- class="noprint" -->
+        <img src="../../img/drTemplate.jpg" class="noprint">
+
         <!-- <div class="ep--no"><br><br><br> <br>
             <p style=" margin-right:15px"><?php echo $ep_no; ?></p>
 
