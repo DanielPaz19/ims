@@ -83,8 +83,10 @@ if (isset($_POST['update'])) {
             $sql = "UPDATE stin_product SET stin_temp_qty = '$qtyIn[$limit]', stin_temp_cost = '$itemCost[$limit]'  WHERE stin_id = '$stinId' AND product_id ='$productId[$limit]'";
         } else {
             // If product id dont exist on stin_product, INSERT
-            $sql = "INSERT INTO stin_product(product_id, stin_id, stin_temp_qty, stin_temp_cost) 
-      VALUES ('$productId[$limit]','$stinId','$qtyIn[$limit]','$itemCost[$limit]')";
+            if ($productId[$limit] != 0) {
+                $sql = "INSERT INTO stin_product(product_id, stin_id, stin_temp_qty, stin_temp_cost) 
+                VALUES ('$productId[$limit]','$stinId','$qtyIn[$limit]','$itemCost[$limit]')";
+            }
         }
 
         mysqli_query($db, $sql);
