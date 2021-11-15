@@ -1,13 +1,13 @@
 "use strict";
 
-const buttonAddItem = document.querySelector(".button--insert__item");
+const buttonAddItem = document.querySelector(".edit__button--insert__item");
 const containerModalAddItem = document.querySelector(".container--modal");
 const modalAddItem = document.querySelector(".modal--add__item");
 const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
-const tableItemTb = document.querySelector(".po__table");
-const inputPoId = document.querySelector("#po_id");
+const tableItemTb = document.querySelector(".table");
+const inputId = document.querySelector("#id");
 
 const formatNumber = (string) => {
   const NumOptions = {
@@ -108,12 +108,12 @@ const rowEdit = function (e) {
     targetInput.value = newValue;
 
     const totalCost = computeTotalCost(qty.value, cost.value);
-    const discountValue = computeDiscountVal(discpercent.value, totalCost);
-    const subTotal = computeSubTotal(totalCost, discountValue);
+    // const discountValue = computeDiscountVal(discpercent.value, totalCost);
+    // const subTotal = computeSubTotal(totalCost, discountValue);
 
     tdTotalCost.innerHTML = formatNumber(totalCost);
-    tdDiscount.innerHTML = formatNumber(discountValue);
-    tdSubTotal.innerHTML = formatNumber(subTotal);
+    // tdDiscount.innerHTML = formatNumber(discountValue);
+    // tdSubTotal.innerHTML = formatNumber(subTotal);
   };
 
   if (target.classList.contains("td__edit--qty")) {
@@ -124,9 +124,9 @@ const rowEdit = function (e) {
     changeValue("cost", "Enter New Cost");
   }
 
-  if (target.classList.contains("td__edit--discpercent")) {
-    changeValue("discpercent", "Enter New Discount");
-  }
+  // if (target.classList.contains("td__edit--discpercent")) {
+  //   changeValue("discpercent", "Enter New Discount");
+  // }
 
   if (target.classList.contains("td__edit--delete")) {
     const confirmDelete = confirm(
@@ -135,12 +135,12 @@ const rowEdit = function (e) {
 
     if (!confirmDelete) return;
 
-    fetch("php/po_edit-inc.php", {
+    fetch("php/stin_edit-inc.php", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `delete&productId=${productId.innerHTML}&poId=${inputPoId.value}`,
+      body: `delete&productId=${productId.innerHTML}&stinId=${inputId.value}`,
     }).then(() => location.reload());
   }
 };
@@ -202,25 +202,17 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
-    <td class="unit">${itemUnit}</td>
+    <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
     <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
     <td class='td__compute td__compute--totalcost'>${formatNumber(
       totalCost
     )}</td>
-    <td class='td__edit td__edit--discpercent'>${formatNumber(
-      itemDiscPercent
-    )}</td>
-    <td class='td__compute td__compute--discount'>0.00</td>
-    <td class='td__compute td__compute--subtotal'>${formatNumber(subTotal)}</td>
     <td class='td__edit td__edit--delete'>
-    <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+   <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
     <input type='hidden' name='itemCost[]' value='${itemCost}' class='input__edit input__edit--cost'>
-    <input type='hidden' name='itemDiscpercent[]' value='0' class='input__edit input__edit--discpercent'>
-    <input type='hidden' name='itemDisamount[]' value='0' class='input__edit input__edit--discount'>
-    <input type='hidden' name='itemTotal[]' value='>${subTotal}' class='input__edit input__edit--total'>
     </tr>
     `
   );

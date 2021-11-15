@@ -14,7 +14,7 @@ include 'php/stin_edit-inc.php';
         <span class="input__label">
             STIN ID:
         </span>
-        <input type="text" name="stinId" id="stin_id" class="textId" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+        <input type="text" name="stinId" id="id" class="textId" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" readonly>
         <span class="input__label">
             STIN Code:
         </span>
@@ -34,7 +34,7 @@ include 'php/stin_edit-inc.php';
         <select name="employeeId" id="employee_name">
             <option value=" <?php echo $empId ?>"><?php echo $empName ?></option>
             // Show supplier name as options for Select input
-            <?php include 'php/render-employee.php' ?>
+            <?php include 'php/render-select-employee.php' ?>
         </select>
         <span class="input__label">
             Remarks:
@@ -70,24 +70,18 @@ include 'php/stin_edit-inc.php';
                         if ($productId[$limit] != '0') {
                             echo
                             "<tr>
-             <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
+             <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
              <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
              <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
              <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
              <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
              <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
-             <td class='td__edit td__edit--discpercent'>" . number_format($itemDiscpercent[$limit], 2) . "</td>
-             <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
-             <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
              <td class='td__edit td__edit--delete'>
                 <i class='fa fa-trash-o' style='font-size:26px'></i>
               </td>
               <input type='hidden' name='productId[]' value='$productId[$limit]' >
               <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
               <input type='hidden' name='itemCost[]' value='$itemCost[$limit]' class='input__edit input__edit--cost'>
-              <input type='hidden' name='itemDiscpercent[]' value='$itemDiscpercent[$limit]' class='input__edit input__edit--discpercent'>
-              <input type='hidden' name='itemDisamount[]' value='$itemDisamount[$limit]' class='input__edit input__edit--discount'>
-              <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
              </tr>
              ";
                         }
@@ -97,7 +91,7 @@ include 'php/stin_edit-inc.php';
                 }
                 ?>
 
-                <tr>
+                <!-- <tr>
                     <td class='td__readonly td__readonly--productid'>00000001</td>
                     <td class='td__readonly td__readonly--itemname'>Sample Item</td>
                     <td>100.00</td>
@@ -118,14 +112,14 @@ include 'php/stin_edit-inc.php';
                     <td class='td__edit td__edit--delete'>
                         <i class='fa fa-trash-o' style='font-size:26px'></i>
                     </td>
-                </tr>
+                </tr> -->
 
             </tbody>
         </table>
     </div>
     <div class="container--edit__button">
-        <button class="edit__button button--update" name='update'>Update</button>
         <button class="edit__button button--cancelupdate" name='cancelupdate'>Cancel</button>
+        <button class="edit__button button--update" name='update'>Update</button>
     </div>
 </form>
 

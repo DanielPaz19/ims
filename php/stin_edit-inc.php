@@ -1,24 +1,24 @@
 <?php
 
 // IF Edit button Click from PO Main
-if (isset($_GET['editpo'])) {
+if (isset($_GET['edit'])) {
 
-    $poId = $_GET['id'];
+    $stinId = $_GET['id'];
 
     require 'php/config.php';
 
     $result = mysqli_query(
         $db,
-        "SELECT po_tb.po_id, po_tb.po_terms, po_tb.po_remarks, po_tb.po_code,
-  po_tb.po_date, po_tb.po_title, po_tb.sup_id, po_product.item_qtyorder, po_product.item_cost, 
-  po_product.item_disamount, po_product.item_discpercent, po_product.po_temp_tot, product.product_name, product.product_name,
-  product.class_id, product.unit_id, product.product_id, sup_tb.sup_name, unit_tb.unit_name
- FROM po_tb  
- LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
- LEFT JOIN product ON po_product.product_id = product.product_id
- LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
+        "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, stin_tb.emp_id,
+        stin_tb.stin_remarks, stin_product.product_id, stin_product.stin_temp_qty,  stin_product.stin_temp_cost, 
+        stin_product.stin_temp_disamount, stin_product.stin_temp_tot, product.product_name, unit_tb.unit_name,
+        employee_tb.emp_name
+ FROM stin_tb  
+ LEFT JOIN stin_product ON stin_product.stin_id = stin_tb.stin_id
+ LEFT JOIN product ON stin_product.product_id = product.product_id
  LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
- WHERE po_tb.po_id ='$poId'"
+ LEFT JOIN employee_tb ON stin_tb.emp_id = employee_tb.emp_id
+ WHERE stin_tb.stin_id = '$stinId'"
     );
 
 
@@ -26,22 +26,18 @@ if (isset($_GET['editpo'])) {
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while ($row = mysqli_fetch_assoc($result)) {
-            $supId = $row['sup_id'];
-            $supName = $row['sup_name'];
-            $poTerms = $row['po_terms'];
-            $poRemarks = $row['po_remarks'];
-            $poDate = $row['po_date'];
-            $poCode = $row['po_code'];
-            $poTitle = $row['po_title'];
-            $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
+            $stinId = $row['stin_id'];
+            $stinCode = $row['stin_code'];
+            $stinTitle = $row['stin_title'];
+            $stinDate = $row['stin_date'];
+            $empId = $row['emp_id'];
+            $empName = $row['emp_name'];
+            $stinRemarks = $row['stin_remarks'];
+            $productId[] = $row['product_id'];
             $productName[] = $row['product_name'];
-            $qtyIn[] = $row['item_qtyorder'];
-            $unitId[] = $row['unit_id'];
+            $qtyIn[] = $row['stin_temp_qty'];
             $unitName[] = $row['unit_name'];
-            $itemCost[] = $row['item_cost'];
-            $itemDisamount[] = $row['item_disamount'];
-            $itemDiscpercent[] = $row['item_discpercent'];
-            $itemTotal[] = $row['po_temp_tot'];
+            $itemCost[] = $row['stin_temp_cost'];
         }
     } else {
         echo "0 results";
@@ -49,47 +45,46 @@ if (isset($_GET['editpo'])) {
 }
 
 // If po_edit-page.php update button is set
-if (isset($_POST['updatepo'])) {
+if (isset($_POST['update'])) {
 
-    $poId = $_POST['poId'];
-    $supId = $_POST['supplierId'];
-    $poTitle = $_POST['poTitle'];
-    $poTerms = $_POST['poTerms'];
-    $poRemarks = $_POST['poRemarks'];
-    $poDate = $_POST['poDate'];
-    $poCode = $_POST['poCode'];
+    $stinId = number_format($_POST['stinId']);
+    $employeeId = $_POST['employeeId'];
+    $stinTitle = $_POST['stinTitle'];
+    $stinRemarks = $_POST['stinRemarks'];
+    $stinDate = $_POST['stinDate'];
+    $stinCode = $_POST['stinCode'];
 
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemCost = $_POST['itemCost'];
-    $itemDisamount = $_POST['itemDisamount'];
-    $itemDiscpercent = $_POST['itemDiscpercent'];
-    $itemTotal = $_POST['itemTotal'];
+
 
     require '../php/config.php';
 
-    // Update po_tb
-    mysqli_query(
+    // Update stin_tb
+    if (!mysqli_query(
         $db,
-        "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle',po_code = '$poCode', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' 
-    WHERE po_id = '" . number_format($poId) . "'"
-    );
+        "UPDATE stin_tb SET emp_id ='$employeeId', stin_title = '$stinTitle', stin_code = '$stinCode', stin_remarks = '$stinRemarks',  stin_date = '$stinDate' 
+    WHERE stin_id = '$stinId'"
+    )) {
+        printf("Error message: %s\n", mysqli_error($link));
+    };
 
 
-    // Update po_product
+    // Update stin_tb
     $limit = 0;
     while (count($productId) !== $limit) {
-        // Check product id from po_product
-        $checkResult = mysqli_query($db, "SELECT product_id FROM po_product WHERE po_id = $poId AND product_id ='" . $productId[$limit] . "'");
+        // Check product id from stin_product
+        $checkResult = mysqli_query($db, "SELECT product_id FROM stin_product WHERE stin_id = $stinId AND product_id ='" . $productId[$limit] . "'");
 
         if (mysqli_num_rows($checkResult) > 0) {
-            // If product id already exist on po_product, UPDATE
-            $sql = "UPDATE po_product SET item_qtyorder = '$qtyIn[$limit]', item_cost = '$itemCost[$limit]' , item_disamount = '$itemDisamount[$limit]', item_discpercent='$itemDiscpercent[$limit]', po_temp_tot= '$itemTotal[$limit]' WHERE po_id = '$poId' AND product_id ='$productId[$limit]'";
+            // If product id already exist on stin_product, UPDATE
+            $sql = "UPDATE stin_product SET stin_temp_qty = '$qtyIn[$limit]', stin_temp_cost = '$itemCost[$limit]'  WHERE stin_id = '$stinId' AND product_id ='$productId[$limit]'";
         } else {
-            // If product id dont exist on po_product, INSERT
-            $sql = "INSERT INTO po_product(product_id, po_id, item_qtyorder, item_cost, item_disamount, item_discpercent, po_temp_tot) 
-      VALUES ('$productId[$limit]','$poId','$qtyIn[$limit]','$itemCost[$limit]','$itemDisamount[$limit]','$itemDiscpercent[$limit]','$itemTotal[$limit]')";
+            // If product id dont exist on stin_product, INSERT
+            $sql = "INSERT INTO stin_product(product_id, stin_id, stin_temp_qty, stin_temp_cost) 
+      VALUES ('$productId[$limit]','$stinId','$qtyIn[$limit]','$itemCost[$limit]')";
         }
 
         mysqli_query($db, $sql);
@@ -97,33 +92,32 @@ if (isset($_POST['updatepo'])) {
         $limit++;
     }
 
-    // editpo&id=2&supId=107&supName=A.F.%20SA
 
-    header("location: ../po_edit-page.php?editpo&updated&id=$poId");
+    header("location: ../stin_edit-page.php?edit&updated&id=$stinId");
 }
 
 // If po_edit-page.php update button is set
 if (isset($_POST['cancelupdate'])) {
-    header('location: ../po_main.php');
+    header('location: ../stin_main.php');
 }
 
 
-// If po_edit-page.php delete button is set
+// If stin_edit-page.php delete button is set
 if (isset($_POST['delete'])) {
-    $poId = $_POST['poId'];
+    $poId = $_POST['stinId'];
     $productId = $_POST['productId'];
 
     require '../php/config.php';
 
-    mysqli_query($db, "DELETE FROM po_product WHERE po_id = '$poId' AND product_id = '$productId'");
+    mysqli_query($db, "DELETE FROM stin_product WHERE stin_id = '$poId' AND product_id = '$productId'");
 
-    echo "poId" . $poId . "productId" . $productId;
+    echo "stinId" . $stinId . "productId" . $productId;
 }
 
 if (isset($_GET['updated'])) {
     echo
     '<script>
   alert("Successfully updated!");
-  location.href = "po_edit-page.php?editpo&id=' . $_GET['id'] . '";
+  location.href = "stin_edit-page.php?edit&id=' . $_GET['id'] . '";
   </script>';
 }

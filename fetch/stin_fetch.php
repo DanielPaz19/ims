@@ -70,7 +70,7 @@ if ($total_data > 0) {
 
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
-      $disable = ' <a href="stin_edit-page.php?editStin&id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+      $disable = ' <a href="stin_edit-page.php?edit&id=' . $row["stin_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete/stin_delete.php?id= ' . $row["stin_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;
