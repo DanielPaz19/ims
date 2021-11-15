@@ -33,7 +33,7 @@ include 'php/po_edit-inc.php';
     <select name="supplierId" id="supplier_name">
       <option value=" <?php echo $supId ?>"><?php echo $supName ?></option>
       // Show supplier name as options for Select input
-      <?php include 'php/render-supplier.php' ?>
+      <?php include 'php/render-select-supplier.php' ?>
 
     </select>
     <span class="po__label">
