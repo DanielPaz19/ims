@@ -74,7 +74,7 @@ include 'php/po_edit-inc.php';
 
         if (isset($productId)) {
           while (count($productId) !== $limit) {
-            if ($productId[$limit] != '0') {
+            if ($productId[$limit] != 0) {
               echo
               "<tr>
              <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
