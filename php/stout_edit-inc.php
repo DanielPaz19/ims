@@ -1,7 +1,7 @@
 <?php
 
-// IF Edit button Click from PO Main
-if (isset($_GET['editStout'])) {
+// IF Edit button Click from STOUT Main
+if (isset($_GET['edit'])) {
 
     $stoutId = $_GET['id'];
 
@@ -9,84 +9,93 @@ if (isset($_GET['editStout'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_date, stout_tb.stout_remarks, employee_tb.emp_name,  stout_product.product_id, stout_product.stout_id, stout_product.stout_temp_qty, stout_product.stout_temp_cost, stout_product.stout_temp_disamount, stout_product.stout_temp_tot, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_id
-        FROM stout_tb
-        LEFT JOIN employee_tb ON employee_tb.emp_id = stout_tb.emp_id
-        LEFT JOIN stout_product ON stout_product.stout_id = stout_tb.stout_id
-        LEFT JOIN product ON product.product_id = stout_product.product_id
-        LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-        WHERE stout_tb.stout_id ='$stoutId'"
+        "SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_date, stout_tb.emp_id,
+        stout_tb.stout_remarks, stout_product.product_id, stout_product.stout_temp_qty,  stout_product.stout_temp_cost, 
+        stout_product.stout_temp_disamount, stout_product.stout_temp_tot, product.product_name, unit_tb.unit_name,
+        employee_tb.emp_name
+ FROM stout_tb  
+ LEFT JOIN stout_product ON stout_product.stout_id = stout_tb.stout_id
+ LEFT JOIN product ON stout_product.product_id = product.product_id
+ LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+ LEFT JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
+ WHERE stout_tb.stout_id = '$stoutId'"
     );
 
 
-
-    // PO Details
+    // STOUT Details
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while ($row = mysqli_fetch_assoc($result)) {
-            $empId = $row['emp_id'];
-            $empName = $row['emp_name'];
+            $stoutId = $row['stout_id'];
             $stoutCode = $row['stout_code'];
             $stoutTitle = $row['stout_title'];
-            $stoutRemarks = $row['stout_remarks'];
             $stoutDate = $row['stout_date'];
-
-            $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
+            $empId = $row['emp_id'];
+            $empName = $row['emp_name'];
+            $stoutRemarks = $row['stout_remarks'];
+            $productId[] = $row['product_id'];
             $productName[] = $row['product_name'];
             $qtyIn[] = $row['stout_temp_qty'];
-            $unitId[] = $row['unit_id'];
             $unitName[] = $row['unit_name'];
-            $itemPrice[] = $row['stout_temp_cost'];
-            $itemTotal[] = $row['stout_temp_tot'];
+            $itemCost[] = $row['stout_temp_cost'];
         }
     } else {
         echo "0 results";
     }
 }
 
-// If po_edit-page.php update button is set
-if (isset($_POST['updatestout'])) {
-    $stoutId = $_POST['stoutId'];
-    $empId = $_POST['empId'];
-    $stoutCode = $_POST['stoutCode'];
+// If stout_edit-page.php update button is set
+if (isset($_POST['update'])) {
+
+    $stoutId = number_format($_POST['stoutId']);
+    $employeeId = $_POST['employeeId'];
     $stoutTitle = $_POST['stoutTitle'];
     $stoutRemarks = $_POST['stoutRemarks'];
     $stoutDate = $_POST['stoutDate'];
+    $stoutCode = $_POST['stoutCode'];
+
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
-    $itemPrice = $_POST['itemPrice'];
-    $itemTotal = $_POST['itemTotal'];
+    $itemCost = $_POST['itemCost'];
+
 
     require '../php/config.php';
 
-    // Update po_tb
-    mysqli_query(
+    // Update stout_tb
+    if (!mysqli_query(
         $db,
-        "UPDATE stout_tb SET stout_code='$stoutCode', stout_title='$stoutTitle', emp_id='$empId', stout_date='$stoutDate', stout_remarks='$stoutRemarks' WHERE stout_id='$stoutId' "
-    );
+        "UPDATE stout_tb SET emp_id ='$employeeId', stout_title = '$stoutTitle', stout_code = '$stoutCode', stout_remarks = '$stoutRemarks',  stout_date = '$stoutDate' 
+    WHERE stout_id = '$stoutId'"
+    )) {
+        printf("Error message: %s\n", mysqli_error($link));
+    };
 
 
-    // Update po_product
+    // Update stout_tb
     $limit = 0;
     while (count($productId) !== $limit) {
-        // Check product id from po_product
+        // Check product id from stout_product
         $checkResult = mysqli_query($db, "SELECT product_id FROM stout_product WHERE stout_id = $stoutId AND product_id ='" . $productId[$limit] . "'");
 
         if (mysqli_num_rows($checkResult) > 0) {
-            // If product id already exist on po_product, UPDATE
-            mysqli_query($db, "UPDATE stout_product SET stout_temp_qty = '$qtyIn[$limit]', stout_temp_cost = '$itemPrice[$limit]', stout_temp_tot= '$itemTotal[$limit]' WHERE stout_id = '$stoutId' AND product_id ='$productId[$limit]'");
+            // If product id already exist on stout_product, UPDATE
+            $sql = "UPDATE stout_product SET stout_temp_qty = '$qtyIn[$limit]', stout_temp_cost = '$itemCost[$limit]'  WHERE stout_id = '$stoutId' AND product_id ='$productId[$limit]'";
         } else {
-            // If product id dont exist on po_product, INSERT
-            mysqli_query($db, "INSERT INTO stout_product(product_id, stout_id, stout_temp_qty, stout_temp_cost, stout_temp_tot) 
-      VALUES ('$productId[$limit]','$stoutId','$qtyIn[$limit]','$itemPrice[$limit]','$itemTotal[$limit]')");
+            // If product id dont exist on stout_product, INSERT
+            if ($productId[$limit] != 0) {
+                $sql = "INSERT INTO stout_product(product_id, stout_id, stout_temp_qty, stout_temp_cost) 
+                VALUES ('$productId[$limit]','$stoutId','$qtyIn[$limit]','$itemCost[$limit]')";
+            }
         }
+
+        mysqli_query($db, $sql);
+
         $limit++;
     }
 
-    // editpo&id=2&supId=107&supName=A.F.%20SA
 
-    header("location: ../stout_edit-page.php?editStout&id=$stoutId&update=success");
+    header("location: ../stout_edit-page.php?edit&updated&id=$stoutId");
 }
 
 // If po_edit-page.php update button is set
@@ -95,6 +104,22 @@ if (isset($_POST['cancelupdate'])) {
 }
 
 
-if (isset($_GET['update'])) {
-    echo '<script>alert("Update records successfully !")</script>';
+// If stout_edit-page.php delete button is set
+if (isset($_POST['delete'])) {
+    $poId = $_POST['stoutId'];
+    $productId = $_POST['productId'];
+
+    require '../php/config.php';
+
+    mysqli_query($db, "DELETE FROM stout_product WHERE stout_id = '$stoutId' AND product_id = '$productId'");
+
+    echo "stoutId" . $stoutId . "productId" . $productId;
+}
+
+if (isset($_GET['updated'])) {
+    echo
+    '<script>
+  alert("Successfully updated!");
+  location.href = "stout_edit-page.php?edit&id=' . $_GET['id'] . '";
+  </script>';
 }
