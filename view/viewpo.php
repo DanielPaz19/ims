@@ -13,7 +13,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   if ($row) {
     $id = $row['po_id'];
     $po_code = $row['po_code'];
-    $po_date = $row['po_date'];
     $po_title = $row['po_title'];
     $po_remarks = $row['po_remarks'];
     $po_terms = $row['po_terms'];
@@ -21,6 +20,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     $sup_address = $row['sup_address'];
     $sup_tel = $row['sup_tel'];
     $sup_tin = $row['sup_tin'];
+    $dateString = $row['po_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
   } else {
     echo "No results!";
   }
@@ -94,8 +96,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
               <td style="font-size: 13px "><label> Supplier :</label>
                 <?php echo $sup_name; ?>
               </td>
-              <td style="font-size: 13px; "><label> Date :</label>
-                <?php echo $po_date; ?></td>
+              <td style="font-size: 13px; letter-spacing:1px "><label> Date :</label>
+                <?php echo $date; ?></td>
             </tr>
             <tr>
               <td style="font-size: 13px "><label> Addres :</label><?php echo $sup_address; ?></td>
@@ -144,11 +146,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <td><?php echo $irow['product_name'] ?></td>
                 <td><?php echo $irow['item_qtyorder'] ?></td>
                 <td><?php echo $irow['unit_name'] ?></td>
-                <td><?php echo $irow['item_cost'] ?></td>
-                <td class="item_totcost"><?php echo $irow["item_qtyorder"] * $irow["item_cost"]; ?></td>
-                <td><?php echo $irow['item_discpercent'] ?></td>
-                <td><?php echo $irow['item_disamount'] ?></td>
-                <td class="po_temp_tot"><?php echo $irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"]; ?></td>
+                <td><?php echo number_format($irow['item_cost'], 2)  ?></td>
+                <td class="item_totcost"> <?php echo number_format($irow["item_qtyorder"] * $irow["item_cost"], 2); ?></td>
+                <td><?php echo number_format($irow['item_discpercent'], 2)  ?></td>
+                <td><?php echo number_format($irow['item_disamount'], 2)  ?></td>
+                <td class="po_temp_tot"><?php echo number_format($irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"], 2); ?></td>
               </tr>
               <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
           <?php }
@@ -172,14 +174,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
             ?>
             <tr>
-              <td><label class="totDiv"> Sub Total:</label>&nbsp;&#8369;<?php echo $subTot; ?></td>
+              <td><label class="totDiv"> Sub Total:</label>&nbsp;&#8369;<?php echo number_format($subTot, 2); ?></td>
             </tr>
 
             <tr>
-              <td><label class="totDiv"> Total Discount:</label>&nbsp;&#8369;<?php echo $disTot ?></td>
+              <td><label class="totDiv"> Total Discount:</label>&nbsp;&#8369;<?php echo number_format($disTot, 2)  ?></td>
             </tr>
             <tr>
-              <td><label class="totDivGrand"> Grand Total:&nbsp;<u> &#8369;<?php echo $grandTot ?></u></label></td>
+              <td><label class="totDivGrand"> Grand Total:&nbsp;<u> &#8369;<?php echo number_format($grandTot, 2)  ?></u></label></td>
             </tr>
           </table>
           <br><br>
