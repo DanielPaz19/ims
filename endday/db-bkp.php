@@ -120,6 +120,6 @@ if (!empty($sqlScript)) {
     exec('rm ' . $backup_file_name);
 }
 
-header("location:hello.php");
+
 
 ?>
