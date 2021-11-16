@@ -34,9 +34,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		$stin_code = $row['stin_code'];
 		$stin_title = $row['stin_title'];
 		$stin_remarks = $row['stin_remarks'];
-		$stin_date = $row['stin_date'];
 		$emp_name = $row['emp_name'];
 		$dept_name = $row['dept_name'];
+		$dateString = $row['stin_date'];
+		$dateTimeObj = date_create($dateString);
+		$date = date_format($dateTimeObj, 'm-d-y');
 	} else {
 		echo "No results!";
 	}
@@ -169,20 +171,29 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 						$count = $count + 1;
 				?>
 						<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
-						<td><?php echo $irow['stin_temp_qty'] ?></td>
+						<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?></td>
 						<td><?php echo $irow['unit_name'] ?></td>
 			</tr>
 	<?php }
 				} ?>
+	<tr>
+		<td style="border: none;"></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="border: none;">
+			<label style="font-weight: bold;"> TON Remarks :</label> <?php echo $stin_remarks ?>
+		</td>
+	</tr>
 		</table>
 	</div>
+
 	<br><br>
 	<div class="footer">
 		<table width="100%">
 			<tr>
 				<td style="text-align:left;"><b>Prepared By:</b>&nbsp;&nbsp;&nbsp;<?php echo $emp_name; ?></td>
 				<td style="text-align: center;"><b>Department:</b>&nbsp;&nbsp;&nbsp;<?php echo $dept_name; ?></td>
-				<td style="text-align: right;"><b>DATE:</b>&nbsp;&nbsp;&nbsp;<?php echo $stin_date; ?>&nbsp;&nbsp;&nbsp;</td>
+				<td style="text-align: right;"><b>DATE:</b>&nbsp;&nbsp;&nbsp;<?php echo $date; ?>&nbsp;&nbsp;&nbsp;</td>
 
 			</tr>
 		</table>
