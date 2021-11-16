@@ -42,6 +42,11 @@ if (isset($_POST['submit'])) {
         exit();
       }
 
+      if ($_SESSION['level'] == 99) {
+        header("Location: ../endday/index.html");
+        exit();
+      }
+
       // else{
       //  echo "<script>alert('Invalid Username  or Password !');
       // window.location='index.php';
