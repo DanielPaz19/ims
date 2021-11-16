@@ -9,8 +9,9 @@ if (isset($_GET['printPOS'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address
+        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address, user.user_name
         FROM order_tb
+        LEFT JOIN user ON user.user_id = order_tb.user_id
         LEFT JOIN customers ON customers_id = order_tb.customer_id 
         WHERE order_tb.order_id = '$id'"
     );
@@ -23,6 +24,7 @@ if (isset($_GET['printPOS'])) {
         $dateString = $row['pos_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm-d-y');
+        $userName = $row['user_name'];
 
         // $date_format = date_format($row['pos_date'], "d/m/y");
     }
@@ -154,6 +156,18 @@ if (isset($_GET['printPOS'])) {
         cursor: pointer;
         font-weight: bolder;
     }
+
+    .ep--user {
+        position: absolute;
+        top: 575px;
+        left: 100px;
+    }
+
+    .ep--joNo {
+        position: absolute;
+        top: 620px;
+        left: 50px;
+    }
 </style>
 
 <head>
@@ -187,7 +201,7 @@ if (isset($_GET['printPOS'])) {
         </div> -->
 
         <div class="ep--date"><br><br><br> <br><br><br><br><br> <br>
-            <p style=" margin-right:20px;font-weight:bold;font-size:15px;"><?php echo $date  ?></p>
+            <p style=" margin-right:75px;font-weight:bold;font-size:15px;"><?php echo $date  ?></p>
         </div>
 
 
@@ -231,7 +245,7 @@ if (isset($_GET['printPOS'])) {
                             <td style="width: 80px;"><?php echo $irow['pos_temp_qty'] ?></td>
                             <td style="width: 50px;"><?php echo $irow['unit_name'] ?></td>
                             <td style=" width: 300px;"><?php echo $irow['product_name'] ?></td>
-                            <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow['pos_temp_price'], 2) ?>/<?php echo $irow['unit_name'] ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td style="width: 50px; text-align:left">&#8369;<?php echo number_format($irow['pos_temp_price'], 2) ?>/<?php echo $irow['unit_name'] ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)  ?></td>
                         </tr>
                 <?php }
@@ -240,6 +254,7 @@ if (isset($_GET['printPOS'])) {
             </table>
 
             <table style="float: right;">
+
                 <?php
 
                 $limit = 0;
@@ -272,7 +287,14 @@ if (isset($_GET['printPOS'])) {
 
         </div>
 
+        <!-- 
+        <div class="ep--user"><br><br><br><br><br><br><br> <br> <br><br>
+            <p>/<?php echo $userName ?></p>
 
+        </div> -->
+        <!-- <div class="ep--joNo"><br><br><br><br><br><br><br> <br> <br><br>
+            <p>/<?php echo $userName ?></p>
+        </div> -->
 </body>
 <input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Click Here to Print ! ">
 
