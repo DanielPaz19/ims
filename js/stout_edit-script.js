@@ -60,6 +60,7 @@ const rowEdit = function (e) {
   const productId = target
     .closest("tr")
     .querySelector(".td__readonly--productid");
+  console.log(productId);
   const qty = target.closest("tr").querySelector(".input__edit--qty");
   const cost = target.closest("tr").querySelector(".input__edit--cost");
   const discpercent = target
@@ -135,12 +136,12 @@ const rowEdit = function (e) {
 
     if (!confirmDelete) return;
 
-    fetch("php/stin_edit-inc.php", {
+    fetch("php/stout_edit-inc.php", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `delete&productId=${productId.innerHTML}&stinId=${inputId.value}`,
+      body: `delete&productId=${productId.innerHTML}&stoutId=${inputId.value}`,
     }).then(() => location.reload());
   }
 };

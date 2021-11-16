@@ -106,7 +106,7 @@ if (isset($_POST['cancelupdate'])) {
 
 // If stout_edit-page.php delete button is set
 if (isset($_POST['delete'])) {
-    $poId = $_POST['stoutId'];
+    $stoutId = $_POST['stoutId'];
     $productId = $_POST['productId'];
 
     require '../php/config.php';
