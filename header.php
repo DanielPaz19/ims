@@ -62,7 +62,7 @@
         <a href="#" onclick="showUnit()"><i class="fa fa-plus-circle"></i>&nbsp;Unit</a>
         <a href="#" onclick="showLocation()"><i class="fa fa-plus-circle"></i>&nbsp;Location</a>
         <a href="#" onclick="showEmployee()"><i class="fa fa-plus-circle"></i>&nbsp;Employee</a>
-        <!-- <a href="#" onclick="myMessage()">End of day...</a> -->
+
 
       </div>
     </div>
@@ -81,72 +81,3 @@
 
     <a href="php/logout-inc.php" style="float:right;" title="Sign-Out">Welcome &nbsp; <i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
   </div>
-
-  <script>
-    function myMessage() {
-      if (window.confirm("Make sure to sign-out all connected pc before proceeding ..")) {
-        window.location.href = "endday/index.html";
-      }
-    }
-
-    function startTimer() {
-      userInput = 15;
-      if (userInput.length == 0) {
-        alert("Please enter a value");
-      } else {
-        var numericExpression = /^[0-9]+$/;
-
-        function display(notifier, str) {
-          document.getElementById(notifier).innerHTML = str;
-        }
-
-        function toMinuteAndSecond(x) {
-          return Math.floor(x / 60) + ":" + x % 60;
-        }
-
-        function setTimer(remain, actions) {
-          (function countdown() {
-            display("countdown", toMinuteAndSecond(remain));
-            actions[remain] && actions[remain]();
-            (remain -= 1) >= 0 && setTimeout(countdown, 1000);
-
-          })();
-        }
-
-        let p1 = "Closing all connection...";
-        let p2 = "Getting backup file.....";
-        let p3 = "Backup Data Successful......";
-
-        setTimer(userInput, {
-          12: function() {
-            document.getElementById("demo1").innerHTML = p1;;
-          }
-        });
-
-        setTimer(userInput, {
-          10: function() {
-            document.getElementById("demo2").innerHTML = p2;;
-          }
-        });
-
-        setTimer(userInput, {
-          5: function() {
-            document.getElementById("demo2").innerHTML = p3;;
-          }
-        });
-
-        setTimer(userInput, {
-          3: function() {
-            window.location.href = "db-bkp.php";
-          }
-        });
-
-        setTimer(userInput, {
-          0: function() {
-            window.location.href = "../php/logout-inc.php";
-          }
-        });
-
-      }
-    }
-  </script>
