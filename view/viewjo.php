@@ -211,7 +211,7 @@
 
                  <?php
                     include "../php/config.php";
-                    $sql = "SELECT product.product_name,jo_product.jo_product_qty,unit_tb.unit_name, jo_product.jo_product_price
+                    $sql = "SELECT product.product_name,jo_product.jo_product_qty,unit_tb.unit_name, jo_product.jo_product_price, jo_product.jo_remarks
                     FROM jo_product 
                     LEFT JOIN product ON product.product_id = jo_product.product_id
                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
@@ -224,9 +224,11 @@
                         while ($irow = $result->fetch_assoc()) {
                             $count = $count + 1;
                     ?>
-                         <td style="text-align: left;"><?php echo $irow['jo_product_qty'] ?><?php echo $irow['unit_name'] ?></td>
-                         <td style="width:235px"><?php echo $irow['product_name'] ?></td>
-                         <td style="width:100px">&#8369;&nbsp;<?php echo $irow['jo_product_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                         <tr valign="top">
+                             <td style="text-align: left;"><?php echo $irow['jo_product_qty'] ?><?php echo $irow['unit_name'] ?></td>
+                             <td style="width:235px" valign="top"><?php echo $irow['product_name'] ?> <br> <textarea wrap="soft" rows="5" cols="30"> <?php echo $irow['jo_remarks'] ?></textarea>
+                             </td>
+                             <td style="width:100px">&#8369;&nbsp;<?php echo $irow['jo_product_price'] ?>/<?php echo $irow['unit_name'] ?></td>
 
                          </tr>
                  <?php }
