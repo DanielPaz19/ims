@@ -5,6 +5,7 @@ include '../../../php/config.php';
 $product_id = $_GET['id'];
 $product_qty = $_GET['qty'];
 $item_price = $_GET['price'];
+$item_remarks = $_GET['remarks'];
 $sql = "SELECT * FROM product WHERE product_id = '$product_id' LIMIT 1";
 $result = mysqli_query($db, $sql);
 
@@ -20,7 +21,8 @@ if (mysqli_num_rows($result) > 0) {
     <td><input name='qty_order[]' style='border:none;' value='" . $product_qty . "' readonly></td>
     <td><input name='price[]' style='border:none;' value='" . number_format($item_price, 2) . "' readonly></td>
     <td><input name='total[]' style='border:none;' value='" . number_format($total_amount, 2) . "' readonly></td>
-
+    </td>
+    <td><textarea name='remarks[]' rows='2' cols='30' style='border:none;text-decoration:none;' readonly>" . $item_remarks . "</textarea>
     <td style='text-align:center;'><span><a href='#' class='delete' id='" . $row['product_id'] . " title='remove' ><font color='red'><i class='fa fa-trash-o' style='font-size:20px'></i></font></a></span></td>
     </tr>";
     }

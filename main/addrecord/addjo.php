@@ -283,12 +283,14 @@
                 var id = $("li.selected p").text(); //gets the value id
                 var qty = $(".item-qty").val();
                 var price = $(".item-price").val();
+                var remarks = $(".item-remarks").val();
                 if (addOrder(id)) {
                     $.get(
                         "../addrecord/addrow/add-item-row-jo.php", {
                             id: id,
                             qty: qty,
                             price: price,
+                            remarks: remarks,
                         },
                         function(data, status) {
                             var noResult = "0 results";
@@ -308,6 +310,7 @@
                                 $("#item-name").val("");
                                 $(".item-qty").val(1);
                                 $(".item-price").val(0);
+                                $(".item-remarks").val("");
                                 $("li.selected").removeClass("selected");
                             }
                         }
@@ -342,6 +345,8 @@
                     <!-- input for discount -->
                     <label>Price: &nbsp;&nbsp;</label>
                     <input class="item-price" type="number" placeholder="Price" value="0" />&nbsp;<br> <br>
+                    <label>Item Remarks: &nbsp;&nbsp;</label>
+                    <textarea class="item-remarks" rows="4" cols="50"></textarea>&nbsp;<br> <br>
                     <button class="add-button" title="Add Item">Add item to table</button> <br />
 
                 </div>
@@ -353,7 +358,7 @@
                     <table class="jotb">
                         <tr>
                             <td><label>JO-No : </label> <br>
-                                <input type="text" name="jo_no" placeholder="JO21-00000" style="width: 50%;">
+                                <input type="text" name="jo_no" placeholder="21-00000" style="width: 50%;">
                             </td>
 
                             <td><label>Date:</label> <br>
@@ -415,6 +420,7 @@
                                 </th>
                                 <th style="padding: 10px; text-align: left" width="10%">Price</th>
                                 <th style="padding: 10px; text-align: left" width="10%">Total Amount</th>
+                                <th style="padding: 10px; text-align: left" width="10%">Item Remarks</th>
                                 <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
                             </tr>
                         </table>

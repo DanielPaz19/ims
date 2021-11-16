@@ -325,8 +325,8 @@
           <input class="item-qty" type="number" placeholder="Quantity" value="1" />
           &nbsp;&nbsp;&nbsp;
           <!-- input for discount -->
-          <label>Discount: &nbsp;&nbsp;</label>
-          <input class="item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
+          <label style="display: none;">Discount: &nbsp;&nbsp;</label>
+          <input class="item-discount" type="number" placeholder="Discount" value="0" style="display: none;" /> <br /><br />
 
 
           <button class="add-button" title="Add Item">Add item to table</button>
