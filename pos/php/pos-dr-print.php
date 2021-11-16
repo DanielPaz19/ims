@@ -17,9 +17,14 @@ if (isset($_GET['printPOS'])) {
     $row = mysqli_fetch_array($result);
     if ($result) {
         $id = $row['order_id'];
-        $pos_date = $row['pos_date'];
+        // $pos_date = $row['pos_date'];
         $customers_name = $row['customers_name'];
         $customers_address = $row['customers_address'];
+        $dateString = $row['pos_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm-d-y');
+
+        // $date_format = date_format($row['pos_date'], "d/m/y");
     }
 }
 
@@ -182,7 +187,7 @@ if (isset($_GET['printPOS'])) {
         </div> -->
 
         <div class="ep--date"><br><br><br> <br><br><br><br><br> <br>
-            <p style=" margin-right:3px;font-weight:bold"><?php echo $pos_date; ?></p>
+            <p style=" margin-right:20px;font-weight:bold;font-size:15px;"><?php echo $date  ?></p>
         </div>
 
 
@@ -219,12 +224,15 @@ if (isset($_GET['printPOS'])) {
                         $count = $count + 1;
                         $total[] = $irow["pos_temp_qty"] * $irow["pos_temp_price"];
 
+
                 ?>
+
                         <tr>
-                            <td style="width: 165px;"><?php echo $irow['pos_temp_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 379px;"><?php echo $irow['product_name'] ?></td>
-                            <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 60px; text-align:left">&#8369;<?php echo $irow["pos_temp_qty"] * $irow["pos_temp_price"] ?>.00</td>
+                            <td style="width: 80px;"><?php echo $irow['pos_temp_qty'] ?></td>
+                            <td style="width: 50px;"><?php echo $irow['unit_name'] ?></td>
+                            <td style=" width: 300px;"><?php echo $irow['product_name'] ?></td>
+                            <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow['pos_temp_price'], 2) ?>/<?php echo $irow['unit_name'] ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)  ?></td>
                         </tr>
                 <?php }
                 } ?>
@@ -251,7 +259,7 @@ if (isset($_GET['printPOS'])) {
                 <tr>
                     <td></td>
                     <td style="text-decoration: overline;">
-                        &#8369;<?php echo $grandTot ?>.00
+                        &#8369;<?php echo number_format($grandTot, 2)  ?>
                     </td>
                 </tr>
                 <td>--------------<i>NOTHING FOLLOWS</i>--------------
