@@ -54,7 +54,6 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="10%">ID</th>
     <th width="10%">PO Code</th>
     <th width="5%">Title</th>
     <th width="10%">Date</th>
@@ -94,7 +93,7 @@ if ($total_data > 0) {
 
     $output .= '
     <tr>
-      <td>' . $row["po_id"] . '</td>
+
       <td>' . $row["po_code"] . '</td>
       <td>' . $row["po_title"] . '</td>
       <td>' . $row["po_date"] . '</td>
