@@ -74,7 +74,7 @@ const selectJo = function (e) {
     .then((res) => res.json())
     .then((data) => {
       data.forEach((product) => {
-        console.log(product.jo_no);
+        const totalGross = product.jo_product_qty * product.jo_product_price;
         containerOrderList.insertAdjacentHTML(
           "beforeend",
           `<tr>
@@ -84,12 +84,24 @@ const selectJo = function (e) {
           <td class="qty">${product.jo_product_qty}</td>
           <td class="unit">${product.unit_name}</td>
           <td class="discount">0.00</td>
-          <td class="total">${formatNumber(
-            product.jo_product_qty * product.jo_product_price
-          )}</td>
+          <td class="total">${formatNumber(totalGross)}</td>
           <td class="delete">X</td>
         </tr>`
         );
+
+        // Add to Summary Gross Amount, Qty,
+        const prevGross = removeComma(smryGross.value);
+        const prevQty = removeComma(smryQty.value);
+        const prevNetSales = removeComma(smryNetSales.value);
+
+        smryGross.value = formatNumber(+prevGross + +totalGross);
+        smryQty.value = formatNumber(+prevQty + +product.jo_product_qty);
+        smryNetSales.value = formatNumber(+prevNetSales + +totalGross);
+
+        computeTax();
+
+        // Add default value of item to the Label
+        smryLabelPayable.textContent = `${smryNetSales.value} PHP`;
       });
     });
 
