@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>PACC IMS</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+      <style>
+.text {
+  letter-spacing: 2px;
+}
+
+</style>
+</head>
+
+<body>
+  
+<div class="group"> 
+  <div class="bigSqr">
+    <div class="square first"></div>
+    <div class="square second"></div>
+    <div class="square third"></div>
+    <div class="square fourth"></div>
+  </div>
+  <div class="text">Creating Back-up database file <br>
+    <br>
+    Don't close the application
+    <br><br>
+    Please be patient ........
+<br>
+<p id="demo1"></p> <br>
+<p id="demo2"></p> <br>
+<p id="demo3"></p> <br>
+  </div>
+
+  <div style="display:none" id="countdown"></div>
+
+</div>
+  
+
+    <script src="js/index.js"></script>
+    
+
+</body>
+</html>
+
+
+<script>
+  function startTimer() {
+  userInput = 20;
+  	if(userInput.length == 0){
+		alert("Please enter a value");
+	} else {
+	var numericExpression = /^[0-9]+$/;
+	
+   function display( notifier, str ) {
+    document.getElementById(notifier).innerHTML = str;
+  }
+        
+  function toMinuteAndSecond( x ) {
+    return Math.floor(x/60) + ":" + x%60;
+  }
+        
+  function setTimer( remain, actions ) {
+    (function countdown() {
+       display("countdown", toMinuteAndSecond(remain));         
+       actions[remain] && actions[remain]();
+       (remain -= 1) >= 0 && setTimeout(countdown, 1000);
+       
+    })();
+  }
+
+let p1 = "Closing all connection...";
+let p2= "Getting backup file.....";
+let p3= "Backup Data Successful......";
+
+  setTimer(userInput, {
+     12: function () { document.getElementById("demo1").innerHTML = p1;
+       ;
+       }
+  }); 
+
+  setTimer(userInput, {
+     10: function () { document.getElementById("demo2").innerHTML = p2;
+       ;
+       }
+  }); 
+
+  setTimer(userInput, {
+     5: function () { document.getElementById("demo2").innerHTML = p3;
+       ;
+       }
+  }); 
+  
+  setTimer(userInput, {
+     3: function () { window.location.href = "db-bkp.php";
+       }
+  }); 
+
+  setTimer(userInput, {
+     0: function () { window.location.href = "../php/logout-inc.php";
+       }
+  }); 
+
+}
+}
+
+startTimer() ;
+
+
+</script>
+
+
+
