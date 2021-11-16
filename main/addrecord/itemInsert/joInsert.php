@@ -18,6 +18,7 @@ $qty = $_GET['qty_order'];
 $price = $_GET['price'];
 $total = $_GET['total'];
 $joNo = $_GET['jo_no'];
+$joRemarks = $_GET['remarks'];
 $customersId = $_GET['customers_id'];
 $joDate = $_GET['jo_date'];
 $emp_id = $_GET['emp_id'];
@@ -31,7 +32,7 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
         echo "product id :" . $x . "<br>";
     }
 
-    echo "stin id:" . $joId . "<br>" . "<br>";
+    echo "jo id:" . $joId . "<br>" . "<br>";
 
     $limit = 0;
     while (sizeof($productId) !== $limit) {
@@ -47,6 +48,28 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
         $limit++;
     }
+
+    $limiter = 0;
+    while (sizeof($productId) !== $limiter) {
+        $sql = "UPDATE jo_product 
+                       SET jo_remarks ='" . $joRemarks[$limiter]
+            . "' WHERE product_id = " . $productId[$limiter] . " AND jo_id =" . $joId;
+
+
+        if (mysqli_query($db, $sql)) {
+            echo "New record created successfully " . "<br>" . "<br>";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+        }
+
+        $limiter++;
+    }
+
+
+
+
+
+
 
     $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, user_id)
             VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','" . $_SESSION['id'] . "')";
