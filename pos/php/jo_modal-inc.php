@@ -5,7 +5,7 @@ require 'config.php';
 $joResult = mysqli_query($db, "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.customers_id, customers.customers_name , jo_tb.jo_date 
 FROM jo_tb 
 LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
-ORDER BY jo_no");
+ORDER BY jo_no LIMIT 15");
 
 if (mysqli_num_rows($joResult) > 0) {
   while ($row = mysqli_fetch_assoc($joResult)) {
