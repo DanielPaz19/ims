@@ -38,7 +38,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		$dept_name = $row['dept_name'];
 		$dateString = $row['stin_date'];
 		$dateTimeObj = date_create($dateString);
-		$date = date_format($dateTimeObj, 'm-d-y');
+		$date = date_format($dateTimeObj, 'm/d/y');
 	} else {
 		echo "No results!";
 	}

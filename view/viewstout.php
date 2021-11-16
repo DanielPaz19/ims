@@ -34,10 +34,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		$stout_code = $row['stout_code'];
 		$stout_title = $row['stout_title'];
 		$stout_remarks = $row['stout_remarks'];
-		$stout_date = $row['stout_date'];
 		$emp_name = $row['emp_name'];
 		$dept_name = $row['dept_name'];
 		$itemdesc = $row['itemdesc'];
+		$dateString = $row['stout_date'];
+		$dateTimeObj = date_create($dateString);
+		$date = date_format($dateTimeObj, 'm/d/y');
 	} else {
 		echo "No results!";
 	}
@@ -159,7 +161,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			<tr>
 				<td><b>Item Description:</b>&nbsp;&nbsp;<?php echo $itemdesc; ?></td>
 				<td width="40%"></td>
-				<td><b>Date:</b>&nbsp;&nbsp;<?php echo $stout_date; ?></td>
+				<td><b>Date:</b>&nbsp;&nbsp;<?php echo $date; ?></td>
 			</tr>
 		</table>
 	</div>
