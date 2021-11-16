@@ -435,7 +435,9 @@ const orderPay = function (orderId, rowIndex, balance) {
   inputPaymentTendered.focus();
 };
 
-const orderView = function () {};
+const orderView = function (orderId) {
+  window.open(`php/pos-dr-print.php?printPOS&id=${+orderId}`);
+};
 
 const savePayment = function (e) {
   e.preventDefault();
@@ -821,7 +823,7 @@ containPendingTrans.addEventListener("click", function (e) {
   }
 
   if (clickedOpt.classList.contains("table__option--view")) {
-    orderView();
+    orderView(orderId);
   }
 });
 
