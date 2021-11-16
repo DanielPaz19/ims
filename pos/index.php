@@ -7,6 +7,7 @@ if (!$_SESSION['user']) {
 ?>
 
 <!---------------------------- POS TAB ----------------------->
+<?php include_once 'jo_modal.php' ?>
 
 <div class="tab__content tab__content--pos tab__content--active">
   <div class="left-side">
@@ -34,7 +35,7 @@ if (!$_SESSION['user']) {
           </span>
           <div class="container-customer_address">
             <div class="container__customer--label">
-              <label for="customerAddress">Contact Address:</label>
+              <label for="customerAddress">Customer Address:</label>
             </div>
             <input type="text" id="customerAddress" class="input-customer_address" disabled />
           </div>
@@ -79,6 +80,9 @@ if (!$_SESSION['user']) {
               <th></th>
             </tr>
           </thead>
+          <tbody>
+
+          </tbody>
           <tbody class="container-order-list">
             <tr>
               <td class="item-code">000001</td>

@@ -581,7 +581,7 @@ td.customer-contact {
   text-align: center;
 }
 
-tr:hover {
+tbody tr:hover {
   background-color: #70a1ff;
   cursor: pointer;
 }
@@ -596,9 +596,12 @@ div.container__button--save {
 }
 
 .btn-save {
-  width: 60%;
+  width: 150px;
   height: 50px;
   border-radius: 10px;
+  background-color: midnightblue;
+  color: #ffffff;
+  border: midnightblue 1px solid;
 }
 
 .btn-save:hover {
@@ -681,7 +684,7 @@ tbody.transaction-list td:nth-child(6) span:hover {
   font-weight: bold;
 }
 
-.transaction-list tr:hover {
+.transaction-list tbody tr:hover {
   background-color: #70a1ff;
   color: #ffffff;
 }
