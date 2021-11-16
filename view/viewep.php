@@ -262,8 +262,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $ep_no = $row['ep_no'];
         $ep_title = $row['ep_title'];
         $ep_remarks = $row['ep_remarks'];
-        $ep_date = $row['ep_date'];
         $customers_name = $row['customers_name'];
+        $dateString = $row['ep_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
     } else {
         echo "No results!";
     }
@@ -425,7 +427,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         </div>
 
         <div class="ep--date"><br><br><br> <br><br><br><br><br> <br>
-            <p style=" margin-right:100px"><?php echo $ep_date; ?></p>
+            <p style=" margin-right:100px"><?php echo $date; ?></p>
         </div>
 
 
@@ -466,7 +468,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <td style="width: 165px;"><?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
                             <td style="width: 379px;"><?php echo $irow['product_name'] ?></td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_totPrice'] ?>.00</td>
+                            <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td>
                         </tr>
                 <?php }
                 } ?>
