@@ -17,9 +17,9 @@
 .jo__modal--content {
   background-color: #fefefe;
   margin: 5% auto; /* 15% from the top and centered */
-  padding: 10px 30px;
+  padding: 20px;
   border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
+  width: 50%; /* Could be more or less, depending on screen size */
   border-radius: 10px;
   transition: all 0.3s;
 }
@@ -65,16 +65,10 @@
 .jo__modal--table th:nth-child(3) {
   width: 20%;
 }
-.jo__modal--table th:nth-child(4) {
-  width: 20%;
-}
 
 /* Table Data format */
-.jo__modal--table td:nth-child(3) {
-  text-align: right;
-}
 
-.jo__modal--table td:nth-child(4),
+.jo__modal--table td:nth-child(3),
 .jo__modal--table td:nth-child(1) {
   text-align: center;
 }

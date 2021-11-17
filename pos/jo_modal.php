@@ -15,7 +15,6 @@
           <tr>
             <th>JO No.</th>
             <th>Customer</th>
-            <th>Price</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -29,7 +28,6 @@
               "<tr>
               <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
               <td>" . $joCustomerName[$jolimit] . "</td>
-              <td>999,999.99</td>
               <td>" . $joDate[$jolimit] . "</td>
             </tr>";
 
