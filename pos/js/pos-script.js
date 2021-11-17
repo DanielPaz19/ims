@@ -2,6 +2,7 @@
 
 // OBJECTS
 const transaction = {
+  joId: 0,
   customerId: 0,
   transactionId: 0,
   transDate: "",
@@ -779,7 +780,7 @@ btnSaveTransaction.addEventListener("click", function (e) {
 
   alert("Transaction Saved");
 
-  location.reload();
+  // location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------

@@ -76,6 +76,7 @@ const selectJo = function (e) {
     .then((data) => {
       //JO input
       inputJoNumber.value = data[0].jo_no;
+      transaction.joId = data[0].jo_id;
 
       data.forEach((product) => {
         const totalGross = product.jo_product_qty * product.jo_product_price;

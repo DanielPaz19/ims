@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'config.php';
 
 // {"customerId":12,"transactionId":3,"transDate":"2021-10-23T23:45:24.908Z","productId":[15],"qty":[1],"discount":[0],"price":[0],"total":0}
@@ -13,11 +14,13 @@ $productPrice = $transDetails->price;
 $discount = $transDetails->discount;
 $orderId = $transDetails->transactionId;
 $total = $transDetails->total;
+$joId = $transDetails->joId;
+$userId = $_SESSION['id'];
 
 $lastQty = [];
 
-$query = "INSERT INTO order_tb (customer_id, pos_date, total, order_status_id) 
-  VALUES ('$customerId','$transDate','$total','1');";
+$query = "INSERT INTO order_tb (customer_id, pos_date, total, order_status_id,user_id, jo_id) 
+  VALUES ('$customerId','$transDate','$total','1', '$userId', '$joId');";
 
 $query2 = "INSERT INTO order_payment (order_id, payment_type_id, order_payment_credit, order_payment_balance, order_payment_date, payment_status_id)
   VALUES ('$orderId','0','$total','$total','$transDate', '1');";
