@@ -27,7 +27,7 @@ const searchJo = function () {
   const joSearch = this.value;
   console.log(joSearch);
 
-  fetch("php/jo-search.php", {
+  fetch("php/jo_modal-inc.php", {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

@@ -16,8 +16,7 @@ if (isset($_GET['editJo'])) {
         LEFT JOIN product ON jo_product.product_id = product.product_id
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
         LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
-        WHERE jo_tb.jo_id ='$joId'"
-
+        WHERE jo_tb.jo_id ='$joId' AND jo_tb.pos = '1' AND jo_tb.closed = '0'"
     );
 
     // PO Details

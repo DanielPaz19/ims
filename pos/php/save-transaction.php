@@ -2,9 +2,6 @@
 session_start();
 include 'config.php';
 
-// {"customerId":12,"transactionId":3,"transDate":"2021-10-23T23:45:24.908Z","productId":[15],"qty":[1],"discount":[0],"price":[0],"total":0}
-
-
 $transDetails = json_decode($_POST['json']);
 $customerId = $transDetails->customerId;
 $transDate = $transDetails->transDate;
@@ -19,7 +16,7 @@ $userId = $_SESSION['id'];
 
 $lastQty = [];
 
-$query = "INSERT INTO order_tb (customer_id, pos_date, total, order_status_id,user_id, jo_id) 
+$query = "INSERT INTO order_tb (customer_id, pos_date, total, order_status_id, user_id, jo_id) 
   VALUES ('$customerId','$transDate','$total','1', '$userId', '$joId');";
 
 $query2 = "INSERT INTO order_payment (order_id, payment_type_id, order_payment_credit, order_payment_balance, order_payment_date, payment_status_id)
@@ -28,9 +25,8 @@ $query2 = "INSERT INTO order_payment (order_id, payment_type_id, order_payment_c
 mysqli_query($db, $query);
 mysqli_query($db, $query2);
 
-
-
-
+// Close the jo_tb
+mysqli_query($db, "UPDATE jo_tb SET closed = '1' WHERE jo_id ='$joId'");
 
 $limit = 0;
 while (sizeof($productId) != $limit) {
