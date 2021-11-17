@@ -179,7 +179,7 @@
             border: none;
             background-color: transparent;
             /* border: 1px solid black; */
-            width: 50%;
+            width: 60%;
         }
 
         .jotb {
@@ -400,6 +400,9 @@
                                     }
                                     ?>
                                 </select>
+                            </td>
+                            <td><label for="pos" style="font-size: 18px;"> POS:</label></td>
+                            <td><input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="pos" value="1" checked="checked" title="Job-Order Type">
                             </td>
                         </tr>
                     </table>
