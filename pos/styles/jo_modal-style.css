@@ -20,7 +20,6 @@
   padding: 10px 30px;
   border: 1px solid #888;
   width: 60%; /* Could be more or less, depending on screen size */
-  height: 60%;
   border-radius: 10px;
   transition: all 0.3s;
 }
@@ -42,9 +41,15 @@
   font-size: 15px;
 }
 
+.jo__modal--table__container {
+  height: 500px;
+  overflow-y: scroll;
+}
+
 .jo__modal--table {
   margin: 10px 0px;
   table-layout: fixed;
+  background-color: #ffffff;
 }
 
 .jo__modal--table th {
@@ -78,6 +83,9 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
+}
+.jo__modal--table tbody tr:nth-child(even) {
+  background-color: lightgray;
 }
 
 /* The Close Button */
