@@ -88,6 +88,10 @@
   background-color: lightgray;
 }
 
+.jo__modal--table tbody tr:hover {
+  background-color: lightskyblue;
+}
+
 /* The Close Button */
 .jo__modal--close {
   color: #aaa;
