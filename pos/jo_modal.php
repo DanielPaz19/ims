@@ -21,18 +21,20 @@
         </thead>
         <tbody>
           <?php
-          $jolimit = 0;
+          if (isset($joId)) {
+            $jolimit = 0;
 
-          while (count($joId) !== $jolimit) {
-            echo
-            "<tr>
-            <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
-            <td>" . $joCustomerName[$jolimit] . "</td>
-            <td>999,999.99</td>
-            <td>" . $joDate[$jolimit] . "</td>
-          </tr>";
+            while (count($joId) !== $jolimit) {
+              echo
+              "<tr>
+              <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
+              <td>" . $joCustomerName[$jolimit] . "</td>
+              <td>999,999.99</td>
+              <td>" . $joDate[$jolimit] . "</td>
+            </tr>";
 
-            $jolimit++;
+              $jolimit++;
+            }
           }
 
           ?>
