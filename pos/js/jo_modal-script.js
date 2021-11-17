@@ -4,6 +4,7 @@ const inputJoSearch = document.querySelector(".jo__modal--input__search");
 const tblJoModal = document.querySelector(".jo__modal--table");
 const joModalClose = document.querySelector(".jo__modal--close");
 const joModal = document.querySelector(".jo__modal");
+const inputJoNumber = document.querySelector("#jonumber");
 
 // Render data on JO table when Searched
 const renderJoTable = function (data, tbody) {
@@ -73,6 +74,9 @@ const selectJo = function (e) {
     })
     .then((res) => res.json())
     .then((data) => {
+      //JO input
+      inputJoNumber.value = data[0].jo_no;
+
       data.forEach((product) => {
         const totalGross = product.jo_product_qty * product.jo_product_price;
         containerOrderList.insertAdjacentHTML(
@@ -80,12 +84,14 @@ const selectJo = function (e) {
           `<tr>
           <td class="item-code">${product.product_id.padStart(8, 0)}</td>
           <td class="item-description">${product.product_name}</td>
-          <td class="price">${formatNumber(product.jo_product_price)}</td>
-          <td class="qty">${product.jo_product_qty}</td>
+          <td class="td__locked price">${formatNumber(
+            product.jo_product_price
+          )}</td>
+          <td class="td__locked qty">${product.jo_product_qty}</td>
           <td class="unit">${product.unit_name}</td>
-          <td class="discount">0.00</td>
+          <td class="td__locked discount">0.00</td>
           <td class="total">${formatNumber(totalGross)}</td>
-          <td class="delete">X</td>
+          <td class="td__locked delete">X</td>
         </tr>`
         );
 
