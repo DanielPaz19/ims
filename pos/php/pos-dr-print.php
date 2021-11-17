@@ -9,10 +9,11 @@ if (isset($_GET['printPOS'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address, user.user_name
+        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address, user.user_name, jo_tb.jo_no
         FROM order_tb
         LEFT JOIN user ON user.user_id = order_tb.user_id
         LEFT JOIN customers ON customers_id = order_tb.customer_id 
+        LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
         WHERE order_tb.order_id = '$id'"
     );
     $row = mysqli_fetch_array($result);
@@ -25,6 +26,7 @@ if (isset($_GET['printPOS'])) {
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm-d-y');
         $userName = $row['user_name'];
+        $joNo = $row['jo_no'];
 
         // $date_format = date_format($row['pos_date'], "d/m/y");
     }
@@ -287,14 +289,14 @@ if (isset($_GET['printPOS'])) {
 
         </div>
 
-        <!-- 
+
         <div class="ep--user"><br><br><br><br><br><br><br> <br> <br><br>
             <p>/<?php echo $userName ?></p>
 
-        </div> -->
-        <!-- <div class="ep--joNo"><br><br><br><br><br><br><br> <br> <br><br>
-            <p>/<?php echo $userName ?></p>
-        </div> -->
+        </div>
+        <div class="ep--joNo"><br><br><br><br><br><br><br> <br> <br><br>
+            <p>JO<?php echo $joNo ?></p>
+        </div>
 </body>
 <input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Click Here to Print ! ">
 
