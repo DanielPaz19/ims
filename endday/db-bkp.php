@@ -116,8 +116,10 @@ if (!empty($sqlScript)) {
     header('Content-Length: ' . filesize($backup_file_name));
     ob_clean();
     flush();
-    readfile($backup_file_name);
+
+    // readfile($backup_file_name);
     exec('rm ' . $backup_file_name);
+    file_put_contents('../dbstore/' . $backup_file_name, $sqlScript);
 }
 
 
