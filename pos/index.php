@@ -63,10 +63,16 @@ if (!$_SESSION['user']) {
       <div class="order-list-container">
         <span class="container-transaction_number">
           <label for="transactionNumber">Transaction Number:</label>
-          <input type="text" id="transactionNumber" value="0000000001" /></span>
+          <input type="text" id="transactionNumber" value="0000000001" disabled />
+        </span>
         <span class="container-transaction_date">
           <label for="transactionDate">Transaction Date:</label>
-          <input type="text" id="transactionDate" disabled value="01-01-2021" /></span>
+          <input type="text" id="transactionDate" disabled value="01-01-2021" />
+        </span>
+        <span class="container-jo__number">
+          <label for="jonumber">JO Number:</label>
+          <input type="text" id="jonumber" disabled value="" />
+        </span>
         <table class="order-list">
           <thead>
             <tr>

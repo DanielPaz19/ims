@@ -198,10 +198,15 @@ a {
 }
 
 [for="transactionNumber"],
-[for="transactionDate"] {
+[for="transactionDate"],
+[for="jonumber"] {
   color: midnightblue;
   font-weight: bold;
   letter-spacing: 2px;
+}
+
+[for="jonumber"] {
+  margin-left: 10%;
 }
 
 #transactionNumber {
@@ -216,6 +221,15 @@ a {
 
 #transactionDate {
   text-align: center;
+  border: none;
+  font-weight: bold;
+  margin-left: 10px;
+  width: 150px;
+  color: red;
+}
+
+#jonumber {
+  text-align: left;
   border: none;
   font-weight: bold;
   margin-left: 10px;
@@ -405,6 +419,15 @@ table.item-list td {
 }
 .item-list th:nth-child(6) {
   width: 20%;
+}
+
+.td__edit {
+  cursor: pointer;
+  color: red;
+  font-style: italic;
+}
+.td__edit:hover {
+  font-weight: bold;
 }
 
 .location {

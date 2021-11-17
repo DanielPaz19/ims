@@ -245,6 +245,7 @@ const editOrder = function (e, selector) {
   if (selector === "delete") return deleteOrder(e);
 
   const target = e.target.closest("tr").querySelector(`.${selector}`);
+
   const targetIndex = e.target.closest("tr").rowIndex;
   const targetRow = containerOrderList.rows[targetIndex - 1];
   const prevRowGross =
@@ -694,10 +695,10 @@ containerProductList.addEventListener("dblclick", function (e) {
     `<tr>
     <td class="item-code">${itemCode}</td>
     <td class="item-description">${itemName}</td>
-    <td class="price">${formatNumber(price)}</td>
-    <td class="qty">1</td>
+    <td class="td__edit price">${formatNumber(price)}</td>
+    <td class="td__edit qty">1</td>
     <td class="unit">${unit}</td>
-    <td class="discount">0.00</td>
+    <td class="td__edit discount">0.00</td>
     <td class="total">${formatNumber(price)}</td>
     <td class="delete">X</td>
   </tr>`
@@ -720,31 +721,17 @@ containerProductList.addEventListener("dblclick", function (e) {
 
 //click events inside order list
 containerOrderList.addEventListener("click", function (e) {
-  const selectedEdit = e.target.className;
+  // const selectedEdit = e.target.className;
+  const selectedEdit = e.target.classList;
 
-  switch (selectedEdit) {
-    //Edit qty order
-    case "qty":
-      updateSummary(editOrder(e, "qty"));
+  // Reject edit if TD has "td__locked" Class name
+  if (selectedEdit.contains("td__locked")) return;
 
-      break;
-
-    //Edit Discount
-    case "discount":
-      updateSummary(editOrder(e, "discount"));
-      break;
-
-    // delete row
-    case "delete":
-      //subtract values of the deleted row form the summary details
-      editOrder(e, "delete");
-
-      break;
-
-    case "price":
-      updateSummary(editOrder(e, "price"));
-      break;
-  }
+  if (selectedEdit.contains("qty")) updateSummary(editOrder(e, "qty"));
+  if (selectedEdit.contains("discount"))
+    updateSummary(editOrder(e, "discount"));
+  if (selectedEdit.contains("price")) updateSummary(editOrder(e, "price"));
+  if (selectedEdit.contains("delete")) editOrder(e, "delete");
 });
 
 //save button
