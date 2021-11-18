@@ -70,7 +70,7 @@
         <a href="#">&nbsp;POS</a>
         <a href="#">&nbsp;Stock-In </a>
         <a href="#">&nbsp;Stock-Out </a>
-        <a href="#">&nbsp;Purchase Order</a>
+        <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
       </div>
     </div>
 
