@@ -624,6 +624,16 @@ div.container__button--save {
 
 /* ------------------------------ Payment Tab style ---------------------------------- */
 
+.pending__payments--search--container {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.pending__payments--search {
+  width: 30%;
+  height: 40px;
+}
+
 .container-transaction-list {
   width: 80%;
   margin: auto;
