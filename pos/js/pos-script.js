@@ -123,6 +123,7 @@ const btnSavePayment = document.querySelector(".button__save--payment");
 const inputPaymentTendered = document.querySelector(".payment-tendered");
 const inputPaymentChange = document.querySelector(".payment-change");
 const labelChangeBalance = document.querySelector(".change-balance");
+const inputTransSearch = document.querySelector(".pending__payments--search");
 
 //radio button
 const containerPayOption = document.querySelector(".container-radio-button");
@@ -793,6 +794,15 @@ nav.addEventListener("click", function (e) {
   if (clicked.classList.contains("nav--button-pos")) {
     window.open("../index.html");
   }
+});
+
+inputTransSearch.addEventListener("keyup", function () {
+  fetchTableData(
+    "pending_payments",
+    containPendingTrans,
+    showPendingPayments,
+    this.value
+  );
 });
 
 containPendingTrans.addEventListener("click", function (e) {

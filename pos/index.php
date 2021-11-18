@@ -236,6 +236,9 @@ if (!$_SESSION['user']) {
 <div class="tab__content tab__content--payment">
   <h1>Pending Payments</h1>
 
+  <div class="pending__payments--search--container">
+    <input type="text" class="pending__payments--search" placeholder="🔎 Search Pending Payments...">
+  </div>
   <div class="container-transaction-list">
     <table class="tbl-transaction">
       <thead>
