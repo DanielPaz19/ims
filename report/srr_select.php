@@ -110,8 +110,8 @@
 
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css" /> -->
 </head>
 
 <body>
@@ -126,9 +126,9 @@
             <input type="date" class="form-control" placeholder="Start" name="date1" />
             <label>To</label>
             <input type="date" class="form-control" placeholder="End" name="date2" />
-            <button class="btn btn-primary" name="search"><span class="fa fa-search"></span>
+            <button class="btn btn-primary" name="search"><span class="fa fa-search"></span>Search </button>
         </form>
-        </button> <a href="srr_select.php" type="button" class="btn btn-success"><span class="fa fa-refresh"></span></a>
+        <a href="srr_select.php" type="button" class="btn btn-success"><span class="fa fa-refresh"></span></a>
         <br /><br />
         <div class="table-responsive">
             <table class="table table-bordered">
