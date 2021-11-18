@@ -1,10 +1,11 @@
 <?php
 session_start();
+date_default_timezone_set("Asia/Manila");
 include 'config.php';
 
 $transDetails = json_decode($_POST['json']);
 $customerId = $transDetails->customerId;
-$transDate = $transDetails->transDate;
+$transDate = date("Y-m-d H:i:s");
 $productId = $transDetails->productId;
 $productQty = $transDetails->qty;
 $productPrice = $transDetails->price;
