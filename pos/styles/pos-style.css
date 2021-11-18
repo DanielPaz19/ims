@@ -48,6 +48,10 @@ select:focus {
   box-shadow: 0 0 10px #70a1ff;
 }
 
+thead {
+  background-color: midnightblue;
+}
+
 .nav-bar {
   height: 35px;
   background-color: midnightblue;
@@ -623,17 +627,22 @@ div.container__button--save {
 .container-transaction-list {
   width: 80%;
   margin: auto;
-  height: 500px;
+  height: 700px;
+  overflow-y: scroll;
+  padding: 0px;
 }
 
 table {
   width: 100%;
   table-layout: fixed;
   background-color: aliceblue;
+  border-spacing: 0;
 }
 
-thead {
+.tbl-transaction thead {
   background-color: midnightblue;
+  position: sticky;
+  top: 0;
 }
 
 th {
