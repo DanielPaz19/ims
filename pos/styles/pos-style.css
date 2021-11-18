@@ -707,8 +707,8 @@ tbody.transaction-list td:nth-child(6) span:hover {
   font-weight: bold;
 }
 
-tbody.transaction-list tr:hover {
-  background-color: lightskyblue;
+.transaction-list tbody tr:hover {
+  background-color: #70a1ff;
   color: #ffffff;
 }
 

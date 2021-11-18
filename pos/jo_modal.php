@@ -9,41 +9,40 @@
     <h1 class="jo__modal--heading">Job Order List</h1>
     <label for="" class="jo__modal--label">Enter JO Number :</label>
     <input type="text" placeholder="12-34567" class="jo__modal--input jo__modal--input__search">
-    <div class="jo__modal--table__container">
-      <table class="jo__modal--table">
-        <thead>
-          <tr>
-            <th>JO No.</th>
-            <th>Customer</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          if (isset($joId)) {
-            $jolimit = 0;
 
-            while (count($joId) !== $jolimit) {
-              echo
-              "<tr>
-              <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
-              <td>" . $joCustomerName[$jolimit] . "</td>
-              <td>" . $joDate[$jolimit] . "</td>
-            </tr>";
+    <table class="jo__modal--table">
+      <thead>
+        <tr>
+          <th>JO No.</th>
+          <th>Customer</th>
+          <th>Price</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $jolimit = 0;
 
-              $jolimit++;
-            }
-          }
+        while (count($joId) !== $jolimit) {
+          echo
+          "<tr>
+          <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
+          <td>" . $joCustomerName[$jolimit] . "</td>
+          <td>999,999.99</td>
+          <td>" . $joDate[$jolimit] . "</td>
+        </tr>";
 
-          ?>
-          <!-- <tr>
-            <td>12-23456</td>
-            <td>Philippine Acrylic and Chemical Corp.</td>
-            <td>999,999.99</td>
-            <td>01-01-2021</td>
-          </tr> -->
-        </tbody>
-      </table>
-    </div>
+          $jolimit++;
+        }
+
+        ?>
+        <!-- <tr>
+          <td>12-23456</td>
+          <td>Philippine Acrylic and Chemical Corp.</td>
+          <td>999,999.99</td>
+          <td>01-01-2021</td>
+        </tr> -->
+      </tbody>
+    </table>
   </div>
 </div>
