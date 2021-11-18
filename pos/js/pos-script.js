@@ -780,7 +780,7 @@ btnSaveTransaction.addEventListener("click", function (e) {
 
   alert("Transaction Saved");
 
-  // location.reload();
+  location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------
