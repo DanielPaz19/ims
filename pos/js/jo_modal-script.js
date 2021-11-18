@@ -15,7 +15,6 @@ const renderJoTable = function (data, tbody) {
       `<tr>
     <td class='jo__modal--td__jonumber'>${data.jo_no}</td>
     <td>${data.customers_name}</td>
-    <td></td>
     <td>${data.jo_date}</td>
     </tr>`
     );
