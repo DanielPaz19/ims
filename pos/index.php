@@ -73,35 +73,37 @@ if (!$_SESSION['user']) {
           <label for="jonumber">JO Number:</label>
           <input type="text" id="jonumber" disabled value="" />
         </span>
-        <table class="order-list">
-          <thead>
-            <tr>
-              <th>Item Code</th>
-              <th>Item Decription</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Unit</th>
-              <th>Discount</th>
-              <th>Total</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class='order-list-table_container'>
+          <table class="order-list">
+            <thead>
+              <tr>
+                <th>Item Code</th>
+                <th>Item Decription</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Discount</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
 
-          </tbody>
-          <tbody class="container-order-list">
-            <tr>
-              <td class="item-code">000001</td>
-              <td class="item-description">000 1.5mm x 1220mm x 2440mm</td>
-              <td class="price">1,200.00</td>
-              <td class="qty">20</td>
-              <td class="unit">sht</td>
-              <td class="discount">0</td>
-              <td class="total">2,400.00</td>
-              <td class="delete">X</td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+            <tbody class="container-order-list">
+              <tr>
+                <td class="item-code">000001</td>
+                <td class="item-description">000 1.5mm x 1220mm x 2440mm</td>
+                <td class="price">1,200.00</td>
+                <td class="qty">20</td>
+                <td class="unit">sht</td>
+                <td class="discount">0</td>
+                <td class="total">2,400.00</td>
+                <td class="delete">X</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="container-item_list">
