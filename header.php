@@ -70,39 +70,9 @@
         <a href="#">&nbsp;POS</a>
         <a href="#">&nbsp;Stock-In </a>
         <a href="#">&nbsp;Stock-Out </a>
-        <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
+        <a href="#">&nbsp;Purchase Order</a>
       </div>
     </div>
 
     <a href="php/logout-inc.php" style="float:right;" title="Sign-Out">Welcome &nbsp; <i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
   </div>
-
-  <!-- 
-  <script type='text/javascript'>
-    function showSrr() {
-      //set the width and height of the 
-      //pop up window in pixels
-      var width = 500;
-      var height = 500;
-
-      //Get the TOP coordinate by
-      //getting the 50% of the screen height minus
-      //the 50% of the pop up window height
-      var top = parseInt((screen.availHeight / 2) - (height / 2));
-
-      //Get the LEFT coordinate by
-      //getting the 50% of the screen width minus
-      //the 50% of the pop up window width
-      var left = parseInt((screen.availWidth / 2) - (width / 2));
-
-      //Open the window with the 
-      //file to show on the pop up window
-      //title of the pop up
-      //and other parameter where we will use the
-      //values of the variables above
-      window.open('report/srr_select.php',
-        "Contact The Code Ninja",
-        "menubar=no,resizable=yes,width=1600,height=1000,scrollbars=yes,left=" +
-        left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
-    }
-  </script> -->
