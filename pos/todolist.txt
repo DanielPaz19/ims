@@ -1,0 +1,8 @@
+----- POS -----
+
+1) Customer Details should not be editable when Jo number is selected
+2) Items ordered on POS should reflect on Item Movement Table
+3) Esc Key closes the JO Modal 
+4) Transaction Cancel button should have Authentication
+5) Payment Modal Design
+6) Transaction Options into Icons
