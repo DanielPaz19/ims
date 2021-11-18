@@ -7,89 +7,32 @@
     <link rel="stylesheet" href="../css/srr_report.css" type="text/css" media="print">
     <link rel="stylesheet" href="../css/srr_report.css" type="text/css">
     <style>
-        body {
-            padding: 30px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .srrItem {
-            font-size: 12px;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .srrItem th,
-        td {
-            border: 1px solid black;
-        }
-
-        p {
-            margin-left: 10px;
-            font-family: Arial, Helvetica, sans-serif;
-            letter-spacing: 2px;
-        }
-
-        .range {
-            margin-left: 30px;
-        }
-
-        .head {
-            padding: 10px;
-        }
-
-        input[type=date] {
-            width: 20%;
-            padding: 6px 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-
-        button {
-            height: 40px;
-            cursor: pointer;
-            font-size: 13px;
-        }
     </style>
+    <title>SRR Report</title>
 </head>
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'print'
-            ]
-        });
-    });
-</script>
 
-<body>
-
+<center>
     <div class="noprint">
         <form class="form-inline" method="POST" action="">
 
-            <p><i class="fa fa-lightbulb-o" style="font-size:24px"></i>&nbsp;Hint: You can choose which data to include from this report by creating filter for fields for the fields below. <br> </p>
+            <p><i class="fa fa-lightbulb-o" style="font-size:24px"></i>&nbsp;<b>Hint:</b> You can choose which data to include from this report by creating filter for fields for the fields below. <br> </p>
 
             <div class="range">
-                <label>Date:</label>
-                <input type="date" class="form-control" placeholder="Start" name="date1" />
-                <label>To</label>
-                <input type="date" class="form-control" placeholder="End" name="date2" />
-                <button class="btn btn-primary" name="search">Generate Report</button>
-
+                <label style="float: left;">From:</label>
+                <input type="date" class="form-control" placeholder="Start" name="date1" /> <br>
+                <label style="float: left;">To :</label>
+                <input type="date" class="form-control" placeholder="End" name="date2" /> <br>
+                <button class="btn btn-primary" name="search">Generate Report</button> <br> <br>
+                <button onclick="window.print()">Print Report</button>
             </div>
         </form>
-
         <br /><br />
     </div>
+</center>
 
-
-
-
-    <hr style="border-top:1px" />
+<body>
     <div class="print-area">
-        <page id="print" size="A4">
-
+        <page size="A4">
             <div class="head">
                 <center>
                     <h3 style="color: midnightblue;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
@@ -99,8 +42,8 @@
             </div>
 
             <h5 style="float:right">SRR No. : <input type="text" style="border: none; background-color:transparent" placeholder="00000000"></h5>
-            <h5 style="float:left"><input type="text" style="border: none; background-color:transparent" placeholder="For the month of : Year"></h5>
-            <table class="srrItem" id="example">
+            <h5 style="float:left">Title :<input type="text" style="border: none; background-color:transparent" placeholder="For the month of : Year" class="tit"></h5>
+            <table class="srrItem">
                 <thead>
                     <tr style="text-align: left;">
                         <th>Date</th>
@@ -129,9 +72,12 @@
                         $row = mysqli_num_rows($query);
                         if ($row > 0) {
                             while ($fetch = mysqli_fetch_array($query)) {
+                                $dateString = $fetch['po_date'];
+                                $dateTimeObj = date_create($dateString);
+                                $date = date_format($dateTimeObj, 'm/d/y');
                     ?>
                                 <tr>
-                                    <td><?php echo $fetch['po_date'] ?></td>
+                                    <td><?php echo $date ?><br></td>
                                     <td><?php echo $fetch['sup_name'] ?></td>
                                     <td><?php echo $fetch['po_code'] ?></td>
                                     <td><?php echo $fetch['product_name'] ?></td>
@@ -154,11 +100,14 @@
                                                     LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
                                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
                                                     INNER JOIN product ON product.product_id = po_product.product_id
-                                                    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id");
+                                                    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id ORDER BY sup_tb.sup_name ASC");
                         while ($fetch = mysqli_fetch_array($query)) {
+                            $dateString = $fetch['po_date'];
+                            $dateTimeObj = date_create($dateString);
+                            $date = date_format($dateTimeObj, 'm/d/y');
                             ?>
                             <tr>
-                                <td><?php echo $fetch['po_date'] ?></td>
+                                <td><?php echo $date ?></td>
                                 <td><?php echo $fetch['sup_name'] ?></td>
                                 <td><?php echo $fetch['po_code'] ?></td>
                                 <td><?php echo $fetch['product_name'] ?></td>
@@ -175,6 +124,8 @@
         </page>
     </div>
 </body>
+
+
 
 <script>
     function refresh() {

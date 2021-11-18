@@ -8,13 +8,14 @@ page {
   margin: 0 auto;
   margin-bottom: 0.5cm;
   margin-top: 0;
-  /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   color: black;
   font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
 }
 
 page[size="A4"] {
-  width: 21cm;
+  width: 8in;
   height: 29.7cm;
 }
 
@@ -31,27 +32,6 @@ label {
   font-weight: bolder;
 }
 
-.ordertable {
-  width: 100%;
-  border-collapse: collapse;
-  padding: 20px;
-  font-size: 10px;
-}
-
-.ordertable th {
-  border: 1px solid black;
-  font-size: 15px;
-  padding: 3px;
-  color: black;
-  text-align: left;
-}
-
-.ordertable td {
-  border: 1px solid black;
-  padding: 5px;
-  font-size: 15px;
-}
-
 .itemTb {
   padding: 5px;
 }
@@ -63,13 +43,28 @@ label {
 @media print {
   body {
     font-family: Arial, Helvetica, sans-serif;
+    font-family: "Courier New", Courier, monospace;
   }
   .print-area {
     width: 100%;
+    margin-top: 0;
   }
   .noprint {
     display: none;
   }
+  page {
+    box-shadow: none;
+  }
+}
+
+.noprint {
+  position: absolute;
+  width: 25%;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #b0c4de;
+  padding-right: 45px;
 }
 
 .totDiv {
@@ -85,4 +80,47 @@ label {
 .empTab {
   margin-left: 30px;
   width: 80%;
+}
+
+.srrItem {
+  font-size: 12px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.srrItem th,
+td {
+  border: 1px solid lightgrey;
+  padding: 2px;
+}
+
+p {
+  margin-left: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+}
+
+.range {
+  margin-left: 30px;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+input[type="text"] {
+  width: 150px;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+button {
+  height: 40px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 13px;
 }
