@@ -1,0 +1,88 @@
+body {
+  background: rgb(204, 204, 204);
+}
+
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  margin-top: 0;
+  /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5); */
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+}
+
+.print-area {
+  width: 100%;
+}
+
+.suptab {
+  line-height: 30px;
+  padding: 10px;
+}
+
+label {
+  font-weight: bolder;
+}
+
+.ordertable {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 20px;
+  font-size: 10px;
+}
+
+.ordertable th {
+  border: 1px solid black;
+  font-size: 15px;
+  padding: 3px;
+  color: black;
+  text-align: left;
+}
+
+.ordertable td {
+  border: 1px solid black;
+  padding: 5px;
+  font-size: 15px;
+}
+
+.itemTb {
+  padding: 5px;
+}
+
+.subtot {
+  float: right;
+}
+
+@media print {
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .print-area {
+    width: 100%;
+  }
+  .noprint {
+    display: none;
+  }
+}
+
+.totDiv {
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+.totDivGrand {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.empTab {
+  margin-left: 30px;
+  width: 80%;
+}
