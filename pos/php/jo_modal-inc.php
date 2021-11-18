@@ -6,7 +6,7 @@ $joResult = mysqli_query($db, "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.customers_
 FROM jo_tb 
 LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
 WHERE jo_tb.pos = '1' AND jo_tb.closed = '0' 
-ORDER BY jo_no LIMIT 15");
+ORDER BY jo_no LIMIT 20");
 
 if (mysqli_num_rows($joResult) > 0) {
   while ($row = mysqli_fetch_assoc($joResult)) {
@@ -72,8 +72,8 @@ if (isset($_POST['joSearch'])) {
   $joResult = mysqli_query($db, "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.customers_id, customers.customers_name , jo_tb.jo_date 
 FROM jo_tb 
 LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
-WHERE jo_no LIKE '%$joSearch%'
-ORDER BY jo_no");
+WHERE jo_no LIKE '%$joSearch%' AND closed = '0' AND pos = '1'
+ORDER BY jo_no LIMIT 20");
 
   $output = [];
 

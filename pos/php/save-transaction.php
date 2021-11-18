@@ -26,7 +26,7 @@ mysqli_query($db, $query);
 mysqli_query($db, $query2);
 
 // Close the jo_tb
-mysqli_query($db, "UPDATE jo_tb SET closed = '1' WHERE jo_id ='$joId'");
+mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
 
 $limit = 0;
 while (sizeof($productId) != $limit) {
