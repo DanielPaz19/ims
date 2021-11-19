@@ -101,7 +101,7 @@ if ($total_data > 0) {
       <td>' . $row["po_remarks"] . '</td>
       <td><center>
       ' . $disable . '
-                <a href="view/viewpo.php?id=' . $row["po_id"] . '">
+                <a href="view/viewpoV2.php?id=' . $row["po_id"] . '">
                     <i class="fa fa-print" style="font-size:26px" title="Print Document"></i></a>
       </center>
                
