@@ -251,4 +251,4 @@ if (!isset($_SESSION['user'])) {
 </script>
 
 
-<?php include_once '../footer.php'; ?>
+<?php include 'footer.php'; ?>
