@@ -119,7 +119,7 @@ if (!empty($sqlScript)) {
 
     // readfile($backup_file_name);
     exec('rm ' . $backup_file_name);
-    file_put_contents('G:\imsbkp' . $backup_file_name, $sqlScript);
+    file_put_contents('G:\imsbkp\dbstore' . $backup_file_name, $sqlScript);
 }
 
 
