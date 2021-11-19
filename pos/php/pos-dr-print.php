@@ -201,6 +201,10 @@ if (isset($_GET['printPOS'])) {
             <p style=" margin-right:15px"><?php echo $ep_no; ?></p>
 
         </div> -->
+        <div class="ep--drNo"><br><br><br> <br><br><br><br><br> <br>
+            <p style=" margin-right:75px;font-weight:bold;font-size:15px;"><?php echo $date  ?></p>
+        </div>
+
 
         <div class="ep--date"><br><br><br> <br><br><br><br><br> <br>
             <p style=" margin-right:75px;font-weight:bold;font-size:15px;"><?php echo $date  ?></p>
