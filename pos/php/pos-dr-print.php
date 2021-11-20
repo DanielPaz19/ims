@@ -170,9 +170,23 @@ if (isset($_GET['printPOS'])) {
         top: 620px;
         left: 50px;
     }
+
+
+
+    .button-print {
+        position: absolute;
+        margin-left: 1000px;
+    }
+
+    .button-print button {
+        height: 50px;
+        width: 200px;
+        font-size: 20px;
+    }
 </style>
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script language="javascript">
         function printdiv(printpage) {
             var headstr = "<html><head><title></title></head><body>";
@@ -190,8 +204,11 @@ if (isset($_GET['printPOS'])) {
 
 </head>
 
-<body>
 
+<body>
+    <div class="button-print">
+        <button class="noprint" name="b_print" onClick="printdiv('div_print');"> <i class="fa fa-print"></i>&nbsp; Print Reciept</button>
+    </div>
 
 
     <div class="container" id="div_print">
@@ -302,6 +319,6 @@ if (isset($_GET['printPOS'])) {
             <p>JO<?php echo $joNo ?></p>
         </div>
 </body>
-<input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Click Here to Print ! ">
+
 
 </html>
