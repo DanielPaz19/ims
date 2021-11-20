@@ -31,21 +31,31 @@ mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
 $limit = 0;
 while (sizeof($productId) != $limit) {
 
+  // Insert order details on order_product
   $query3 = "INSERT INTO order_product (product_id, order_id, pos_temp_qty, pos_temp_price, pos_temp_disamount) 
-    VALUES ('" . $productId[$limit] . "','" . $orderId . "','" . $productQty[$limit] . "','" . $productPrice[$limit] . "','" . $discount[$limit] . "');";
-  // echo $productId[$limit], $productQty[$limit], $discount[$limit] ."<br>";
+  VALUES ('" . $productId[$limit] . "','" . $orderId . "','" . $productQty[$limit] . "','" . $productPrice[$limit] . "','" . $discount[$limit] . "');";
 
   mysqli_query($db, $query3);
 
-  //subract qty from product table
+  // Subract qty ordered from product table
   $query4 = "SELECT qty FROM product WHERE product_id=" . $productId[$limit];
   $result = mysqli_query($db, $query4);
 
+  // Run Loop for each product 
   if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-      $query5 = "UPDATE product SET qty=" . ($row['qty'] - $productQty[$limit]) . " WHERE product_id =" . $productId[$limit];
+      $currentQty = $row['qty'];
 
-      mysqli_query($db, $query5);
+      // Update current product qty
+      $sqlUpdateQty = "UPDATE product SET qty=" . ($currentQty - $productQty[$limit]) . " WHERE product_id =" . $productId[$limit];
+
+      mysqli_query($db, $sqlUpdateQty);
+
+      // Record item movement
+      $sqlItemMov = "INSERT INTO move_product(product_id, bal_qty, out_qty, mov_type_id, move_ref)
+      VALUES('" . $productId[$limit] . "','" . $currentQty . "','" . $productQty[$limit] . "','4','" . $orderId . "')";
+
+      mysqli_query($db, $sqlItemMov);
     };
   }
 
@@ -53,4 +63,4 @@ while (sizeof($productId) != $limit) {
   $limit++;
 }
 
-echo $query;
+// echo $query;
