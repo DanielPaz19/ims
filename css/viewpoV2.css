@@ -64,6 +64,7 @@ page[size="A4"] {
 .sup-info table {
   margin-top: 180px;
   /* border: 1px solid black; */
+  width: 62%;
 }
 
 .tab-title {
