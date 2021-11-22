@@ -39,7 +39,7 @@
 
         <a href="ep_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="po_main.php"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
-        <!-- <a href="srr_main.php"><i class='fas fa-receipt'></i>&nbspStockroom Reciepts Register</a> -->
+        <a href="#"><i class='fas fa-note'></i>&nbspPhysical Inventory</a>
       </div>
     </div>
 

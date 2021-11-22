@@ -1,0 +1,73 @@
+.form-inline {
+  margin-top: 10px;
+
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: white;
+  padding: 1%;
+  width: 70%;
+}
+.form-inline select {
+  height: 35px;
+  width: 20%;
+  background-color: white;
+}
+.form-inline button {
+  height: 35px;
+  width: 10%;
+  border: 2px solid gray;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.form-inline label {
+  font-size: 18px;
+}
+
+.itemlist {
+  margin: auto;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: white;
+  padding: 1%;
+  width: 100%;
+}
+.pinv-tb {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.pinv-tb th,
+td {
+  padding: 2px;
+  border: 1px solid black;
+  text-align: left;
+}
+.pinv-tb input[type="number"] {
+  border: none;
+  text-decoration: none;
+}
+
+.pagination li:hover {
+  cursor: pointer;
+}
+table tbody tr {
+  display: none;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+}
