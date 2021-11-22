@@ -55,7 +55,7 @@ foreach ($productId as $index => $id) {
   if (!mysqli_query(
     $db,
     "INSERT INTO move_product(product_id, bal_qty, in_qty, mov_type_id, move_ref)
-    VALUES('$id', '$balQty', '$inQty', '6', '$orderId')"
+    VALUES('$id', '$balQty', '$inQty', '7', '$orderId')"
   )) {
     echo "Error updating movement table.";
     exit();
