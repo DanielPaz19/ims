@@ -111,6 +111,7 @@ const selectJo = function (e) {
       });
     });
 
+  btnSearchCustomer.setAttribute("disabled", "");
   closeJoModal();
 };
 
