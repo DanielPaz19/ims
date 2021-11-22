@@ -427,7 +427,7 @@ const orderCancel = function (orderId) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `cancelOrder${orderId}`,
+      body: `orderId=${orderId}`,
     })
       .then((res) => {
         return res.text();
