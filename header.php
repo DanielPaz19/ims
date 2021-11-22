@@ -40,6 +40,8 @@
         <a href="ep_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="po_main.php"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
         <a href="#"><i class='fas fa-note'></i>&nbspPhysical Inventory</a>
+        <a href="rt_main.php">Return Slip</a>
+
       </div>
     </div>
 
