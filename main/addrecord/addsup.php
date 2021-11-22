@@ -50,16 +50,16 @@
       <form autocomplete="off" method="POST" class="form-inline" action="sup_add.php">
 
         <label for="name"><b>Supplier Name:</b></label>&nbsp&nbsp
-        <input required="text" type="text" class="form-control" name="sup_name" size="50%">
+        <input type="text" class="form-control" name="sup_name" size="50%">
         <br>
         <label for="name"><b>Contact Person:</b></label>&nbsp&nbsp
-        <input required="text" type="text" class="form-control" name="sup_conper">
+        <input type="text" class="form-control" name="sup_conper">
         <br>
         <label for="name"><b>Telephone:</b></label>&nbsp&nbsp
-        <input required="text" type="text" class="form-control" name="sup_tel">
+        <input type="text" class="form-control" name="sup_tel">
         <br>
         <label for="name"><b>Address:</b></label>&nbsp&nbsp
-        <input required="text" type="text" class="form-control" name="sup_address" size="50%">
+        <input type="text" class="form-control" name="sup_address" size="50%">
         <br>
         <label for="name"><b>Email:</b></label>&nbsp&nbsp
         <input type="email" class="form-control" name="sup_email">
