@@ -30,7 +30,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 }
 ?>
 <html>
-<title><?php echo $po_code; ?></title>
+<title>RT #<?php echo $rt_no; ?></title>
 
 <head>
     <link rel="stylesheet" href="../css/viewrt.css" type="text/css" media="print">
