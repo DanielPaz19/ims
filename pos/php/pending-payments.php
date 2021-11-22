@@ -15,7 +15,7 @@ $query = "SELECT order_tb.order_status_id, order_tb.order_id, order_tb.customer_
   INNER JOIN customers ON customers.customers_id = order_tb.customer_id
   INNER JOIN order_payment ON order_tb.order_id = order_payment.order_id
   WHERE order_payment.order_payment_balance > 0 AND order_payment.payment_status_id != 0 
-  AND order_tb.order_status_id = 1 ORDER BY order_tb.pos_date DESC";
+  AND order_tb.order_status_id = 1 ORDER BY order_tb.order_id DESC";
 
 $result = mysqli_query($db, $query);
 
