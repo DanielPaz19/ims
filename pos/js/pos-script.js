@@ -407,24 +407,36 @@ const hasDuplicateOrder = function (productId) {
 
 const orderCancel = function (orderId) {
   // Pop up Message for confirmation
-  const confirmAcion = confirm(
+  const confirmAction = confirm(
     `You are about to DELETE Transaction Number ${orderId.padStart(8, 0)}. 
     ARE YOU SURE?`
   );
 
   // Change order Status into cancelled
-  if (confirmAcion) {
-    const update = new XMLHttpRequest();
+  if (confirmAction) {
+    // const update = new XMLHttpRequest();
+    // update.open("POST", "php/order-cancel.php");
+    // update.setRequestHeader(
+    //   "Content-type",
+    //   "application/x-www-form-urlencoded"
+    // );
+    // update.send(`orderId=${orderId}`);
 
-    update.open("POST", "php/order-cancel.php");
-    update.setRequestHeader(
-      "Content-type",
-      "application/x-www-form-urlencoded"
-    );
-    update.send(`orderId=${orderId}`);
+    fetch("php/order-cancel.php", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `cancelOrder${orderId}`,
+    })
+      .then((res) => {
+        return res.text();
+      })
+      .then((data) => {
+        alert(data);
+        location.reload();
+      });
   }
-
-  location.reload();
 };
 
 const orderPay = function (orderId, rowIndex, balance) {
