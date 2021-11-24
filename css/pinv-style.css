@@ -81,6 +81,14 @@ table tbody tr {
   .typo {
     border: none;
   }
+
+  page {
+    box-shadow: none;
+  }
+
+  .btn-save {
+    display: none;
+  }
 }
 
 page {
@@ -102,4 +110,21 @@ page[size="A4"] {
 
 label {
   font-weight: bold;
+}
+
+.input-tab {
+  /* border: 1px solid black; */
+  margin-left: 8in;
+  position: fixed;
+  padding: 1%;
+  text-align: left;
+  width: 20%;
+}
+
+.btn-save {
+  height: 35px;
+  border: 2px solid gray;
+  cursor: pointer;
+  letter-spacing: 1px;
+  float: center;
 }

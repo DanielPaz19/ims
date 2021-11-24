@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <link rel="stylesheet" href="css/tablepage.css">
+  <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+</head>
+
+<body>
+  <br />
+  <div class="container">
+
+    <br />
+    <div class="card">
+
+      <div class="card-body">
+        <div class="form-group" style="align-content: right;">
+            <a href="pinv_main.php"> <button class="butLink" title="Create New Item"><i
+              class="fas fa-plus"></i>&nbspNew</button></a>
+          <a href="stout_main.php"><button style="float: right; height: 40px; background-color: midnightblue;"><i
+                class="fa fa-refresh fa-spin" style="font-size:16px; color:white" title="Refresh"></i></button></a>
+          <input type="text" name="search_box" id="search_box" style="width: 500px; height: 40px; float: right;"
+            placeholder=" &#x1F50E;&nbsp;Search Code.....">
+        </div>
+
+        <div class="table-responsive" id="dynamic_content">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  $(document).ready(function () {
+
+    load_data(1);
+
+    function load_data(page, query = '') {
+      $.ajax({
+        url: "fetch/pinv_fetch.php",
+        method: "POST",
+        data: { page: page, query: query },
+        success: function (data) {
+          $('#dynamic_content').html(data);
+        }
+      });
+    }
+
+    $(document).on('click', '.page-link', function () {
+      var page = $(this).data('page_number');
+      var query = $('#search_box').val();
+      load_data(page, query);
+    });
+
+    $('#search_box').keyup(function () {
+      var query = $('#search_box').val();
+      load_data(1, query);
+    });
+
+  });
+</script>
