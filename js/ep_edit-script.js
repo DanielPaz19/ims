@@ -1,12 +1,13 @@
 "use strict";
 
-const buttonAddItem = document.querySelector(".button--insert__item");
+const buttonAddItem = document.querySelector(".edit__button--insert__item");
 const containerModalAddItem = document.querySelector(".container--modal");
 const modalAddItem = document.querySelector(".modal--add__item");
 const buttonCloseModal = document.querySelector(".close--modal");
 const containerItemList = document.querySelector(".container--itemlist");
 const inputSearch = document.querySelector(".input--search");
-const tableItemTb = document.querySelector(".po__table");
+const tableItemTb = document.querySelector(".table");
+const inputId = document.querySelector("#id");
 
 const formatNumber = (string) => {
   const NumOptions = {
@@ -50,35 +51,101 @@ const renderItem = function (data, container) {
   });
 };
 
-const epEdit = function (e) {
-  const target = e.target.closest("td").querySelector("input");
-  const prevValue = target.closest("td").innerText;
-  console.log(prevValue);
-  console.dir(target.closest("td"));
+// Editing Table values
+const rowEdit = function (e) {
+  const target = e.target.closest(".td__edit");
+  const itemName = target
+    .closest("tr")
+    .querySelector(".td__readonly--itemname");
+  const productId = target
+    .closest("tr")
+    .querySelector(".td__readonly--productid");
+  console.log(productId);
+  const qty = target.closest("tr").querySelector(".input__edit--qty");
+  const cost = target.closest("tr").querySelector(".input__edit--cost");
+  const discpercent = target
+    .closest("tr")
+    .querySelector(".input__edit--discpercent");
+  const discount = target.closest("tr").querySelector(".input__edit--discount");
+  const subtotal = target.closest("tr").querySelector(".input__edit--total");
+  const tdTotalCost = target
+    .closest("tr")
+    .querySelector(".td__compute--totalcost");
+  const tdDiscount = target
+    .closest("tr")
+    .querySelector(".td__compute--discount");
+  const tdSubTotal = target
+    .closest("tr")
+    .querySelector(".td__compute--subtotal");
 
-  const changeValue = function (promptMessage) {
-    let newValue = prompt(promptMessage);
-
-    if (!newValue || newValue.includes(" ") || newValue === NaN) return;
-
-    target.value = newValue;
-    target.closest("td").childNodes[0].data = newValue;
+  const computeTotalCost = (qty, cost) => {
+    return qty * cost;
+  };
+  const computeDiscountVal = (discpercent, totalCost) => {
+    discount.value = totalCost * (discpercent / 100);
+    return discount.value;
+  };
+  const computeSubTotal = (totalCost, DiscountVal) => {
+    subtotal.value = totalCost - DiscountVal;
+    return subtotal.value;
   };
 
+  // Return if there's no target
   if (!target) return;
 
-  if (target.classList.contains("po--qty__in")) {
-    changeValue("Enter New Qty-Order");
+  // Function -- changing value data
+  const changeValue = function (inputName, promptMessage) {
+    let newValue = prompt(promptMessage);
+
+    // Return if invalid input
+    if (!newValue || newValue.includes(" ") || newValue === NaN) return;
+
+    target.innerHTML = formatNumber(newValue);
+
+    const targetInput = target
+      .closest("tr")
+      .querySelector(`.input__edit--${inputName}`);
+
+    targetInput.value = newValue;
+
+    const totalCost = computeTotalCost(qty.value, cost.value);
+    // const discountValue = computeDiscountVal(discpercent.value, totalCost);
+    // const subTotal = computeSubTotal(totalCost, discountValue);
+
+    tdTotalCost.innerHTML = formatNumber(totalCost);
+    // tdDiscount.innerHTML = formatNumber(discountValue);
+    // tdSubTotal.innerHTML = formatNumber(subTotal);
+  };
+
+  if (target.classList.contains("td__edit--qty")) {
+    changeValue("qty", "Enter New Qty-Order");
   }
 
-  if (target.classList.contains("po--cost")) {
-    changeValue("Enter New Cost");
+  if (target.classList.contains("td__edit--cost")) {
+    changeValue("cost", "Enter New Price");
   }
 
-  if (target.classList.contains("po--discount")) {
-    changeValue("Enter New Discount");
+  // if (target.classList.contains("td__edit--discpercent")) {
+  //   changeValue("discpercent", "Enter New Discount");
+  // }
+
+  if (target.classList.contains("td__edit--delete")) {
+    const confirmDelete = confirm(
+      `ARE YOU SURE YOU WANT TO REMOVE THE FOLLOWING?\n\n${itemName.innerHTML}?`
+    );
+
+    if (!confirmDelete) return;
+
+    fetch("php/ep_edit-inc.php", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `delete&productId=${productId.innerHTML}&epId=${inputId.value}`,
+    }).then(() => location.reload());
   }
 };
+
 
 const modalOpen = function (e) {
   e.preventDefault();
@@ -133,20 +200,20 @@ const selectItem = function (e) {
   tableItemTb.querySelector("tbody").insertAdjacentHTML(
     "beforeend",
     `<tr>
-    <td class="item-code">${itemCode}</td>
-    <td class="item-description">${itemName}</td>
-    <td class="qty-in">${formatNumber(epQty)}</td>
-    <td class="unit">${itemUnit}</td>
-    <td class="price">${formatNumber(itemPrice)}</td> 
-    <td class="total-cost">${formatNumber(totalCost)}</td>
-    <td class="delete">
-    <font color="red"><i class="fa fa-trash-o" style="font-size:24px"></i></font>
+    <td class='td__readonly td__readonly--productid'>${itemCode}</td>
+    <td class='td__readonly td__readonly--itemname'>${itemName}</td>
+    <td class='td__edit td__edit--qty'>${formatNumber(epQty)}</td>
+    <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
+    <td class='td__edit td__edit--cost'>${formatNumber(itemPrice)}</td> 
+    <td class='td__compute td__compute--totalcost'>${formatNumber(totalCost)}</td>
+    <td class='td__edit td__edit--delete'>
+   <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
     </tr>
     <input type='hidden' name='productId[]' value='${itemCode}'>
-    <input type='hidden' name='qtyIn[]' value='${epQty}'>
-    <input type='hidden' name='itemPrice[]' value='${itemPrice}'>
-    <input type='hidden' name='itemTotal[]' value='>${subTotal}'>
+    <input type='hidden' name='qtyIn[]' value='${epQty}' class='input__edit input__edit--qty'>
+    <input type='hidden' name='itemPrice[]' value='${itemPrice}' class='input__edit input__edit--cost'>
+
     `
   );
 
@@ -196,7 +263,7 @@ inputSearch.addEventListener("keyup", searchItem);
 
 containerItemList.addEventListener("dblclick", selectItem);
 
-tableItemTb.querySelector("tbody").addEventListener("dblclick", epEdit);
+tableItemTb.querySelector("tbody").addEventListener("click", rowEdit);
 
 function showadditem() {
   //set the width and height of the
