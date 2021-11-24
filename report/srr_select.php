@@ -67,8 +67,9 @@
                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
                                     INNER JOIN product ON product.product_id = po_product.product_id
                                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-                                    WHERE po_tb.po_date 
-                                    BETWEEN '$date1' AND '$date2' ORDER BY sup_tb.sup_name ASC");
+                                    WHERE po_tb.srr = 1 AND po_tb.po_date 
+                                    BETWEEN '$date1' AND '$date2'
+                                     ORDER BY sup_tb.sup_name ASC");
                         $row = mysqli_num_rows($query);
                         if ($row > 0) {
                             while ($fetch = mysqli_fetch_array($query)) {
@@ -100,7 +101,9 @@
                                                     LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
                                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
                                                     INNER JOIN product ON product.product_id = po_product.product_id
-                                                    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id ORDER BY sup_tb.sup_name ASC");
+                                                    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+                                                    WHERE po_tb.srr = 1 
+                                                    ORDER BY sup_tb.sup_name ASC");
                         while ($fetch = mysqli_fetch_array($query)) {
                             $dateString = $fetch['po_date'];
                             $dateTimeObj = date_create($dateString);
