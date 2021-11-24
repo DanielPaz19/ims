@@ -395,6 +395,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         font-weight: bolder;
     }
 </style>
+<title>EP No. <?php echo $ep_no; ?></title>
 
 <head>
     <script language="javascript">
@@ -448,11 +449,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <th>&nbsp;&nbsp;</th>
                 </tr>
                 <?php
-                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ep_product.ep_qty, ep_product.ep_price, ep_product.ep_totPrice, ep_tb.ep_remarks
-                    FROM product 
-                    LEFT JOIN ep_tb ON ep_tb.ep_id = product.product_id
-                    LEFT JOIN ep_product ON product.product_id = ep_product.product_id
-                    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ep_product.ep_id='$id' ";
+                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ep_product.ep_qty, ep_product.ep_price, ep_product.ep_totPrice, ep_tb.ep_remarks, ep_tb.ep_no
+                FROM ep_tb
+                LEFT JOIN ep_product ON ep_product.ep_id = ep_tb.ep_id
+                LEFT JOIN product ON product.product_id = ep_product.product_id
+                LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+            
+                WHERE ep_tb.ep_no='$ep_no'  ";
 
                 $result = $db->query($sql);
                 $count = 0;
