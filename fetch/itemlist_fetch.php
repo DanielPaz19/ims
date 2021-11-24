@@ -74,7 +74,7 @@ if ($total_data > 0) {
   foreach ($result as $row) {
     $output .= '
     <tr>
-      <td>' . $row["product_id"] . '</td>
+      <td>' . str_pad($row['product_id'], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["product_name"] . '</td>
       <td>' . $row["class_name"] . '</td>
       <td>' . $row["qty"] . '</td>
