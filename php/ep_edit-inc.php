@@ -45,7 +45,7 @@ if (isset($_GET['editEp'])) {
 }
 
 // If po_edit-page.php update button is set
-if (isset($_POST['updateep'])) {
+if (isset($_POST['update'])) {
     $epId = $_POST['epId'];
     $customerId = $_POST['customerId'];
     $epTitle = $_POST['epTitle'];
@@ -86,7 +86,7 @@ if (isset($_POST['updateep'])) {
 
     // editpo&id=2&supId=107&supName=A.F.%20SA
 
-    header("location: ../ep_edit-page.php?editEp&id=$epId&update=success");
+    header("location: ../ep_edit-page.php?editEp&updated&id=$epId&update=success");
 }
 
 // If po_edit-page.php update button is set
@@ -95,6 +95,22 @@ if (isset($_POST['cancelupdate'])) {
 }
 
 
-if (isset($_GET['update'])) {
-    echo '<script>alert("Update records successfully !")</script>';
+// If stout_edit-page.php delete button is set
+if (isset($_POST['delete'])) {
+    $epId = $_POST['epId'];
+    $productId = $_POST['productId'];
+
+    require '../php/config.php';
+
+    mysqli_query($db, "DELETE FROM ep_product WHERE ep_id = '$epId' AND product_id = '$productId'");
+
+    echo "epId" . $epId . "productId" . $productId;
+}
+
+if (isset($_GET['updated'])) {
+    echo
+    '<script>
+  alert("Successfully updated!");
+  location.href = "ep_edit-page.php?editEp&id=' . $_GET['id'] . '";
+  </script>';
 }
