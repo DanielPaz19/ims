@@ -357,7 +357,9 @@
           </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
           <label>Terms:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="text" name="po_terms">
+          <input type="text" name="po_terms">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <label for="pos" style="font-size: 18px;"> SRR:</label>
+          <input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="srr" value="1" checked="checked" title="Job-Order Type">
 
 
           <div>
