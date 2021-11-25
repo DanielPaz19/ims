@@ -4,6 +4,7 @@
 if (isset($_GET['editJo'])) {
 
     $joId = $_GET['id'];
+    $joId = $_GET['id'];
 
     require 'php/config.php';
 
@@ -16,8 +17,10 @@ if (isset($_GET['editJo'])) {
         LEFT JOIN product ON jo_product.product_id = product.product_id
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
         LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
-        WHERE jo_tb.jo_id ='$joId' AND jo_tb.pos = '1' AND jo_tb.closed = '0'"
+        WHERE jo_tb.jo_id ='$joId'"
     );
+
+
 
     // PO Details
     if (mysqli_num_rows($result) > 0) {
@@ -42,7 +45,7 @@ if (isset($_GET['editJo'])) {
 }
 
 // If po_edit-page.php update button is set
-if (isset($_POST['updatejo'])) {
+if (isset($_POST['update'])) {
     $joId = $_POST['joId'];
     $customerId = $_POST['customerId'];
     $joNo = $_POST['joNo'];
@@ -51,6 +54,7 @@ if (isset($_POST['updatejo'])) {
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemPrice = $_POST['itemPrice'];
+
 
     require '../php/config.php';
 
@@ -65,22 +69,23 @@ if (isset($_POST['updatejo'])) {
     $limit = 0;
     while (count($productId) !== $limit) {
         // Check product id from po_product
-        $checkResult = mysqli_query($db, "SELECT product_id FROM ep_product WHERE jo_id = $joId AND product_id ='" . $productId[$limit] . "'");
+        $checkResult = mysqli_query($db, "SELECT product_id FROM jo_product WHERE jo_id = $joId AND product_id ='" . $productId[$limit] . "'");
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on po_product, UPDATE
             mysqli_query($db, "UPDATE jo_product SET jo_product_qty = '$qtyIn[$limit]', jo_product_price = '$itemPrice[$limit]' WHERE jo_id = '$joId' AND product_id ='$productId[$limit]'");
         } else {
             // If product id dont exist on po_product, INSERT
+            // If product id dont exist on po_product, INSERT
             mysqli_query($db, "INSERT INTO jo_product(product_id, jo_id, jo_product_qty, jo_product_price) 
-      VALUES ('$productId[$limit]','$joId','$qtyIn[$limit]','$itemPrice[$limit]')");
+            VALUES ('$productId[$limit]','$joId','$qtyIn[$limit]','$itemPrice[$limit]')");
         }
         $limit++;
     }
 
     // editpo&id=2&supId=107&supName=A.F.%20SA
 
-    header("location: ../jo_edit-page.php?editJo&id=$joId&update=success");
+    header("location: ../jo_edit-page.php?editJo&updated&id=$joId&update=success");
 }
 
 // If po_edit-page.php update button is set
@@ -89,6 +94,22 @@ if (isset($_POST['cancelupdate'])) {
 }
 
 
-if (isset($_GET['update'])) {
-    echo '<script>alert("Update records successfully !")</script>';
+// If stout_edit-page.php delete button is set
+if (isset($_POST['delete'])) {
+    $joId = $_POST['joId'];
+    $productId = $_POST['productId'];
+
+    require '../php/config.php';
+
+    mysqli_query($db, "DELETE FROM jo_product WHERE jo_id = '$joId' AND product_id = '$productId'");
+
+    echo "joId" . $joId . "productId" . $productId;
+}
+
+if (isset($_GET['updated'])) {
+    echo
+    '<script>
+  alert("Successfully updated!");
+  location.href = "jo_edit-page.php?editJo&id=' . $_GET['id'] . '";
+  </script>';
 }
