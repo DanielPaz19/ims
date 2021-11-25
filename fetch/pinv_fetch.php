@@ -27,7 +27,7 @@ $query = "
 SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_location, employee_tb.emp_name, pinv_tb.pinv_date, user.user_name, pinv_tb.closed
 FROM pinv_tb
 LEFT JOIN user ON user.user_id = pinv_tb.user_id
-INNER JOIN employee_tb 
+LEFT JOIN employee_tb 
 ON pinv_tb.emp_id = employee_tb.emp_id ";
 
 if ($_POST['query'] != '') {
@@ -90,7 +90,7 @@ if ($total_data > 0) {
       <td>' . $row["pinv_date"] . '</td>
       <td><center>
                ' . $disable . '
-                <a href="view/viewstout.php?id=' . $row["pinv_id"] . '">
+                <a href="view/viewpinv.php?id=' . $row["pinv_id"] . '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                
