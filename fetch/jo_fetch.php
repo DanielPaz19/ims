@@ -84,8 +84,7 @@ if ($total_data > 0) {
        &nbsp;&nbsp;&nbsp;
       <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;
-      <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
-      &nbsp;&nbsp;&nbsp;';
+';
         }
         $output .= '
     <tr>
