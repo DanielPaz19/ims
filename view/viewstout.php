@@ -20,7 +20,7 @@ if (isset($_POST['stout_submit'])) {
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 	$id = $_GET['id'];
-	$result = mysqli_query($db, "SELECT  stout_tb.stout_id ,stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_remarks, stout_tb.itemdesc, stout_tb.stout_date, employee_tb.emp_name, dept_tb.dept_name
+	$result = mysqli_query($db, "SELECT  stout_tb.stout_id ,stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_remarks, stout_tb.itemdesc, stout_tb.stout_date, stout_tb.stout_remarks, employee_tb.emp_name, dept_tb.dept_name
 														FROM stout_tb  
 														LEFT JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
 														LEFT JOIN dept_tb ON employee_tb.dept_id = dept_tb.dept_id
@@ -87,15 +87,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		}
 
 
-		.itemtb {
-			border-collapse: collapse;
-			width: 100%;
-		}
 
 
 
 		.content {
 			width: 100%;
+			position: relative;
+			/* border: 1px solid black; */
 		}
 
 		.footertb td {
@@ -127,13 +125,45 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			font-weight: bolder;
 		}
 
-		.top1 {
+
+		.itemtb {
+			position: absolute;
 			border-collapse: collapse;
+			/* border: 1px solid black; */
+			width: 60%;
 		}
 
-		.top1 td,
-		th {
-			border: 1px solid black;
+		.itemtb2 {
+			position: absolute;
+			border-collapse: collapse;
+			/* border: 1px solid lightgray; */
+			width: auto;
+			margin-left: 60%;
+			align-content: right;
+		}
+
+
+
+		.itemtb2 textarea {
+			border: none;
+			resize: none;
+			font-size: 16px;
+		}
+
+		.button {
+			margin-left: 80%;
+			margin-top: -8%;
+			position: absolute;
+		}
+
+		.textarea {
+			display: block;
+			width: 31%;
+			overflow: hidden;
+			resize: both;
+			border: none;
+			resize: none;
+
 		}
 	</style>
 
@@ -169,10 +199,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 	<br>
 
 	<div class="content">
-		<table width="50%" class="itemtb">
+		<table class="itemtb">
 			<tr>
 				<th>QTY</th>
 				<th>MATERIAL USE</th>
+
 			</tr>
 			<?php
 			$sql = "SELECT product.product_name,stout_product.stout_temp_qty,unit_tb.unit_name, stout_product.stout_temp_remarks 
@@ -187,19 +218,31 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 				while ($irow = $result->fetch_assoc()) {
 					$count = $count + 1;
+					$text = $irow['stout_temp_remarks'];
+					$newtext = wordwrap($text, 50, "<br />", false);
 			?>
 					<tr>
-						<td style=" padding-left: 10px;"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?></td>
-						<td><?php echo $irow['product_name'] ?><br><?php echo $irow['stout_temp_remarks'] ?></td>
+						<td style=" padding-left: 10px; vertical-align:top"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?></td>
+						<td><?php echo $irow['product_name'] ?><br><textarea class="textarea resize-ta" rows="5"><?php echo $irow['stout_temp_remarks'] ?></textarea></td>
+						</td>
 					</tr>
 			<?php }
-			} ?>
-		</table>
+			}
 
+			?>
+		</table>
+		<table class="itemtb2">
+			<tr>
+				<th style="border: 1px solid lightgrey;">Remarks</th>
+			</tr>
+			<tr>
+				<td><textarea cols="50" rows="10"><?php echo $stout_remarks ?></textarea></td>
+			</tr>
+		</table>
 	</div>
 
 
-
+	<!-- 
 	<table width="100%">
 		<tr>
 			<td>
@@ -209,19 +252,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 				<p style="float: right;"><b>Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><?php echo $dept_name; ?></p>
 			</td>
 		</tr>
-	</table>
+	</table> -->
 
 
 
 
 
-
-
-	<br><br><br>
-	<button id="printPageButton" onclick="window.print()">Print <i class="fa fa-print"></i></button>
-	<a href="../stout_main.php"><button id="printPageButton">Back</button></a>
-
-
+	<div class="button">
+		<button id="printPageButton" onclick="window.print()">Print <i class="fa fa-print"></i></button>
+		<a href="../stout_main.php"><button id="printPageButton">Back</button></a>
+	</div>
 
 </body>
 

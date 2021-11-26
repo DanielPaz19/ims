@@ -350,8 +350,8 @@
           <label>Description: </label>
           <input type="text" name="itemdesc" placeholder="ACRYPANEL">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-          <!-- <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <textarea name="stout_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <textarea name="stout_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
           <label>Requested By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select name="emp_id" style="width: 15%; height: 32px; border: 1px solid #B8B8B8;">

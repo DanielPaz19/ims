@@ -19,6 +19,7 @@ $cost = $_GET['cost'];
 $disamount = $_GET['disamount'];
 $total = $_GET['total'];
 $stoutCode = $_GET['stout_code'];
+$stoutRemarks = $_GET['stout_remarks'];
 $stoutTitle = $_GET['stout_title'];
 $stoutDate = $_GET['stout_date'];
 $stout_temp_remarks = $_GET['stout_temp_remarks'];
@@ -74,12 +75,12 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-  $sql = "INSERT INTO stout_tb (stout_id,stout_code, stout_title ,stout_date , itemdesc, emp_id, user_id)
-            VALUES ('$stoutID','$stoutCode','$stoutTitle','$stoutDate','$itemdesc','$emp_id','" . $_SESSION['id'] . "')";
+  $sql = "INSERT INTO stout_tb (stout_id,stout_code, stout_title, stout_date, stout_remarks, itemdesc, emp_id, user_id)
+            VALUES ('$stoutID','$stoutCode','$stoutTitle','$stoutDate','$stoutRemarks','$itemdesc','$emp_id','" . $_SESSION['id'] . "')";
 
   if (mysqli_query($db, $sql)) {
-    echo "<script>alert('New Record Added')</script>";
-    echo "<script>window.close();</script>";
+    // echo "<script>alert('New Record Added')</script>";
+    // echo "<script>window.close();</script>";
   } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>";
   }
