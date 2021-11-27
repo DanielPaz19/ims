@@ -22,12 +22,13 @@ if (isset($_GET['add'])) {
   $cost = mysqli_real_escape_string($db, $_GET['cost']);
   $dept_id = mysqli_real_escape_string($db, $_GET['dept_id']);
   $sup_id = mysqli_real_escape_string($db, $_GET['sup_id']);
+  $product_type = mysqli_real_escape_string($db, $_GET['product_type']);
 
 
 
 
-  $query = "INSERT INTO product (product_name,class_id,qty,unit_id,pro_remarks,loc_id,barcode,price,cost,dept_id,sup_id) 
-  			  VALUES('$product_name','$class_id','$qty','$unit_id','$pro_remarks','$location','$barcode','$price','$cost','$dept_id','$sup_id')";
+  $query = "INSERT INTO product (product_name,class_id,qty,unit_id,pro_remarks,loc_id,barcode,price,cost,dept_id,sup_id,product_type) 
+  			  VALUES('$product_name','$class_id','$qty','$unit_id','$pro_remarks','$location','$barcode','$price','$cost','$dept_id','$sup_id','$product_type')";
 
 
   if (mysqli_query($db, $query)) {
@@ -40,7 +41,7 @@ if (isset($_GET['add'])) {
 
     echo date('Y-m-d');
 
-    echo '<script type="text/javascript"> alert("Data Inserted Seccessfully!"); </script>';
+    echo '<script type="text/javascript"> alert("Data Inserted Successfully!"); </script>';
   } else {
     echo '<script type="text/javascript"> alert("Error Uploading Data!"); </script>';  // when error occur
   }
