@@ -2,9 +2,9 @@
 
 ✅ Customer Details should not be editable when Jo number is selected 
 ✅ Items ordered on POS should reflect on Item Movement Table 
-❌ Esc Key closes the JO Modal 
 ✅ Transaction Cancel button should have Authentication
+✅ Cancel button will revert item qty on inventory
+✅ Canceled items should also reflect on item movement
+❌ Esc Key closes the JO Modal 
 ❌ Payment Modal Design
 ❌ Transaction Options into Icons
-❌ Cancel button will revert item qty on inventory
-❌ Canceled items should also reflect on item movement
