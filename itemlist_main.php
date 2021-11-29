@@ -346,15 +346,14 @@ if (!isset($_SESSION['user'])) {
                         </tr>
                         <tr>
                             <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required tabindex="1"></td>
-
-                            <!-- <td colspan="4" class='input__container'><input type="hidden" name="sup_id" class="container--supplier__id"><input name="sup_name" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;" class="input__search--supplier modal__trigger--supplier" tabindex="-1">
+                            <td colspan="4" class='input__container' style="display: none;"><input type="hidden" name="sup_id" class="container--supplier__id"><input name="sup_name" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;" class="input__search--supplier modal__trigger--supplier" tabindex="-1">
                                 <div class="list__container--supplier list__container">
                                     <ul class="list list--supplier">
 
                                     </ul>
 
                                 </div>
-                            </td> -->
+                            </td>
                             <td style="text-align: center;"> <input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="product_type" value="1" checked="checked"><br>&nbsp; <i style="color: chocolate;">(uncheck if non-inventory type item)</i>
                             </td>
                         </tr>
