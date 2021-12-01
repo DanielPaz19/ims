@@ -105,7 +105,7 @@ include 'php/stout_edit-inc.php';
                             "<tr>
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
-                 <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
+                 <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
                  <td class='td__readonly td__readonly--barcode'>$barcode[$limit]</td>
                  <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
                  <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
