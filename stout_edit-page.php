@@ -105,11 +105,12 @@ include 'php/stout_edit-inc.php';
                             echo
                             "<tr >
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
-                 <td class='td__readonly td__readonly--itemname' '>$productName[$limit]</td>
+                 <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
                  <td class='td__readonly td__readonly--barcode' style='text-align:center;'>$barcode[$limit]</td>
                  <td class='td__edit td__edit--cost' style='text-align:center;'>" . number_format($itemCost[$limit], 2) . "</td>
                  <td class='td__compute td__compute--totalcost' style='text-align:center;'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+
                  <td class='td__edit td__edit--delete'>
                     <i class='fa fa-trash-o' style='font-size:26px' title='Remove'></i>
                   </td>
