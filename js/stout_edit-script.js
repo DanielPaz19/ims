@@ -43,7 +43,7 @@ const renderItem = function (data, container) {
                           )}</td>
                           <td class='item-name'>${data.product_name}</td>
                           <td class='qty'>${formatNumber(data.qty)}</td>
-                          <td class='unit'>${data.unit_name}</td>
+                          <td class='barcode'>${data.barcode}</td>
                           <td class='location'>${data.loc_name}</td>
                           <td class='cost'>${formatNumber(data.cost)}</td>
                     </tr>`
@@ -183,7 +183,7 @@ const selectItem = function (e) {
   // Get Values to add on Order List
   const itemCode = targetItem.querySelector(".item-code").innerHTML;
   const itemName = targetItem.querySelector(".item-name").innerHTML;
-  const itemUnit = targetItem.querySelector(".unit").innerHTML;
+  const itemBarcode = targetItem.querySelector(".barcode").innerHTML;
   const itemCost = targetItem.querySelector(".cost").innerHTML;
 
   // Check for duplicate entries
@@ -203,7 +203,7 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
-    <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
+    <td class='td__readonly td__readonly--barcode'>${itemBarcode}</td>
     <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
     <td class='td__compute td__compute--totalcost'>${formatNumber(
       totalCost
@@ -248,7 +248,7 @@ const showTableData = (data, container) => {
                     <td class='item-code'>${data.product_id.padStart(8, 0)}</td>
                     <td class='item-name'>${data.product_name}</td>
                     <td class='qty'>${formatNumber(data.qty)}</td>
-                    <td class='unit'>${data.unit_name}</td>
+                    <td class='barcode'>${data.barcode}</td>
                     <td class='location'>${data.loc_name}</td>
                     <td class='cost'>${formatNumber(data.cost)}</td>
               </tr>`;

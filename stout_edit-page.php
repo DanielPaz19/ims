@@ -85,7 +85,7 @@ include 'php/stout_edit-inc.php';
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Qty-In</th>
-                    <th>Unit</th>
+                    <th>Barcode</th>
                     <th>Cost</th>
                     <th>Total Cost</th>
                     <th>
@@ -106,7 +106,7 @@ include 'php/stout_edit-inc.php';
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
-                 <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
+                 <td class='td__readonly td__readonly--barcode'>$barcode[$limit]</td>
                  <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
                  <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
                  <td class='td__edit td__edit--delete'>
