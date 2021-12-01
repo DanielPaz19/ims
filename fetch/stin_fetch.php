@@ -53,11 +53,12 @@ $output = '
 <br>
 <table width="100%">
   <tr>
+  <th width="10%">STIN ID</th>
     <th width="5%" style="display:none;">ID</th>
-    <th width="15%">Code</th>
-    <th width="20%">Title</th>
+    <th width="15%">STIN Code</th>
+    <th width="20%">JO No.</th>
     <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>STIN Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -88,13 +89,17 @@ if ($total_data > 0) {
       <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
     }
+    $dateString = $row['stin_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
+
     $output .= '
     <tr>
-      <td style="display:none;">' . $row["stin_id"] . '</td>
+      <td >' . str_pad($row["stin_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["stin_code"] . '</td>
       <td>' . $row["stin_title"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["stin_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewstin.php?id=' . $row["stin_id"] . '">

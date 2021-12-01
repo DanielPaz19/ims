@@ -49,7 +49,7 @@ if (!isset($_SESSION['user'])) {
         color: lightgray;
     }
 
-    .content-area {
+    /* .content-area {
         border-radius: 5px;
         width: fit-content;
         height: fit-content;
@@ -60,7 +60,7 @@ if (!isset($_SESSION['user'])) {
         -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         margin-bottom: 10px;
-    }
+    } */
 
     .con-form {
         font-family: Arial, Helvetica, sans-serif;
@@ -80,6 +80,12 @@ if (!isset($_SESSION['user'])) {
         display: inline-block;
         letter-spacing: 3px;
         cursor: pointer;
+        width: 150px;
+        height: 50px;
+    }
+
+    .butLink:hover {
+        font-size: 25px;
     }
 
     /* The Modal (background) */

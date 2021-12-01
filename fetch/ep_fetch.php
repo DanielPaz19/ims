@@ -53,11 +53,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th >ID</th>
-    <th>No.</th>
+    <th>EP ID</th>
+    <th>EP No.</th>
     <th>Title</th>
     <th>Customer</th>
-    <th>Date</th>
+    <th><center>Date</th>
     <th><center>Action</th>
     <th><center>Created By</th>
     <th><center>Status</th>
@@ -67,6 +67,9 @@ $output = '
 if ($total_data > 0) {
     foreach ($result as $row) {
         $closed = $row["closed"];
+        $dateString = $row['ep_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
 
 
         if ($closed == 0) {
@@ -92,11 +95,11 @@ if ($total_data > 0) {
         }
         $output .= '
     <tr>
-      <td>' . $row["ep_id"] . '</td>
+      <td>' . str_pad($row["ep_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["ep_no"] . '</td>
       <td>' . $row["ep_title"] . '</td>
       <td>' . $row["customers_name"] . '</td>
-      <td>' . $row["ep_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewep.php?id=' . $row["ep_id"] . '&epNo=' . $row["ep_no"] . '">

@@ -56,7 +56,7 @@ $output = '
     <th width="5%">ID</th>
     <th width="15%">RT No.</th>
     <th width="50%">Customer</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>Create Date</th>
     <th width="10%"><center>Details</th>
     <th width="10%"><center>Created By</th>
     
@@ -64,13 +64,15 @@ $output = '
 ';
 if ($total_data > 0) {
     foreach ($result as $row) {
-
+        $dateString = $row['rt_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
         $output .= '
     <tr>
       <td>' . str_pad($row["rt_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["rt_no"] . '</td>
       <td>' . $row["customers_name"] . '</td>
-      <td>' . $row["rt_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
 
                 <a href="view/viewrt.php?id=' . $row["rt_id"] . '">

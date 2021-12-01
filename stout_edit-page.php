@@ -84,7 +84,7 @@ include 'php/stout_edit-inc.php';
             <thead>
                 <tr>
                     <th>Item Code</th>
-                    <th>Item Name</th>
+                    <th style="text-align:left;">&emsp;&emsp;Item Name</th>
                     <th>Qty-Out</th>
                     <th>Barcode</th>
                     <th>Cost</th>
