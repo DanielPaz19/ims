@@ -11,6 +11,7 @@ include 'php/stout_edit-inc.php';
 <h1>Edit Stock-out</h1>
 <form action="php/stout_edit-inc.php" method="POST">
     <div class='container--details'>
+        <a href="stout_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
         <table>
             <tr>
                 <td> <span class="input__label">
@@ -45,9 +46,9 @@ include 'php/stout_edit-inc.php';
                 </td>
                 <td>
                     <span class="input__label input__label--employee">
-                        Employee Name:
+                        Requested By:
                     </span>
-                    <select name="employeeId" id="employee_name">
+                    <select name="employeeId" id="employee_name" style="height:35px">
                         <option value=" <?php echo $empId ?>"><?php echo $empName ?></option>
                         // Show supplier name as options for Select input
                         <?php include 'php/render-select-employee.php' ?>
@@ -84,7 +85,7 @@ include 'php/stout_edit-inc.php';
                 <tr>
                     <th>Item Code</th>
                     <th>Item Name</th>
-                    <th>Qty-In</th>
+                    <th>Qty-Out</th>
                     <th>Barcode</th>
                     <th>Cost</th>
                     <th>Total Cost</th>
@@ -102,15 +103,16 @@ include 'php/stout_edit-inc.php';
                         if ($productId[$limit] != 0) {
                             # code...
                             echo
-                            "<tr>
+                            "<tr >
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
-                 <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
-                 <td class='td__readonly td__readonly--barcode'>$barcode[$limit]</td>
-                 <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
-                 <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+                 <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
+                 <td class='td__readonly td__readonly--barcode' style='text-align:center;'>$barcode[$limit]</td>
+                 <td class='td__edit td__edit--cost' style='text-align:center;'>" . number_format($itemCost[$limit], 2) . "</td>
+                 <td class='td__compute td__compute--totalcost' style='text-align:center;'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+
                  <td class='td__edit td__edit--delete'>
-                    <i class='fa fa-trash-o' style='font-size:26px'></i>
+                    <i class='fa fa-trash-o' style='font-size:26px' title='Remove'></i>
                   </td>
                   <input type='hidden' name='productId[]' value='$productId[$limit]' >
                   <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
@@ -172,8 +174,8 @@ include 'php/stout_edit-inc.php';
                     <tr>
                         <th>Item Code</th>
                         <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
+                        <th>Qty-On-Hand</th>
+                        <th>Barcode</th>
                         <th>Location</th>
                         <th>Cost</th>
                     </tr>
