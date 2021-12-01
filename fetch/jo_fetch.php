@@ -54,11 +54,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="5%" style="display:none;">ID</th>
+    <th width="5%"">Jo-ID</th>
     <th width="15%">Jo-No. </th>
     <th width="20%">Customer</th>
     <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>Create Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -86,13 +86,16 @@ if ($total_data > 0) {
       &nbsp;&nbsp;&nbsp;
 ';
         }
+        $dateString = $row['jo_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
         $output .= '
     <tr>
-      <td style="display:none;">' . $row["jo_id"] . '</td>
+      <td>' . str_pad($row["jo_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["jo_no"] . '</td>
       <td>' . $row["customers_name"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["jo_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewjo.php?id=' . $row["jo_id"] . '">

@@ -56,9 +56,9 @@ $output = '
 <br>
 <table width="100%" class="itemlist" id="hover">
   <tr>
-    <th width="5%">ID</th>
+    <th width="10%">Prod. ID</th>
     <th width="30%">Item</th>
-    <th width="15%">Class</th>
+    <th width="10%">Class</th>
     <th width="2.5%">Quantity</th>
     <th width="2.5%">Unit</th>
     <th width="10%">Remarks</th>
@@ -108,7 +108,7 @@ if ($total_data > 0) {
 $output .= '
 </table>
 <br />
-<label class="tableLabel" style="color:gray;">Total Records - ' . $total_data . '</label>
+<label class="tableLabel" style="color:midnightblue; letter-spacing:1px">Total Records Found - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">

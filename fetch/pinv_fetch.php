@@ -53,11 +53,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="5%">ID</th>
+    <th width="5%">PINV ID</th>
     <th width="15%">Title</th>
     <th width="20%">Location</th>
     <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>PINV Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -81,13 +81,16 @@ if ($total_data > 0) {
       <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
         }
+        $dateString = $row['pinv_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
         $output .= '
     <tr>
-      <td>' . $row["pinv_id"] . '</td>
+      <td>' . str_pad($row["pinv_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["pinv_title"] . '</td>
       <td>' . $row["pinv_location"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["pinv_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewpinv.php?id=' . $row["pinv_id"] . '">
