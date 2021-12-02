@@ -13,8 +13,9 @@ if (isset($_POST['submit'])) {
     $price = $_POST['price'];
     $cost = $_POST['cost'];
     $dept = $_POST['dept_id'];
+    $product_type_id = $_POST['product_type_id'];
 
-    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' WHERE product_id='$id'");
+    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
 
 
 
@@ -26,11 +27,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, product.pro_remarks, loc_tb.loc_name, product.barcode, product.price, product.cost, dept_tb.dept_name
+    $result = mysqli_query($db, "SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, product.pro_remarks, loc_tb.loc_name, product.barcode, product.price, product.cost, dept_tb.dept_name, product_type.product_type_name
 FROM product
 LEFT JOIN class_tb ON product.class_id = class_tb.class_id
 LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
 LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
+LEFT JOIN product_type ON product.product_type_id = product_type.product_type_id
 LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GET['id']);
 
     $row = mysqli_fetch_array($result);
@@ -47,6 +49,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
         $price = $row['price'];
         $cost = $row['cost'];
         $dept = $row['dept_name'];
+        $type = $row['product_type_name'];
     } else {
         echo "No results!";
     }
@@ -146,13 +149,15 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
             <table class="items1" style=" width: 100%; border-collapse: collapse;">
                 <tr>
                     <th width="50%">Price</th>
-                    <th width="25%">Cost</th>
-                    <th width="25%">Department</th>
+                    <th width="15%">Cost</th>
+                    <th width="25%" style="text-align: left;">&emsp;&emsp;&emsp;Department</th>
+                    <th width="10%" style="text-align: left;">Type</th>
+
                 </tr>
                 <tr>
                     <td><input tabindex="2" required="number" type="number" name="price" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $price; ?>" /></td>
                     <td><input tabindex="2" required="number" type="number" name="cost" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $cost; ?>" /></td>
-                    <td>
+                    <td style="text-align: center;">
                         <select name="dept_id" class="select--dept">
                             <option value="<?php echo $_GET['deptId'] ?>"><?php echo $_GET['dept']; ?></option>
                             <?php
@@ -163,8 +168,19 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                                 echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
                             }
                             ?>
-
                         </select>
+                    </td>
+                    <td style="text-align: left;">
+                        <select name="product_type_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;">
+                            <option value="<?php echo $_GET['typeId'] ?>"><?php echo $_GET['typeName']; ?></option>
+                            <?php
+                            include "config.php";
+                            $records = mysqli_query($db, "SELECT * FROM product_type ORDER BY product_type_id ASC");
+
+                            while ($data = mysqli_fetch_array($records)) {
+                                echo "<option value='" . $data['product_type_id'] . "'>" . $data['product_type_name'] . "</option>";
+                            }
+                            ?>
                     </td>
                 </tr>
             </table>
