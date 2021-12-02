@@ -341,7 +341,7 @@
           <input type="text" name="po_title" placeholder="Enter Title here...">&nbsp;&nbsp;&nbsp;&nbsp;
           <label>Remarks:&nbsp;&nbsp;</label>
           <input type="text" name="po_remarks">&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Date:&nbsp;&nbsp;</label>
+          <label>Date:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input type="date" name="po_date" required> <br><br>
           <label for="name"><b>Supplier:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
           <select name="sup_id" style="height:25px; border: 1px solid lightgrey;" required>
@@ -358,8 +358,19 @@
 
           <label>Terms:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input type="text" name="po_terms">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label for="pos" style="font-size: 18px;"> SRR:</label>
-          <input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="srr" value="1" checked="checked" title="Job-Order Type">
+          <label> PO-Type:</label>
+          <select name="po_type_id" style="width: 150px; height: 26px; border: 1px solid gray;">
+            <option></option>
+            <?php
+            include "config.php";
+            $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
+
+            while ($data = mysqli_fetch_array($records)) {
+              echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
+            }
+            ?>
+          </select>
+
 
 
           <div>

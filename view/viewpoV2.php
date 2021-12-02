@@ -222,6 +222,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <?php }
                     } ?>
                 </table>
+                <div class="remarks">
+                    <p> <b> Remarks:</b> <?php
+                                            if ($po_remarks == "") {
+                                                echo "N/A";
+                                            } else {
+                                                echo $po_remarks;
+                                            }
+                                            ?></td>
+                    </p>
+                </div>
                 <br><br><br>
             </div>
             <div class="subtot">

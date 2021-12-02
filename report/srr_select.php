@@ -61,13 +61,14 @@
                     if (isset($_POST['search'])) {
                         $date1 = date("Y-m-d", strtotime($_POST['date1']));
                         $date2 = date("Y-m-d", strtotime($_POST['date2']));
-                        $query = mysqli_query($db, "SELECT po_tb.po_date, sup_tb.sup_name, po_tb.po_code, product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.pro_remarks
+                        $query = mysqli_query($db, "SELECT po_tb.po_date, sup_tb.sup_name, po_tb.po_code, product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.pro_remarks, po_tb.po_type_id
                                     FROM po_tb
                                     LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
                                     INNER JOIN product ON product.product_id = po_product.product_id
                                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-                                    WHERE po_tb.srr = 1 AND po_tb.po_date 
+                                    LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id
+                                    WHERE po_tb.po_type_id = 1 AND po_tb.po_date 
                                     BETWEEN '$date1' AND '$date2'
                                      ORDER BY sup_tb.sup_name ASC");
                         $row = mysqli_num_rows($query);
@@ -102,7 +103,8 @@
                                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
                                                     INNER JOIN product ON product.product_id = po_product.product_id
                                                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
-                                                    WHERE po_tb.srr = 1 
+                                                    LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id
+                                                    WHERE po_tb.po_type_id = 1 
                                                     ORDER BY sup_tb.sup_name ASC");
                         while ($fetch = mysqli_fetch_array($query)) {
                             $dateString = $fetch['po_date'];
