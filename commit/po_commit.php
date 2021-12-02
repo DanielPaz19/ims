@@ -12,7 +12,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   if ($row) {
     $id = $row['po_id'];
     $po_code = $row['po_code'];
-    $po_date = $row['po_date'];
+    $dateString = $row['po_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
     $po_title = $row['po_title'];
     $po_remarks = $row['po_remarks'];
     $sup_name = $row['sup_name'];
@@ -34,35 +36,41 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     body {
-      font-family: Arial;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       color: black;
       padding: 50px;
     }
 
+
     .item-details {
       border-collapse: collapse;
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); */
     }
 
-    .item-details td {
-      padding: 7px;
-      border: 1px solid grey;
-      text-align: left;
-      font-size: 15px;
-      background-color: white;
-
-    }
 
     .item-details th {
       background-color: midnightblue;
       color: white;
-      padding: 5px;
+      padding: 10px;
       border: 1px solid grey;
       text-align: left;
       font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+
+    .item-details td {
+      padding: 7px;
+      border-left: 1px solid lightgrey;
+      text-align: left;
+      font-size: 15px;
+      background-color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 1px;
+
     }
 
     .fieldset {
@@ -72,9 +80,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     h2 {
       color: midnightblue;
       letter-spacing: 4px;
-      text-decoration: underline;
+      font-size: 35px;
     }
-
 
     .button {
       background-color: midnightblue;
@@ -86,22 +93,25 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       letter-spacing: 2px;
       text-decoration: none;
       display: inline-block;
-      font-size: 15px;
+      font-size: 16px;
       margin: 4px 2px;
       cursor: pointer;
       -webkit-transition-duration: 0.4s;
       /* Safari */
       transition-duration: 0.4s;
+      width: 10%;
+      height: 5%;
     }
 
     .button:hover {
-      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      /* box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); */
+      font-size: 18px;
     }
 
+
     .head {
-      color: midnightblue;
-      /* border: 1px solid black; */
-      border-collapse: collapse;
+      color: black;
+      font-size: 24px
     }
 
     .stock-details {
@@ -109,16 +119,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     }
 
     .stock-details th {
+      font-size: 24px;
       text-align: left;
+      padding: 5px;
 
     }
 
     .stock-details td {
-      padding: 10px;
-
+      padding: 5px;
     }
 
-    .container {
+
+    /* .container {
       padding: 30px;
       background-color: #EAEAEA;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -126,7 +138,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       height: 1000px;
-    }
+    } */
 
     input[type=number] {
       color: red;
@@ -139,34 +151,28 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <!-- VIEW PO END -->
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
+<h2>Purchase Order : Commiting Records</h2>
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
   <!-- PO Details -->
   <div class="container">
-    <a href="../po_main.php" style="float: right; color: red;" title="Close"><i class="fa fa-close" style="font-size:24px"></i></a>
     <fieldset style="border:none;">
       <legend>
-        <h2>PO-DETAILS</h2>
+
       </legend>
       <table class="stock-details" width="100%">
         <tr>
           <th><b>PO Code</b></th>
           <th><b>Supplier</b></th>
-          <th><b>Remarks </b></th>
           <th><b>PO Title </b></th>
-          <th><b>Address </b></th>
           <th><b>PO Date </b></th>
-          <th><b>TIN </b></th>
+
         </tr>
         <tr>
           <td class="head"> <?php echo $po_code; ?> </td>
           <td class="head"> <?php echo $sup_name; ?> </td>
-          <td class="head"><?php echo $po_remarks; ?></td>
           <td class="head"><?php echo $po_title; ?></td>
-          <td class="head"><?php echo $sup_address; ?></td>
-          <td class="head"><?php echo $po_date; ?></td>
-          <td class="head"><?php echo $sup_tin; ?></td>
-          <td></td>
+          <td class="head"><?php echo $date; ?></td>
         </tr>
       </table>
 
@@ -180,6 +186,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <input type="hidden" name='mov_date' class='date'>
         <table class="item-details">
           <tr>
+            <th width="10%">Product ID</th>
             <th width="30%">Item Name</th>
             <th width="10%">Beg. Qty</th>
             <th width="10%">Qty-Recieved</th>
@@ -208,7 +215,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
           ?>
               <tr>
 
-
+                <td contenteditable="false"><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT) ?></td>
                 <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
                 <td><input type="number" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
                 <td contenteditable="false"><input style="border:none;" type="number" name="in_qty[]" value="<?php echo $irow['item_qtyorder'] ?>" readonly></td>
@@ -226,6 +233,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         </table>
         <br>
         <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
+        <a href="../po_main.php"> <input type="button" class="button" value="Cancel"></a>
       </form>
 
 
