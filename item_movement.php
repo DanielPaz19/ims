@@ -120,14 +120,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <th>REFERENCE NO</th>
         <th>IN</th>
         <th>OUT</th>
-        <th>PHYSICAL COUNT</th>
         <th>BALANCE</th>
         <th>Process Date</th>
       </tr>
       <?php
       include "php/config.php";
 
-      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, pinv_tb.pinv_title, pinv_product.pinv_qty
+      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no
 
        FROM move_product 
 
@@ -142,9 +141,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			 LEFT JOIN stin_tb ON move_product.move_ref = stin_tb.stin_id
 
        LEFT JOIN ep_tb ON move_product.move_ref = ep_tb.ep_id
-
-       LEFT JOIN pinv_tb ON move_product.move_ref = pinv_tb.pinv_id
-       LEFT JOIN pinv_product ON pinv_product.pinv_id = pinv_tb.pinv_id
 
        WHERE move_product.product_id = '$id'
        ORDER BY move_id ASC";
@@ -182,9 +178,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                   case '6':
                     echo $irow['ep_no'];
                     break;
-                  case '7':
-                    echo $irow['pinv_title'];
-                    break;
+
                   default:
                     break;
                 }
@@ -193,7 +187,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </td>
             <td><?php echo $irow['in_qty']; ?></td>
             <td><?php echo $irow['out_qty']; ?></td>
-            <td><?php echo $irow['pinv_qty'] ?></td>
             <td><?php
 
                 switch ($irow['mov_type_id']) {
@@ -218,10 +211,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                   case '6':
                     echo $irow['bal_qty'] - $irow['out_qty'];
-                    break;
-
-                  case '7':
-                    echo $irow['pinv_qty'];
                     break;
 
                   default:

@@ -28,8 +28,8 @@ if (isset($_GET['submit'])) {
 
 
     if ($closed == 0) {
-        foreach ($_GET['ep_totPrice'] as $ep_totPrice) {
-            $total[] = $ep_totPrice;
+        foreach ($_GET['ep_qty_tot'] as $ep_qty_tot) {
+            $total[] = $ep_qty_tot;
         }
 
         foreach ($_GET['product_id'] as $product_id) {
