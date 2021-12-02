@@ -49,8 +49,8 @@ page[size="A4"] {
 }
 
 .heading p {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   float: right;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   line-height: 25px;
   text-align: right;
   margin-right: 50px;
@@ -147,4 +147,8 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 15px;
+}
+
+.remarks {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
