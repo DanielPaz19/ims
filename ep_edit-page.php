@@ -12,6 +12,7 @@ include 'php/ep_edit-inc.php';
 <hr>
 <form action="php/ep_edit-inc.php" method="POST">
     <div class='container--details'>
+        <a href="ep_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
         <span class="po__label">
             EP ID:
         </span>
@@ -62,8 +63,18 @@ include 'php/ep_edit-inc.php';
     </div>
 
     <div class="button__container--insert_item">
-        <button class="edit__button edit__button--insert__item" style="float: right; margin-top:10px;margin-right:10px;margin-bottom:10px;">Add item</button>
+
         <div class="container--table">
+            <button class="edit__button edit__button--insert__item" style="float: left; margin-bottom:5px;"><i class="fa fa-plus"></i>&nbsp;Add item</button>
+            <button class="edit__button button--update" name='update' style="float: right; margin-bottom:5px;  cursor: pointer;
+   cursor: pointer;
+  height: 50px;
+  width: 150px;
+  border-radius: 5px;
+  background-color: midnightblue;
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: 2px;"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
             <table class='table'>
                 <thead>
                     <tr style="text-align: left;">
@@ -91,7 +102,7 @@ include 'php/ep_edit-inc.php';
                                 "<tr style='text-align:left;'>
         <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
         <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
-        <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
+        <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
         <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
         <td class='td__edit td__edit--cost'>" . number_format($itemPrice[$limit], 2) . "</td>
         <td class='td__compute td__compute--totalcost'>" . number_format($itemPrice[$limit] * $qtyIn[$limit], 2) . "</td>
@@ -115,8 +126,7 @@ include 'php/ep_edit-inc.php';
         </div>
         <div class="container--edit__button">
 
-            <button class="edit__button button--update" name='update'>Update</button>
-            <button class="edit__button button--cancelupdate" name='cancelupdate'>Cancel</button>
+
 
         </div>
 </form>
@@ -125,20 +135,18 @@ include 'php/ep_edit-inc.php';
 <div class="container--modal">
     <div class='modal--add__item'>
 
-        <a href=""><button onclick="showadditem()" class="button--add__item">New Item</button></a>
-
         <input type="text" class='input--search' placeholder="Search Item..."><br>
-        <span class='close--modal' style="float: right;"><i class="fa fa-close"></i></span>
+        <span class='close--modal'><i class="fa fa-close"></i></span>
         <div class='table--container'>
             <table class="modal--table__itemlist">
                 <thead>
-                    <tr>
+                    <tr style="text-align: center;">
                         <th>Item Code</th>
                         <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
+                        <th>Qty-On-Hand</th>
+                        <th>Barcode</th>
                         <th>Location</th>
-                        <th>Price</th>
+                        <th>Cost</th>
                     </tr>
                 </thead>
                 <tbody class='container--itemlist'>
