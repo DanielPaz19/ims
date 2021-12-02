@@ -24,12 +24,13 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, unit_tb.unit_id, product.pro_remarks, loc_tb.loc_name,loc_tb.loc_id, product.barcode, product.price, product.cost, dept_tb.dept_name, dept_tb.dept_id, class_tb.class_id
+SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, unit_tb.unit_id, product.pro_remarks, loc_tb.loc_name,loc_tb.loc_id, product.barcode, product.price, product.cost, dept_tb.dept_name, dept_tb.dept_id, class_tb.class_id, product_type.product_type_name, product_type.product_type_id
 FROM product
 LEFT JOIN class_tb ON product.class_id = class_tb.class_id
 LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
 LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
 LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id
+LEFT JOIN product_type ON product.product_type_id = product_type.product_type_id
 
 ";
 
@@ -87,7 +88,7 @@ if ($total_data > 0) {
       <td>' . $row["dept_name"] . '</td>
       <td>
 <center>
-      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . '" title="Edit Item"><i class="fa fa-edit" style="font-size:25px"></i></a>
+      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . "&typeId=" . $row["product_type_id"] . "&typeName=" . $row["product_type_name"] . '" title="Edit Item"><i class="fa fa-edit" style="font-size:25px"></i></a>
       &nbsp;
       <a href="item_movement.php?id=' . $row["product_id"] . '" title="View History"><i class="fa fa-history" style="font-size:25px"></i></a>
       &nbsp;
