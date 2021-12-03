@@ -42,7 +42,7 @@ const renderItem = function (data, container) {
                             0
                           )}</td>
                           <td class='item-name'>${data.product_name}</td>
-                          <td class='qty'>${formatNumber(data.qty)}</td>
+                          <td class='qty'>${data.qty}</td>
                           <td class='unit'>${data.unit_name}</td>
                           <td class='location'>${data.loc_name}</td>
                           <td class='price'>${formatNumber(data.cost)}</td>
@@ -100,7 +100,7 @@ const rowEdit = function (e) {
     // Return if invalid input
     if (!newValue || newValue.includes(" ") || newValue === NaN) return;
 
-    target.innerHTML = formatNumber(newValue);
+    target.innerHTML = newValue;
 
     const targetInput = target
       .closest("tr")
@@ -202,7 +202,7 @@ const selectItem = function (e) {
     `<tr>
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
-    <td class='td__edit td__edit--qty'>${formatNumber(joQty)}</td>
+    <td class='td__edit td__edit--qty'>${joQty}</td>
     <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
     <td class='td__edit td__edit--cost'>${formatNumber(itemPrice)}</td> 
     <td class='td__compute td__compute--totalcost'>${formatNumber(totalCost)}</td>
