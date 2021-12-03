@@ -65,6 +65,7 @@ h1 {
   border-radius: 10px;
   table-layout: fixed;
   padding: 10px;
+  overflow-y: scroll;
 }
 
 .po__table {
@@ -256,6 +257,7 @@ h1 {
 
 .modal--table__itemlist tr:hover {
   background-color: lightgray;
+  font-size: larger;
 }
 
 /* Item Code */

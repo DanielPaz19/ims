@@ -135,7 +135,7 @@ include 'php/jo_edit-inc.php';
             <table class="modal--table__itemlist">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">Item Code</th>
+                        <th style="text-align: center;">Product ID</th>
                         <th style="text-align: center;">Item Name</th>
                         <th style="text-align: center;">Quantity</th>
                         <th style="text-align: center;">Unit</th>

@@ -69,11 +69,12 @@ h1 {
   background-color: #eaeaea;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   width: 100%;
-  height: auto;
+  height: 600px;
   margin: 20px auto;
   border-radius: 10px;
   table-layout: fixed;
   padding: 25px;
+  overflow-y: scroll;
 }
 
 .table {
@@ -265,6 +266,7 @@ h1 {
 
 .modal--table__itemlist tr:hover {
   background-color: lightgray;
+  font-size: larger;
 }
 
 /* Item Code */
