@@ -79,11 +79,12 @@ include 'php/stout_edit-inc.php';
   background-color: midnightblue;
   color: #ffffff;
   font-size: 18px;
-  letter-spacing: 2px;"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
+  letter-spacing: 2px;
+  float:right"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
         <table class='table'>
             <thead>
                 <tr>
-                    <th>Item Code</th>
+                    <th>Product ID</th>
                     <th style="text-align:left;">&emsp;&emsp;Item Name</th>
                     <th>Qty-Out</th>
                     <th>Barcode</th>

@@ -85,7 +85,7 @@ include 'php/po_edit-inc.php';
     <table class='po__table'>
       <thead>
         <tr>
-          <th>Item Code</th>
+          <th>Product ID</th>
           <th>Item Name</th>
           <th>Qty-In</th>
           <th>Unit</th>

@@ -199,7 +199,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </center>
                 <br>
                 <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
-                <a href="../pinv_main.php"> <input type="button" class="button" value="Cancel"></a>
+                <a href="../pinv_main2.php"> <input type="button" class="button" value="Cancel"></a>
             </form>
         </fieldset>
     </div>
