@@ -57,7 +57,7 @@ h1 {
 .edit__button--insert__item {
   cursor: pointer;
   height: 50px;
-  width: 100px;
+  width: 200px;
   border-radius: 5px;
   background-color: midnightblue;
   color: #ffffff;
@@ -245,7 +245,7 @@ h1 {
 .input--search {
   width: 500px;
   padding: 2px 5px;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .close--modal {
@@ -260,6 +260,7 @@ h1 {
   cursor: pointer;
   color: black;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .modal--table__itemlist tr:hover {
@@ -269,6 +270,7 @@ h1 {
 /* Item Code */
 .modal--table__itemlist th:nth-child(1) {
   width: 10%;
+  text-align: left;
 }
 
 .modal--table__itemlist td:nth-child(1) {
