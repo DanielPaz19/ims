@@ -78,7 +78,7 @@ include 'php/ep_edit-inc.php';
             <table class='table'>
                 <thead>
                     <tr style="text-align: left;">
-                        <th>&nbsp;&nbsp;Item Code</th>
+                        <th>&nbsp;&nbsp;Product ID</th>
                         <th>&nbsp;&nbsp;Item Name</th>
                         <th>&nbsp;&nbsp;Qty</th>
                         <th>&nbsp;&nbsp;Unit</th>
@@ -141,7 +141,7 @@ include 'php/ep_edit-inc.php';
             <table class="modal--table__itemlist">
                 <thead>
                     <tr style="text-align: center;">
-                        <th>Item Code</th>
+                        <th>Product ID</th>
                         <th>Item Name</th>
                         <th>Qty-On-Hand</th>
                         <th>Barcode</th>
