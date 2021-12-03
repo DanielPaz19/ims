@@ -173,7 +173,7 @@ include 'php/stout_edit-inc.php';
             <table class="modal--table__itemlist">
                 <thead>
                     <tr>
-                        <th>Item Code</th>
+                        <th>Product ID</th>
                         <th>Item Name</th>
                         <th>Qty-On-Hand</th>
                         <th>Barcode</th>

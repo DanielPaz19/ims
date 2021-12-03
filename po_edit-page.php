@@ -156,7 +156,7 @@ include 'php/po_edit-inc.php';
       <table class="modal--table__itemlist">
         <thead>
           <tr>
-            <th>Item Code</th>
+            <th>Product ID</th>
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Unit</th>
