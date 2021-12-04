@@ -7,7 +7,7 @@ FROM jo_tb
 LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
 LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
 WHERE jo_tb.jo_type_id = '1' AND jo_tb.closed = '0' 
-ORDER BY jo_no LIMIT 50");
+ORDER BY jo_no ");
 
 if (mysqli_num_rows($joResult) > 0) {
   while ($row = mysqli_fetch_assoc($joResult)) {
