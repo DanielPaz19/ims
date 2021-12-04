@@ -401,9 +401,19 @@
                                     ?>
                                 </select>
                             </td>
-                            <td><label for="pos" style="font-size: 18px;"> POS:</label></td>
-                            <td><input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="pos" value="1" checked="checked" title="Job-Order Type">
-                            </td>
+
+                            <td><label> JO-Type:</label>
+                                <select name="jo_type_id" style="width: 150px; height: 26px; border: 1px solid gray;">
+                                    <option></option>
+                                    <?php
+                                    include "config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM jo_type ORDER BY jo_type_id ASC");
+
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['jo_type_id'] . "'>" . $data['jo_type_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
                         </tr>
                     </table>
 
