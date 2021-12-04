@@ -54,10 +54,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../css/viewpoV2.css" type="text/css" media="print">
+	<link rel="stylesheet" href="../css/viewpoV2.css" type="text/css">
 	<style>
 		body {
 			font-family: sans-serif;
-			margin: 100px;
+			margin: none;
 			padding: 50px;
 		}
 
@@ -70,8 +72,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		}
 
 
-		.itemtb td,
-		th {
+		.itemtb th {
 			text-align: left;
 			border: 1px solid lightgrey;
 			padding: 5px;
@@ -87,6 +88,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		}
 
 
+		.itemtb2 th {
+			text-align: left;
+			border: 1px solid lightgrey;
+			padding: 5px;
+		}
+
+		.itemtb2 th {
+			color: midnightblue;
+		}
 
 
 
@@ -104,34 +114,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		@media print {
 			#printPageButton {
 				display: none;
+
 			}
-		}
 
-		@media print {
-			body {
-				width: 21cm;
-				height: 29.7cm;
-				margin: 30mm 45mm 30mm 45mm;
-				/* change the margins as you want them to be. */
-			}
 		}
-
-		button {
-			background-color: midnightblue;
-			color: white;
-			width: 80px;
-			height: 30px;
-			padding: 5px;
-			font-weight: bolder;
-		}
-
 
 		.itemtb {
 			position: absolute;
 			border-collapse: collapse;
 			/* border: 1px solid black; */
 			width: 60%;
+
 		}
+
+
 
 		.itemtb2 {
 			position: absolute;
@@ -142,7 +138,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			align-content: right;
 		}
 
-
+		.itemtb tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
 
 		.itemtb2 textarea {
 			border: none;
@@ -165,105 +163,100 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			resize: none;
 
 		}
+
+		.itemtb td {
+			padding: 3px;
+		}
 	</style>
 
 </head>
 
 
-<body style="margin: auto;">
+<body>
+	<div class="print-area">
+		<page id="print" size="A4">
+			<div class="top">
+				<center>
+					<h3 style="color: midnightblue;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
+					<h4 style="color: midnightblue;">REQUISITION SLIP</h4>
+					<hr width="50%">
+					<br>
+				</center>
+			</div>
 
-	<div class="top">
-		<center>
-			<h3 style="color: midnightblue;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
-			<h4 style="color: midnightblue;">REQUISITION SLIP</h4>
-			<hr width="50%">
+			<div class="labels">
+				<table width="100%">
+					<tr>
+						<td><b>Job-Order.:</b>&nbsp;&nbsp;<?php echo $stout_title; ?></td>
+						<td width="40%"></td>
+						<td><b>RS No. :</b>&nbsp;&nbsp;<?php echo $stout_code; ?></td>
+					</tr>
+					<tr>
+						<td><b>Item Description:</b>&nbsp;&nbsp;<?php echo $itemdesc; ?></td>
+						<td width="40%"></td>
+						<td><b>Date:</b>&nbsp;&nbsp;<?php echo $date; ?></td>
+					</tr>
+				</table>
+			</div>
+
 			<br>
-		</center>
-	</div>
 
-	<div class="labels">
-		<table width="100%">
-			<tr>
-				<td><b>Job-Order.:</b>&nbsp;&nbsp;<?php echo $stout_title; ?></td>
-				<td width="40%"></td>
-				<td><b>RS No. :</b>&nbsp;&nbsp;<?php echo $stout_code; ?></td>
-			</tr>
-			<tr>
-				<td><b>Item Description:</b>&nbsp;&nbsp;<?php echo $itemdesc; ?></td>
-				<td width="40%"></td>
-				<td><b>Date:</b>&nbsp;&nbsp;<?php echo $date; ?></td>
-			</tr>
-		</table>
-	</div>
+			<div class="content">
+				<table class="itemtb">
+					<tr>
+						<th>QTY</th>
+						<th>MATERIAL USE</th>
 
-	<br>
-
-	<div class="content">
-		<table class="itemtb">
-			<tr>
-				<th>QTY</th>
-				<th>MATERIAL USE</th>
-
-			</tr>
-			<?php
-			$sql = "SELECT product.product_name,stout_product.stout_temp_qty,unit_tb.unit_name, stout_product.stout_temp_remarks 
+					</tr>
+					<?php
+					$sql = "SELECT product.product_name,stout_product.stout_temp_qty,unit_tb.unit_name, stout_product.stout_temp_remarks 
 			   FROM stout_product 
 			   LEFT JOIN product ON product.product_id = stout_product.product_id
 			   LEFT JOIN stout_tb ON stout_product.stout_id=stout_tb.stout_id
 			   LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stout_product.stout_id='$id'";
 
-			$result = $db->query($sql);
-			$count = 0;
-			if ($result->num_rows >  0) {
+					$result = $db->query($sql);
+					$count = 0;
+					if ($result->num_rows >  0) {
 
-				while ($irow = $result->fetch_assoc()) {
-					$count = $count + 1;
-					$text = $irow['stout_temp_remarks'];
-					$newtext = wordwrap($text, 50, "<br />", false);
-			?>
+						while ($irow = $result->fetch_assoc()) {
+							$count = $count + 1;
+							$text = $irow['stout_temp_remarks'];
+							$newtext = wordwrap($text, 50, "<br />", false);
+					?>
+							<tr>
+								<td style=" padding-left: 10px; vertical-align:top"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?></td>
+								<td><?php echo $irow['product_name'] ?><br>
+									<p style="font-size:smaller;line: height 2px;"> <?php echo $irow['stout_temp_remarks'] ?></p>
+								</td>
+								</td>
+							</tr>
+					<?php }
+					}
+
+					?>
+				</table>
+				<table class="itemtb2">
 					<tr>
-						<td style=" padding-left: 10px; vertical-align:top"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?></td>
-						<td><?php echo $irow['product_name'] ?><br><textarea class="textarea resize-ta" rows="5"><?php echo $irow['stout_temp_remarks'] ?></textarea></td>
-						</td>
+						<th style="border: 1px solid lightgrey;">Remarks</th>
 					</tr>
-			<?php }
-			}
+					<tr>
+						<td><textarea cols="30" rows="10"><?php echo $stout_remarks ?></textarea></td>
+					</tr>
+				</table>
+			</div>
 
-			?>
-		</table>
-		<table class="itemtb2">
-			<tr>
-				<th style="border: 1px solid lightgrey;">Remarks</th>
-			</tr>
-			<tr>
-				<td><textarea cols="50" rows="10"><?php echo $stout_remarks ?></textarea></td>
-			</tr>
-		</table>
+
+			<div class="button">
+
+			</div>
+		</page>
 	</div>
-
-
-	<!-- 
-	<table width="100%">
-		<tr>
-			<td>
-				<p style="float: left;"><b>Requested By:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><?php echo $emp_name; ?></p>
-			</td>
-			<td>
-				<p style="float: right;"><b>Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><?php echo $dept_name; ?></p>
-			</td>
-		</tr>
-	</table> -->
-
-
-
-
-
-	<div class="button">
-		<button id="printPageButton" onclick="window.print()">Print <i class="fa fa-print"></i></button>
-		<a href="../stout_main.php"><button id="printPageButton">Back</button></a>
-	</div>
-
 </body>
+
+<button class="noprint" onclick="window.print()">PRINT</button>
+
+
 
 
 </html>

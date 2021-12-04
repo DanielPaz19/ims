@@ -115,13 +115,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <input type="hidden" name="id" value="<?php echo $id; ?>" />
     <table width="50%" class="itemTb">
       <tr>
-        <th>ID</th>
+        <th>Movement ID</th>
         <th>PROCESS</th>
         <th>REFERENCE NO</th>
         <th>IN</th>
         <th>OUT</th>
         <th>BALANCE</th>
-        <th>Process Date</th>
+        <th style="text-align: center;">Process Date</th>
       </tr>
       <?php
       include "php/config.php";
@@ -152,9 +152,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         while ($irow = $result->fetch_assoc()) {
           $count = $count + 1;
+          $dateString = $irow['mov_date'];
+          $dateTimeObj = date_create($dateString);
+          $date = date_format($dateTimeObj, 'm/d/y');
       ?>
           <tr>
-            <td><?php echo $irow['move_id']; ?></td>
+            <td><?php echo str_pad($irow["move_id"], 8, 0, STR_PAD_LEFT) ?></td>
             <td><?php echo $irow['mov_type_name']; ?></td>
             <td><?php
 
@@ -219,7 +222,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                 ?>
             </td>
-            <td><?php echo $irow['mov_date']; ?></td>
+            <td style="font-weight: bolder; letter-spacing:2px;text-align: center;"><?php echo $date; ?></td>
           </tr>
       <?php }
       } ?>
