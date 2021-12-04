@@ -10,13 +10,14 @@ if (isset($_GET['editJo'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id
+        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id
         FROM jo_tb
         LEFT JOIN jo_product ON jo_product.jo_id = jo_tb.jo_id
         LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
         LEFT JOIN product ON jo_product.product_id = product.product_id
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
         LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
+        LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
         WHERE jo_tb.jo_id ='$joId'"
     );
 
@@ -32,6 +33,8 @@ if (isset($_GET['editJo'])) {
             $empName = $row['emp_name'];
             $empId = $row['emp_id'];
             $joDate = $row['jo_date'];
+            $jo_type_id = $row['jo_type_id'];
+            $jo_type_name = $row['jo_type_name'];
             $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
             $productName[] = $row['product_name'];
             $qtyIn[] = $row['jo_product_qty'];
@@ -50,7 +53,7 @@ if (isset($_POST['update'])) {
     $customerId = $_POST['customerId'];
     $joNo = $_POST['joNo'];
     $joDate = $_POST['joDate'];
-
+    $jo_type_id = $_POST['jo_type_id'];
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemPrice = $_POST['itemPrice'];
@@ -61,7 +64,8 @@ if (isset($_POST['update'])) {
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate' WHERE jo_id='$joId' "
+        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate', jo_type_id='$jo_type_id'
+        WHERE jo_id='$joId' "
     );
 
 

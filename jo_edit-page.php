@@ -30,6 +30,22 @@ include 'php/jo_edit-inc.php';
             JO Date:
         </span>
         <input type="date" name="joDate" id="po_date" value="<?php echo $joDate ?>">
+        <span class="po__label">
+            JO Type:
+        </span>
+        <select name="jo_type_id" style="width: 250px; height: 26px; border: 1px solid gray;">
+
+            <option value="<option value=" <?php echo $jo_type_id ?>"><?php echo $jo_type_name ?></option>
+
+            <?php
+            include "config.php";
+            $records = mysqli_query($db, "SELECT * FROM jo_type ORDER BY jo_type_id ASC");
+
+            while ($data = mysqli_fetch_array($records)) {
+                echo "<option value='" . $data['jo_type_id'] . "'>" . $data['jo_type_name'] . "</option>";
+            }
+            ?>
+        </select>
         <br>
         <span class="po__label">
             Customer:
@@ -126,7 +142,6 @@ include 'php/jo_edit-inc.php';
 
 <div class="container--modal">
     <div class='modal--add__item'>
-
 
 
         <input type="text" class='input--search' placeholder="Search Item..."><br>

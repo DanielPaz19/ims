@@ -22,7 +22,7 @@ $joRemarks = $_GET['remarks'];
 $customersId = $_GET['customers_id'];
 $joDate = $_GET['jo_date'];
 $emp_id = $_GET['emp_id'];
-$joPos = $_GET['pos'];
+$jo_type_id = $_GET['jo_type_id'];
 
 
 if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Products are Empty
@@ -72,8 +72,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-    $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, pos, user_id)
-            VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$joPos','" . $_SESSION['id'] . "')";
+    $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id)
+            VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$jo_type_id','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
         echo "<script>alert('New Record Added')</script>";
