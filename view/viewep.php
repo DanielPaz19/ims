@@ -498,7 +498,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 <tr>
                     <td></td>
                     <td style="text-decoration: overline;">
-                        &#8369;<?php echo $grandTot ?>.00
+                        &#8369;<?php echo number_format($grandTot, 2) ?>
                     </td>
                 </tr>
                 <td>--------------<i>NOTHING FOLLOWS</i>--------------
