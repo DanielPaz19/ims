@@ -93,10 +93,12 @@ include 'php/ep_edit-inc.php';
                     <?php
 
                     $limit = 0;
+                    $total = $itemPrice[$limit] * $qtyIn[$limit];
 
                     if (isset($productId)) {
                         while (count($productId) !== $limit) {
                             if ($productId[$limit] != 0) {
+                                $total = $itemPrice[$limit] * $qtyIn[$limit];
                                 # code...
                                 echo
                                 "<tr style='text-align:left;'>
@@ -105,13 +107,14 @@ include 'php/ep_edit-inc.php';
         <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
         <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
         <td class='td__edit td__edit--cost'>" . number_format($itemPrice[$limit], 2) . "</td>
-        <td class='td__compute td__compute--totalcost'>" . number_format($itemPrice[$limit] * $qtyIn[$limit], 2) . "</td>
+        <td class='td__compute td__compute--totalcost'>" . number_format($total, 2) . "</td>
         <td class='td__edit td__edit--delete'>
         <i class='fa fa-trash-o' style='font-size:26px'></i>
       </td>
          <input type='hidden' name='productId[]' value='$productId[$limit]' >
          <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
          <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]' class='input__edit input__edit--cost'>
+         <input type='hidden' name='itemTotal[]' value='$total' class='input__edit input__edit--total'>
          </tr>
          ";
                             }
