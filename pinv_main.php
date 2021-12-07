@@ -196,7 +196,20 @@ if (!isset($_SESSION['user'])) {
                     }
                     ?> <br><br>
                     <label> Title:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="PHYINV9999" class="typo" name="pinv_title"> <br> <br>
-                    <label> Location :</label>&nbsp;&nbsp;<input type="text" placeholder="Type Location Here..." class="typo" name="pinv_location"> <br> <br>
+                    <label>Location: &nbsp;&nbsp;</label>
+                    <select name="location" class="item-location" style=" height: 32px; border: 1px solid #B8B8B8;">
+                        <option>
+                            <center>--- Select Location---</center>
+                        </option>
+                        <?php
+                        include "../../php/config.php";
+                        $records = mysqli_query($db, "SELECT * FROM loc_tb");
+
+                        while ($data = mysqli_fetch_array($records)) {
+                            echo "<option value='" . $data['loc_id'] . "'>" . $data['loc_name'] . "</option>";
+                        }
+                        ?>
+                    </select> <br> <br>
 
                     <label>Date :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" placeholder="Type Location Here..." class="typo" name="pinv_date"> <br /><br />
                     <label>Personel:</label>&nbsp;&nbsp;&nbsp;
