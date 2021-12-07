@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_location, employee_tb.emp_name, pinv_tb.pinv_date, user.user_name, pinv_tb.closed
+    $result = mysqli_query($db, "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, employee_tb.emp_name, pinv_tb.pinv_date, user.user_name, pinv_tb.closed
     FROM pinv_tb
     LEFT JOIN user ON user.user_id = pinv_tb.user_id
     INNER JOIN employee_tb 
@@ -17,7 +17,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     if ($row) {
         $id = $row['pinv_id'];
         $pinv_title = $row['pinv_title'];
-        $pinv_location = $row['pinv_location'];
         $emp_name = $row['emp_name'];
         $dateString = $row['pinv_date'];
         $dateTimeObj = date_create($dateString);
@@ -131,6 +130,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             font-size: 16px;
             background-color: transparent;
         }
+
+        .itemcon {
+            overflow-y: scroll;
+        }
     </style>
 </head>
 
@@ -147,56 +150,59 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <table class="stock-details" width="100%">
                 <tr>
                     <td class="head"><b>Title:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $pinv_title; ?></td>
-                    <td class="head"><b> Location: </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $pinv_location; ?></td>
                     <td class="head"><b> Created Date:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $date; ?></td>
-                    <td class="head"><b> Prep By:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $emp_name ?></td>
+                    <td class="head"><b> Check By:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $emp_name ?></td>
                 </tr>
             </table>
             <!-- Items Details -->
+
             <form method="GET" action="../commit/que/pinv_commit_que.php">
                 <input type="hidden" name="pinv_id" value="<?php echo $_GET['id'] ?>">
                 <input type="hidden" name='mov_date' class='date'>
-                <center>
-                    <table class="item-details" style="width: 100%;">
-                        <tr>
-                            <th width="10%">Product ID.</th>
-                            <th width="60%">Description</th>
-                            <th width="10%">Barcode</th>
-                            <th width="5%">On-Hand</th>
-                            <th width="5%">Phy-Qty</th>
-                        </tr>
+                <div class="itemcon">
+                    <center>
+                        <table class="item-details" style="width: 100%;">
+                            <tr>
+                                <th width="10%">Product ID.</th>
+                                <th width="60%">Description</th>
+                                <th width="10%">Location</th>
+                                <th width="5%">On-Hand</th>
+                                <th width="5%">Phy-Qty</th>
+                            </tr>
 
-                        <?php
-                        $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, pinv_product.pinv_qty, product.barcode
+                            <?php
+                            $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, pinv_product.pinv_qty, product.barcode, loc_tb.loc_name
                     FROM product 
                     LEFT JOIN pinv_product ON product.product_id = pinv_product.product_id
                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
+                    LEFT JOIN loc_tb ON loc_tb.loc_id = pinv_product.loc_id
                     WHERE pinv_product.pinv_id='$id' ";
 
-                        $result = $db->query($sql);
-                        $count = 0;
-                        if ($result->num_rows >  0) {
+                            $result = $db->query($sql);
+                            $count = 0;
+                            if ($result->num_rows >  0) {
 
-                            while ($irow = $result->fetch_assoc()) {
+                                while ($irow = $result->fetch_assoc()) {
 
-                        ?>
-                                <tr>
-                                    <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
-                                    <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                                    <td contenteditable="false"><?php echo $irow['barcode'] ?></td>
-                                    <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;background-color:transparent" readonly></td>
-                                    <td contenteditable="false">
-                                        <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['pinv_qty'] ?>" style="border: none;" readonly></font>
-                                    </td>
+                            ?>
+                                    <tr>
+                                        <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
+                                        <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
+                                        <td contenteditable="false"><?php echo $irow['loc_name'] ?></td>
+                                        <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;background-color:transparent" readonly></td>
+                                        <td contenteditable="false">
+                                            <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['pinv_qty'] ?>" style="border: none;" readonly></font>
+                                        </td>
 
-                                </tr>
-                                <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
-                        <?php }
-                        } ?>
+                                    </tr>
+                                    <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
+                            <?php }
+                            } ?>
 
-                </center>
-                </table>
-                </center>
+                    </center>
+                    </table>
+                    </center>
+                </div>
                 <br>
                 <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
                 <a href="../pinv_main2.php"> <input type="button" class="button" value="Cancel"></a>

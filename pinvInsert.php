@@ -17,7 +17,7 @@ $productId = $_GET['prodId'];
 $qty = $_GET['pinvQty'];
 $pinvDate = $_GET['pinv_date'];
 $pinvTitle = $_GET['pinv_title'];
-$pinvLocation = $_GET['pinv_location'];
+$pinvLocation = $_GET['location'];
 $empID = $_GET['emp_id'];
 
 
@@ -34,7 +34,7 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-    $sql = "INSERT INTO pinv_tb (pinv_id, pinv_title, pinv_location, emp_id, pinv_date, user_id)
+    $sql = "INSERT INTO pinv_tb (pinv_id, pinv_title, loc_id, emp_id, pinv_date, user_id)
             VALUES ('$pinv_id','$pinvTitle','$pinvLocation','$empID','$pinvDate','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
@@ -49,9 +49,9 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     $limit = 0;
     while (sizeof($productId) !== $limit) {
 
-        $sql = "INSERT INTO pinv_product (product_id, pinv_id, pinv_qty)
+        $sql = "INSERT INTO pinv_product (product_id, pinv_id, pinv_qty, loc_id)
 
-            VALUES (" . $productId[$limit] . "," . $pinv_id . "," . $qty[$limit] . ")";
+            VALUES (" . $productId[$limit] . "," . $pinv_id . "," . $qty[$limit] . "," . $location[$limit] . ")";
 
 
         if (mysqli_query($db, $sql)) {
