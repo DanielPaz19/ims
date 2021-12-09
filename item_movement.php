@@ -126,7 +126,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <?php
       include "php/config.php";
 
-      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no
+      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, ol_tb.ol_title
 
        FROM move_product 
 
@@ -141,6 +141,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 			 LEFT JOIN stin_tb ON move_product.move_ref = stin_tb.stin_id
 
        LEFT JOIN ep_tb ON move_product.move_ref = ep_tb.ep_id
+
+       LEFT JOIN ol_tb ON move_product.move_ref = ol_tb.ol_id
 
        WHERE move_product.product_id = '$id'
        ORDER BY move_id ASC";
@@ -182,6 +184,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     echo $irow['ep_no'];
                     break;
 
+                  case '8':
+                    echo $irow['ol_title'];
+                    break;
+
                   default:
                     break;
                 }
@@ -213,6 +219,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     break;
 
                   case '6':
+                    echo $irow['bal_qty'] - $irow['out_qty'];
+                    break;
+
+                  case '8':
                     echo $irow['bal_qty'] - $irow['out_qty'];
                     break;
 

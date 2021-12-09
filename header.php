@@ -41,6 +41,7 @@
         <a href="po_main.php"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
         <a href="pinv_main2.php">Physical Inventory</a>
         <a href="rt_main.php">Return Slip</a>
+        <a href="ol_main.php">Online Transaction</a>
 
       </div>
     </div>
