@@ -44,7 +44,7 @@ const renderItem = function (data, container) {
                           <td class='item-name'>${data.product_name}</td>
                           <td class='qty'>${data.qty}</td>
                           <td class='barcode'>${data.barcode}</td>
-                          <td class='location'>${data.loc_id}</td>
+                          <td class='location'>${data.loc_name}</td>
                           <td class='cost'>${formatNumber(data.cost)}</td>
                     </tr>`
     );
@@ -203,13 +203,13 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
-    <td class='td__readonly td__readonly--location' style='text-align:center;'>${itemLocation}</td>
+    <td class='td__readonly td__readonly--barcode' style='text-align:center;'>${itemLocation}</td>
     <td class='td__edit td__edit--delete'>
    <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
-    <input type='hidden' name='location[]' value='${itemLocation}' class='input__edit input__edit--location'>
+    <input type='hidden' name='itemCost[]' value='${itemCost}' class='input__edit input__edit--cost'>
     </tr>
     `
   );
@@ -245,7 +245,7 @@ const showTableData = (data, container) => {
                     <td class='item-name'>${data.product_name}</td>
                     <td class='qty'>${data.qty}</td>
                     <td class='barcode'>${data.barcode}</td>
-                    <td class='location'>${data.loc_id}</td>
+                    <td class='location'>${data.loc_name}</td>
                     <td class='cost'>${formatNumber(data.cost)}</td>
               </tr>`;
     container.innerHTML += row;

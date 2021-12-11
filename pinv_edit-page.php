@@ -96,7 +96,7 @@ include 'php/pinv_edit-inc.php';
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
-                 <td class='td__readonly td__readonly--location' style='text-align:center;'>$locId[$limit]</td>
+                 <td class='td__readonly td__readonly--location' style='text-align:center;'>$location[$limit]</td>
               
 
                  <td class='td__edit td__edit--delete'>
@@ -104,7 +104,7 @@ include 'php/pinv_edit-inc.php';
                   </td>
                   <input type='hidden' name='productId[]' value='$productId[$limit]' >
                   <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-                  <input type='hidden' name='location[]' value='$locId[$limit]' class='input__edit input__edit--location'>
+                  <input type='hidden' name='location[]' value='$location[$limit]' class='input__edit input__edit--location'>
                  </tr>
                  ";
                         }
