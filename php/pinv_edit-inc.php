@@ -9,7 +9,7 @@ if (isset($_GET['edit'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_date, employee_tb.emp_name,employee_tb.emp_id, pinv_product.pinv_qty, loc_tb.loc_id, loc_tb.loc_name, product.product_id, product.product_name, unit_tb.unit_name
+        "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_date, employee_tb.emp_name,employee_tb.emp_id, pinv_product.pinv_qty, loc_tb.loc_name, product.product_id, product.product_name, unit_tb.unit_name
         FROM pinv_tb
         LEFT JOIN employee_tb ON employee_tb.emp_id = pinv_tb.emp_id
         LEFT JOIN pinv_product ON pinv_product.pinv_id = pinv_tb.pinv_id
@@ -36,7 +36,7 @@ if (isset($_GET['edit'])) {
             $productName[] = $row['product_name'];
             $unit[] = $row['unit_name'];
             $qtyIn[] = $row['pinv_qty'];
-            $locId[] = $row['loc_id'];
+            $location[] = $row['loc_name'];
         }
     } else {
         echo "0 results";
@@ -55,7 +55,7 @@ if (isset($_POST['update'])) {
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
-    $locId = $_POST['location'];
+    $itemLocation = $_POST['location'];
 
 
     require '../php/config.php';
@@ -78,12 +78,12 @@ if (isset($_POST['update'])) {
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on stout_product, UPDATE
-            $sql = "UPDATE pinv_product SET pinv_qty = '$qtyIn[$limit]', loc_id='$locId[$limit]'  WHERE pinv_id = '$pinvId' AND product_id ='$productId[$limit]'";
+            $sql = "UPDATE pinv_product SET pinv_qty = '$qtyIn[$limit]'  WHERE pinv_id = '$pinvId' AND product_id ='$productId[$limit]'";
         } else {
             // If product id dont exist on stout_product, INSERT
             if ($productId[$limit] != 0) {
                 $sql = "INSERT INTO pinv_product(product_id, pinv_id, pinv_id, loc_id) 
-                VALUES ('$productId[$limit]','$pinvId','$qtyIn[$limit]','$locId[$limit]')";
+                VALUES ('$productId[$limit]','$pinvId','$qtyIn[$limit]','$itemLocation[$limit]')";
             }
         }
 
