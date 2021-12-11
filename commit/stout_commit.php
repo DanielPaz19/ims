@@ -154,18 +154,19 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <table class="item-details">
       <tr>
         <th width="5%">Product ID</th>
-        <th width="30%">Item Name</th>
-        <th width="10%">Barcode</th>
-        <th width="10%">Qty-On-Hand</th>
-        <th width="10%">Qty-Out</th>
+        <th width="5%">Qty-Out</th>
         <th width="5%">Unit</th>
+        <th width="40%">Item Name</th>
+        <th width="20%">Item Remarks</th>
+        <th width="10%">Barcode</th>
+        <th width="10%" style="display: none;">Qty-On-Hand</th>
         <th width="10%" style="display: none;">Cost</th>
         <th width="10%" style="display: none;">Discount Amount</th>
         <th width="10%">Incomming Qty</th>
       </tr>
 
       <?php
-      $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount, product.barcode
+      $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount, product.barcode, stout_product.stout_temp_remarks
           FROM product 
           LEFT JOIN stout_product ON product.product_id = stout_product.product_id
           LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
@@ -180,8 +181,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       ?>
           <tr>
             <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
+            <td contenteditable="false">
+              <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" style="border: none;" readonly></font>
+            </td>
+            <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
             <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-
+            <td contenteditable="false"><?php echo $irow['stout_temp_remarks'] ?></td>
             <td contenteditable="false">
               <?php
               if ($irow['barcode'] == "") {
@@ -190,11 +195,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 echo $irow['barcode'];
               }
               ?></td>
-            <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
-            <td contenteditable="false">
-              <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" style="border: none;" readonly></font>
-            </td>
-            <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
+            <td style="display: none;"><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
+
+
             <td contenteditable="false" style="display: none;"><?php echo $irow['cost'] ?></td>
             <td contenteditable="false" style="display: none;"><?php echo $irow['stout_temp_disamount'] ?></td>
             <td class="stout_temp_tot"><input type="number" name="stout_temp_tot[]" style="border: none" value="<?php echo $irow["qty"] - $irow["stout_temp_qty"]; ?>" readonly></td>
