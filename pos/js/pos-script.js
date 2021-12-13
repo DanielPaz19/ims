@@ -121,7 +121,6 @@ const paymentModalClose = document.querySelector(".payment__modal--close");
 const labelPaymentBalance = document.querySelector(".payment-balance");
 const btnSavePayment = document.querySelector(".button__save--payment");
 const inputPaymentTendered = document.querySelector(".payment-tendered");
-const inputPaymentDiscount = document.querySelector(".payment-discount");
 const inputPaymentChange = document.querySelector(".payment-change");
 const labelChangeBalance = document.querySelector(".change-balance");
 const inputTransSearch = document.querySelector(".pending__payments--search");
@@ -144,18 +143,6 @@ const inputChequeDate = document.querySelector(".cheque-date");
 const inputChequeNumber = document.querySelector(".cheque-number");
 
 // ---------------------------------- FUNCTION ---------------------------------
-
-const renderNewBal = function () {
-  const currBalance = +removeComma(labelPaymentBalance.value);
-  const currDiscount = +removeComma(inputPaymentDiscount.value);
-  const currTendered = +removeComma(inputPaymentTendered.value);
-
-  const newBalance = formatNumber(currBalance - currDiscount - currTendered);
-  console.log(newBalance);
-
-  inputPaymentChange.value = newBalance;
-};
-
 const fetchTableData = (tableType, container, renderFunction, input = "") => {
   fetch(`php/search-${tableType}.php?q=${encodeURIComponent(input)}`)
     .then((response) => {
@@ -854,48 +841,41 @@ paymentModalClose.addEventListener("click", function () {
   modalPayment.style.display = "none";
 });
 
-// // Input Amount Tendered Function
-// inputPaymentTendered.addEventListener("keyup", function () {
-//   const change =
-//     labelPaymentBalance.value.replaceAll(",", "") -
-//     inputPaymentTendered.value.replaceAll(",", "");
+// Input Amount Tendered Function
+inputPaymentTendered.addEventListener("keyup", function () {
+  const change =
+    labelPaymentBalance.value.replaceAll(",", "") -
+    inputPaymentTendered.value.replaceAll(",", "");
 
-//   inputPaymentChange.value = formatNumber(change);
+  inputPaymentChange.value = formatNumber(change);
 
-//   if (change > 0) {
-//     labelChangeBalance.textContent = "New Balance:";
-//     payment.status = 1;
-//   } else {
-//     labelChangeBalance.textContent = "Change:";
-//   }
-// });
+  if (change > 0) {
+    labelChangeBalance.textContent = "New Balance:";
+    payment.status = 1;
+  } else {
+    labelChangeBalance.textContent = "Change:";
+  }
+});
 
-// //clear payment tender on click
-// inputPaymentTendered.addEventListener("focusin", function () {
-//   inputPaymentTendered.value = "";
+//clear payment tender on click
+inputPaymentTendered.addEventListener("focusin", function () {
+  inputPaymentTendered.value = "";
 
-//   //update change value
-//   labelChangeBalance.textContent = "New Balance:";
-//   inputPaymentChange.value = "";
-// });
+  //update change value
+  labelChangeBalance.textContent = "New Balance:";
+  inputPaymentChange.value = "";
+});
 
-// //focus out on payment tender input
-// inputPaymentTendered.addEventListener("focusout", function () {
-//   if (inputPaymentTendered.value) {
-//     inputPaymentTendered.value = new Intl.NumberFormat(
-//       "en-US",
-//       NumOptions
-//     ).format(removeComma(inputPaymentTendered.value));
-//   }
+//focus out on payment tender input
+inputPaymentTendered.addEventListener("focusout", function () {
+  if (inputPaymentTendered.value) {
+    inputPaymentTendered.value = new Intl.NumberFormat(
+      "en-US",
+      NumOptions
+    ).format(removeComma(inputPaymentTendered.value));
+  }
 
-//   console.log(inputPaymentTendered.value);
-// });
-
-inputPaymentDiscount.addEventListener("focusout", function () {
-  this.value = formatNumber(this.value);
-
-  // Render New Balance
-  renderNewBal();
+  console.log(inputPaymentTendered.value);
 });
 
 //radio button event

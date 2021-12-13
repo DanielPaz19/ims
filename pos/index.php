@@ -324,8 +324,6 @@ if (!$_SESSION['user']) {
         <div class="payment-details">
           <label for="">Amount:</label>
           <input type="text" class="payment-balance" value="1000.00" disabled /><br />
-          <label for="">Discount:</label>
-          <input type="text" class="payment-discount" placeholder="Enter Discount" /><br />
           <label for="">Tendered Amount:</label>
           <input type="text" class="payment-tendered" placeholder="Enter Amount" /><br />
           <label for="" class="change-balance">Change: </label>

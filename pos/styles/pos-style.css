@@ -825,14 +825,12 @@ legend {
   border: none;
 }
 
-.payment-tendered,
-.payment-discount {
+.payment-tendered {
   text-align: right;
   padding: 0px 10px;
-  height: 30px;
+  height: 40px;
   background-color: #ced6e0;
   border: solid 2px black;
-  margin: 2px 0px;
 }
 
 .container--button__save {
