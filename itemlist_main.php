@@ -385,7 +385,7 @@ if (!isset($_SESSION['user'])) {
 
                         </tr>
                         <tr>
-                            <td><input class='next__tab' tabindex="2" required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required></td>
+                            <td><input class='next__tab' tabindex="2" required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0" required></td>
                             <td>
                                 <select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                     <option></option>
@@ -462,8 +462,8 @@ if (!isset($_SESSION['user'])) {
                             <th style="text-align: left;">Remarks</th>
                         </tr>
                         <tr>
-                            <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
-                            <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
+                            <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
+                            <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
                             <td><input type="text" name="pro_remarks" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value=""></td>
                         </tr>
                     </table>
