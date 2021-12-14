@@ -30,6 +30,7 @@ if (isset($_GET['edit'])) {
             $stinCode = $row['stin_code'];
             $stinTitle = $row['stin_title'];
             $stinDate = $row['stin_date'];
+
             $empId = $row['emp_id'];
             $empName = $row['emp_name'];
             $stinRemarks = $row['stin_remarks'];

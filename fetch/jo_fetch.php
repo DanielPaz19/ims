@@ -24,11 +24,12 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.pos
+SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.jo_type_id, jo_type.jo_type_name
 FROM jo_tb
 LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
 LEFT JOIN user ON user.user_id = jo_tb.user_id
 LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
+LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
  ";
 
 if ($_POST['query'] != '') {
@@ -54,11 +55,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="5%" style="display:none;">ID</th>
+    <th width="5%"">Jo-ID</th>
     <th width="15%">Jo-No. </th>
     <th width="20%">Customer</th>
     <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>Create Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -71,7 +72,7 @@ if ($total_data > 0) {
 
         if ($closed == 0) {
             $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
-            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&posI=' . $row['pos'] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
+            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&joTypeId=' . $row['jo_type_id'] . '&joTypeName=' . $row['jo_type_name'] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="#"><font color="gray"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
                
@@ -86,13 +87,16 @@ if ($total_data > 0) {
       &nbsp;&nbsp;&nbsp;
 ';
         }
+        $dateString = $row['jo_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
         $output .= '
     <tr>
-      <td style="display:none;">' . $row["jo_id"] . '</td>
+      <td>' . str_pad($row["jo_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["jo_no"] . '</td>
       <td>' . $row["customers_name"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["jo_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewjo.php?id=' . $row["jo_id"] . '">

@@ -115,19 +115,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <input type="hidden" name="id" value="<?php echo $id; ?>" />
     <table width="50%" class="itemTb">
       <tr>
-        <th>ID</th>
+        <th>Movement ID</th>
         <th>PROCESS</th>
         <th>REFERENCE NO</th>
         <th>IN</th>
         <th>OUT</th>
-        <th>PHYSICAL COUNT</th>
         <th>BALANCE</th>
-        <th>Process Date</th>
+        <th style="text-align: center;">Process Date</th>
       </tr>
       <?php
       include "php/config.php";
 
-      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, pinv_tb.pinv_title, pinv_product.pinv_qty
+      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, ol_tb.ol_title
 
        FROM move_product 
 
@@ -143,8 +142,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
        LEFT JOIN ep_tb ON move_product.move_ref = ep_tb.ep_id
 
-       LEFT JOIN pinv_tb ON move_product.move_ref = pinv_tb.pinv_id
-       LEFT JOIN pinv_product ON pinv_product.pinv_id = pinv_tb.pinv_id
+       LEFT JOIN ol_tb ON move_product.move_ref = ol_tb.ol_id
 
        WHERE move_product.product_id = '$id'
        ORDER BY move_id ASC";
@@ -156,9 +154,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         while ($irow = $result->fetch_assoc()) {
           $count = $count + 1;
+          $dateString = $irow['mov_date'];
+          $dateTimeObj = date_create($dateString);
+          $date = date_format($dateTimeObj, 'm/d/y');
       ?>
           <tr>
-            <td><?php echo $irow['move_id']; ?></td>
+            <td><?php echo str_pad($irow["move_id"], 8, 0, STR_PAD_LEFT) ?></td>
             <td><?php echo $irow['mov_type_name']; ?></td>
             <td><?php
 
@@ -182,9 +183,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                   case '6':
                     echo $irow['ep_no'];
                     break;
-                  case '7':
-                    echo $irow['pinv_title'];
+
+                  case '8':
+                    echo $irow['ol_title'];
                     break;
+
                   default:
                     break;
                 }
@@ -193,7 +196,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </td>
             <td><?php echo $irow['in_qty']; ?></td>
             <td><?php echo $irow['out_qty']; ?></td>
-            <td><?php echo $irow['pinv_qty'] ?></td>
             <td><?php
 
                 switch ($irow['mov_type_id']) {
@@ -220,8 +222,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     echo $irow['bal_qty'] - $irow['out_qty'];
                     break;
 
-                  case '7':
-                    echo $irow['pinv_qty'];
+                  case '8':
+                    echo $irow['bal_qty'] - $irow['out_qty'];
                     break;
 
                   default:
@@ -230,7 +232,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                 ?>
             </td>
-            <td><?php echo $irow['mov_date']; ?></td>
+            <td style="font-weight: bolder; letter-spacing:2px;text-align: center;"><?php echo $date; ?></td>
           </tr>
       <?php }
       } ?>

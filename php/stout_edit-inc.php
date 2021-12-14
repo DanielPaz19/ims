@@ -11,7 +11,7 @@ if (isset($_GET['edit'])) {
         $db,
         "SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_date, stout_tb.emp_id,
         stout_tb.stout_remarks, stout_product.product_id, stout_product.stout_temp_qty,  stout_product.stout_temp_cost, 
-        stout_product.stout_temp_disamount, stout_product.stout_temp_tot, product.product_name, unit_tb.unit_name,
+        stout_product.stout_temp_disamount, stout_product.stout_temp_tot, product.product_name, unit_tb.unit_name, product.barcode,
         employee_tb.emp_name
  FROM stout_tb  
  LEFT JOIN stout_product ON stout_product.stout_id = stout_tb.stout_id
@@ -36,7 +36,7 @@ if (isset($_GET['edit'])) {
             $productId[] = $row['product_id'];
             $productName[] = $row['product_name'];
             $qtyIn[] = $row['stout_temp_qty'];
-            $unitName[] = $row['unit_name'];
+            $barcode[] = $row['barcode'];
             $itemCost[] = $row['stout_temp_cost'];
         }
     } else {

@@ -11,14 +11,16 @@ include 'php/po_edit-inc.php';
 <h1>Edit Purchase Order</h1>
 <form action="php/po_edit-inc.php" method="POST">
   <div class='container--po__details'>
+    <a href="po_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
     <span class="po__label">
       PO ID:
     </span>
-    <input type="text" name="poId" id="po_id" class="textId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+    <input type="text" name="poId" id="po_id" class="textId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly> <br>
     <span class="po__label">
       PO Code:
-    </span>
+    </span>&emsp;&emsp;&emsp;&nbsp;
     <input type="text" name="poCode" id="po_code" value="<?php echo $poCode ?>">
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     <span class=" po__label">
       PO Title:
     </span>
@@ -26,7 +28,11 @@ include 'php/po_edit-inc.php';
     <span class="po__label">
       Terms:
     </span>
-    <input type="text" name="poTerms" id="po_terms" value="<?php echo $poTerms ?>"><br>
+    <input type="text" name="poTerms" id="po_terms" value="<?php echo $poTerms ?>">&emsp;
+    <span class="po__label">
+      PO Date:
+    </span>
+    <input type="date" name="poDate" id="po_date" value="<?php echo $poDate ?>"><br>
     <span class="po__label po__label--supplier">
       Supplier Name:
     </span>
@@ -41,20 +47,45 @@ include 'php/po_edit-inc.php';
     </span>
     <input type="text" name="poRemarks" id="po_remarks" value="<?php echo $poRemarks ?>">
     <span class="po__label">
-      PO Date:
+      PO Type:
     </span>
-    <input type="date" name="poDate" id="po_date" value="<?php echo $poDate ?>">
+    <select name="po_type_id" style="width: 250px; height: 26px; border: 1px solid gray;">
+      <option value=" <?php echo $po_type_id ?>"><?php echo $po_type_name ?></option>
+      <?php
+      include "config.php";
+      $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
 
+      while ($data = mysqli_fetch_array($records)) {
+        echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
+      }
+      ?>
+    </select>
   </div>
   <div class="button__container--insert_item">
-    <button class="po__button button--insert__item">Add item</button>
+    <!-- <button class="po__button button--insert__item">Add item</button> -->
   </div>
 
   <div class="container--po__table">
+    <button class="po__button button--insert__item" style="float: left; margin-bottom:5px;width: 150px;"><i class="fa fa-plus"></i>&nbsp;Add item</button>
+    <!-- <button class="edit__button button--cancelupdate" name='cancelupdate' style="float: right; margin-bottom:5px;  cursor: pointer;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: midnightblue;
+  color: #ffffff;">Cancel</button> -->
+    <button class="po__button button--po__update" name='updatepo' style="float: right; margin-bottom:5px;  cursor: pointer;
+   cursor: pointer;
+  height: 50px;
+  width: 150px;
+  border-radius: 5px;
+  background-color: midnightblue;
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: 2px;"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
     <table class='po__table'>
       <thead>
         <tr>
-          <th>Item Code</th>
+          <th>Product ID</th>
           <th>Item Name</th>
           <th>Qty-In</th>
           <th>Unit</th>
@@ -108,8 +139,8 @@ include 'php/po_edit-inc.php';
     </table>
   </div>
   <div class="container--po__button">
-    <button class="po__button button--po__update" name='updatepo'>Update</button>
-    <button class="po__button button--po__cancel" name='cancelupdate'>Cancel</button>
+
+
   </div>
 </form>
 
@@ -125,7 +156,7 @@ include 'php/po_edit-inc.php';
       <table class="modal--table__itemlist">
         <thead>
           <tr>
-            <th>Item Code</th>
+            <th>Product ID</th>
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Unit</th>

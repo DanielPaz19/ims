@@ -27,7 +27,7 @@ $query = "
 SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, employee_tb.emp_name, stout_tb.stout_date, stout_tb.closed, user.user_name
 FROM stout_tb
 LEFT JOIN user ON user.user_id = stout_tb.user_id
-INNER JOIN employee_tb 
+LEFT JOIN employee_tb 
 ON stout_tb.emp_id = employee_tb.emp_id ";
 
 if ($_POST['query'] != '') {
@@ -53,11 +53,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="5%">ID</th>
-    <th width="15%">Code</th>
-    <th width="20%">Title</th>
-    <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%">STOUT ID</th>
+    <th width="15%">RS No.</th>
+    <th width="20%">JO No.</th>
+    <th width="10%">Requested By</th>
+    <th width="10%"><center>RS Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -67,6 +67,9 @@ $output = '
 if ($total_data > 0) {
   foreach ($result as $row) {
     $closed = $row["closed"];
+    $dateString = $row['stout_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
 
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
@@ -90,11 +93,11 @@ if ($total_data > 0) {
     }
     $output .= '
     <tr>
-      <td>' . $row["stout_id"] . '</td>
+      <td>' . str_pad($row["stout_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["stout_code"] . '</td>
       <td>' . $row["stout_title"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["stout_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewstout.php?id=' . $row["stout_id"] . '">

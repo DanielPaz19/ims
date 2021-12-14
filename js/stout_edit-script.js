@@ -42,8 +42,8 @@ const renderItem = function (data, container) {
                             0
                           )}</td>
                           <td class='item-name'>${data.product_name}</td>
-                          <td class='qty'>${formatNumber(data.qty)}</td>
-                          <td class='unit'>${data.unit_name}</td>
+                          <td class='qty'>${data.qty}</td>
+                          <td class='barcode'>${data.barcode}</td>
                           <td class='location'>${data.loc_name}</td>
                           <td class='cost'>${formatNumber(data.cost)}</td>
                     </tr>`
@@ -100,7 +100,7 @@ const rowEdit = function (e) {
     // Return if invalid input
     if (!newValue || newValue.includes(" ") || newValue === NaN) return;
 
-    target.innerHTML = formatNumber(newValue);
+    target.innerHTML = newValue;
 
     const targetInput = target
       .closest("tr")
@@ -183,7 +183,7 @@ const selectItem = function (e) {
   // Get Values to add on Order List
   const itemCode = targetItem.querySelector(".item-code").innerHTML;
   const itemName = targetItem.querySelector(".item-name").innerHTML;
-  const itemUnit = targetItem.querySelector(".unit").innerHTML;
+  const itemBarcode = targetItem.querySelector(".barcode").innerHTML;
   const itemCost = targetItem.querySelector(".cost").innerHTML;
 
   // Check for duplicate entries
@@ -202,10 +202,10 @@ const selectItem = function (e) {
     `<tr>
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
-    <td class='td__edit td__edit--qty'>${formatNumber(poQty)}</td>
-    <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
-    <td class='td__edit td__edit--cost'>${formatNumber(itemCost)}</td> 
-    <td class='td__compute td__compute--totalcost'>${formatNumber(
+    <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
+    <td class='td__readonly td__readonly--barcode' style='text-align:center;'>${itemBarcode}</td>
+    <td class='td__edit td__edit--cost' style='text-align:center;'>${formatNumber(itemCost)}</td> 
+    <td class='td__compute td__compute--totalcost' style='text-align:center;'>${formatNumber(
       totalCost
     )}</td>
     <td class='td__edit td__edit--delete'>
@@ -247,8 +247,8 @@ const showTableData = (data, container) => {
     }'>
                     <td class='item-code'>${data.product_id.padStart(8, 0)}</td>
                     <td class='item-name'>${data.product_name}</td>
-                    <td class='qty'>${formatNumber(data.qty)}</td>
-                    <td class='unit'>${data.unit_name}</td>
+                    <td class='qty'>${data.qty}</td>
+                    <td class='barcode'>${data.barcode}</td>
                     <td class='location'>${data.loc_name}</td>
                     <td class='cost'>${formatNumber(data.cost)}</td>
               </tr>`;

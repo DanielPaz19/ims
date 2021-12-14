@@ -196,7 +196,20 @@ if (!isset($_SESSION['user'])) {
                     }
                     ?> <br><br>
                     <label> Title:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="PHYINV9999" class="typo" name="pinv_title"> <br> <br>
-                    <label> Location :</label>&nbsp;&nbsp;<input type="text" placeholder="Type Location Here..." class="typo" name="pinv_location"> <br> <br>
+                    <label>Location: &nbsp;&nbsp;</label>
+                    <select name="location" class="item-location" style=" height: 32px; border: 1px solid #B8B8B8;">
+                        <option>
+                            <center>--- Select Location---</center>
+                        </option>
+                        <?php
+                        include "../../php/config.php";
+                        $records = mysqli_query($db, "SELECT * FROM loc_tb");
+
+                        while ($data = mysqli_fetch_array($records)) {
+                            echo "<option value='" . $data['loc_id'] . "'>" . $data['loc_name'] . "</option>";
+                        }
+                        ?>
+                    </select> <br> <br>
 
                     <label>Date :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" placeholder="Type Location Here..." class="typo" name="pinv_date"> <br /><br />
                     <label>Personel:</label>&nbsp;&nbsp;&nbsp;
@@ -232,11 +245,12 @@ if (!isset($_SESSION['user'])) {
                         if (isset($_POST['filter'])) {
 
                             $loc_id = $_POST['loc_id'];
-                            $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode
+                            $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, product.product_type_id
                     FROM product
                     LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                     LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-                    WHERE product.loc_id = '$loc_id'");
+                    LEFT JOIN product_type ON product_type.product_type_id = product.product_type_id
+                    WHERE product.loc_id = '$loc_id' AND product.product_type_id = 1");
                             while ($fetch = mysqli_fetch_array($query)) {
                                 $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
 
@@ -253,7 +267,7 @@ if (!isset($_SESSION['user'])) {
                             $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode
                         FROM product
                         LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
-                        LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id LIMIT 40");
+                        LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id ");
                             while ($fetch = mysqli_fetch_array($query)) {
                                 $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
                                 echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
@@ -262,7 +276,7 @@ if (!isset($_SESSION['user'])) {
                             $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode
                     FROM product
                     LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
-                    LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id LIMIT 40");
+                    LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id ");
                             while ($fetch = mysqli_fetch_array($query)) {
                                 $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
                                 echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";

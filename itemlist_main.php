@@ -49,7 +49,7 @@ if (!isset($_SESSION['user'])) {
         color: lightgray;
     }
 
-    .content-area {
+    /* .content-area {
         border-radius: 5px;
         width: fit-content;
         height: fit-content;
@@ -60,7 +60,7 @@ if (!isset($_SESSION['user'])) {
         -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
         margin-bottom: 10px;
-    }
+    } */
 
     .con-form {
         font-family: Arial, Helvetica, sans-serif;
@@ -80,6 +80,12 @@ if (!isset($_SESSION['user'])) {
         display: inline-block;
         letter-spacing: 3px;
         cursor: pointer;
+        width: 150px;
+        height: 50px;
+    }
+
+    .butLink:hover {
+        font-size: 25px;
     }
 
     /* The Modal (background) */
@@ -340,7 +346,7 @@ if (!isset($_SESSION['user'])) {
                     <table width="100%">
                         <tr>
                             <th style="text-align: left;" width="30%">Item Description&nbsp;<i style="color: red;" class='fas fa-exclamation-circle'></i></th>
-                            <th style="text-align: center;" width="30%">Standard Item</th>
+                            <th style="text-align: left;" width="30%">Item Type&nbsp;<i style="color: red;" class='fas fa-exclamation-circle'></i></th>
                             <th style="text-align: left;" width="40%"></th>
 
                         </tr>
@@ -354,7 +360,19 @@ if (!isset($_SESSION['user'])) {
 
                                 </div>
                             </td>
-                            <td style="text-align: center;"> <input style=" top: 0;left: 0;height: 25px;width: 25px;background-color: midnightblue;" type="checkbox" name="product_type" value="1" checked="checked"><br>&nbsp; <i style="color: chocolate;">(uncheck if non-inventory type item)</i>
+                            <td style="text-align: left;">
+                                <select name="product_type_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
+                                    <option></option>
+                                    <?php
+                                    include "config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM product_type ORDER BY product_type_id ASC");
+
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['product_type_id'] . "'>" . $data['product_type_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+
                             </td>
                         </tr>
                     </table>
@@ -367,7 +385,7 @@ if (!isset($_SESSION['user'])) {
 
                         </tr>
                         <tr>
-                            <td><input class='next__tab' tabindex="2" required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required></td>
+                            <td><input class='next__tab' tabindex="2" required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0" required></td>
                             <td>
                                 <select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                                     <option></option>
@@ -444,8 +462,8 @@ if (!isset($_SESSION['user'])) {
                             <th style="text-align: left;">Remarks</th>
                         </tr>
                         <tr>
-                            <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
-                            <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
+                            <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
+                            <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
                             <td><input type="text" name="pro_remarks" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value=""></td>
                         </tr>
                     </table>

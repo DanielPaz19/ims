@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_location, employee_tb.emp_name, pinv_tb.pinv_date
+    $result = mysqli_query($db, "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, employee_tb.emp_name, pinv_tb.pinv_date
                                  FROM pinv_tb
                                  LEFT JOIN employee_tb ON employee_tb.emp_id = pinv_tb.emp_id
                                  WHERE pinv_id=" . $_GET['id']);
@@ -16,7 +16,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     if ($row) {
         $id = $row['pinv_id'];
         $pinv_title = $row['pinv_title'];
-        $pinv_location = $row['pinv_location'];
         $emp_name = $row['emp_name'];
         $dateString = $row['pinv_date'];
         $dateTimeObj = date_create($dateString);
@@ -55,8 +54,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <td style="text-align: right;"><label>PINV Date: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $date ?></td>
                     </tr>
                     <tr>
-                        <td><label>Location:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <?php echo $pinv_location ?></td>
-                        <td style="text-align: right;"><label>Personel: </label>&nbsp;&nbsp;&nbsp;<?php echo $emp_name ?></td>
+                        <td style="text-align: left;"><label>Check By: </label>&nbsp;&nbsp;&nbsp;<?php echo $emp_name ?></td>
                     </tr>
                 </table>
             </div>
@@ -68,16 +66,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <th width="30%">Item Description</th>
                         <th width="10%">Sys. Count</th>
                         <th width="10%">P. Count</th>
-                        <th width="5%">Unit</th>
+                        <th width="5%">Location</th>
 
                     </tr>
                     <tr>
                         <?php
-                        $sql = "SELECT pinv_product.pinv_id, pinv_product.product_id, pinv_product.pinv_qty, product.product_name, unit_tb.unit_name, product.qty
+                        $sql = "SELECT pinv_product.pinv_id, pinv_product.product_id, pinv_product.pinv_qty, product.product_name, unit_tb.unit_name, product.qty, loc_tb.loc_name
                                 FROM pinv_product
                                 LEFT JOIN product ON product.product_id = pinv_product.product_id
                                 LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
                                 LEFT JOIN pinv_tb ON pinv_tb.pinv_id = pinv_product.pinv_id
+                                LEFT JOIN loc_tb ON loc_tb.loc_id = pinv_product.loc_id
                                 WHERE pinv_tb.pinv_id = '$id'";
 
                         $result = $db->query($sql);
@@ -95,7 +94,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td>
                                     <font color="red"><?php echo number_format($irow['pinv_qty'], 2) ?></font>
                                 </td>
-                                <td><?php echo $irow['unit_name'] ?></td>
+                                <td><?php echo $irow['loc_name'] ?></td>
 
 
                     </tr>

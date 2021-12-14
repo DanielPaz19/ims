@@ -5,7 +5,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
   $id = $_GET['id'];
 
-  $result = mysqli_query($db, "SELECT stout_id,stout_code,stout_title,stout_date,stout_remarks FROM stout_tb WHERE stout_id=" . $_GET['id']);
+  $result = mysqli_query($db, "SELECT stout_tb.stout_id,stout_tb.stout_code,stout_tb.stout_title,stout_tb.stout_date,employee_tb.emp_name 
+  FROM stout_tb 
+  LEFT JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
+  WHERE stout_id=" . $_GET['id']);
 
 
   $row = mysqli_fetch_array($result);
@@ -14,8 +17,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     $id = $row['stout_id'];
     $stout_code = $row['stout_code'];
     $stout_title = $row['stout_title'];
-    $stout_date = $row['stout_date'];
-    $stout_remarks = $row['stout_remarks'];
+    $emp_name = $row['emp_name'];
+    $dateString = $row['stout_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
   } else {
     echo "No results!";
   }
@@ -31,35 +36,40 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     body {
-      font-family: Arial;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       color: black;
       padding: 50px;
     }
 
     .item-details {
       border-collapse: collapse;
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); */
     }
 
-    .item-details td {
-      padding: 7px;
-      border: 1px solid grey;
-      text-align: left;
-      font-size: 15px;
-      background-color: white;
-
-    }
 
     .item-details th {
       background-color: midnightblue;
       color: white;
-      padding: 5px;
+      padding: 10px;
       border: 1px solid grey;
       text-align: left;
       font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+
+    .item-details td {
+      padding: 7px;
+      border-left: 1px solid lightgrey;
+      text-align: left;
+      font-size: 15px;
+      background-color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 1px;
+
     }
 
     .fieldset {
@@ -69,7 +79,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     h2 {
       color: midnightblue;
       letter-spacing: 4px;
-      text-decoration: underline;
+      font-size: 35px;
     }
 
 
@@ -83,36 +93,36 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       letter-spacing: 2px;
       text-decoration: none;
       display: inline-block;
-      font-size: 15px;
+      font-size: 16px;
       margin: 4px 2px;
       cursor: pointer;
       -webkit-transition-duration: 0.4s;
       /* Safari */
       transition-duration: 0.4s;
+      width: 10%;
+      height: 5%;
     }
 
     .button:hover {
-      box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+      /* box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); */
+      font-size: 18px;
     }
 
     .head {
-      color: midnightblue;
+      color: black;
+      font-size: 24px
     }
 
     .stock-details td {
-      padding: 15px;
-
+      padding: 20px;
     }
 
     .container {
-      padding: 30px;
-      background-color: #EAEAEA;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      height: 1000px;
+
+      height: auto;
+      margin-bottom: 20px;
     }
+
 
     input[type=number] {
       color: red;
@@ -122,83 +132,91 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 </head>
 
 <body style="margin: 0px;" bgcolor="#B0C4DE">
-
+  <h2>Stock Inventory Out: Commiting Records</h2>
   <div class="container">
-    <a href="../stout_main.php" style="float: right; color: red;" title="Close"><i class="fa fa-close" style="font-size:24px"></i></a>
-
     <input type="hidden" name="id" value="<?php echo $id; ?>" />
     <!-- Stock-Out Details -->
-    <fieldset class="fieldset">
-      <legend>
-        <h2>Stock-Out Details</h2>
-      </legend>
-      <table class="stock-details" width="100%">
-        <tr>
-          <td class="head"><b>Code:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stout_code; ?></td>
-          <td class="head"><b> Title: </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stout_title; ?></td>
-          <td class="head"><b> Created Date:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stout_date; ?></td>
-          <td class="head"><b> Remarks:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stout_remarks ?></td>
-          <td class="head"></td>
-          <td class="head"></td>
-          <td class="head"></td>
-          <td class="head"></td>
-          <td class="head"></td>
-          <td class="head"></td>
-        </tr>
-      </table>
-      <!-- Items Details -->
-      <form method="GET" action="../commit/que/stout_commit_que.php">
-        <input type="hidden" name="stout_id" value="<?php echo $_GET['id'] ?>">
-        <input type="hidden" name='mov_date' class='date'>
-        <table class="item-details">
-          <tr>
-            <th width="5%">Item No.</th>
-            <th width="30%">Item Name</th>
-            <th width="10%">Beg. Qty</th>
-            <th width="10%">Qty Out</th>
-            <th width="5%">Unit</th>
-            <th width="10%">Cost</th>
-            <th width="10%">Discount Amount</th>
-            <th width="10%">Incomming Qty</th>
-          </tr>
+    <table class="stock-details" width="80%">
+      <tr style="text-align: left;">
+        <td class="head"><b>RS No. :</b>
+          &emsp;&emsp;<?php echo $stout_code; ?>
+        </td>
+        <td class="head"><b> JO No. : </b>&emsp;&emsp; <?php echo $stout_title; ?></td>
+        <td class="head"><b> Requested By:</b> &emsp;&emsp;<?php echo $emp_name; ?></td>
+        <td class="head"><b> RS Date:</b> <?php echo $date; ?></td>
+      </tr>
+    </table>
+  </div>
+  <!-- Items Details -->
+  <form method="GET" action="../commit/que/stout_commit_que.php">
+    <input type="hidden" name="stout_id" value="<?php echo $_GET['id'] ?>">
+    <input type="hidden" name='mov_date' class='date'>
+    <table class="item-details">
+      <tr>
+        <th width="5%">Product ID</th>
+        <th width="5%">Qty-Out</th>
+        <th width="5%">Unit</th>
+        <th width="40%">Item Name</th>
+        <th width="20%">Item Remarks</th>
+        <th width="10%">Barcode</th>
+        <th width="10%" style="display: none;">Qty-On-Hand</th>
+        <th width="10%" style="display: none;">Cost</th>
+        <th width="10%" style="display: none;">Discount Amount</th>
+        <th width="10%">Incomming Qty</th>
+      </tr>
 
-          <?php
-          $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount 
+      <?php
+      $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, stout_product.stout_temp_qty, stout_product.stout_temp_disamount, product.barcode, stout_product.stout_temp_remarks
           FROM product 
           LEFT JOIN stout_product ON product.product_id = stout_product.product_id
           LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
           WHERE stout_product.stout_id='$id' ";
 
-          $result = $db->query($sql);
-          $count = 0;
-          if ($result->num_rows >  0) {
+      $result = $db->query($sql);
+      $count = 0;
+      if ($result->num_rows >  0) {
 
-            while ($irow = $result->fetch_assoc()) {
-              $count = $count + 1;
-          ?>
-              <tr>
-                <td><?php echo $count; ?></td>
-                <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
-                <td contenteditable="false">
-                  <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" style="border: none;"></font>
-                </td>
-                <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
-                <td contenteditable="false"><?php echo $irow['cost'] ?></td>
-                <td contenteditable="false"><?php echo $irow['stout_temp_disamount'] ?></td>
-                <td class="stout_temp_tot"><input type="number" name="stout_temp_tot[]" style="border: none" value="<?php echo $irow["qty"] - $irow["stout_temp_qty"]; ?>" contenteditable="false"></td>
+        while ($irow = $result->fetch_assoc()) {
 
-              </tr>
-              <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
-          <?php }
-          } ?>
+      ?>
+          <tr>
+            <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
+            <td contenteditable="false">
+              <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['stout_temp_qty'] ?>" style="border: none;" readonly></font>
+            </td>
+            <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
+            <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
+            <td contenteditable="false"><?php echo $irow['stout_temp_remarks'] ?></td>
+            <td contenteditable="false">
+              <?php
+              if ($irow['barcode'] == "") {
+                echo "N/A";
+              } else {
+                echo $irow['barcode'];
+              }
+              ?></td>
+            <td style="display: none;"><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
 
-          </center>
-        </table>
-        <br>
-        <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
-      </form>
-    </fieldset>
+
+            <td contenteditable="false" style="display: none;"><?php echo $irow['cost'] ?></td>
+            <td contenteditable="false" style="display: none;"><?php echo $irow['stout_temp_disamount'] ?></td>
+            <td class="stout_temp_tot"><input type="number" name="stout_temp_tot[]" style="border: none" value="<?php echo $irow["qty"] - $irow["stout_temp_qty"]; ?>" readonly></td>
+
+          </tr>
+          <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
+      <?php }
+      } ?>
+
+      </center>
+    </table>
+    <br>
+    <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">&emsp;
+    <a href="../stout_main.php"> <input type="button" class="button" value="Cancel"></a>
+  </form>
+
+
+
+  </fieldset>
   </div>
 </body>
 

@@ -26,10 +26,11 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name
+SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name, po_tb.po_terms, po_type.po_type_id, po_type.po_type_name
 FROM po_tb 
 LEFT JOIN user ON user.user_id = po_tb.user_id
-LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id ";
+LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id
+LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id ";
 
 if ($_POST['query'] != '') {
   $query .= '
@@ -54,11 +55,11 @@ $output = '
 <br>
 <table width="100%">
   <tr>
+  <th width="10%">PO ID</th>
     <th width="10%">PO Code</th>
-    <th width="5%">Title</th>
-    <th width="10%">Date</th>
-    <th width="20%">Supplier</th>
-    <th width="10%">Remarks</th>
+    <th width="5%"><center>Date</th>
+    <th width="25%">Supplier</th>
+    <th width="10%">Terms</th>
     <th width="15%"><center>Action</th>
     <th width="15%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -72,7 +73,7 @@ if ($total_data > 0) {
     if ($closed == 0) {
       $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
       $disable = '              
-                <a href="po_edit-page.php?editpo&id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="po_edit-page.php?editpo&id=' . $row["po_id"] . "&supId=" . $row["sup_id"] . "&supName=" . $row["sup_name"] . "&poTypeId=" . $row["po_type_id"] . "&poTypeName=" . $row["po_type_name"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
       &nbsp;&nbsp;&nbsp;
                 <a href="delete/po_delete.php?id= ' . $row["po_id"] . '" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
       &nbsp;&nbsp;&nbsp;
@@ -90,15 +91,16 @@ if ($total_data > 0) {
       <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
     }
-
+    $dateString = $row['po_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
     $output .= '
     <tr>
-
+      <td>' . str_pad($row["po_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["po_code"] . '</td>
-      <td>' . $row["po_title"] . '</td>
-      <td>' . $row["po_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td>' . $row["sup_name"] . '</td>
-      <td>' . $row["po_remarks"] . '</td>
+      <td>' . $row["po_terms"] . '</td>
       <td><center>
       ' . $disable . '
                 <a href="view/viewpoV2.php?id=' . $row["po_id"] . '">

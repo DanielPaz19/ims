@@ -17,7 +17,7 @@
       <div class="card-body">
         <div class="form-group" style="align-content: right;">
           <button id="myBtn" class="butLink" title="Create New Item"><i class="fas fa-plus"></i>&nbspNew</button>
-          <input type="text" name="search_box" id="search_box" style="width: 500px; height: 35px; float: right;" placeholder="🔎 Search Item....." />
+          <input type="text" name="search_box" id="search_box" style="width: 500px; height: 35px; float: right;" placeholder="🔎 Search Item Description....." />
         </div>
         <div class="table-responsive" id="dynamic_content">
         </div>

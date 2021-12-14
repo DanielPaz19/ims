@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_location, employee_tb.emp_name, pinv_tb.pinv_date, user.user_name, pinv_tb.closed
+SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, employee_tb.emp_name, pinv_tb.pinv_date, user.user_name, pinv_tb.closed
 FROM pinv_tb
 LEFT JOIN user ON user.user_id = pinv_tb.user_id
 LEFT JOIN employee_tb 
@@ -53,11 +53,10 @@ $output = '
 <br>
 <table width="100%">
   <tr>
-    <th width="5%">ID</th>
+    <th width="5%">PINV ID</th>
     <th width="15%">Title</th>
-    <th width="20%">Location</th>
     <th width="10%">Prepared By</th>
-    <th width="10%">Create Date</th>
+    <th width="10%"><center>PINV Date</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -71,6 +70,9 @@ if ($total_data > 0) {
         if ($closed == 0) {
             $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
             $disable = ' 
+            <a href="pinv_edit-page.php?edit&id=' . $row["pinv_id"] . '">
+            <i class="fa fa-edit" style="font-size:26px" title="Edit Records"></i></a>
+&nbsp;&nbsp;&nbsp;
                 <a href="commit/pinv_commit.php?id=' . $row["pinv_id"] . '">
                     <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
       &nbsp;&nbsp;&nbsp;';
@@ -81,16 +83,18 @@ if ($total_data > 0) {
       <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
         }
+        $dateString = $row['pinv_date'];
+        $dateTimeObj = date_create($dateString);
+        $date = date_format($dateTimeObj, 'm/d/y');
         $output .= '
     <tr>
-      <td>' . $row["pinv_id"] . '</td>
+      <td>' . str_pad($row["pinv_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["pinv_title"] . '</td>
-      <td>' . $row["pinv_location"] . '</td>
       <td>' . $row["emp_name"] . '</td>
-      <td>' . $row["pinv_date"] . '</td>
+      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
-                <a href="view/viewpinv.php?id=' . $row["pinv_id"] . '">
+                <a href="view/viewpinv.php?id=' . $row["pinv_id"] . '&title=' . $row["pinv_title"] . '&date=' . $date .   '">
                     <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
       </center>
                

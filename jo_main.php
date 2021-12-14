@@ -45,7 +45,14 @@ if (!isset($_SESSION['user'])) {
         display: inline-block;
         letter-spacing: 3px;
         cursor: pointer;
+        width: 150px;
+        height: 50px;
     }
+
+    .butLink:hover {
+        font-size: 25px;
+    }
+
 
     /* The Modal (background) */
     .modal {

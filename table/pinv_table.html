@@ -17,14 +17,16 @@
 
       <div class="card-body">
         <div class="form-group" style="align-content: right;">
-            <a href="pinv_main.php"> <button class="butLink" title="Create New Item"><i
-              class="fas fa-plus"></i>&nbspNew</button></a>
-          <a href="stout_main.php"><button style="float: right; height: 40px; background-color: midnightblue;"><i
+         
+            <!-- <a href="pinv_main.php"> <button class="butLink" title="Create New Item"><i
+              class="fas fa-plus"></i>&nbspNew</button></a> -->
+              <a href=""> <button class="butLink"onclick="addNew()"><i
+                class="fas fa-plus"></i>&nbspNew</button></a>
+          <a href="pinv_main.php"><button style="float: right; height: 40px; background-color: midnightblue;"><i
                 class="fa fa-refresh fa-spin" style="font-size:16px; color:white" title="Refresh"></i></button></a>
           <input type="text" name="search_box" id="search_box" style="width: 500px; height: 40px; float: right;"
-            placeholder=" &#x1F50E;&nbsp;Search Code.....">
+            placeholder=" &#x1F50E;&nbsp;Search Title.....">
         </div>
-
         <div class="table-responsive" id="dynamic_content">
 
         </div>
@@ -62,4 +64,35 @@
     });
 
   });
+
+
+</script>
+
+<script type='text/javascript'>
+  function addNew() {
+     //set the width and height of the 
+     //pop up window in pixels
+     var width = 500;
+     var height = 500;
+
+     //Get the TOP coordinate by
+     //getting the 50% of the screen height minus
+     //the 50% of the pop up window height
+     var top = parseInt((screen.availHeight / 2) - (height / 2));
+
+     //Get the LEFT coordinate by
+     //getting the 50% of the screen width minus
+     //the 50% of the pop up window width
+     var left = parseInt((screen.availWidth / 2) - (width / 2));
+
+     //Open the window with the 
+     //file to show on the pop up window
+     //title of the pop up
+     //and other parameter where we will use the
+     //values of the variables above
+     window.open('main/addrecord/addpinv.php',
+        "Contact The Code Ninja",
+        "menubar=no,resizable=yes,width=1600,height=800,scrollbars=yes,left=" +
+        left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
+  }
 </script>
