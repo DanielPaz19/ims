@@ -1,0 +1,158 @@
+body {
+  background: rgb(204, 204, 204);
+}
+
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  margin-top: 0;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+}
+
+page[size="A4"] {
+  width: 8in;
+  height: 29.7cm;
+}
+
+.print-area {
+  width: 100%;
+}
+
+.suptab {
+  line-height: 30px;
+  padding: 10px;
+}
+
+label {
+  font-weight: bolder;
+}
+
+.itemTb {
+  padding: 5px;
+}
+
+.subtot {
+  float: right;
+}
+
+@media print {
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .print-area {
+    width: 100%;
+    margin-top: 0;
+  }
+  .noprint {
+    display: none;
+  }
+  page {
+    box-shadow: none;
+  }
+
+  .report--content .tb--items th {
+    background-color: lightgrey;
+    padding: 2px;
+  }
+}
+
+.noprint {
+  position: absolute;
+  width: 25%;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #b0c4de;
+  padding-right: 45px;
+}
+
+.totDiv {
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+.totDivGrand {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.empTab {
+  margin-left: 30px;
+  width: 80%;
+}
+
+.srrItem {
+  font-size: 12px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.srrItem th,
+td {
+  border: 1px solid lightgrey;
+  padding: 2px;
+}
+
+p {
+  margin-left: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+}
+
+.range {
+  margin-left: 30px;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+input[type="text"] {
+  width: 150px;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+button {
+  height: 40px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.report--content {
+  border: 1px solid lightgrey;
+  padding: 1%;
+}
+
+.report--content .tb--head {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  font-size: smaller;
+}
+
+.report--content .tb--items {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  font-size: smaller;
+}
+.report--content .tb--items th {
+  background-color: lightgrey;
+  padding: 2px;
+}
+
+.report--content .tb--items td {
+  padding: 2.5px;
+}
