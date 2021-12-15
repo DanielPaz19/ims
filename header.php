@@ -71,7 +71,7 @@
       <div class="dropdown-content">
         <a href="#">&nbsp;Inventory</a>
         <a href="#">&nbsp;POS</a>
-        <a href="#">&nbsp;Stock-In </a>
+        <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
         <a href="#">&nbsp;Stock-Out </a>
         <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
       </div>
