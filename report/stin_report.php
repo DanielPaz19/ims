@@ -42,7 +42,8 @@
                     $sql = "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, employee_tb.emp_name, stin_tb.stin_remarks, stin_tb.closed
                                 FROM stin_tb 
                                 LEFT JOIN employee_tb ON employee_tb.emp_id=stin_tb.emp_id
-                                WHERE stin_tb.stin_date BETWEEN '$date1' AND '$date2'
+                                WHERE stin_tb.stin_date 
+                                    BETWEEN '$date1' AND '$date2'
                                 ";
 
                     $result = $db->query($sql);
@@ -68,14 +69,19 @@
                             }
 
 
-                            $sqlItem = "SELECT stin_product.stin_id, product.product_name, product.product_id, stin_product.stin_temp_qty, unit_tb.unit_name
+                            $sqlItem = "SELECT stin_product.stin_id, product.product_name, product.product_id, stin_product.stin_temp_qty, unit_tb.unit_name,stin_tb.stin_date
                                     FROM stin_product 
+                                    INNER JOIN stin_tb ON stin_tb.stin_id = stin_product.stin_id
                                     LEFT JOIN product ON product.product_id = stin_product.product_id                  
                                     LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-                                    WHERE stin_product.stin_id = $stinId
+                                    WHERE stin_product.stin_id = $stinId 
                                     ";
 
                             $resultItem = $db->query($sqlItem);
+                            $prodId = [];
+                            $prodName = [];
+                            $qty = [];
+                            $unit = [];
                             if ($result->num_rows >  0) {
                                 while ($irow = $resultItem->fetch_assoc()) {
                                     $prodId[] = str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT);
