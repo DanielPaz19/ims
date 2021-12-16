@@ -105,9 +105,12 @@
                                 </tr>
                                 <tr>
                                     <td><label>Title</label> &emsp;&emsp;&emsp; $stinTitle</td>
-                                    <td><label>Prep By </label>&emsp;$empName<label>&emsp;Dept </label>&emsp;$deptName</td>
-                                    <td colspan=2><label>Remarks </label>&emsp;$stinRemarks</td> 
+                                    <td><label>Prep By </label>&emsp;$empName</td>
+                                    <td><label>Department</label>&emsp;$deptName</td>
                                 </tr>
+                                <tr>
+                                <td colspan=4><label>Remarks</label> &emsp;&emsp;&emsp; $stinRemarks</td>
+                            </tr>
                             </table>
 
                             <table class='tb--items'>
