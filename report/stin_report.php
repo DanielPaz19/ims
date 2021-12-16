@@ -39,9 +39,10 @@
                 if (isset($_POST['search'])) {
                     $date1 = date("Y-m-d", strtotime($_POST['date1']));
                     $date2 = date("Y-m-d", strtotime($_POST['date2']));
-                    $sql = "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, employee_tb.emp_name, stin_tb.stin_remarks, stin_tb.closed
+                    $sql = "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, employee_tb.emp_name, stin_tb.stin_remarks, stin_tb.closed,dept_tb.dept_name
                                 FROM stin_tb 
                                 LEFT JOIN employee_tb ON employee_tb.emp_id=stin_tb.emp_id
+                                LEFT JOIN dept_tb ON dept_tb.dept_id = employee_tb.dept_id
                                 WHERE stin_tb.stin_date 
                                     BETWEEN '$date1' AND '$date2'
                                 ";
@@ -59,6 +60,7 @@
                             $dateTimeObj = date_create($dateString);
                             $date = date_format($dateTimeObj, 'm/d/y');
                             $empName = $irow['emp_name'];
+                            $deptName = $irow['dept_name'];
                             $stinRemarks = $irow['stin_remarks'];
                             $closed = $irow["closed"];
 
@@ -103,7 +105,7 @@
                                 </tr>
                                 <tr>
                                     <td><label>Title</label> &emsp;&emsp;&emsp; $stinTitle</td>
-                                    <td><label>Prep By </label>&emsp;$empName</td>
+                                    <td><label>Prep By </label>&emsp;$empName<label>&emsp;Dept </label>&emsp;$deptName</td>
                                     <td colspan=2><label>Remarks </label>&emsp;$stinRemarks</td> 
                                 </tr>
                             </table>
