@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_name, user.user_name
+SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_name, user.user_name, rt_tb.closed
 FROM rt_tb
 LEFT JOIN customers ON customers.customers_id = rt_tb.customers_id
 LEFT JOIN user ON user.user_id = rt_tb.user_id
@@ -55,35 +55,60 @@ $output = '
   <tr>
     <th width="5%">ID</th>
     <th width="15%">RT No.</th>
-    <th width="50%">Customer</th>
+    <th width="40%">Customer</th>
     <th width="10%"><center>Create Date</th>
-    <th width="10%"><center>Details</th>
+    <th width="20%"><center>Action</th>
     <th width="10%"><center>Created By</th>
+    <th width="10%"><center>Status</th>
     
   </tr>
 ';
 if ($total_data > 0) {
     foreach ($result as $row) {
+        $closed = $row["closed"];
+
+        if ($closed == 0) {
+            $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
+            $disable = ' <a href="rt_edit-page.php?edit&id=' . $row["rt_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+        &nbsp;&nbsp;&nbsp;
+                  <a href="#" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+        &nbsp;&nbsp;&nbsp;
+                  <a href="commit/rt_commit.php?id=' . $row["rt_id"] . '">
+                      <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
+        &nbsp;&nbsp;&nbsp;';
+        } else {
+            $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
+            $disable = ' 
+        
+        <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
+         &nbsp;&nbsp;&nbsp;
+        <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
+        &nbsp;&nbsp;&nbsp;
+        <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
+        &nbsp;&nbsp;&nbsp;';
+        }
         $dateString = $row['rt_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm/d/y');
-        $output .= '
-    <tr>
-      <td>' . str_pad($row["rt_id"], 8, 0, STR_PAD_LEFT) . '</td>
-      <td>' . $row["rt_no"] . '</td>
-      <td>' . $row["customers_name"] . '</td>
-      <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
-      <td><center>
 
-                <a href="view/viewrt.php?id=' . $row["rt_id"] . '">
-                    <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
-      </center>
-               
-      </td>
-      <td><center>' . $row["user_name"] . '</center></td>
-      
-    </tr>
-    ';
+        $output .= '
+      <tr>
+        <td >' . str_pad($row["rt_id"], 8, 0, STR_PAD_LEFT) . '</td>
+        <td>' . $row["rt_no"] . '</td>
+        <td>' . $row["customers_name"] . '</td>
+        <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
+        <td><center>
+                 ' . $disable . '
+                  <a href="view/viewrt.php?id=' . $row["rt_id"] . '">
+                      <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
+        </center>
+                 
+        </td>
+        <td><center>' . $row["user_name"] . '</center></td>
+        <td><center>' . $str . '</center></td>
+        
+      </tr>
+      ';
     }
 } else {
     $output .= '
