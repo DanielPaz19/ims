@@ -22,12 +22,13 @@ if (isset($_GET['add'])) {
     $cost = mysqli_real_escape_string($db, $_GET['cost']);
     $dept_id = mysqli_real_escape_string($db, $_GET['dept_id']);
     $sup_id = mysqli_real_escape_string($db, $_GET['sup_id']);
+    $product_type_id = mysqli_real_escape_string($db, $_GET['product_type_id']);
 
 
 
 
-    $query = "INSERT INTO product (product_name,class_id,qty,unit_id,pro_remarks,loc_id,barcode,price,cost,dept_id,sup_id) 
-  			  VALUES('$product_name','$class_id','$qty','$unit_id','$pro_remarks','$location','$barcode','$price','$cost','$dept_id','$sup_id')";
+    $query = "INSERT INTO product (product_name,class_id,qty,unit_id,pro_remarks,loc_id,barcode,price,cost,dept_id,sup_id,product_type_id) 
+  			  VALUES('$product_name','$class_id','$qty','$unit_id','$pro_remarks','$location','$barcode','$price','$cost','$dept_id','$sup_id','$product_type_id')";
 
 
     if (mysqli_query($db, $query)) {
@@ -149,25 +150,27 @@ if (isset($_GET['add'])) {
         <table width="100%">
             <tr>
                 <th style="text-align: left;" width="30%">Item Description&nbsp;<i style="color: red;">*</i></th>
-                <th style="text-align: left;" width="30%">Supplier</th>
+                <th style="text-align: left;" width="30%">Item Type</th>
                 <th style="text-align: left;" width="40%"></th>
 
             </tr>
             <tr>
                 <td> <input type="text" name="product_name" style=" width:460px;border: 1px solid gray; height: 36px; border-radius: 5px;" required></td>
 
-                <td colspan="4"><select name="sup_id" style="width:500px; height: 35px; border: 1px solid gray; border-radius: 5px;">
-
+                <td style="text-align: left;">
+                    <select name="product_type_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
                         <option></option>
                         <?php
-
-                        $records = mysqli_query($db, "SELECT * FROM sup_tb ORDER BY sup_name ASC");
+                        include "config.php";
+                        $records = mysqli_query($db, "SELECT * FROM product_type ORDER BY product_type_id ASC");
 
                         while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
+                            echo "<option value='" . $data['product_type_id'] . "'>" . $data['product_type_name'] . "</option>";
                         }
                         ?>
-                    </select></td>
+                    </select>
+
+                </td>
                 <td></td>
             </tr>
         </table>
@@ -181,7 +184,7 @@ if (isset($_GET['add'])) {
 
             </tr>
             <tr>
-                <td><input required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
+                <td><input required="number" type="number" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
                 <td><select name="unit_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;">
                         <option></option>
                         <?php
@@ -256,8 +259,8 @@ if (isset($_GET['add'])) {
                 <th style="text-align: left;">Remarks</th>
             </tr>
             <tr>
-                <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
-                <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;"></td>
+                <td><input type="number" name="price" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
+                <td><input type="number" name="cost" onchange="setTwoNumberDecimal" min="0" max="9999999" step="any" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value="0"></td>
                 <td><input type="text" name="pro_remarks" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;" value=""></td>
             </tr>
         </table>

@@ -141,8 +141,8 @@ include 'php/jo_edit-inc.php';
 
 
 <div class="container--modal">
-    <div class='modal--add__item'>
 
+    <div class='modal--add__item'>
 
         <input type="text" class='input--search' placeholder="Search Item..."><br>
         <span class='close--modal' style="float: right;"><i class="fa fa-close"></i></span>
