@@ -269,12 +269,14 @@
       $(".add-button").click(function() {
         var id = $("li.selected p").text(); //gets the value id
         var qty = $(".item-qty").val();
+        var cost = $(".item-cost").val();
         var discount = $(".item-discount").val();
         if (addOrder(id)) {
           $.get(
-            "../addrecord/addrow/add-item-row.php", {
+            "../addrecord/addrow/add-item-row-po.php", {
               id: id,
               qty: qty,
+              cost: cost,
               discount: discount,
             },
             function(data, status) {
@@ -294,6 +296,7 @@
                 //clear form
                 $("#item-name").val("");
                 $(".item-qty").val(1);
+                $(".item-cost").val(0);
                 $(".item-discount").val(0);
                 $("li.selected").removeClass("selected");
               }
@@ -325,6 +328,9 @@
           <!-- input for item qty -->
           <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
           <input class="item-qty" type="number" placeholder="Quantity" value="1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <label>Cost: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input class="item-cost" type="number" placeholder="Cost" value="0" />
+
           <!-- input for discount -->
           <label style="display: none;">Discount: &nbsp;&nbsp;</label>
           <input style="display: none;" class=" item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
@@ -386,7 +392,7 @@
                 <th style="padding: 10px; text-align: left" width="10%">
                   Qty-Order
                 </th>
-                <th style="padding: 10px; text-align: left" width="10%">Price</th>
+                <th style="padding: 10px; text-align: left" width="10%">Cost</th>
                 <th style="padding: 10px; text-align: left" width="10%">
                   Discount Amount
                 </th>
