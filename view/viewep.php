@@ -249,8 +249,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_remarks, ep_tb.ep_date, customers.customers_name
+    $result = mysqli_query($db, "SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_remarks, ep_tb.ep_date, customers.customers_name, user.user_name
                                  FROM ep_tb
+                                 LEFT JOIN user ON user.user_id = ep_tb.user_id
                                  LEFT JOIN customers ON ep_tb.customers_id = customers.customers_id
                                 WHERE ep_id=" . $_GET['id']);
 
@@ -263,6 +264,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $ep_title = $row['ep_title'];
         $ep_remarks = $row['ep_remarks'];
         $customers_name = $row['customers_name'];
+        $user_name = $row['user_name'];
         $dateString = $row['ep_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm/d/y');
@@ -281,8 +283,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
     img {
-        width: 808.81889764px;
-        height: 657.63779528px;
+        width: 213mm;
+        height: 175mm;
         position: relative;
     }
 
@@ -290,7 +292,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         position: relative;
         text-align: center;
         color: black;
-        border: 1px solid black;
+        /* border: 1px solid black; */
         width: 43%;
 
 
@@ -306,6 +308,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         position: absolute;
         top: 8px;
         left: 16px;
+    }
+
+    .tb--sign {
+        position: absolute;
+        margin-left: 50px;
+        top: 580px;
+        /* border: 1px solid black; */
+    }
+
+    .tb--user {
+        position: absolute;
+        margin-left: 80px;
+        top: 540px;
+        /* border: 1px solid black; */
     }
 
     .ep--customer--address {
@@ -349,17 +365,28 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         position: absolute;
         top: 8px;
         left: 16px;
+
     }
 
-    .ep_tb th,
-    td {
-        padding: 5px;
-        /* border: 1px solid black; */
+    .ep_tb td {
+        /* border: 1px solid red; */
+        padding-top: 6px;
+        padding-bottom: 3px;
+        vertical-align: top;
     }
 
     .ep_tb {
         margin-left: 10px;
+        margin-top: 5px;
         border-collapse: collapse;
+        /* border: 1px solid red; */
+        width: 100%;
+
+    }
+
+    .items {
+        font-size: 4mm;
+        height: 7mm !important;
 
     }
 
@@ -376,11 +403,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     }
 
     textarea {
+        margin-left: 150px;
         border: none;
         background-color: transparent;
         resize: none;
         outline: none;
         font-size: 12px;
+        overflow-y: hidden;
     }
 
 
@@ -393,6 +422,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         margin: 4px 2px;
         cursor: pointer;
         font-weight: bolder;
+    }
+
+    .print--button {
+        position: absolute;
+        margin-left: 5%;
+        float: right;
     }
 </style>
 <title>EP No. <?php echo $ep_no; ?></title>
@@ -467,15 +502,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         $total[] = $irow["ep_qty"] * $irow["ep_price"];
 
                 ?>
-                        <tr>
-                            <td style="width: 165px;"><?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 379px;"><?php echo $irow['product_name'] ?></td>
+                        <tr class="items">
+                            <td style="width: 165px;">&emsp;&emsp;<?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
+                            <td style="width: 430px;"><?php echo $irow['product_name'] ?></td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td>
                         </tr>
                 <?php }
                 } ?>
-
+                <tr style="text-align: center;">
+                    <td></td>
+                    <td style="font-size: small; padding-top:-5px">****** NOTHING FOLLOWS *****</td>
+                </tr>
             </table>
 
             <table style="float: right;">
@@ -496,23 +534,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 ?>
 
                 <tr>
-                    <td></td>
+
                     <td style="text-decoration: overline;">
                         &#8369;<?php echo number_format($grandTot, 2) ?>
                     </td>
                 </tr>
-                <td>--------------<i>NOTHING FOLLOWS</i>--------------
-                </td>
-                <tr>
-                    <td>&nbsp;<textarea cols="30" rows="10"><?php echo $ep_remarks; ?></textarea></td>
-                </tr>
             </table>
-
-
+            &emsp;&emsp;<textarea cols="65" rows="4"><?php echo $ep_remarks; ?></textarea>
         </div>
+        <table class="tb--user">
+            <tr style="text-align: center;">
+                <td style="width:20%">/<?php echo $user_name ?></td>
+            </tr>
+        </table>
+        <table class="tb--sign" style="width: 100%;">
+            <tr style="text-align: center;">
+                <td style="width:20%">/CTG</td>
+                <td style="width:15%">/RE</td>
+                <td></td>
+            </tr>
+        </table>
 
 
 </body>
-<input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Click Here to Print ! ">
+
+<div class="print--button">
+    <input name="b_print" type="button" class="noprint" onClick="printdiv('div_print');" value=" Print Document ">
+</div>
 
 </html>
