@@ -331,7 +331,7 @@
 </script>
 
 <script type='text/javascript'>
-   function showadditem() {
+   function showadditemEDITV2() {
       //set the width and height of the 
       //pop up window in pixels
       var width = 500;
