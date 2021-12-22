@@ -52,6 +52,8 @@ const selectJo = function (e) {
   const targetRow = e.target.closest("tr");
   const targetJoNumber = targetRow.querySelector(".jo__modal--td__jonumber");
 
+  inputJoNumber.value = targetJoNumber.innerText;
+
   // Fetch customer details
   fetch(`php/jo_modal-inc.php?selectCustomer&joNo=${targetJoNumber.innerHTML}`)
     .then((res) => res.json())
@@ -73,7 +75,7 @@ const selectJo = function (e) {
     })
     .then((res) => res.json())
     .then((data) => {
-      //JO input
+      // JO input
       inputJoNumber.value = data[0].jo_no;
       transaction.joId = data[0].jo_id;
 

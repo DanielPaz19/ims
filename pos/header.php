@@ -23,10 +23,10 @@
     <div class="nav-bar">
         <span class="nav--options">
             <button class="nav__button nav__button--pos nav__button--active" data-tab="pos">
-                POS
+                Payment
             </button>
             <button class="nav__button nav__button--payment" data-tab="payment">
-                Payment
+                Releasing
             </button>
         </span>
 

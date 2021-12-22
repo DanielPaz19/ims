@@ -9,6 +9,75 @@ if (!$_SESSION['user']) {
 <!---------------------------- POS TAB ----------------------->
 <?php include_once 'jo_modal.php' ?>
 
+<div id="payment-modal">
+  <div class="container-payment-details">
+
+    <div class="payment__modal--close">
+      <p>X</p>
+    </div>
+
+    <form class="payment" method="get" action="payment.php">
+      <div class="payment-type">
+        <h1>Payment Type</h1>
+        <div class="container-radio-button">
+          <span>
+            <input type="radio" id="cash" name="payment-type" value="" checked class="radio--payment-type" />
+            <label for="cash" class="label--payment-type">CASH</label>
+            <input type="radio" id="online" value="" name="payment-type" class="radio--payment-type" />
+            <label for="online" class="label--payment-type">ONLINE</label>
+            <input type="radio" id="cheque" value="" name="payment-type" class="radio--payment-type" />
+            <label for="cheque" class="label--payment-type">CHEQUE</label>
+          </span>
+        </div>
+      </div>
+
+      <fieldset class="online-details">
+        <div class="online-details">
+          <label for="">Online Platform:</label>
+          <select name="" id="onlinePlatform" disabled>
+            <option value="">-Select Field-</option>
+            <option value="1">GCash</option>
+            <option value="2">Paymaya</option>
+          </select>
+          <label for="">Transaction Date:</label>
+          <input type="date" class="transaction-date" name="payment_date" disabled />
+          <label for="">Reference Number:</label>
+          <input type="text" class="reference-number" name="ref_num" disabled />
+        </div>
+      </fieldset>
+
+      <fieldset class="bank-details">
+        <div class="bank-details">
+          <label for="">Bank:</label>
+          <select name="" id="bankName" disabled>
+            <option value="">-Select Field-</option>
+            <option value="1">BPI</option>
+            <option value="2">BDO</option>
+            <option value="3">MBTC</option>
+          </select>
+          <label for="">Cheque Date:</label>
+          <input type="date" class="cheque-date" name="payment_date" disabled />
+          <label for="">Cheque Number:</label>
+          <input type="text" class="cheque-number" name="ref_num" disabled />
+        </div>
+      </fieldset>
+
+      <div class="payment-details">
+        <label for="">Amount:</label>
+        <input type="text" class="payment-balance" value="1000.00" disabled /><br />
+        <label for="">Tendered Amount:</label>
+        <input type="text" class="payment-tendered" placeholder="Enter Amount" /><br />
+        <label for="" class="change-balance">Change: </label>
+        <input type="text" class="payment-change" disabled value="0.00" />
+      </div>
+
+      <div class='container--button__save'>
+        <button class="button__save--payment">Save And Print</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="tab__content tab__content--pos tab__content--active">
   <div class="left-side">
     <div class="left-side-content">
@@ -180,7 +249,7 @@ if (!$_SESSION['user']) {
       </fieldset>
     </div>
     <div class="container__button--save">
-      <button class="btn-save">SAVE</button>
+      <button class="btn-save">Pay Now</button>
     </div>
   </div>
 
@@ -268,7 +337,7 @@ if (!$_SESSION['user']) {
     </table>
   </div>
 
-  <div id="payment-modal">
+  <!-- <div id="payment-modal">
     <div class="container-payment-details">
 
       <div class="payment__modal--close">
@@ -335,7 +404,7 @@ if (!$_SESSION['user']) {
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 </div>
 
 

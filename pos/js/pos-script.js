@@ -750,50 +750,54 @@ containerOrderList.addEventListener("click", function (e) {
 
 //save button
 btnSaveTransaction.addEventListener("click", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
+  // // e.preventDefault();
+  // // e.stopPropagation();
 
-  //customer is empty
-  if (!inputCustomerId.value) return alert("Invalid Customer Details");
+  //jo number is empty
+  if (!inputJoNumber.value) return alert("Choose JO Number!");
 
-  //order list is empty
-  if (!containerOrderList.children.length) return alert("No orders selected");
+  modalPayment.style.display = "block";
+  // //customer is empty
+  // if (!inputCustomerId.value) return alert("Invalid Customer Details");
 
-  //add to objects
-  transaction.customerId = +inputCustomerId.value;
-  transaction.transactionId = +inputTransNumber.value;
-  transaction.transDate = new Date().toISOString();
-  order.total = +removeComma(smryNetSales.value);
+  // //order list is empty
+  // if (!containerOrderList.children.length) return alert("No orders selected");
 
-  const orderRow = containerOrderList.querySelectorAll("tr");
+  // //add to objects
+  // transaction.customerId = +inputCustomerId.value;
+  // transaction.transactionId = +inputTransNumber.value;
+  // transaction.transDate = new Date().toISOString();
+  // order.total = +removeComma(smryNetSales.value);
 
-  orderRow.forEach((element) => {
-    order.productId.push(+element.children[0].innerHTML);
-    order.qty.push(+removeComma(element.children[3].innerHTML));
-    order.discount.push(+removeComma(element.children[5].innerHTML));
-    order.price.push(+removeComma(element.children[2].innerHTML));
-  });
+  // const orderRow = containerOrderList.querySelectorAll("tr");
 
-  const saveJSON = { ...transaction, ...order };
+  // orderRow.forEach((element) => {
+  //   order.productId.push(+element.children[0].innerHTML);
+  //   order.qty.push(+removeComma(element.children[3].innerHTML));
+  //   order.discount.push(+removeComma(element.children[5].innerHTML));
+  //   order.price.push(+removeComma(element.children[2].innerHTML));
+  // });
 
-  // const save = new XMLHttpRequest();
-  // save.open("POST", "php/save-transaction.php");
-  // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  // save.send(`json=${JSON.stringify(saveJSON)}`);
-  // console.log(JSON.stringify(saveJSON));
-  // console.log(saveJSON);
+  // const saveJSON = { ...transaction, ...order };
 
-  fetch("php/save-transaction.php", {
-    method: "POST", // or 'PUT'
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `json=${JSON.stringify(saveJSON)}`,
-  });
+  // // const save = new XMLHttpRequest();
+  // // save.open("POST", "php/save-transaction.php");
+  // // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // // save.send(`json=${JSON.stringify(saveJSON)}`);
+  // // console.log(JSON.stringify(saveJSON));
+  // // console.log(saveJSON);
 
-  alert("Transaction Saved");
+  // fetch("php/save-transaction.php", {
+  //   method: "POST", // or 'PUT'
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  //   body: `json=${JSON.stringify(saveJSON)}`,
+  // });
 
-  location.reload();
+  // alert("Transaction Saved");
+
+  // location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------
