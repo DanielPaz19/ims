@@ -137,7 +137,7 @@ include 'php/ep_edit-inc.php';
 
 <div class="container--modal">
     <div class='modal--add__item'>
-
+        <a href="#"><button onclick="showadditemEDITV2()" class="button--add__item">New Item</button></a>
         <input type="text" class='input--search' placeholder="Search Item..."><br>
         <span class='close--modal'><i class="fa fa-close"></i></span>
         <div class='table--container'>

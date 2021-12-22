@@ -109,7 +109,7 @@
       //values of the variables above
       window.open('utilities/addunit.php',
          "Contact The Code Ninja",
-         "menubar=no,resizable=yes,width=1200,height=600,scrollbars=yes,left=" +
+         "menubar=no,resizable=yes,width=450,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
    }
 </script>
@@ -139,7 +139,7 @@
       //values of the variables above
       window.open('utilities/addlocation.php',
          "Contact The Code Ninja",
-         "menubar=no,resizable=yes,width=1200,height=600,scrollbars=yes,left=" +
+         "menubar=no,resizable=yes,width=650,height=600,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
    }
 </script>
