@@ -23,7 +23,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $sup_email = $row['sup_email'];
         $dateString = $row['po_date'];
         $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm/d/y');
+        $date = date_format($dateTimeObj, 'F d, Y');
         $sup_id = $row['sup_id'];
     } else {
         echo "No results!";

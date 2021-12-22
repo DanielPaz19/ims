@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
         $olTypeName = $row['ol_type_name'];
         $dateString = $row['ol_date'];
         $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm-d-y');
+        $date = date_format($dateTimeObj, 'F d, Y');
         $userName = $row['user_name'];
     }
 }
