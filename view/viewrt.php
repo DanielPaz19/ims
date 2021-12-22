@@ -23,7 +23,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $rt_guard = $row['rt_guard'];
         $dateString = $row['rt_date'];
         $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm/d/y');
+        $date = date_format($dateTimeObj, 'F d, Y');
     } else {
         echo "No results!";
     }
