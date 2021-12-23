@@ -16,8 +16,10 @@ $olId = $_GET['ol_id'];
 $productId = $_GET['product-id'];
 $qty = $_GET['qty_order'];
 $price = $_GET['price'];
+$fee = $_GET['fee'];
 $total = $_GET['total'];
 $olTitle = $_GET['ol_title'];
+$olSi = $_GET['ol_si'];
 $olDate = $_GET['ol_date'];
 $olType = $_GET['ol_type_id'];
 
@@ -36,9 +38,9 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     $limit = 0;
     while (sizeof($productId) !== $limit) {
 
-        $sql = "INSERT INTO ol_product (product_id, ol_id, ol_qty, ol_price, ol_priceTot)
+        $sql = "INSERT INTO ol_product (product_id, ol_id, ol_qty, ol_price, ol_fee, ol_priceTot)
 
-            VALUES (" . $productId[$limit] . "," . $olId . "," . $qty[$limit] . "," . removeComma($price[$limit]) . "," . removeComma($total[$limit]) . ")";
+            VALUES (" . $productId[$limit] . "," . $olId . "," . $qty[$limit] . "," . removeComma($price[$limit]) . "," . removeComma($fee[$limit]) . "," . removeComma($total[$limit]) . ")";
 
 
         if (mysqli_query($db, $sql)) {
@@ -72,8 +74,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-    $sql = "INSERT INTO ol_tb (ol_id,ol_title, ol_date, ol_type_id ,user_id)
-            VALUES ('$olId','$olTitle','$olDate','$olType','" . $_SESSION['id'] . "')";
+    $sql = "INSERT INTO ol_tb (ol_id,ol_title,ol_si,ol_date, ol_type_id ,user_id)
+            VALUES ('$olId','$olTitle','$olSi','$olDate','$olType','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
         echo "<script>alert('New Record Added')</script>";

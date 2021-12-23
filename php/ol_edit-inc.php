@@ -9,7 +9,7 @@ if (isset($_GET['editOl'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT ol_tb.ol_id, ol_type.ol_type_id, ol_type.ol_type_name, ol_product.ol_price, ol_product.ol_priceTot, ol_tb.ol_title, ol_tb.ol_date, ol_product.ol_qty, product.product_id, product.product_name, unit_tb.unit_name, unit_tb.unit_id
+        "SELECT ol_tb.ol_id, ol_type.ol_type_id, ol_type.ol_type_name, ol_product.ol_price, ol_product.ol_priceTot, ol_tb.ol_title, ol_tb.ol_date, ol_product.ol_qty, product.product_id, product.product_name, unit_tb.unit_name, unit_tb.unit_id, ol_tb.ol_si, ol_product.ol_fee
         FROM ol_tb
         LEFT JOIN ol_product ON ol_product.ol_id = ol_tb.ol_id
         LEFT JOIN ol_type ON ol_type.ol_type_id = ol_tb.ol_type_id
@@ -27,6 +27,7 @@ if (isset($_GET['editOl'])) {
             $oltypeId = $row['ol_type_id'];
             $olTypeName = $row['ol_type_name'];
             $olTitle = $row['ol_title'];
+            $olSi = $row['ol_si'];
             $olDate = $row['ol_date'];
             $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
             $productName[] = $row['product_name'];
@@ -34,6 +35,7 @@ if (isset($_GET['editOl'])) {
             $unitId[] = $row['unit_id'];
             $unitName[] = $row['unit_name'];
             $itemPrice[] = $row['ol_price'];
+            $itemFee[] = $row['ol_fee'];
             $itemTotal[] = $row['ol_priceTot'];
         }
     } else {
@@ -46,11 +48,13 @@ if (isset($_POST['update'])) {
     $olId = $_POST['olId'];
     $oltypeId = $_POST['oltypeId'];
     $olTitle = $_POST['olTitle'];
+    $olSi = $_POST['olSi'];
     $olDate = $_POST['olDate'];
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemPrice = $_POST['itemPrice'];
+    $itemFee = $_POST['itemFee'];
     $itemTotal = $_POST['itemTotal'];
 
     require '../php/config.php';
@@ -58,7 +62,7 @@ if (isset($_POST['update'])) {
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE ol_tb SET ol_title='$olTitle', ol_type_id='$oltypeId',  ol_date='$olDate' WHERE ol_id='$olId' "
+        "UPDATE ol_tb SET ol_title='$olTitle',ol_si='$olSi', ol_type_id='$oltypeId',  ol_date='$olDate' WHERE ol_id='$olId' "
     );
 
 
@@ -70,11 +74,11 @@ if (isset($_POST['update'])) {
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on po_product, UPDATE
-            mysqli_query($db, "UPDATE ol_product SET ol_qty = '$qtyIn[$limit]', ol_price = '$itemPrice[$limit]', ol_priceTot= '$itemTotal[$limit]' WHERE ol_id = '$olId' AND product_id ='$productId[$limit]'");
+            mysqli_query($db, "UPDATE ol_product SET ol_qty = '$qtyIn[$limit]', ol_price = '$itemPrice[$limit]', ol_fee = '$itemFee[$limit]', ol_priceTot= '$itemTotal[$limit]' WHERE ol_id = '$olId' AND product_id ='$productId[$limit]'");
         } else {
             // If product id dont exist on po_product, INSERT
-            mysqli_query($db, "INSERT INTO ol_product(product_id, ol_id, ol_qty, ol_price, ol_priceTot) 
-      VALUES ('$productId[$limit]','$olId','$qtyIn[$limit]','$itemPrice[$limit]','$itemTotal[$limit]')");
+            mysqli_query($db, "INSERT INTO ol_product(product_id, ol_id, ol_qty, ol_price, ol_fee, ol_priceTot) 
+      VALUES ('$productId[$limit]','$olId','$qtyIn[$limit]','$itemPrice[$limit]','$itemFee[$limit]','$itemTotal[$limit]')");
         }
         $limit++;
     }
