@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT ol_tb.ol_id, ol_tb.ol_title, ol_type.ol_type_id, ol_type.ol_type_name, ol_tb.ol_date, ol_tb.closed, user.user_name
+SELECT ol_tb.ol_id, ol_tb.ol_title, ol_type.ol_type_id, ol_type.ol_type_name, ol_tb.ol_date, ol_tb.closed, user.user_name, ol_tb.ol_si
 FROM ol_tb
 LEFT JOIN ol_type ON ol_type.ol_type_id = ol_tb.ol_type_id
 LEFT JOIN user ON user.user_id = ol_tb.user_id
@@ -54,7 +54,8 @@ $output = '
 <table width="100%">
   <tr>
     <th>OL ID</th>
-    <th>Title</th>
+    <th>DR No.</th>
+    <th>SI No.</th>
     <th>Type</th>
     <th><center>Date</th>
     <th><center>Action</th>
@@ -96,14 +97,15 @@ if ($total_data > 0) {
     <tr>
       <td>' . str_pad($row["ol_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["ol_title"] . '</td>
+      <td>' . $row["ol_si"] . '</td>
       <td>' . $row["ol_type_name"] . '</td>
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
                 <a href="view/viewol.php?id=' . $row["ol_id"] . '">
-                    <i class="fa fa-eye" style="font-size:26px" title="Details"></i></a>
+                <i class="fa fa-print" style="font-size:26px" title="Details"></i></a>
       </center>
-               
+     
       </td>
       <td><center>' . $row["user_name"] . '</center></td>
       <td><center>' . $str . '</center></td>

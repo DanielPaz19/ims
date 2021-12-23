@@ -45,7 +45,8 @@ const renderItem = function (data, container) {
                           <td class='qty'>${data.qty}</td>
                           <td class='unit'>${data.unit_name}</td>
                           <td class='location'>${data.loc_name}</td>
-                          <td class='price'>${formatNumber(data.cost)}</td>
+                          <td class='price'>${data.cost}</td>
+                          <td class='fee'>${data.fee}</td>
                     </tr>`
     );
   });
@@ -63,6 +64,7 @@ const rowEdit = function (e) {
   console.log(productId);
   const qty = target.closest("tr").querySelector(".input__edit--qty");
   const cost = target.closest("tr").querySelector(".input__edit--cost");
+  const fee = target.closest("tr").querySelector(".input__edit--fee");
   const discpercent = target
     .closest("tr")
     .querySelector(".input__edit--discpercent");
@@ -78,8 +80,8 @@ const rowEdit = function (e) {
     .closest("tr")
     .querySelector(".td__compute--subtotal");
 
-  const computeTotalCost = (qty, cost) => {
-    return qty * cost;
+  const computeTotalCost = (qty, cost, fee) => {
+    return qty * cost - fee;
   };
   const computeDiscountVal = (discpercent, totalCost) => {
     discount.value = totalCost * (discpercent / 100);
@@ -108,11 +110,11 @@ const rowEdit = function (e) {
 
     targetInput.value = newValue;
 
-    const totalCost = computeTotalCost(qty.value, cost.value);
+    const totalCost = computeTotalCost(qty.value, cost.value, fee.value);
     // const discountValue = computeDiscountVal(discpercent.value, totalCost);
     // const subTotal = computeSubTotal(totalCost, discountValue);
 
-    tdTotalCost.innerHTML = formatNumber(totalCost);
+    tdTotalCost.innerHTML = totalCost;
     // tdDiscount.innerHTML = formatNumber(discountValue);
     // tdSubTotal.innerHTML = formatNumber(subTotal);
   };
@@ -123,6 +125,10 @@ const rowEdit = function (e) {
 
   if (target.classList.contains("td__edit--cost")) {
     changeValue("cost", "Enter New Price");
+  }
+
+  if (target.classList.contains("td__edit--fee")) {
+    changeValue("fee", "Enter New Fee");
   }
 
   // if (target.classList.contains("td__edit--discpercent")) {
@@ -184,17 +190,20 @@ const selectItem = function (e) {
   const itemCode = targetItem.querySelector(".item-code").innerHTML;
   const itemName = targetItem.querySelector(".item-name").innerHTML;
   const itemUnit = targetItem.querySelector(".unit").innerHTML;
-  const itemPrice = targetItem.querySelector(".price").innerHTML;
+  // const itemPrice = targetItem.querySelector(".price").innerHTML;
+  // const itemFee = targetItem.querySelector(".fee").innerHTML;
 
   // Check for duplicate entries
   if (hasDuplicate(+itemCode, tableItemTb))
     return alert(`${itemName} is already added.`);
 
   const epQty = prompt("Enter Qty-in");
+  const itemPrice = prompt("Enter Price");
+  const itemFee = prompt("Enter Fee's & Charges");
   const itemDiscPercent = 0;
   const itemDiscVal = 0;
-  const totalCost = epQty * itemPrice;
-  const subTotal = +totalCost - +itemDiscVal;
+  const totalCost = epQty * itemPrice ;
+  const subTotal = +totalCost - itemFee;
 
   // Insert selected values into table
   tableItemTb.querySelector("tbody").insertAdjacentHTML(
@@ -204,8 +213,9 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty'>${epQty}</td>
     <td class='td__readonly td__readonly--unit'>${itemUnit}</td>
-    <td class='td__edit td__edit--cost'>${formatNumber(itemPrice)}</td> 
-    <td class='td__compute td__compute--totalcost'>${formatNumber(totalCost)}</td>
+    <td class='td__edit td__edit--cost'>${itemPrice}</td> 
+    <td class='td__edit td__edit--fee'>${itemFee}</td> 
+    <td class='td__compute td__compute--totalcost'>${subTotal}</td>
     <td class='td__edit td__edit--delete'>
    <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
@@ -213,6 +223,7 @@ const selectItem = function (e) {
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${epQty}' class='input__edit input__edit--qty'>
     <input type='hidden' name='itemPrice[]' value='${itemPrice}' class='input__edit input__edit--cost'>
+    <input type='hidden' name='itemFee[]' value='${itemFee}' class='input__edit input__edit--fee'>
 
     `
   );
@@ -249,7 +260,7 @@ const showTableData = (data, container) => {
                     <td class='qty'>${data.qty}</td>
                     <td class='unit'>${data.unit_name}</td>
                     <td class='location'>${data.loc_name}</td>
-                    <td class='price'>${formatNumber(data.cost)}</td>
+                    <td class='price'>${data.cost}</td>
               </tr>`;
     container.innerHTML += row;
   });

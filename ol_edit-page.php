@@ -5,7 +5,7 @@ include 'php/ol_edit-inc.php';
 ?>
 
 
-<link rel="stylesheet" href="css/ep_edit-style.css">
+<link rel="stylesheet" href="css/ol_edit-style.css">
 <script defer src="js/ol_edit-script.js"></script>
 
 <h1 style="float: left; margin-left: 50px">Online Transactions: Editing Records</h1> <br><br><br>
@@ -31,19 +31,19 @@ include 'php/ol_edit-inc.php';
                 echo "<option value='" . $data['ol_type_id'] . "'>" . $data['ol_type_name'] . "</option>";
             }
             ?>
-        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;
 
 
         <span class=" po__label">
-            OL Title:
+            OR No.:
         </span>
         <input type="text" name="olTitle" id="po_title" value="<?php echo $olTitle ?>">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!-- <span class="po__label">
-            Remarks:
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class=" po__label">
+            SI No.:
         </span>
-        <textarea name="epRemarks" cols="30" rows="3"><?php echo $epRemarks; ?></textarea> -->
+        <input type="text" name="olSi" id="po_title" value="<?php echo $olSi ?>">
         <span class="po__label">
             OL Date:
         </span>
@@ -68,14 +68,16 @@ include 'php/ol_edit-inc.php';
             <table class='table'>
                 <thead>
                     <tr style="text-align: left;">
-                        <th>&nbsp;&nbsp;Product ID</th>
-                        <th>&nbsp;&nbsp;Item Name</th>
-                        <th>&nbsp;&nbsp;Qty</th>
-                        <th>&nbsp;&nbsp;Unit</th>
-                        <th>&nbsp;&nbsp;Price</th>
-                        <th>&nbsp;&nbsp;Total Price</th>
-                        <th>
+                        <th style="width: 15%;">&nbsp;&nbsp;Product ID</th>
+                        <th style="width: 50%;">&nbsp;&nbsp;Item Name</th>
+                        <th style="width: 10%;">&nbsp;&nbsp;Qty</th>
+                        <th style="width: 10%;">&nbsp;&nbsp;Unit</th>
+                        <th style="width: 8%;">&nbsp;&nbsp;SRP</th>
+                        <th style="width: 10%;">&nbsp;&nbsp;Less Fee</th>
+                        <th style="width: 15%;">&nbsp;&nbsp;Total Price</th>
+                        <th style="width: 10%;">
                         </th>
+
                     </tr>
                 </thead>
                 <tbody class='table--item'>
@@ -83,12 +85,12 @@ include 'php/ol_edit-inc.php';
                     <?php
 
                     $limit = 0;
-                    $total = $itemPrice[$limit] * $qtyIn[$limit];
+                    $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
 
                     if (isset($productId)) {
                         while (count($productId) !== $limit) {
                             if ($productId[$limit] != 0) {
-                                $total = $itemPrice[$limit] * $qtyIn[$limit];
+                                $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
                                 # code...
                                 echo
                                 "<tr style='text-align:left;'>
@@ -96,14 +98,16 @@ include 'php/ol_edit-inc.php';
         <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
         <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
         <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
-        <td class='td__edit td__edit--cost'>" . number_format($itemPrice[$limit], 2) . "</td>
-        <td class='td__compute td__compute--totalcost'>" . number_format($total, 2) . "</td>
+        <td class='td__edit td__edit--cost'>" . $itemPrice[$limit] . "</td>
+        <td class='td__edit td__edit--fee'>" . $itemFee[$limit] . "</td>
+        <td class='td__compute td__compute--totalcost'>" . $total . "</td>
         <td class='td__edit td__edit--delete'>
         <i class='fa fa-trash-o' style='font-size:26px'></i>
       </td>
          <input type='hidden' name='productId[]' value='$productId[$limit]' >
          <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
          <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]' class='input__edit input__edit--cost'>
+         <input type='hidden' name='itemFee[]' value='$itemFee[$limit]' class='input__edit input__edit--fee'>
          <input type='hidden' name='itemTotal[]' value='$total' class='input__edit input__edit--total'>
          </tr>
          ";
@@ -117,11 +121,7 @@ include 'php/ol_edit-inc.php';
                 </tbody>
             </table>
         </div>
-        <div class="container--edit__button">
 
-
-
-        </div>
 </form>
 
 

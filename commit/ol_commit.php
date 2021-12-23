@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT ol_tb.ol_id, ol_tb.ol_title, ol_tb.ol_date, ol_type.ol_type_name
+    $result = mysqli_query($db, "SELECT ol_tb.ol_id, ol_tb.ol_title, ol_tb.ol_date, ol_type.ol_type_name, ol_tb.ol_si
                                  FROM ol_tb
                                  LEFT JOIN ol_type ON ol_type.ol_type_id = ol_tb.ol_type_id
                                 WHERE ol_id=" . $_GET['id']);
@@ -16,6 +16,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     if ($row) {
         $id = $row['ol_id'];
         $ol_title = $row['ol_title'];
+        $ol_si = $row['ol_si'];
         $dateString = $row['ol_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm/d/y');
@@ -135,7 +136,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <table class="stock-details" width="100%">
             <tr>
                 <td class="head">Sales Type :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ol_type_name; ?></td>
-                <td class="head"><b>Title. :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ol_title; ?></td>
+                <td class="head"><b>OR No. :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ol_title; ?></td>
+                <td class="head"><b>SI No. :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ol_si; ?></td>
                 <td class="head"><b> Date:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $date; ?></td>
 
 
@@ -153,12 +155,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <th width="10%">Qty Out</th>
                     <th width="5%">Unit</th>
                     <th width="10%">Incomming Qty</th>
-                    <th width="10%">Price</th>
+                    <th width="10%">SRP</th>
+                    <th width="10%">Less Amount</th>
                     <th width="10%">SubTotal Price</th>
                 </tr>
 
                 <?php
-                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ol_product.ol_qty, ol_product.ol_price, ol_product.ol_priceTot
+                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ol_product.ol_qty, ol_product.ol_price, ol_product.ol_priceTot, ol_product.ol_fee
                     FROM product 
                     LEFT JOIN ol_product ON product.product_id = ol_product.product_id
                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ol_product.ol_id='$id' ";
@@ -182,7 +185,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <input type="number" name="ol_priceTot[]" style="border: none" value="<?php echo $irow["qty"] - $irow["ol_qty"]; ?>" contenteditable="false">
                             </td>
                             <td contenteditable="false"><?php echo $irow['ol_price'] ?></td>
-                            <td class="ep_totPrice"><input type="number" style="border: none" value="<?php echo $irow["ol_qty"] * $irow["ol_price"]; ?>" contenteditable="false"></td>
+                            <td contenteditable="false"><?php echo $irow['ol_fee'] ?></td>
+                            <td class="ep_totPrice"><input type="number" style="border: none" value="<?php echo $irow["ol_priceTot"]  ?>" contenteditable="false"></td>
                         </tr>
                         <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
                 <?php }
