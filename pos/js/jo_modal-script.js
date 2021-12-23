@@ -51,6 +51,10 @@ const closeJoModal = function () {
 const selectJo = function (e) {
   const targetRow = e.target.closest("tr");
   const targetJoNumber = targetRow.querySelector(".jo__modal--td__jonumber");
+  const tdJoNumber = targetRow.querySelector(".jo__modal--td__jonumber");
+  const targetJoId = tdJoNumber.dataset.id;
+
+  window.location.hash = targetJoId;
 
   inputJoNumber.value = targetJoNumber.innerText;
 
@@ -78,6 +82,7 @@ const selectJo = function (e) {
       // JO input
       inputJoNumber.value = data[0].jo_no;
       transaction.joId = data[0].jo_id;
+      console.log(data);
 
       data.forEach((product) => {
         const totalGross = product.jo_product_qty * product.jo_product_price;
@@ -123,3 +128,12 @@ inputJoSearch.addEventListener("keyup", searchJo.bind(inputJoSearch));
 joModalClose.addEventListener("click", closeJoModal);
 // Event for Selecting JO
 tblJoModal.addEventListener("dblclick", selectJo);
+
+const loadJo = async function () {
+  const res = await fetch("http://localhost/ims/pos/php/jo.php");
+  console.log(res);
+  const dataJo = await res.json();
+  console.log(dataJo);
+};
+
+loadJo();

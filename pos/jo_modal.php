@@ -26,7 +26,7 @@
             while (count($joId) !== $jolimit) {
               echo
               "<tr>
-              <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
+              <td class='jo__modal--td__jonumber' data-id='" . $joId[$jolimit] . "'>" . $joNum[$jolimit] . "</td>
               <td>" . $joCustomerName[$jolimit] . "</td>
               <td>" . $joDate[$jolimit] . "</td>
             </tr>";
@@ -37,7 +37,7 @@
 
           ?>
           <!-- <tr>
-            <td>12-23456</td>
+            <td class='jo__modal--td__jonumber'>12-23456</td>
             <td>Philippine Acrylic and Chemical Corp.</td>
             <td>999,999.99</td>
             <td>01-01-2021</td>

@@ -748,8 +748,23 @@ containerOrderList.addEventListener("click", function (e) {
   if (selectedEdit.contains("delete")) editOrder(e, "delete");
 });
 
+// Request for Balance Function
+const getBalance = async function (joId) {
+  const res = await fetch("php/pending-payments.php", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `joId=${joId}`,
+  });
+
+  const data = await res.json();
+
+  console.log(data);
+};
+
 //save button
-btnSaveTransaction.addEventListener("click", function (e) {
+btnSaveTransaction.addEventListener("click", function () {
   // // e.preventDefault();
   // // e.stopPropagation();
 
@@ -757,6 +772,11 @@ btnSaveTransaction.addEventListener("click", function (e) {
   if (!inputJoNumber.value) return alert("Choose JO Number!");
 
   modalPayment.style.display = "block";
+
+  const id = window.location.hash.slice(1);
+  console.log(id);
+  getBalance(id);
+
   // //customer is empty
   // if (!inputCustomerId.value) return alert("Invalid Customer Details");
 
