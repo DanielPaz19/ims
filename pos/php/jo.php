@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *');
 $id = $_GET['id'];
 
 $qryJo = "SELECT jo_tb.jo_id,jo_tb.jo_no,jo_tb.customers_id,jo_tb.emp_id,jo_tb.jo_date,jo_tb.user_id,jo_tb.closed,jo_tb.jo_type_id,
-customers.customers_name
+customers.customers_name, customers.customers_company, customers.customers_address, customers.customers_contact, customers.customers_note
  FROM  jo_tb 
  LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
  WHERE jo_id = $id";
