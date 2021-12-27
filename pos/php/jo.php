@@ -6,7 +6,11 @@ header('Access-Control-Allow-Origin: *');
 // Load all JO Data
 $id = $_GET['id'];
 
-$qryJo = "SELECT * FROM  jo_tb WHERE jo_id = $id";
+$qryJo = "SELECT jo_tb.jo_id,jo_tb.jo_no,jo_tb.customers_id,jo_tb.emp_id,jo_tb.jo_date,jo_tb.user_id,jo_tb.closed,jo_tb.jo_type_id,
+customers.customers_name
+ FROM  jo_tb 
+ LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
+ WHERE jo_id = $id";
 $resultJo = mysqli_query($db, $qryJo);
 
 $output = [];
