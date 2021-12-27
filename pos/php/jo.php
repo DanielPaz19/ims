@@ -14,8 +14,11 @@ if (mysqli_num_rows($resultJo) > 0) {
   while ($rowJo = mysqli_fetch_assoc($resultJo)) {
 
     // Run Select for product array for each jo_id
-    $qryJoItems = "SELECT product.product_name, jo_product.product_id, jo_product.jo_id, jo_product.jo_product_qty, jo_product.jo_product_price,
-    jo_product.jo_remarks FROM jo_product LEFT JOIN product ON product.product_id = jo_product.product_id WHERE jo_product.jo_id =" . $rowJo['jo_id'];
+    $qryJoItems = "SELECT  product.product_id, product.product_name, unit_tb.unit_name, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price,
+    jo_product.jo_remarks FROM jo_product 
+    LEFT JOIN product ON product.product_id = jo_product.product_id 
+    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
+    WHERE jo_product.jo_id =" . $rowJo['jo_id'];
     $resultJoItems = mysqli_query($db, $qryJoItems);
 
     if (mysqli_num_rows($resultJoItems) > 0) {
