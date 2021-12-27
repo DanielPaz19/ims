@@ -98,14 +98,14 @@ if (isset($_GET['id'])) {
 
     .ep--type {
         position: absolute;
-        top: -70px;
+        top: -80px;
         left: 15%;
     }
 
     .ep--or {
         position: absolute;
         margin-left: 90px;
-        margin-top: 110mm;
+        margin-top: 105mm;
     }
 
     .bottom-right {
@@ -155,7 +155,7 @@ if (isset($_GET['id'])) {
     .totAmount {
         position: absolute;
         margin-left: 700px;
-        margin-top: 80mm;
+        margin-top: 75mm;
     }
 
     @media print {
