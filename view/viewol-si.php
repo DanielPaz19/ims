@@ -336,6 +336,13 @@ if (isset($_GET['id'])) {
                     <td><?php echo number_format($av, 2)  ?></td>
                 </tr>
                 <tr>
+                    <td>&emsp;</td>
+                </tr>
+                <tr>
+                    <td>&emsp;</td>
+                </tr>
+
+                <tr>
                     <td>
                         <b><?php echo number_format($grandTot, 2)  ?></b>
                     </td>
