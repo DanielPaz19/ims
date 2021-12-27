@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
         position: relative;
         text-align: center;
         color: black;
-        border: 1px solid black;
+        /* border: 1px solid black; */
         width: 43%;
 
 
@@ -86,7 +86,7 @@ if (isset($_GET['id'])) {
 
     .ep--date {
         position: absolute;
-        top: -33px;
+        top: -70px;
         right: -50px;
     }
 
@@ -98,7 +98,7 @@ if (isset($_GET['id'])) {
 
     .ep--type {
         position: absolute;
-        top: -43px;
+        top: -70px;
         left: 15%;
     }
 
@@ -140,7 +140,7 @@ if (isset($_GET['id'])) {
 
     .ep_tb {
         width: 210mm;
-        margin-top: 2.8mm;
+        margin-top: -5mm;
         margin-left: 0;
         border-collapse: collapse;
         position: fixed;
@@ -155,7 +155,7 @@ if (isset($_GET['id'])) {
     .totAmount {
         position: absolute;
         margin-left: 700px;
-        margin-top: 93mm;
+        margin-top: 80mm;
     }
 
     @media print {
