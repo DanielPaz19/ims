@@ -541,7 +541,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </td>
                 </tr>
             </table>
-            &emsp;&emsp;<textarea cols="65" rows="4"><?php echo $ep_remarks; ?></textarea>
+            &emsp;&emsp;<textarea cols="65" rows="10"><?php echo $ep_remarks; ?></textarea>
         </div>
         <table class="tb--user">
             <tr style="text-align: center;">
