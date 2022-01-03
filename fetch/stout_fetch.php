@@ -122,7 +122,7 @@ if ($total_data > 0) {
 $output .= '
 </table>
 <br />
-<label class="tableLabel" style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
+<label class="tableLabel" style="float:right; color:midnightblue;font-weight:bolder; letter-spacing:2px">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">
