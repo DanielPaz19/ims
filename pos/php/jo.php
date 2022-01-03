@@ -1,7 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 
 require 'config.php';
-header('Access-Control-Allow-Origin: *');
 
 // Load all JO Data
 $id = $_GET['id'];
