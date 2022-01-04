@@ -143,7 +143,7 @@ if (isset($_GET['printPOS'])) {
                     <td colspan="4">&emsp;&emsp;&emsp;&nbsp;<?php echo $customers_address; ?></td>
                 </tr>
             </table>
-
+            <br>
             <table class="items">
                 <?php
                 $sql = "SELECT product.product_id, product.product_name, order_product.pos_temp_qty, unit_tb.unit_name, order_product.pos_temp_price
