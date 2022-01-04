@@ -54,6 +54,7 @@ if (isset($_GET['printPOS'])) {
         }
 
         .main-page {
+            position: absolute;
             width: 210mm;
             min-height: 253mm;
             margin: 10mm auto;
@@ -120,7 +121,7 @@ if (isset($_GET['printPOS'])) {
         }
 
         .sign {
-            position: absolute;
+            position: sticky;
             margin-left: 35px;
             margin-top: 5.2in;
         }
@@ -130,7 +131,7 @@ if (isset($_GET['printPOS'])) {
 <body>
     <div class="main-page">
         <div class="sub-page">
-            <br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br><br><br>
             <table class="header">
                 <tr>
                     <td>&emsp;&nbsp;&nbsp;</td>
@@ -142,7 +143,7 @@ if (isset($_GET['printPOS'])) {
                     <td colspan="4">&emsp;&emsp;&emsp;&nbsp;<?php echo $customers_address; ?></td>
                 </tr>
             </table>
-            <br>
+
             <table class="items">
                 <?php
                 $sql = "SELECT product.product_id, product.product_name, order_product.pos_temp_qty, unit_tb.unit_name, order_product.pos_temp_price
