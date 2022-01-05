@@ -15,7 +15,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
         echo "<tr>
-    <td><input id='product" . $row['product_id'] . "' name='product-id[]'  value='" . $row['product_id'] . "'></td>
+    <td><input style='border:none;' id='product" . $row['product_id'] . "' name='product-id[]'  value='" . $row['product_id'] . "'></td>
     <td>" . $row['product_name'] . "</td>
     <td><input name='qty_order[]' style='border:none;' value='" . $product_qty . "' readonly></td>
     <td><input name='location[]' style='border:none;' style='border:none;' value='" . $item_location . "' readonly></td>
