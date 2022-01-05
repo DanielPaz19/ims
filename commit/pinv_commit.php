@@ -171,7 +171,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             </tr>
 
                             <?php
-                            $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, pinv_product.pinv_qty, product.barcode, loc_tb.loc_name
+                            $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.cost, pinv_product.pinv_qty, product.barcode, loc_tb.loc_name,loc_tb.loc_id
                     FROM product 
                     LEFT JOIN pinv_product ON product.product_id = pinv_product.product_id
                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
@@ -188,7 +188,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                     <tr>
                                         <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
                                         <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                                        <td contenteditable="false"><?php echo $irow['loc_name'] ?></td>
+                                        <td contenteditable="false"><input type="text" name="loc_id[]" value="<?php echo $irow['loc_id'] ?>"></td>
                                         <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;background-color:transparent" readonly></td>
                                         <td contenteditable="false">
                                             <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['pinv_qty'] ?>" style="border: none;" readonly></font>
