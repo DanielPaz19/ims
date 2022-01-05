@@ -93,7 +93,7 @@ if (isset($_POST['update'])) {
     }
 
 
-    // header("location: ../pinv_edit-page.php?edit&updated&id=$pinvId");
+    header("location: ../pinv_edit-page.php?edit&updated&id=$pinvId");
 }
 
 // If po_edit-page.php update button is set
