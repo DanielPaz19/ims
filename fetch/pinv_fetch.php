@@ -79,7 +79,8 @@ if ($total_data > 0) {
         } else {
             $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
             $disable = '
-
+            <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
+            &nbsp;&nbsp;&nbsp;
       <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
       &nbsp;&nbsp;&nbsp;';
         }
