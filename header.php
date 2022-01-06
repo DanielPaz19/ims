@@ -76,14 +76,14 @@
       </div>
     </div>
 
-    <!-- <div class="dropdown">
+    <div class="dropdown">
       <button class="dropbtn"><i class="fa fa-file-text-o"></i>&nbsp;Others&nbsp<i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
         <a href="pivdr_main.php">&nbsp;PIVDR</a>
 
       </div>
-    </div> -->
+    </div>
 
     <a href="php/logout-inc.php" style="float:right;" title="Sign-Out">Welcome &nbsp; <i class='fas fa-user-circle'></i>&nbsp;<?php echo $_SESSION["empName"]; ?></a>
   </div>
