@@ -145,7 +145,7 @@ if (!isset($_SESSION['user'])) {
     float: left;
   }
 </style>
-<div class='container'>
+<!-- <div class='container'>
   <center>
     <h2>Sales / Inventory Logs </h2>
   </center>
@@ -160,10 +160,10 @@ if (!isset($_SESSION['user'])) {
     </center>
 
   </div>
-</div>
+</div> -->
 
 
-<div class="item--details">
+<!-- <div class="item--details">
   <center>
     <h3>
       <b style="color: red;">
@@ -204,7 +204,7 @@ if (!isset($_SESSION['user'])) {
     <?php }
     } ?>
   </table>
-</div>
+</div> -->
 
 
 

@@ -20,4 +20,4 @@
 
 </head>
 
-<body style="margin: 0px;" bgcolor="#F5F5F5">
+<body style="margin: 0px;" bgcolor="#b0e0e6">
