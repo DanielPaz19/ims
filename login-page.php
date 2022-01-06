@@ -1,6 +1,6 @@
 <?php
-include_once 'header.php';
 
+include_once 'header.php';
 if (isset($_SESSION['user'])) {
   header("location: ../php/logout-inc.php");
 }
