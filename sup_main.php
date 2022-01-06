@@ -1,4 +1,5 @@
 <?php include('header.php');
+include('navbar.php');
 
 if (!isset($_SESSION['user'])) {
   header("location: ../login-page.php");
