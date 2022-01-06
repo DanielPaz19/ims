@@ -69,8 +69,8 @@ if (isset($_GET['qry'])) {
   $qryJo = "SELECT jo_tb.jo_id,jo_tb.jo_no,jo_tb.customers_id,jo_tb.emp_id,jo_tb.jo_date,jo_tb.user_id,jo_tb.closed,jo_tb.jo_type_id,
   customers.customers_name, customers.customers_company, customers.customers_address, customers.customers_contact, customers.customers_note
    FROM  jo_tb 
-   LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id ORDER BY jo_tb.jo_date DESC
-   WHERE customers.customers_name LIKE '%$qry%' OR jo_tb.jo_no LIKE '%$qry%'";
+   LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
+   WHERE customers.customers_name LIKE '%$qry%' OR jo_tb.jo_no LIKE '%$qry%' ORDER BY jo_tb.jo_date DESC";
 
   $resultJo = mysqli_query($db, $qryJo);
 
