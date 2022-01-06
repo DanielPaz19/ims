@@ -83,4 +83,21 @@ if (isset($_GET['qry'])) {
   }
 }
 
+
+
+if (isset($_GET['payment'])) {
+  require 'config.php';
+
+  $joId = $_GET['id'];
+
+  $qryPayments = "SELECT * FROM payment_tb WHERE jo_id = '$joId'";
+  $resultPayments = mysqli_query($db, $qryPayments);
+  $output = [];
+  if (mysqli_num_rows($resultPayments) > 0) {
+    while ($row = mysqli_fetch_assoc($resultPayments)) {
+      $output[] = $row;
+    }
+  }
+}
+
 echo json_encode($output);
