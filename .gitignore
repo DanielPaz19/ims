@@ -2349,3 +2349,4 @@ phpMyAdmin/version_check.php
 phpMyAdmin/view_create.php
 phpMyAdmin/view_operations.php
 phpMyAdmin/yarn.lock
+pos/php/config.php
