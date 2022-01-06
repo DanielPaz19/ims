@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
   customers.customers_name, customers.customers_company, customers.customers_address, customers.customers_contact, customers.customers_note
    FROM  jo_tb 
    LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
-   WHERE jo_id = $id";
+   WHERE jo_id = $id AND jo_tb.jo_type_id = '1' AND jo_tb.closed = '0'";
   $resultJo = mysqli_query($db, $qryJo);
 
   $output = [];
@@ -48,7 +48,8 @@ if (isset($_GET['pending'])) {
   $qryJo = "SELECT jo_tb.jo_id,jo_tb.jo_no,jo_tb.customers_id,jo_tb.emp_id,jo_tb.jo_date,jo_tb.user_id,jo_tb.closed,jo_tb.jo_type_id,
   customers.customers_name, customers.customers_company, customers.customers_address, customers.customers_contact, customers.customers_note
    FROM  jo_tb 
-   LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id ORDER BY jo_tb.jo_date DESC";
+   LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id
+   WHERE jo_tb.jo_type_id = '1' AND jo_tb.closed = '0' ORDER BY jo_tb.jo_date DESC";
 
   $resultJo = mysqli_query($db, $qryJo);
 
@@ -70,7 +71,7 @@ if (isset($_GET['qry'])) {
   customers.customers_name, customers.customers_company, customers.customers_address, customers.customers_contact, customers.customers_note
    FROM  jo_tb 
    LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
-   WHERE customers.customers_name LIKE '%$qry%' OR jo_tb.jo_no LIKE '%$qry%' ORDER BY jo_tb.jo_date DESC";
+   WHERE (jo_tb.jo_type_id = '1' AND jo_tb.closed = '0') AND (customers.customers_name LIKE '%$qry%' OR jo_tb.jo_no LIKE '%$qry%') ORDER BY jo_tb.jo_date DESC";
 
   $resultJo = mysqli_query($db, $qryJo);
 
