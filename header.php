@@ -20,7 +20,7 @@
 
 </head>
 
-<body style="margin: 0px;" bgcolor="#B0C4DE">
+<body style="margin: 0px;" bgcolor="#F5F5F5">
   <div class="navbar" <?php
                       if (!isset($_SESSION['user'])) {
                         echo "hidden";
@@ -36,7 +36,6 @@
         <a href="itemlist_main.php"><i class="fas fa-box"></i>&nbspItemList</a>
         <a href="stin_main.php"><i class="fas fa-arrow-circle-down"></i>&nbspStock-In</a>
         <a href="stout_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspStock-Out</a>
-
         <a href="ep_main.php"><i class="fas fa-arrow-circle-up"></i>&nbspExit-Pass</a>
         <a href="po_main.php"><i class="fas fa-shopping-cart"></i>&nbspPurchase Order</a>
         <a href="pinv_main2.php">Physical Inventory</a>
@@ -74,6 +73,15 @@
         <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
         <a href="#">&nbsp;Stock-Out </a>
         <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn"><i class="fa fa-file-text-o"></i>&nbsp;Others&nbsp<i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="pivdr_main.php">&nbsp;PIVDR</a>
+
       </div>
     </div>
 
