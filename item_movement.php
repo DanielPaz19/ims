@@ -240,7 +240,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     break;
 
                   case '9':
-                    echo $irow['bal_qty'] - $irow['in_qty'];
+                    echo $irow['bal_qty'] + $irow['in_qty'];
                     break;
 
                   default:
