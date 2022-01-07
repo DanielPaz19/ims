@@ -9,7 +9,7 @@ if (isset($_GET['edit'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_date, employee_tb.emp_name,employee_tb.emp_id, pinv_product.pinv_qty, loc_tb.loc_name, product.product_id, product.product_name, unit_tb.unit_name
+        "SELECT pinv_tb.pinv_id, pinv_tb.pinv_title, pinv_tb.pinv_date, employee_tb.emp_name,employee_tb.emp_id, pinv_product.pinv_qty, loc_tb.loc_id,loc_tb.loc_name, product.product_id, product.product_name, unit_tb.unit_name
         FROM pinv_tb
         LEFT JOIN employee_tb ON employee_tb.emp_id = pinv_tb.emp_id
         LEFT JOIN pinv_product ON pinv_product.pinv_id = pinv_tb.pinv_id
@@ -36,7 +36,8 @@ if (isset($_GET['edit'])) {
             $productName[] = $row['product_name'];
             $unit[] = $row['unit_name'];
             $qtyIn[] = $row['pinv_qty'];
-            $location[] = $row['loc_name'];
+            $locationName[] = $row['loc_name'];
+            $locId[] = $row['loc_id'];
         }
     } else {
         echo "0 results";
@@ -44,18 +45,18 @@ if (isset($_GET['edit'])) {
 }
 
 // If stout_edit-page.php update button is set
-if (isset($_POST['update'])) {
+if (isset($_GET['update'])) {
 
-    $pinvId = number_format($_POST['pinvId']);
-    $employeeId = $_POST['employeeId'];
-    $pinvTitle = $_POST['pinvTitle'];
-    $pinvDate = $_POST['pinvDate'];
+    $pinvId = number_format($_GET['pinvId']);
+    $employeeId = $_GET['employeeId'];
+    $pinvTitle = $_GET['pinvTitle'];
+    $pinvDate = $_GET['pinvDate'];
 
 
 
-    $productId = $_POST['productId'];
-    $qtyIn = $_POST['qtyIn'];
-    $itemLocation = $_POST['location'];
+    $productId = $_GET['productId'];
+    $qtyIn = $_GET['qtyIn'];
+    $locId = $_GET['locId'];
 
 
     require '../php/config.php';
@@ -82,8 +83,8 @@ if (isset($_POST['update'])) {
         } else {
             // If product id dont exist on stout_product, INSERT
             if ($productId[$limit] != 0) {
-                $sql = "INSERT INTO pinv_product(product_id, pinv_id, pinv_id, loc_id) 
-                VALUES ('$productId[$limit]','$pinvId','$qtyIn[$limit]','$itemLocation[$limit]')";
+                $sql = "INSERT INTO pinv_product(product_id, pinv_id, pinv_qty,loc_id) 
+                VALUES ('$productId[$limit]','$pinvId','$qtyIn[$limit]','$locId[$limit]')";
             }
         }
 
@@ -104,14 +105,14 @@ if (isset($_POST['cancelupdate'])) {
 
 // If stout_edit-page.php delete button is set
 if (isset($_POST['delete'])) {
-    $stoutId = $_POST['stoutId'];
+    $pinvId = $_POST['pinvId'];
     $productId = $_POST['productId'];
 
     require '../php/config.php';
 
-    mysqli_query($db, "DELETE FROM stout_product WHERE stout_id = '$stoutId' AND product_id = '$productId'");
+    mysqli_query($db, "DELETE FROM pinv_product WHERE pinv_id = '$pinvId' AND product_id = '$productId'");
 
-    echo "stoutId" . $stoutId . "productId" . $productId;
+    echo "pinvId" . $pinvId . "productId" . $productId;
 }
 
 if (isset($_GET['updated'])) {

@@ -44,7 +44,7 @@ const renderItem = function (data, container) {
                           <td class='item-name'>${data.product_name}</td>
                           <td class='qty'>${data.qty}</td>
                           <td class='barcode'>${data.barcode}</td>
-                          <td class='location'>${data.loc_name}</td>
+                          <td class='location'>${data.loc_name} <input type='hidden' name='locId[]' value='${data.loc_id}' class='locId'></td>
                           <td class='cost'>${formatNumber(data.cost)}</td>
                     </tr>`
     );
@@ -136,12 +136,12 @@ const rowEdit = function (e) {
 
     if (!confirmDelete) return;
 
-    fetch("php/stout_edit-inc.php", {
+    fetch("php/pinv_edit-inc.php", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `delete&productId=${productId.innerHTML}&stoutId=${inputId.value}`,
+      body: `delete&productId=${productId.innerHTML}&pinvId=${inputId.value}`,
     }).then(() => location.reload());
   }
 };
@@ -184,6 +184,7 @@ const selectItem = function (e) {
   const itemCode = targetItem.querySelector(".item-code").innerHTML;
   const itemName = targetItem.querySelector(".item-name").innerHTML;
   const itemLocation = targetItem.querySelector(".location").innerHTML;
+  const itemLocationId = targetItem.querySelector(".locId").value;
   const itemCost = targetItem.querySelector(".cost").innerHTML;
 
   // Check for duplicate entries
@@ -203,13 +204,13 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--productid'>${itemCode}</td>
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
-    <td class='td__readonly td__readonly--barcode' style='text-align:center;'>${itemLocation}</td>
+    <td class='' style='text-align:center;'></td>
     <td class='td__edit td__edit--delete'>
    <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
-    <input type='hidden' name='itemCost[]' value='${itemCost}' class='input__edit input__edit--cost'>
+    <input type='hidden' name='locId[]' value='${itemLocationId}' class='input__edit input__edit--cost locId'>
     </tr>
     `
   );
@@ -245,7 +246,7 @@ const showTableData = (data, container) => {
                     <td class='item-name'>${data.product_name}</td>
                     <td class='qty'>${data.qty}</td>
                     <td class='barcode'>${data.barcode}</td>
-                    <td class='location'>${data.loc_name}</td>
+                    <td class='location'>${data.loc_name} <input type='hidden' value='${data.loc_id}' class='locId'></td>
                     <td class='cost'>${formatNumber(data.cost)}</td>
               </tr>`;
     container.innerHTML += row;
