@@ -9,7 +9,7 @@ include 'php/pinv_edit-inc.php';
 <script defer src="js/pinv_edit-script.js"></script>
 
 <h1>Physical Inventory: Editing Records</h1>
-<form action="php/pinv_edit-inc.php" method="POST">
+<form action="php/pinv_edit-inc.php" method="GET">
     <div class='container--details'>
         <a href="pinv_main2.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
         <table>
@@ -31,7 +31,6 @@ include 'php/pinv_edit-inc.php';
                     </span>
                     <input type="date" name="pinvDate" id="pinv_date" value="<?php echo $pinvDate ?>">
                 </td>
-
 
             </tr>
             <tr>
@@ -96,7 +95,7 @@ include 'php/pinv_edit-inc.php';
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
-                 <td class='td__readonly td__readonly--location' style='text-align:center;'>$location[$limit]</td>
+                 <td class='td__readonly td__readonly--location' style='text-align:center;'>$locationName[$limit]</td>
               
 
                  <td class='td__edit td__edit--delete'>
@@ -104,7 +103,7 @@ include 'php/pinv_edit-inc.php';
                   </td>
                   <input type='hidden' name='productId[]' value='$productId[$limit]' >
                   <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-                  <input type='hidden' name='location[]' value='$location[$limit]' class='input__edit input__edit--location'>
+                  <input type='hidden' name='locId[]' value='$locId[$limit]' class='input__edit input__edit--locId'>
                  </tr>
                  ";
                         }
@@ -152,7 +151,7 @@ include 'php/pinv_edit-inc.php';
 <div class="container--modal">
     <div class='modal--add__item'>
 
-        <a href=""><button onclick="showadditem()" class="button--add__item">New Item</button></a>
+        <a href=""><button onclick="showadditemEDITV2()" class="button--add__item">New Item</button></a>
 
         <input type="text" class='input--search' placeholder="Search Item..."><br>
         <span class='close--modal' style="float: right;"><i class="fa fa-close"></i></span>
