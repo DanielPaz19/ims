@@ -1,4 +1,5 @@
-config.php
+php/config.php
+pos/php/config
 phpMyAdmin/ajax.php
 phpMyAdmin/browse_foreigners.php
 phpMyAdmin/ChangeLog
