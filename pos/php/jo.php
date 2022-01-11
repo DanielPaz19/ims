@@ -1,4 +1,6 @@
 <?php
+// header('content-type: application/json; charset=utf-8');
+// header('Content-Type: application/x-www-form-urlencoded; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 
 if (isset($_GET['id'])) {
@@ -100,45 +102,50 @@ if (isset($_GET['payment'])) {
   }
 }
 
-
-echo json_encode($output);
-
 if (isset($_GET['save'])) {
   require_once 'config.php';
 
-  $mode = $_POST['mode'];
-  $joId = $_POST['joId'];
-  $invoiceNum = $_POST['invoiceNum'];
-  $amount = $_POST['amount'];
-  $userId = $_POST['userId'];
-  $paymentDate = $_POST['date'];
+  $json = file_get_contents('php://input');
+  $payment = json_decode($json);
 
-  $sql = "INSERT INTO payment_tb(jo_id, invoice_no,payment_amount, user_id, payment_date)
-  VALUES ('$joId', '$invoiceNum', '$amount', '$userId', '$paymentDate')";
+  echo $json;
+
+  $mode = $payment->mode;
+  $joId = $payment->joId;
+  $invoiceNum = $payment->invoiceNum;
+  $amount = $payment->amount;
+  $userId = $payment->userId;
+  $paymentDate = $payment->date;
+
+  $sql = "INSERT INTO payment_tb(jo_id, invoice_no,payment_amount, user_id)
+  VALUES ('$joId', '$invoiceNum', '$amount', '$userId')";
 
   if (mysqli_query($db, $sql)) {
     $lastPaymentId = mysqli_insert_id($db);
 
     if ($mode === "cash") {
       $modeSql = "INSERT INTO cash_payment(payment_id,cash_pay_amount) 
-      VALUES($lastPaymentId, $amount)";
+      VALUES('$lastPaymentId', '$amount')";
     }
 
     if ($mode === "online") {
-      $platform = $_POST['platform'];
-      $onlineRef = $_POST['reference'];
+      $platform = $payment->platform;
+      $onlineRef = $payment->reference;
       $modeSql = "INSERT INTO online_payment(payment_id,online_platform_id,online_payment_reference,online_payment_amount, online_payment_date) 
-      VALUES($lastPaymentId, $platform, $onlineRef, $amount, $paymentDate)";
+      VALUES('$lastPaymentId', '$platform', '$onlineRef', '$amount', '$paymentDate')";
     }
 
     if ($mode === "cheque") {
-      $chequeNum = $_POST['chequeNum'];
-      $bankId = $_POST['bankId'];
+      $chequeNum = $payment->chequeNum;
+      $bankId = $payment->bank;
       $modeSql = "INSERT INTO cheque_payment(payment_id,cheque_number,cheque_date,cheque_amount, bank_id) 
-      VALUES($lastPaymentId, $chequeNum,$paymentDate, $amount, $bankId)";
+      VALUES('$lastPaymentId', '$chequeNum','$paymentDate', '$amount', '$bankId')";
     }
     mysqli_query($db, $modeSql);
   }
 
   exit();
 }
+
+
+echo json_encode($output);
