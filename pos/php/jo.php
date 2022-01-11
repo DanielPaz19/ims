@@ -108,8 +108,6 @@ if (isset($_GET['save'])) {
   $json = file_get_contents('php://input');
   $payment = json_decode($json);
 
-  echo $json;
-
   $mode = $payment->mode;
   $joId = $payment->joId;
   $invoiceNum = $payment->invoiceNum;
@@ -124,8 +122,8 @@ if (isset($_GET['save'])) {
     $lastPaymentId = mysqli_insert_id($db);
 
     if ($mode === "cash") {
-      $modeSql = "INSERT INTO cash_payment(payment_id,cash_pay_amount) 
-      VALUES('$lastPaymentId', '$amount')";
+      $modeSql = "INSERT INTO cash_payment(payment_id,cash_pay_amount,cash_pay_date) 
+      VALUES('$lastPaymentId', '$amount','$paymentDate')";
     }
 
     if ($mode === "online") {
@@ -142,9 +140,9 @@ if (isset($_GET['save'])) {
       VALUES('$lastPaymentId', '$chequeNum','$paymentDate', '$amount', '$bankId')";
     }
     mysqli_query($db, $modeSql);
+    $output = new stdClass();
+    $output->paymentId = $lastPaymentId;
   }
-
-  exit();
 }
 
 
