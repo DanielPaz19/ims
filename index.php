@@ -43,8 +43,6 @@ if (!isset($_SESSION['user'])) {
       <a href="#" onclick="showUnit()"><i class="fa fa-plus-circle"></i>&nbsp;Unit</a>
       <a href="#" onclick="showLocation()"><i class="fa fa-plus-circle"></i>&nbsp;Location</a>
       <a href="#" onclick="showEmployee()"><i class="fa fa-plus-circle"></i>&nbsp;Employee</a>
-
-
     </div>
   </div>
 
@@ -53,7 +51,7 @@ if (!isset($_SESSION['user'])) {
     </button>
     <div class="dropdown-content">
       <a href="#">&nbsp;Inventory</a>
-      <a href="#">&nbsp;POS</a>
+      <a href="pos_report.php">&nbsp;POS</a>
       <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
       <a href="#">&nbsp;Stock-Out </a>
       <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>

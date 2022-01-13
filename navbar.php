@@ -18,7 +18,6 @@
             <a href="pinv_main2.php">Physical Inventory</a>
             <a href="rt_main.php">Return Slip</a>
             <a href="ol_main.php">Online Transaction</a>
-
         </div>
     </div>
 
@@ -47,7 +46,7 @@
         </button>
         <div class="dropdown-content">
             <a href="#">&nbsp;Inventory</a>
-            <a href="#">&nbsp;POS</a>
+            <a href="pos_report.php">&nbsp;POS</a>
             <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
             <a href="#">&nbsp;Stock-Out </a>
             <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
