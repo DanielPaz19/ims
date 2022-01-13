@@ -22,21 +22,17 @@ if ($_POST['page'] > 1) {
 } else {
     $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_name, user.user_name, rt_tb.closed
 FROM rt_tb
 LEFT JOIN customers ON customers.customers_id = rt_tb.customers_id
 LEFT JOIN user ON user.user_id = rt_tb.user_id
+WHERE rt_tb.rt_no LIKE '%$qry%' OR customers.customers_name LIKE '%$qry%'  ORDER BY rt_tb.rt_id DESC
+
  ";
 
-if ($_POST['query'] != '') {
-    $query .= '
-  WHERE rt_tb.rt_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
 
-$query .= 'ORDER BY rt_tb.rt_id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
