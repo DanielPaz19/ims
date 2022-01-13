@@ -40,6 +40,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     .container {
         background-color: white;
         padding: 2%;
+        -webkit-box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
+        box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
     }
 
     .header {
@@ -75,7 +77,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         font-weight: bolder;
     }
 </style>
-
+<title>POS REPORT</title>
 
 <body>
 
