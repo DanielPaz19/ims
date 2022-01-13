@@ -22,21 +22,17 @@ if ($_POST['page'] > 1) {
 } else {
     $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT ol_tb.ol_id, ol_tb.ol_title, ol_type.ol_type_id, ol_type.ol_type_name, ol_tb.ol_date, ol_tb.closed, user.user_name, ol_tb.ol_si
 FROM ol_tb
 LEFT JOIN ol_type ON ol_type.ol_type_id = ol_tb.ol_type_id
 LEFT JOIN user ON user.user_id = ol_tb.user_id
+WHERE ol_tb.ol_title LIKE '%$qry%' OR ol_tb.ol_si LIKE '%$qry%'  ORDER BY ol_tb.ol_id DESC
+
 ";
 
-if ($_POST['query'] != '') {
-    $query .= '
-  WHERE ol_tb.ol_title LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
 
-$query .= 'ORDER BY ol_id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 

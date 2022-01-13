@@ -24,21 +24,17 @@ if ($_POST['page'] > 1) {
 } else {
   $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name, po_tb.po_terms, po_type.po_type_id, po_type.po_type_name
 FROM po_tb 
 LEFT JOIN user ON user.user_id = po_tb.user_id
 LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id
-LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id ";
+LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id 
+WHERE po_tb.po_code LIKE '%$qry%' OR sup_tb.sup_name LIKE '%$qry%'  ORDER BY po_tb.po_id DESC
+";
 
-if ($_POST['query'] != '') {
-  $query .= '
-  WHERE po_code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
 
-$query .= 'ORDER BY po_id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
