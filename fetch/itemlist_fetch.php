@@ -22,7 +22,7 @@ if ($_POST['page'] > 1) {
 } else {
   $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, unit_tb.unit_id, product.pro_remarks, loc_tb.loc_name,loc_tb.loc_id, product.barcode, product.price, product.cost, dept_tb.dept_name, dept_tb.dept_id, class_tb.class_id, product_type.product_type_name, product_type.product_type_id
 FROM product
@@ -31,16 +31,9 @@ LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
 LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
 LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id
 LEFT JOIN product_type ON product.product_type_id = product_type.product_type_id
-
+WHERE product.product_id LIKE '%$qry%' OR product.barcode LIKE '%$qry%' 
 ";
 
-if ($_POST['query'] != '') {
-  $query .= '
-  WHERE product_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
-
-$query .= 'ORDER BY product_id ASC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
