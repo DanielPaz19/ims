@@ -1,0 +1,54 @@
+.w3-midnight-blue,
+.w3-hover-midnight-blue:hover {
+  color: #fff !important;
+  background-color: midnightblue !important;
+}
+
+.w3-text-midnight-blue,
+.w3-hover-text-midnight-blue:hover {
+  color: midnightblue !important;
+}
+
+.w3-border-midnight-blue,
+.w3-hover-border-midnight-blue:hover {
+  border-color: midnightblue !important;
+}
+
+.container--jo:hover {
+  cursor: pointer;
+}
+
+.nav--active {
+  color: red !important;
+}
+
+table {
+  table-layout: fixed !important;
+}
+
+.nav--container {
+  position: sticky;
+  top: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+
+  /* background: #f1f1f1; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
