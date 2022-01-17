@@ -84,6 +84,13 @@ include 'php/pinv_edit-inc.php';
             </thead>
             <tbody class='table--item'>
                 <?php
+                $records = mysqli_query($db, "SELECT * FROM loc_tb");
+                $output = '';
+                while ($data = mysqli_fetch_array($records)) {
+                    $idLoc = $data['loc_id'];
+                    $nameLoc = $data['loc_name'];
+                    $output .= "<option value='$idLoc'>$nameLoc</option>";
+                }
                 $limit = 0;
 
                 if (isset($productId)) {
@@ -95,7 +102,11 @@ include 'php/pinv_edit-inc.php';
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
-                 <td class='td__readonly td__readonly--location' style='text-align:center;'>$locationName[$limit]</td>
+                 <td class='td__readonly td__readonly--location' style='text-align:center;'>
+                 <select name='locId[]'>
+                 <option value='$locId[$limit]'>$locationName[$limit]</option>$output
+                 </select>
+                 </td>
               
 
                  <td class='td__edit td__edit--delete'>
@@ -103,7 +114,7 @@ include 'php/pinv_edit-inc.php';
                   </td>
                   <input type='hidden' name='productId[]' value='$productId[$limit]' >
                   <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-                  <input type='hidden' name='locId[]' value='$locId[$limit]' class='input__edit input__edit--locId'>
+                  
                  </tr>
                  ";
                         }

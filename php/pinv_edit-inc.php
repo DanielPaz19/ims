@@ -79,7 +79,7 @@ if (isset($_GET['update'])) {
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on stout_product, UPDATE
-            $sql = "UPDATE pinv_product SET pinv_qty = '$qtyIn[$limit]'  WHERE pinv_id = '$pinvId' AND product_id ='$productId[$limit]'";
+            $sql = "UPDATE pinv_product SET pinv_qty = '$qtyIn[$limit]', loc_id='$locId[$limit]'  WHERE pinv_id = '$pinvId' AND product_id ='$productId[$limit]'";
         } else {
             // If product id dont exist on stout_product, INSERT
             if ($productId[$limit] != 0) {
