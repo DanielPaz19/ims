@@ -31,7 +31,7 @@ LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
 LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
 LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id
 LEFT JOIN product_type ON product.product_type_id = product_type.product_type_id
-WHERE product.product_id LIKE '%$qry%' OR product.barcode LIKE '%$qry%' 
+WHERE product.product_id LIKE '%$qry%' OR product.barcode LIKE '%$qry%'  OR product.product_name LIKE '%$qry%'
 ";
 
 
