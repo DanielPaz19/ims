@@ -22,21 +22,15 @@ if ($_POST['page'] > 1) {
 } else {
   $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, employee_tb.emp_name, stin_tb.stin_date, stin_tb.closed, user.user_name
 FROM stin_tb
 LEFT JOIN user ON user.user_id = stin_tb.user_id
 LEFT JOIN employee_tb 
-ON stin_tb.emp_id = employee_tb.emp_id ";
-
-if ($_POST['query'] != '') {
-  $query .= '
-  WHERE stin_code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
-
-$query .= 'ORDER BY stin_id DESC ';
+ON stin_tb.emp_id = employee_tb.emp_id 
+WHERE stin_tb.stin_code LIKE '%$qry%' OR stin_tb.stin_title LIKE '%$qry%' OR employee_tb.emp_name LIKE '%$qry%' ORDER BY stin_tb.stin_id DESC
+";
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -124,7 +118,7 @@ if ($total_data > 0) {
 $output .= '
 </table>
 <br />
-<label style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
+<label style="float:right; color:midnightblue;font-weight:bolder; letter-spacing:2px">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">

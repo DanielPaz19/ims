@@ -255,6 +255,7 @@
                 var id = $("li.selected p").text(); //gets the value id
                 var qty = $(".item-qty").val();
                 var price = $(".item-price").val();
+                var fee = $(".item-fee").val();
                 var remarks = $(".item-remarks").val();
                 if (addOrder(id)) {
                     $.get(
@@ -262,6 +263,7 @@
                             id: id,
                             qty: qty,
                             price: price,
+                            fee: fee,
                             remarks: remarks,
                         },
                         function(data, status) {
@@ -282,6 +284,7 @@
                                 $("#item-name").val("");
                                 $(".item-qty").val(1);
                                 $(".item-price").val(0);
+                                $(".item-fee").val(0);
                                 $(".item-remarks").val("");
                                 $("li.selected").removeClass("selected");
                             }
@@ -314,10 +317,14 @@
                     <!-- input for item qty -->
                     <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input class="item-qty" type="number" placeholder="Quantity" value="1" />
-
+                    &emsp;
                     <!-- input for discount -->
-                    <label>Price: &nbsp;&nbsp;</label>
-                    <input class="item-price" type="number" placeholder="Price" value="0" /> <br /><br />
+                    <label>SRP Price: &nbsp;&nbsp;</label>
+                    <input class="item-price" type="number" placeholder="Price" value="0" />
+                    &emsp;
+                    <label>Fee's & Charges: &nbsp;&nbsp;</label>
+                    <input class="item-fee" type="number" placeholder="Fee" value="0" />
+                    <br /><br />
                     <button class="add-button" title="Add Item">Add item to table</button>
                 </div>
                 <br><br><br>
@@ -327,8 +334,10 @@
                     <label>OL ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId"></span><br><br>
 
 
-                    <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="ol_title" placeholder="DR-00000"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>OR No.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <input type="text" name="ol_title" placeholder="#####"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>SI No.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <input type="text" name="ol_si" placeholder="#####"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     <label>Date:&nbsp;&nbsp;</label>
                     <input type="date" name="ol_date" required><br><br>
@@ -360,10 +369,10 @@
                                 <th style="padding: 10px; text-align: left" width="10%">
                                     Quantity
                                 </th>
-                                <th style="padding: 10px; text-align: left" width="10%">Price</th>
-
+                                <th style="padding: 10px; text-align: left" width="10%">SRP Price</th>
+                                <th style="padding: 10px; text-align: left" width="10%">Total Payment Fee</th>
                                 <th style="padding: 10px; text-align: left" width="10%">
-                                    Total Amount
+                                    Settlement Amount
                                 </th>
 
                                 <th style="padding: 10px; text-align: left" width="10%">

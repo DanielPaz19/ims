@@ -9,7 +9,8 @@ $query = "SELECT product.pro_remarks,
             product.qty,
             unit_tb.unit_name,
             product.barcode, 
-            loc_name,
+            loc_tb.loc_name,
+            loc_tb.loc_id,
             product.unit_id,
             product.cost
             FROM product 

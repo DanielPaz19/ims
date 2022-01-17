@@ -24,7 +24,7 @@ if (isset($_GET['printPOS'])) {
         $customers_address = $row['customers_address'];
         $dateString = $row['pos_date'];
         $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm-d-y');
+        $date = date_format($dateTimeObj, 'F d, Y');
         $userName = $row['user_name'];
         $joNo = $row['jo_no'];
 

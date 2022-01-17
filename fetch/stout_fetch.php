@@ -22,21 +22,15 @@ if ($_POST['page'] > 1) {
 } else {
   $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, employee_tb.emp_name, stout_tb.stout_date, stout_tb.closed, user.user_name
 FROM stout_tb
 LEFT JOIN user ON user.user_id = stout_tb.user_id
 LEFT JOIN employee_tb 
-ON stout_tb.emp_id = employee_tb.emp_id ";
-
-if ($_POST['query'] != '') {
-  $query .= '
-  WHERE stout_code LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
-
-$query .= 'ORDER BY stout_id DESC ';
+ON stout_tb.emp_id = employee_tb.emp_id 
+WHERE stout_tb.stout_code LIKE '%$qry%' OR stout_tb.stout_title LIKE '%$qry%' OR employee_tb.emp_name LIKE '%$qry%' ORDER BY stout_tb.stout_id DESC
+";
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 
@@ -122,7 +116,7 @@ if ($total_data > 0) {
 $output .= '
 </table>
 <br />
-<label class="tableLabel" style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
+<label class="tableLabel" style="float:right; color:midnightblue;font-weight:bolder; letter-spacing:2px">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
   <ul class="pagination">

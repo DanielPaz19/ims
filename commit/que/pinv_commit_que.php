@@ -6,7 +6,7 @@
 if (isset($_GET['submit'])) {
 
     include "../../php/config.php";
-
+    $loc = $_GET['loc_id'];
     $bal_qty = $_GET['bal_qty'];
     $out_qty = $_GET['out_qty'];
     $productId = $_GET['product_id'];
@@ -45,7 +45,7 @@ if (isset($_GET['submit'])) {
         while ($limit != count($pro_id)) {
 
 
-            $sql = "UPDATE product SET qty = " . $total[$limit] . " WHERE product_id=" . $pro_id[$limit];
+            $sql = "UPDATE product SET qty = $total[$limit], loc_id = $loc[$limit] WHERE product_id=" . $pro_id[$limit];
 
             mysqli_query($db, $sql);
 

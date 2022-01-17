@@ -267,7 +267,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $user_name = $row['user_name'];
         $dateString = $row['ep_date'];
         $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm/d/y');
+        $date = date_format($dateTimeObj, 'F d, Y');
     } else {
         echo "No results!";
     }
@@ -340,7 +340,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     .ep--date {
         position: absolute;
         top: 8px;
-        right: 16px;
+        right: -35px;
+
     }
 
     .bottom-right {
@@ -458,7 +459,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <img src="../img/eptemplate.jpg" class="noprint">
 
         <div class="ep--no"><br><br><br> <br>
-            <p style=" margin-right:15px"><?php echo $ep_no; ?></p>
+            <p style=" margin-right:50px"><?php echo $ep_no; ?></p>
 
         </div>
 
@@ -540,7 +541,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </td>
                 </tr>
             </table>
-            &emsp;&emsp;<textarea cols="65" rows="4"><?php echo $ep_remarks; ?></textarea>
+            &emsp;&emsp;<textarea cols="65" rows="10"><?php echo $ep_remarks; ?></textarea>
         </div>
         <table class="tb--user">
             <tr style="text-align: center;">

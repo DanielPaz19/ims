@@ -22,21 +22,14 @@ if ($_POST['page'] > 1) {
 } else {
     $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
 SELECT ep_tb.ep_id, ep_tb.ep_no, ep_tb.ep_title, ep_tb.ep_date, customers.customers_name, ep_tb.closed, user.user_name, customers.customers_id
 FROM ep_tb
 LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
 LEFT JOIN user ON user.user_id = ep_tb.user_id
+WHERE ep_tb.ep_no LIKE '%$qry%' OR ep_tb.ep_title LIKE '%$qry%' OR customers.customers_name LIKE '%$qry%' ORDER BY ep_tb.ep_id DESC
 ";
-
-if ($_POST['query'] != '') {
-    $query .= '
-  WHERE ep_tb.ep_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
-
-$query .= 'ORDER BY ep_id DESC ';
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
 

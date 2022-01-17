@@ -6,7 +6,7 @@ if (isset($_GET["query"])) {
      $output = '';  //Output Initialization
      $query = "SELECT product.product_name, product.product_id, loc_tb.loc_name, product.barcode, product.qty
                 FROM product
-                INNER JOIN loc_tb ON loc_tb.loc_id = product.loc_id
+                LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                 WHERE product_name LIKE '%" . $_GET["query"] . "%' LIMIT 30";  //Select Items
 
      $result = mysqli_query($connect, $query);
