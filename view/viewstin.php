@@ -38,7 +38,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		$dept_name = $row['dept_name'];
 		$dateString = $row['stin_date'];
 		$dateTimeObj = date_create($dateString);
-		$date = date_format($dateTimeObj, 'm/d/y');
+		$date = date_format($dateTimeObj, 'F d, Y');
 	} else {
 		echo "No results!";
 	}
@@ -48,170 +48,129 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 /* TEST CODE END */
 ?>
-<html>
-<title><?php echo $stin_code; ?></title>
+<style>
+	body {
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+		padding: 5%;
+		background-color: lightgray;
+	}
 
-<head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
-		body {
-			font-family: sans-serif;
-			width: auto;
-			padding: 10px;
-		}
+	.container {
+		background-color: white;
+		padding: 2%;
+		-webkit-box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
+		box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
+	}
 
-		.top {
+	.header {
+		width: 100%;
+	}
 
-			letter-spacing: 3px;
-			line-height: 1%;
-			padding-top: 10px;
+	label {
+		font-weight: bold;
+	}
 
-		}
+	.itemtb {
+		width: 100%;
+		border: 1px solid black;
+		padding: 2px;
+		border-collapse: collapse;
+	}
 
-		.labels {
-			margin-left: 40px;
-			margin-right: 40px;
-		}
+	.itemtb td {
 
-		.content {
-			margin-left: 40px;
-			margin-right: 40px;
-		}
+		border-right: 1px solid black;
+		padding: 3px;
+	}
 
-		.itemtb td,
-		th {
-			text-align: left;
-			border: 1px solid lightgrey;
-			font-size: 15px;
-			padding: 5px;
+	.itemtb th {
 
-		}
+		border: 1px solid black;
+		padding: 4px;
+	}
 
-		label,
-		th {
-			color: midnightblue;
-		}
+	button {
+		height: 35px;
+		width: 120px;
+		font-weight: bolder;
+	}
 
+	.top {
+		line-height: 1%;
+	}
+</style>
+<title>POS REPORT</title>
 
-		.itemtb {
-			border-collapse: collapse;
-		}
+<body>
 
-		.footer {
-			margin-left: 40px;
-			margin-right: 40px;
-		}
-
-		.butLink {
-			background-color: midnightblue;
-			color: white;
-			padding: 7px 12px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			letter-spacing: 3px;
-			cursor: pointer;
-			font-size: 15px;
-		}
-
-		@media print {
-			#printPageButton {
-				display: none;
-			}
-		}
-	</style>
-
-</head>
-
-
-<body style="margin: auto;">
-	<div class="top">
-		<center>
-			<h3 style="color: midnightblue;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
-			<h4 style="color: midnightblue;">PRODUCTION TURN-OVER SLIP</h4>
-			<hr width="50%">
-
-		</center>
-	</div>
-
-	<div class="labels">
-		<table width="100%">
+	<div class="container" id="printDiv">
+		<div class="top">
+			<center>
+				<h2>PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h2>
+				<h3>PRODUCTION TURN-OVER SLIP</h3>
+				<hr style="width: 50%;">
+			</center>
+		</div>
+		<table class="header">
 			<tr>
-				<td style="color: midnightblue;"><b>TON No.:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stin_code; ?> </td>
-				<td style="float: right; color: midnightblue;"><b>Job-Order. :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $stin_title; ?></td>
+				<td><label for="">STIN ID :</label> <?php echo str_pad($id, 8, 0, STR_PAD_LEFT); ?></td>
+				<td colspan="3"></td>
+
 			</tr>
 			<tr>
-				<td></td>
+				<td><label for="">TON No.:</label> <?php echo $stin_code; ?></td>
+				<td><label for="">Job Order No. :</label> <?php echo $stin_title; ?></td>
+				<td style="text-align:left;"><b>Prepared By:</b>&nbsp;&nbsp;&nbsp;<?php echo $emp_name; ?></td>
+				<td style="text-align: center;"><b>Department:</b>&nbsp;&nbsp;&nbsp;<?php echo $dept_name; ?></td>
+				<td><label for="">STIN Date :</label> <?php echo $date; ?></td>
 
 			</tr>
 		</table>
-	</div>
-	<br>
-	<div class="content">
-		<table width="100%" class="itemtb">
-			<tr>
+		<br>
+
+		<br>
+
+		<table class="itemtb">
+			<tr style="text-align: left;">
 				<th>ITEMS</th>
 				<th>QUANTITY</th>
 				<th>UNIT</th>
 			</tr>
-			<tr>
-				<?php
-				include "../php/config.php";
-				$sql = "SELECT product.product_name,stin_product.stin_temp_qty,unit_tb.unit_name 
+			<?php
+			include "../php/config.php";
+			$sql = "SELECT product.product_name,stin_product.stin_temp_qty,unit_tb.unit_name 
    FROM stin_product 
    LEFT JOIN product ON product.product_id = stin_product.product_id
    LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
    LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
 
-				$result = $db->query($sql);
-				$count = 0;
-				if ($result->num_rows >  0) {
+			$result = $db->query($sql);
+			$count = 0;
+			if ($result->num_rows >  0) {
 
-					while ($irow = $result->fetch_assoc()) {
-						$count = $count + 1;
-				?>
-						<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
-						<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?></td>
-						<td><?php echo $irow['unit_name'] ?></td>
-			</tr>
-	<?php }
-				} ?>
-	<tr>
-		<td style="border: none;"></td>
-	</tr>
-	<tr>
-		<td colspan="3" style="border: none;">
-			<label style="font-weight: bold;"> TON Remarks :</label> <?php echo $stin_remarks ?>
-		</td>
-	</tr>
-		</table>
-	</div>
-
-	<br><br>
-	<div class="footer">
-		<table width="100%">
-			<tr>
-				<td style="text-align:left;"><b>Prepared By:</b>&nbsp;&nbsp;&nbsp;<?php echo $emp_name; ?></td>
-				<td style="text-align: center;"><b>Department:</b>&nbsp;&nbsp;&nbsp;<?php echo $dept_name; ?></td>
-				<td style="text-align: right;"><b>DATE:</b>&nbsp;&nbsp;&nbsp;<?php echo $date; ?>&nbsp;&nbsp;&nbsp;</td>
-
-			</tr>
+				while ($irow = $result->fetch_assoc()) {
+					$count = $count + 1;
+			?>
+					<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
+					<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?></td>
+					<td><?php echo $irow['unit_name'] ?></td>
+					</tr>
+			<?php }
+			} ?>
 		</table>
 		<br>
-		<button id="printPageButton" onclick="window.print()" class="butLink">Print <i class="fa fa-print"></i></button>
-		<a href="../stin_main.php"><button id="printPageButton" class="butLink">Back</button></a>
+		<label style="font-weight: bold;"> Remarks :</label> <?php echo $stin_remarks ?>
 	</div>
+	<br>
+	<a href="../stin_main.php"><button style="float: right;">Cancel</button></a> <button style="float: left;" id="doPrint">Print Record</button>
 </body>
-<script>
-	function printpage() {
-		//Get the print button and put it into a variable
-		var printButton = document.getElementById("printPageButton");
-		//Set the print button visibility to 'hidden' 
-		printButton.style.visibility = 'hidden';
-		//Print the page content
-		window.print()
-		printButton.style.visibility = 'visible';
-	}
-</script>
 
-</html>
+<script>
+	document.getElementById("doPrint").addEventListener("click", function() {
+		var printContents = document.getElementById('printDiv').innerHTML;
+		var originalContents = document.body.innerHTML;
+		document.body.innerHTML = printContents;
+		window.print();
+		document.body.innerHTML = originalContents;
+	});
+</script>
