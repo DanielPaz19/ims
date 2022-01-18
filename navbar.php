@@ -50,6 +50,7 @@
             <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
             <a href="#">&nbsp;Stock-Out </a>
             <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
+            <a href="pinv_main.php">&nbsp;Physical Inventory</a>
         </div>
     </div>
 

@@ -215,7 +215,8 @@
                     FROM jo_product 
                     LEFT JOIN product ON product.product_id = jo_product.product_id
                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id 
-                    WHERE jo_product.jo_id='$id'";
+                    WHERE jo_product.jo_id='$id'
+                    ";
 
                     $result = $db->query($sql);
                     $count = 0;
