@@ -1,0 +1,17 @@
+body {
+  box-sizing: border-box;
+}
+
+.receipt__input {
+  padding-left: 5px;
+}
+
+.receipt__input--row {
+  height: 25%;
+}
+
+@media print {
+  .receipt__label {
+    opacity: 0;
+  }
+}
