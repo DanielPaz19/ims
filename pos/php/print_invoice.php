@@ -98,17 +98,20 @@
                 <div class="w3-cell" style="width: 1.1cm">
                 </div>
             </div>
-            <div class="w3-cell-row receipt__input--item">
+
+        </div>
+        <!-- Summary -->
+        <div class="w3-cell-row w3-small w3-light-gray" style="height:2.5cm; position:absolute; top: 15.7cm;">
+            <!-- Amount Net of Vat -->
+            <div class="w3-cell-row receipt__input--summary">
                 <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.5cm">
                     <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
@@ -116,17 +119,35 @@
                 <div class="w3-cell" style="width: 1.1cm">
                 </div>
             </div>
-            <div class="w3-cell-row receipt__input--item">
+            <!-- Amount Due -->
+
+            <div class="w3-cell-row receipt__input--summary">
                 <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
+
+                </div>
+                <div class="w3-display-container w3-cell " style="width: 2.5cm">
+                    <div class="receipt__input--total__price receipt__input" style="width: 100%">-</div>
+                </div>
+                <div class="w3-cell" style="width: 1.1cm">
+                </div>
+            </div>
+
+            <!-- Add: Vat -->
+            <div class="w3-cell-row receipt__input--summary">
+                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
+
+                </div>
+                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
+
+                </div>
+                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.5cm">
                     <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
@@ -134,17 +155,17 @@
                 <div class="w3-cell" style="width: 1.1cm">
                 </div>
             </div>
-            <div class="w3-cell-row receipt__input--item">
+
+            <!-- Total Amount Due -->
+            <div class="w3-cell-row receipt__input--summary">
                 <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
+                    <div class="receipt__input--or__number receipt__input" style="width: 100%"> OR#</div>
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
+
                 </div>
                 <div class="w3-display-container w3-cell " style="width: 2.5cm">
                     <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
@@ -152,114 +173,7 @@
                 <div class="w3-cell" style="width: 1.1cm">
                 </div>
             </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
-            <div class="w3-cell-row receipt__input--item">
-                <div class="w3-cell w3-display-container" style="width: 2.7cm;">
-                    <div class="receipt__input--qty" style="text-align:center;">
-                        1 pc
-                    </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 12.5cm;">
-                    <div class="receipt__input--description receipt__input" style="width: 100%"> 00001234 ACRY PUPPY</div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.8cm;">
-                    <div class="receipt__input--unit__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-display-container w3-cell " style="width: 2.5cm">
-                    <div class="receipt__input--total__price receipt__input" style="width: 100%"> 9,999.99 </div>
-                </div>
-                <div class="w3-cell" style="width: 1.1cm">
-                </div>
-            </div>
+
         </div>
     </div>
     </div>

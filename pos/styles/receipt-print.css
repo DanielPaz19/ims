@@ -25,6 +25,9 @@
 .receipt__input--item {
   height: 10%;
 }
+.receipt__input--summary {
+  height: 25%;
+}
 
 .receipt__input--unit__price {
   text-align: right;
@@ -32,4 +35,9 @@
 
 .receipt__input--total__price {
   text-align: right;
+}
+
+.receipt__input--or__number {
+  padding-left: 100px;
+  text-align: left;
 }
