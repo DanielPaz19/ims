@@ -19,50 +19,50 @@
                 <div class="w3-cell receipt__label" style="width: 2.3cm;">
                     Sold To
                 </div>
-                <div class="w3-cell receipt__input" style="width: 11.7cm;">
-                    PACC
+                <div class="w3-display-container w3-cell " style="width: 11.7cm;">
+                    <div class="w3-display-left receipt__input">PACC</div>
                 </div>
                 <div class="w3-cell receipt__label" style="width: 2cm;">
                     Date
                 </div>
-                <div class="w3-cell receipt__input" style="width: 5.6cm">
-                    January 2021
+                <div class="w3-display-container w3-cell receipt__input" style="width: 5.6cm">
+                    <div class="w3-display-left receipt__input">January 01, 2022</div>
                 </div>
             </div>
             <div class="w3-cell-row receipt__input--row">
                 <div class="w3-cell receipt__label" style="width: 2.3cm;">
                     TIN
                 </div>
-                <div class="w3-cell receipt__input" style="width: 11.7cm;">
-                    123-456-789-000
+                <div class="w3-display-container w3-cell receipt__input" style="width: 11.7cm;">
+                    <div class="w3-display-left receipt__input">123-456-789-000</div>
                 </div>
                 <div class="w3-cell receipt__label" style="width: 2cm;">
                     DR No.
                 </div>
-                <div class="w3-cell receipt__input" style="width: 5.6cm">
-                    12345
+                <div class="w3-display-container w3-cell receipt__input" style="width: 5.6cm">
+                    <div class="w3-display-left receipt__input">12345</div>
                 </div>
             </div>
             <div class="w3-cell-row receipt__input--row">
                 <div class="w3-cell receipt__label" style="width: 2.3cm;">
                     Address
                 </div>
-                <div class="w3-cell receipt__input" style="width: 11.7cm;">
-                    635 Mercedes Ave., Brgy. San Miguel, Pasig City
+                <div class="w3-display-container w3-cell receipt__input" style="width: 11.7cm;">
+                    <div class="w3-display-left receipt__input receipt__input--address">635 Mercedes Ave., Brgy. San Miguel, Pasig City</div>
                 </div>
                 <div class="w3-cell receipt__label" style="width: 2cm;">
                     Shipped Via
                 </div>
-                <div class="w3-cell receipt__input" style="width: 5.6cm">
-                    Lalamove
+                <div class="w3-display-container w3-cell receipt__input" style="width: 5.6cm">
+                    <div class="w3-display-left receipt__input">Lalamove</div>
                 </div>
             </div>
             <div class="w3-cell-row receipt__input--row">
                 <div class="w3-cell receipt__label" style="width: 2.3cm;">
                     Deliverd To
                 </div>
-                <div class="w3-cell receipt__input" style="width: 11.7cm;">
-                    635 Mercedes Ave., Brgy. San Miguel, Pasig City
+                <div class="w3-display-container w3-cell receipt__input" style="width: 11.7cm;">
+                    <div class="w3-display-left receipt__input receipt__input--address"> 635 Mercedes Ave., Brgy. San Miguel, Pasig City</div>
                 </div>
                 <div class="w3-cell-row" style="width: 7.6cm;">
                     <div class="w3-cell receipt__label" style="width: 50%">
