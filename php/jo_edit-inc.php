@@ -18,7 +18,8 @@ if (isset($_GET['editJo'])) {
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
         LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
         LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
-        WHERE jo_tb.jo_id ='$joId'"
+        WHERE jo_tb.jo_id ='$joId'
+        ORDER BY jo_product.jo_product_id ASC"
     );
 
 
