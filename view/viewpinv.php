@@ -77,7 +77,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
                                 LEFT JOIN pinv_tb ON pinv_tb.pinv_id = pinv_product.pinv_id
                                 LEFT JOIN loc_tb ON loc_tb.loc_id = pinv_product.loc_id
-                                WHERE pinv_tb.pinv_id = '$id'";
+                                WHERE pinv_tb.pinv_id = '$id'
+                                ORDER BY product.product_name ASC";
 
                         $result = $db->query($sql);
                         $count = 0;

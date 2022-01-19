@@ -88,8 +88,8 @@ include 'php/stout_edit-inc.php';
                     <th style="text-align:left;">&emsp;&emsp;Item Name</th>
                     <th>Qty-Out</th>
                     <th>Barcode</th>
-                    <th>Cost</th>
-                    <th>Total Cost</th>
+                    <th>Item remarks
+                    </th>
                     <th>
                     </th>
                 </tr>
@@ -109,8 +109,8 @@ include 'php/stout_edit-inc.php';
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
                  <td class='td__readonly td__readonly--barcode' style='text-align:center;'>$barcode[$limit]</td>
-                 <td class='td__edit td__edit--cost' style='text-align:center;'>" . number_format($itemCost[$limit], 2) . "</td>
-                 <td class='td__compute td__compute--totalcost' style='text-align:center;'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+                 <td class='' style='text-align:center;'>
+                 <textarea  name='itemRemarks[]' rows='1'cols='20' placeholder='&#9999; Item remarks...' id='itemRemarks'>$itemRemarks[$limit]</textarea></td>
 
                  <td class='td__edit td__edit--delete'>
                     <i class='fa fa-trash-o' style='font-size:26px' title='Remove'></i>

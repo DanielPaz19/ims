@@ -12,13 +12,13 @@ if (isset($_GET['edit'])) {
         "SELECT stout_tb.stout_id, stout_tb.stout_code, stout_tb.stout_title, stout_tb.stout_date, stout_tb.emp_id,
         stout_tb.stout_remarks, stout_product.product_id, stout_product.stout_temp_qty,  stout_product.stout_temp_cost, 
         stout_product.stout_temp_disamount, stout_product.stout_temp_tot, product.product_name, unit_tb.unit_name, product.barcode,
-        employee_tb.emp_name
+        employee_tb.emp_name, stout_product.stout_temp_remarks
  FROM stout_tb  
  LEFT JOIN stout_product ON stout_product.stout_id = stout_tb.stout_id
  LEFT JOIN product ON stout_product.product_id = product.product_id
  LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
  LEFT JOIN employee_tb ON stout_tb.emp_id = employee_tb.emp_id
- WHERE stout_tb.stout_id = '$stoutId'"
+ WHERE stout_tb.stout_id = '$stoutId' "
     );
 
 
@@ -38,6 +38,7 @@ if (isset($_GET['edit'])) {
             $qtyIn[] = $row['stout_temp_qty'];
             $barcode[] = $row['barcode'];
             $itemCost[] = $row['stout_temp_cost'];
+            $itemRemarks[] = $row['stout_temp_remarks'];
         }
     } else {
         echo "0 results";
@@ -58,6 +59,7 @@ if (isset($_POST['update'])) {
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemCost = $_POST['itemCost'];
+    $itemRemarks = $_POST['itemRemarks'];
 
 
     require '../php/config.php';
@@ -80,7 +82,7 @@ if (isset($_POST['update'])) {
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on stout_product, UPDATE
-            $sql = "UPDATE stout_product SET stout_temp_qty = '$qtyIn[$limit]', stout_temp_cost = '$itemCost[$limit]'  WHERE stout_id = '$stoutId' AND product_id ='$productId[$limit]'";
+            $sql = "UPDATE stout_product SET stout_temp_qty = '$qtyIn[$limit]', stout_temp_cost = '$itemCost[$limit]', stout_temp_remarks = '$itemRemarks[$limit]'  WHERE stout_id = '$stoutId' AND product_id ='$productId[$limit]'";
         } else {
             // If product id dont exist on stout_product, INSERT
             if ($productId[$limit] != 0) {

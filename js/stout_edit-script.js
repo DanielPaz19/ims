@@ -185,6 +185,7 @@ const selectItem = function (e) {
   const itemName = targetItem.querySelector(".item-name").innerHTML;
   const itemBarcode = targetItem.querySelector(".barcode").innerHTML;
   const itemCost = targetItem.querySelector(".cost").innerHTML;
+  const itemRemarks = targetItem.querySelector(".cost").innerHTML;
 
   // Check for duplicate entries
   if (hasDuplicate(+itemCode, tableItemTb))
@@ -204,10 +205,9 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
     <td class='td__readonly td__readonly--barcode' style='text-align:center;'>${itemBarcode}</td>
-    <td class='td__edit td__edit--cost' style='text-align:center;'>${formatNumber(itemCost)}</td> 
-    <td class='td__compute td__compute--totalcost' style='text-align:center;'>${formatNumber(
-      totalCost
-    )}</td>
+    <td>
+    <textarea name='itemRemarks[]' rows='1' cols='20' placeholder='&#9999; Item remarks...' id='itemRemarks'></textarea>
+    </td> 
     <td class='td__edit td__edit--delete'>
    <i class="fa fa-trash-o" style="font-size:24px"></i>
     </td>
