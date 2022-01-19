@@ -177,69 +177,115 @@ if (!isset($_SESSION['user'])) {
 
     <page id="print" size="A4">
         <div class="itemlist">
+            <form method="GET" action="pinvInsert.php">
+                <div class="input-tab">
 
-        </div>
-        <table class="pinv-tb" id="table-id">
-            <thead>
-                <th style="width: 10%;">Product ID</th>
-                <th style="width: 40%;">Name</th>
-                <th style="width: 10%;">On-Hand</th>
-                <th style="width: 10%;">Unit</th>
-                <th style="width: 10%;">Location</th>
-                <th style="width: 10%;">Stock No.</th>
-                <th style="width: 5%;">PhyQty</th>
-            </thead>
-            <thead>
-                <?php
-                require 'php/config.php';
-                if (isset($_POST['filter'])) {
 
-                    $loc_id = $_POST['loc_id'];
-                    $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, product.product_type_id, pinv_product.pinv_qty
-                    FROM pinv_product
-                    LEFT JOIN pinv_tb ON pinv_tb.pinv_id = pinv_product.pinv_id
-                    LEFT JOIN product ON product.product_id = pinv_product.product_id
+                    <label>PINV ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <?php
+
+                    include 'php/config.php';
+                    $query = "SELECT pinv_id FROM pinv_tb ORDER BY pinv_id DESC LIMIT 1";
+                    $result = mysqli_query($db, $query);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $newPinvId = $row['pinv_id'] + 1;
+                            echo "<input style='border:none;background-color:transparent; font-weight:bolder; color:grey;' name='newPinvId' value='" . str_pad($newPinvId, 8, 0, STR_PAD_LEFT) . "' readonly>";
+                        }
+                    } else {
+                        echo "No result.";
+                    }
+                    ?> <br><br>
+                    <label> Title:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="PHYINV9999" class="typo" name="pinv_title"> <br> <br>
+                    <label>Location: &nbsp;&nbsp;</label>
+                    <select name="location" class="item-location" style=" height: 32px; border: 1px solid #B8B8B8;">
+                        <option>
+                            <center>--- Select Location---</center>
+                        </option>
+                        <?php
+                        include "../../php/config.php";
+                        $records = mysqli_query($db, "SELECT * FROM loc_tb");
+
+                        while ($data = mysqli_fetch_array($records)) {
+                            echo "<option value='" . $data['loc_id'] . "'>" . $data['loc_name'] . "</option>";
+                        }
+                        ?>
+                    </select> <br> <br>
+
+                    <label>Date :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" placeholder="Type Location Here..." class="typo" name="pinv_date"> <br /><br />
+                    <label>Personel:</label>&nbsp;&nbsp;&nbsp;
+                    <select name="emp_id">
+                        <option>-- Select Employee --</option>
+                        <?php
+                        include "php/config.php";
+                        $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+
+                        while ($data = mysqli_fetch_array($records)) {
+                            echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                        }
+                        ?>
+                    </select> <br /><br />
+                    <center>
+                        <button name="btnsave" style="width: 100%;" class="btn-save">Save Record</button>
+                        <br> <br>
+                    </center>
+                </div>
+                <table class="pinv-tb" id="table-id">
+                    <thead>
+                        <th style="width: 10%;">Product ID</th>
+                        <th style="width: 40%;">Name</th>
+                        <th style="width: 10%;">On-Hand</th>
+                        <th style="width: 10%;">Unit</th>
+                        <th style="width: 10%;">Location</th>
+                        <th style="width: 10%;">Stock No.</th>
+                        <th style="width: 5%;">PhyQty</th>
+                    </thead>
+                    <thead>
+                        <?php
+                        require 'php/config.php';
+                        if (isset($_POST['filter'])) {
+
+                            $loc_id = $_POST['loc_id'];
+                            $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, product.product_type_id
+                    FROM product
                     LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                     LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
                     LEFT JOIN product_type ON product_type.product_type_id = product.product_type_id
                     WHERE product.loc_id = '$loc_id' AND product.product_type_id = 1");
-                    while ($fetch = mysqli_fetch_array($query)) {
-                        $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
+                            while ($fetch = mysqli_fetch_array($query)) {
+                                $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
 
-                        echo "<tr>
+                                echo "<tr><td style='display:none'><input type='hidden' name='pinv_id' style='border:none;' readonly> </td>
+        <td><input type='text' name='prodId[]' value='$prodId' style='border:none;' readonly> </td>
                   <td>" . $fetch['product_name'] . "</td>
                   <td>"  . $fetch['qty'] . "</td>
                   <td>" . $fetch['unit_name'] . " </td>
                   <td>"  . $fetch['loc_name'] . "</td>
                   <td>" . $fetch['barcode'] . "</td>
-                  <td>"  . $fetch['pinv_qty'] .  "</td></tr>";
-                    }
-                } else if (isset($_POST['reset'])) {
-                    $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, pinv_product.pinv_qty
-                        FROM pinv_product
-                        LEFT JOIN pinv_tb ON pinv_tb.pinv_id = pinv_product.pinv_id
-                        LEFT JOIN product ON product.product_id = pinv_product.product_id
+                  <td>"  . "<input type='number' name='pinvQty[]' style='width:100%' >" . "</td></tr>";
+                            }
+                        } else if (isset($_POST['reset'])) {
+                            $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode
+                        FROM product
                         LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                         LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id ");
-                    while ($fetch = mysqli_fetch_array($query)) {
-                        $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
-                        echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
-                    }
-                } else {
-                    $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, pinv_product.pinv_qty
-                    FROM pinv_product
-                    LEFT JOIN pinv_tb ON pinv_tb.pinv_id = pinv_product.pinv_id
-                    LEFT JOIN product ON product.product_id = pinv_product.product_id
+                            while ($fetch = mysqli_fetch_array($query)) {
+                                $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
+                                echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
+                            }
+                        } else {
+                            $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode
+                    FROM product
                     LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                     LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id ");
-                    while ($fetch = mysqli_fetch_array($query)) {
-                        $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
-                        echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
-                    }
-                }
-                ?>
-            </thead>
-        </table>
+                            while ($fetch = mysqli_fetch_array($query)) {
+                                $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
+                                echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
+                            }
+                        }
+                        ?>
+                    </thead>
+                </table>
     </page>
     </div>
 
