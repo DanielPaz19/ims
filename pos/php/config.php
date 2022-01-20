@@ -1,5 +1,14 @@
 <?php
-$db = mysqli_connect('localhost', 'root', '@Dmin898', 'inventorymanagement');
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "inventorymanagement";
+
+// Create connection
+$db = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$db) {
+    die("Connection failed: " . mysqli_connect_error());
 }
+    // echo "Connected successfully";

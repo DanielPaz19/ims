@@ -748,52 +748,76 @@ containerOrderList.addEventListener("click", function (e) {
   if (selectedEdit.contains("delete")) editOrder(e, "delete");
 });
 
-//save button
-btnSaveTransaction.addEventListener("click", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-
-  //customer is empty
-  if (!inputCustomerId.value) return alert("Invalid Customer Details");
-
-  //order list is empty
-  if (!containerOrderList.children.length) return alert("No orders selected");
-
-  //add to objects
-  transaction.customerId = +inputCustomerId.value;
-  transaction.transactionId = +inputTransNumber.value;
-  transaction.transDate = new Date().toISOString();
-  order.total = +removeComma(smryNetSales.value);
-
-  const orderRow = containerOrderList.querySelectorAll("tr");
-
-  orderRow.forEach((element) => {
-    order.productId.push(+element.children[0].innerHTML);
-    order.qty.push(+removeComma(element.children[3].innerHTML));
-    order.discount.push(+removeComma(element.children[5].innerHTML));
-    order.price.push(+removeComma(element.children[2].innerHTML));
-  });
-
-  const saveJSON = { ...transaction, ...order };
-
-  // const save = new XMLHttpRequest();
-  // save.open("POST", "php/save-transaction.php");
-  // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  // save.send(`json=${JSON.stringify(saveJSON)}`);
-  // console.log(JSON.stringify(saveJSON));
-  // console.log(saveJSON);
-
-  fetch("php/save-transaction.php", {
+// Request for Balance Function
+const getBalance = async function (joId) {
+  const res = await fetch("php/pending-payments.php", {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `json=${JSON.stringify(saveJSON)}`,
+    body: `joId=${joId}`,
   });
 
-  alert("Transaction Saved");
+  const data = await res.json();
 
-  location.reload();
+  console.log(data);
+};
+
+//save button
+btnSaveTransaction.addEventListener("click", function () {
+  // // e.preventDefault();
+  // // e.stopPropagation();
+
+  //jo number is empty
+  if (!inputJoNumber.value) return alert("Choose JO Number!");
+
+  modalPayment.style.display = "block";
+
+  const id = window.location.hash.slice(1);
+  console.log(id);
+  getBalance(id);
+
+  // //customer is empty
+  // if (!inputCustomerId.value) return alert("Invalid Customer Details");
+
+  // //order list is empty
+  // if (!containerOrderList.children.length) return alert("No orders selected");
+
+  // //add to objects
+  // transaction.customerId = +inputCustomerId.value;
+  // transaction.transactionId = +inputTransNumber.value;
+  // transaction.transDate = new Date().toISOString();
+  // order.total = +removeComma(smryNetSales.value);
+
+  // const orderRow = containerOrderList.querySelectorAll("tr");
+
+  // orderRow.forEach((element) => {
+  //   order.productId.push(+element.children[0].innerHTML);
+  //   order.qty.push(+removeComma(element.children[3].innerHTML));
+  //   order.discount.push(+removeComma(element.children[5].innerHTML));
+  //   order.price.push(+removeComma(element.children[2].innerHTML));
+  // });
+
+  // const saveJSON = { ...transaction, ...order };
+
+  // // const save = new XMLHttpRequest();
+  // // save.open("POST", "php/save-transaction.php");
+  // // save.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // // save.send(`json=${JSON.stringify(saveJSON)}`);
+  // // console.log(JSON.stringify(saveJSON));
+  // // console.log(saveJSON);
+
+  // fetch("php/save-transaction.php", {
+  //   method: "POST", // or 'PUT'
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  //   body: `json=${JSON.stringify(saveJSON)}`,
+  // });
+
+  // alert("Transaction Saved");
+
+  // location.reload();
 });
 
 // --------------------- PAYMENT EVENTS / DECLARATIONS ------------------------
