@@ -450,6 +450,21 @@ const orderPay = function (orderId, rowIndex, balance) {
   inputPaymentTendered.focus();
 };
 
+const getDrNumber = async function (orderId) {
+  let drNumber = 0;
+
+  while (!drNumber || !drNumber.match(/^[0-9]/)) {
+    alert("Invalid Format");
+    drNumber = prompt("Enter DR Number: ");
+  }
+
+  // Save Data to Database
+  const res = await fetch(`php/save-transaction.php?drNumber=${drNumber}`);
+  const data = await res.text();
+
+  console.log(data);
+};
+
 const orderView = function (orderId) {
   window.open(`php/pos-dr-print2.php?printPOS&id=${+orderId}`);
 };
@@ -833,6 +848,7 @@ containPendingTrans.addEventListener("click", function (e) {
   }
 
   if (clickedOpt.classList.contains("table__option--view")) {
+    getDrNumber();
     orderView(orderId);
   }
 });
