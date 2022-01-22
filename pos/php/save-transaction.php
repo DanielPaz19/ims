@@ -65,16 +65,5 @@ if ($_POST['json']) {
     $limit++;
   }
 
-  if ($_GET['drNumber']) {
-    $drNumber = $_GET['drNumber'];
-
-    require_once 'config.php';
-
-    // Check if already has dr number
-    // - If dr number exist, view print using existed dr
-    // - If dr number doesnt exist, update table
-
-  }
-
   // echo $query;
 }

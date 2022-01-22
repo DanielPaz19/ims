@@ -450,19 +450,33 @@ const orderPay = function (orderId, rowIndex, balance) {
   inputPaymentTendered.focus();
 };
 
+// Check if Row already have DR number
+const checkDrNumber = async function (orderId) {
+  const res = await fetch(`php/check-dr.php?checkDr&orderId=${orderId}`);
+  const data = await res.text();
+
+  return data;
+};
+
+// Get DR number from users
 const getDrNumber = async function (orderId) {
+  const drStatus = await checkDrNumber(orderId);
+  if (drStatus != "0") return orderView(orderId);
+
   let drNumber = 0;
 
   while (!drNumber || !drNumber.match(/^[0-9]/)) {
-    alert("Invalid Format");
     drNumber = prompt("Enter DR Number: ");
+    if (!drNumber || !drNumber.match(/^[0-9]/)) alert("Invalid Format");
   }
 
   // Save Data to Database
-  const res = await fetch(`php/save-transaction.php?drNumber=${drNumber}`);
+  const res = await fetch(
+    `php/save-dr.php?saveDr&drNumber=${drNumber}&orderId=${orderId}`
+  );
   const data = await res.text();
 
-  console.log(data);
+  orderView(data);
 };
 
 const orderView = function (orderId) {
@@ -848,8 +862,8 @@ containPendingTrans.addEventListener("click", function (e) {
   }
 
   if (clickedOpt.classList.contains("table__option--view")) {
-    getDrNumber();
-    orderView(orderId);
+    getDrNumber(orderId);
+    // orderView(orderId);
   }
 });
 
