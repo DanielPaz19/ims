@@ -9,7 +9,7 @@ if (isset($_GET['printPOS'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address, user.user_name, jo_tb.jo_no, order_tb.dr_number
+        "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, customers.customers_address, user.user_name, jo_tb.jo_no
         FROM order_tb
         LEFT JOIN user ON user.user_id = order_tb.user_id
         LEFT JOIN customers ON customers_id = order_tb.customer_id 
@@ -27,7 +27,6 @@ if (isset($_GET['printPOS'])) {
         $date = date_format($dateTimeObj, 'F d, Y');
         $userName = $row['user_name'];
         $joNo = $row['jo_no'];
-        $drNumber = $row['dr_number'];
 
         // $date_format = date_format($row['pos_date'], "d/m/y");
     }
@@ -130,10 +129,7 @@ if (isset($_GET['printPOS'])) {
 </head>
 
 <body>
-    <div class="main-page" style="position: relative;">
-        <div style="position: absolute; right: 100px; top: 150px;">
-            <?php echo $drNumber ?>
-        </div>
+    <div class="main-page">
         <div class="sub-page">
             <br><br><br><br><br><br><br><br><br><br>
             <table class="header">
