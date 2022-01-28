@@ -207,10 +207,11 @@ if (!isset($_SESSION['user'])) {
                         $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
 
                         echo "<tr>
-                  <td>" . $fetch['product_name'] . "</td>
-                  <td>"  . $fetch['qty'] . "</td>
-                  <td>" . $fetch['unit_name'] . " </td>
-                  <td>"  . $fetch['loc_name'] . "</td>
+                  <td>" . $prodId . "</td>
+                  <td>"  . $fetch['product_name'] . "</td>
+                  <td>" . $fetch['qty'] . " </td>
+                  <td>"  . $fetch['unit_name'] . "</td>
+                  <td>" . $fetch['loc_name'] . "</td>
                   <td>" . $fetch['barcode'] . "</td>
                   <td>"  . $fetch['pinv_qty'] .  "</td></tr>";
                     }
