@@ -183,7 +183,6 @@ if (!isset($_SESSION['user'])) {
             <thead>
                 <th style="width: 10%;">Product ID</th>
                 <th style="width: 40%;">Name</th>
-                <th style="width: 10%;">On-Hand</th>
                 <th style="width: 10%;">Unit</th>
                 <th style="width: 10%;">Location</th>
                 <th style="width: 10%;">Stock No.</th>
@@ -209,7 +208,6 @@ if (!isset($_SESSION['user'])) {
                         echo "<tr>
                   <td>" . $prodId . "</td>
                   <td>"  . $fetch['product_name'] . "</td>
-                  <td>" . $fetch['qty'] . " </td>
                   <td>"  . $fetch['unit_name'] . "</td>
                   <td>" . $fetch['loc_name'] . "</td>
                   <td>" . $fetch['barcode'] . "</td>
@@ -224,7 +222,7 @@ if (!isset($_SESSION['user'])) {
                         LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id ");
                     while ($fetch = mysqli_fetch_array($query)) {
                         $prodId = str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT);
-                        echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>"  . $fetch['qty'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%'>" . "</td></tr>";
+                        echo "<tr><td>" . $prodId . "</td><td>" . $fetch['product_name'] . "</td><td>" . $fetch['unit_name'] . " </td><td>"  . $fetch['loc_name'] . "</td><td>" . $fetch['barcode'] . "</td><td>"  . "<input type='number' name='user_count'  style='width:100%;background-color:transparent'>" . "</td></tr>";
                     }
                 } else {
                     $query = mysqli_query($db, "SELECT product.product_id, product.product_name, loc_tb.loc_id, loc_tb.loc_name, product.qty, unit_tb.unit_name, product.barcode, pinv_product.pinv_qty
