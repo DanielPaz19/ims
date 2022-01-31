@@ -505,7 +505,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 ?>
                         <tr class="items">
                             <td style="width: 165px;">&emsp;&emsp;<?php echo $irow['ep_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
-                            <td style="width: 430px;"><?php echo $irow['product_name'] ?></td>
+                            <td style="width: 550px;"><?php echo $irow['product_name'] ?></td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
                             <td style="width: 60px; text-align:left">&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td>
                         </tr>
