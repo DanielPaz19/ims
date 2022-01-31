@@ -156,7 +156,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </table>
             <!-- Items Details -->
 
-            <form method="GET" action="../commit/que/pinv_commit_que.php">
+            <form method="POST" action="../commit/que/pinv_commit_que.php">
                 <input type="hidden" name="pinv_id" value="<?php echo $_GET['id'] ?>">
                 <input type="hidden" name='mov_date' class='date'>
                 <div class="itemcon">

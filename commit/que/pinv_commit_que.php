@@ -3,18 +3,18 @@
 //Check closed value if 1 or 0
 //- Select query for stout_tb
 
-if (isset($_GET['submit'])) {
+if (isset($_POST['submit'])) {
 
     include "../../php/config.php";
-    $loc = $_GET['loc_id'];
-    $bal_qty = $_GET['bal_qty'];
-    $out_qty = $_GET['out_qty'];
-    $productId = $_GET['product_id'];
-    $pinv_id = $_GET['pinv_id'];
-    $mov_date = $_GET['mov_date'];
+    $loc = $_POST['loc_id'];
+    $bal_qty = $_POST['bal_qty'];
+    $out_qty = $_POST['out_qty'];
+    $productId = $_POST['product_id'];
+    $pinv_id = $_POST['pinv_id'];
+    $mov_date = $_POST['mov_date'];
 
 
-    $sql = "SELECT closed FROM pinv_tb WHERE pinv_id = " . $_GET['pinv_id'];
+    $sql = "SELECT closed FROM pinv_tb WHERE pinv_id = " . $_POST['pinv_id'];
     $result = mysqli_query($db, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -28,17 +28,17 @@ if (isset($_GET['submit'])) {
 
 
     if ($closed == 0) {
-        foreach ($_GET['out_qty'] as $pinv_qty) {
+        foreach ($_POST['out_qty'] as $pinv_qty) {
             $total[] = $pinv_qty;
         }
 
-        foreach ($_GET['product_id'] as $product_id) {
+        foreach ($_POST['product_id'] as $product_id) {
             $pro_id[] = $product_id;
         }
 
         //update database by number of row in stout_commit or number of product ID
 
-        $sql = "UPDATE pinv_tb SET closed = 1 WHERE pinv_id = " . $_GET['pinv_id'];
+        $sql = "UPDATE pinv_tb SET closed = 1 WHERE pinv_id = " . $_POST['pinv_id'];
         mysqli_query($db, $sql);
 
         $limit = 0;
