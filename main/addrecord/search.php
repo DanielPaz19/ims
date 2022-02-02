@@ -1,7 +1,7 @@
 <?php
 
 
-$connect = mysqli_connect("localhost", "root", "@Dmin898", "inventorymanagement");
+$connect = mysqli_connect("localhost", "root", "", "inventorymanagement");
 if (isset($_GET["query"])) {
      $output = '';  //Output Initialization
      $query = "SELECT product.product_name, product.product_id, loc_tb.loc_name, product.barcode, product.qty
