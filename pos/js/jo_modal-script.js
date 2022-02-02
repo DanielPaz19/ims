@@ -87,7 +87,9 @@ const selectJo = function (e) {
           <td class="td__locked price">${formatNumber(
             product.jo_product_price
           )}</td>
-          <td class="td__locked qty">${product.jo_product_qty}</td>
+          <td class="${
+            product.jo_product_qty > 0 ? "td__edit" : "td__locked"
+          } qty">${product.jo_product_qty}</td>
           <td class="unit">${product.unit_name}</td>
           <td class="td__locked discount">0.00</td>
           <td class="total">${formatNumber(totalGross)}</td>

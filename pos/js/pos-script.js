@@ -266,6 +266,10 @@ const editOrder = function (e, selector) {
   )
     return;
 
+  // if (selector == "qty")
+  //   if (+newValue > +prevValue)
+  //     return alert("Value cannot exceed job order quantity!");
+
   target.innerHTML = formatNumber(newValue);
 
   return [

@@ -27,8 +27,8 @@ if ($_POST['json']) {
   mysqli_query($db, $query);
   mysqli_query($db, $query2);
 
-  // Close the jo_tb
-  mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
+  // Close the jo_tb if Order_tb and Jo_tb are equal qty
+  // mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
 
   $limit = 0;
   while (sizeof($productId) != $limit) {
