@@ -1,6 +1,6 @@
 <?php
 
-$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "");
+$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "@Dmin898");
 
 /*function get_total_row($connect)
 {
