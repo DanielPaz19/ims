@@ -45,6 +45,8 @@ const NumOptions = {
   minimumFractionDigits: 2,
 };
 
+const qtyHistory = [];
+
 // ELEMENTS
 
 // Nav
@@ -265,6 +267,15 @@ const editOrder = function (e, selector) {
     isNaN(newValue)
   )
     return;
+
+  console.log(qtyHistory, targetIndex);
+  if (selector == "qty")
+    if (+newValue > +qtyHistory[targetIndex - 1])
+      return alert(
+        `Value cannot exceed job order quantity!\nMaximum Quantity: ${
+          qtyHistory[targetIndex - 1]
+        }`
+      );
 
   target.innerHTML = formatNumber(newValue);
 

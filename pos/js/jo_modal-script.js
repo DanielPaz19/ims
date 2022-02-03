@@ -77,8 +77,9 @@ const selectJo = function (e) {
       inputJoNumber.value = data[0].jo_no;
       transaction.joId = data[0].jo_id;
 
-      data.forEach((product) => {
+      data.forEach((product, index) => {
         const totalGross = product.jo_product_qty * product.jo_product_price;
+        qtyHistory.push(product.jo_product_qty);
         containerOrderList.insertAdjacentHTML(
           "beforeend",
           `<tr>
@@ -87,7 +88,9 @@ const selectJo = function (e) {
           <td class="td__locked price">${formatNumber(
             product.jo_product_price
           )}</td>
-          <td class="td__locked qty">${product.jo_product_qty}</td>
+          <td class="${
+            product.jo_product_qty > 0 ? "td__edit" : "td__locked"
+          } qty">${product.jo_product_qty}</td>
           <td class="unit">${product.unit_name}</td>
           <td class="td__locked discount">0.00</td>
           <td class="total">${formatNumber(totalGross)}</td>
