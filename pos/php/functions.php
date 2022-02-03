@@ -53,3 +53,19 @@ function closeJo($db, $joId)
 {
     mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
 }
+
+
+function getOnlinePlatforms($db)
+{
+    $result = mysqli_query($db, 'SELECT * FROM online_platform');
+    if (!$result) {
+        echo 'Error on query';
+        return;
+    }
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $output[] = $row;
+    }
+
+    return $output;
+}

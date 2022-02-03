@@ -295,8 +295,22 @@ if (!$_SESSION['user']) {
             <label for="">Online Platform:</label>
             <select name="" id="onlinePlatform" disabled>
               <option value="">-Select Field-</option>
-              <option value="1">GCash</option>
-              <option value="2">Paymaya</option>
+
+              <?php
+              include './php/config.php';
+              include './php/functions.php';
+
+              $onlinePlatforms = getOnlinePlatforms($db);
+              foreach ($onlinePlatforms as $value) {
+                $id = $value['online_platform_id'];
+                $platform = $value['online_platform_name'];
+
+                echo "
+                <option value='$id'>$platform</option>";
+              }
+
+              ?>
+
             </select>
             <label for="">Transaction Date:</label>
             <input type="date" class="transaction-date" name="payment_date" disabled />
