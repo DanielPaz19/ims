@@ -1,5 +1,8 @@
 <?php
 
+require "./functions.php";
+
+
 if ($_POST['json']) {
   session_start();
   date_default_timezone_set("Asia/Manila");
@@ -18,6 +21,16 @@ if ($_POST['json']) {
 
   $lastQty = [];
 
+  // Check total Qty
+  $totalQty = 0;
+  foreach ($productQty as $qty) {
+    $totalQty += $qty;
+  }
+  // Exit if total qty <= 0
+  if ($totalQty <= 0) {
+    exit();
+  }
+
   $query = "INSERT INTO order_tb (customer_id, total, order_status_id, user_id, jo_id) 
     VALUES ('$customerId','$total','1', '$userId', '$joId');";
 
@@ -26,9 +39,6 @@ if ($_POST['json']) {
 
   mysqli_query($db, $query);
   mysqli_query($db, $query2);
-
-  // Close the jo_tb if Order_tb and Jo_tb are equal qty
-  // mysqli_query($db, "UPDATE jo_tb SET closed ='1' WHERE jo_id ='$joId'");
 
   $limit = 0;
   while (sizeof($productId) != $limit) {
@@ -69,5 +79,12 @@ if ($_POST['json']) {
     $limit++;
   }
 
+  // Close the jo_tb if Order_tb and Jo_tb are equal qty
+  $totaJoQty = getJoTotalQty($db, $joId);
+  $totalOrderQty = getOrderTotalQty($db, $joId);
+
+  if ($totalOrderQty >= $totaJoQty) {
+    closeJo($db, $joId);
+  }
   // echo $query;
 }
