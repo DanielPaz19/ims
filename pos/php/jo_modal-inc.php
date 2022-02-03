@@ -66,7 +66,6 @@ if (isset($_GET['selectOrders'])) {
     while ($row = mysqli_fetch_assoc($joSelect)) {
 
 
-      // Subtract qty on order_tb
       $orderSelect = mysqli_query(
         $db,
         "SELECT 

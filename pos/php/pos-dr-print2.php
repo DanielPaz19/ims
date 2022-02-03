@@ -165,8 +165,6 @@ if (isset($_GET['printPOS'])) {
                     while ($irow = $result->fetch_assoc()) {
                         $count = $count + 1;
                         $total[] = $irow["pos_temp_qty"] * $irow["pos_temp_price"];
-
-
                 ?>
                         <tr>
                             <td style="width: 10%; text-align:center"><?php echo $irow['pos_temp_qty'] ?></td>

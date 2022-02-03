@@ -33,6 +33,10 @@ if ($_POST['json']) {
   $limit = 0;
   while (sizeof($productId) != $limit) {
 
+    if ($productQty[$limit] == 0) {
+      $limit++;
+      continue;
+    }
     // Insert order details on order_product
     $query3 = "INSERT INTO order_product (product_id, order_id, pos_temp_qty, pos_temp_price, pos_temp_disamount) 
     VALUES ('" . $productId[$limit] . "','" . $orderId . "','" . $productQty[$limit] . "','" . $productPrice[$limit] . "','" . $discount[$limit] . "');";

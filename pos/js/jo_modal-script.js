@@ -77,8 +77,9 @@ const selectJo = function (e) {
       inputJoNumber.value = data[0].jo_no;
       transaction.joId = data[0].jo_id;
 
-      data.forEach((product) => {
+      data.forEach((product, index) => {
         const totalGross = product.jo_product_qty * product.jo_product_price;
+        qtyHistory.push(product.jo_product_qty);
         containerOrderList.insertAdjacentHTML(
           "beforeend",
           `<tr>
