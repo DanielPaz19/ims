@@ -9,7 +9,7 @@ include 'php/pinv_edit-inc.php';
 <script defer src="js/pinv_edit-script.js"></script>
 
 <h1>Physical Inventory: Editing Records</h1>
-<form action="php/pinv_edit-inc.php" method="GET">
+<form action="php/pinv_edit-inc.php" method="POST">
     <div class='container--details'>
         <a href="pinv_main2.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
         <table>

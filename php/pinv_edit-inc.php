@@ -45,18 +45,18 @@ if (isset($_GET['edit'])) {
 }
 
 // If stout_edit-page.php update button is set
-if (isset($_GET['update'])) {
+if (isset($_POST['update'])) {
 
-    $pinvId = number_format($_GET['pinvId']);
-    $employeeId = $_GET['employeeId'];
-    $pinvTitle = $_GET['pinvTitle'];
-    $pinvDate = $_GET['pinvDate'];
+    $pinvId = number_format($_POST['pinvId']);
+    $employeeId = $_POST['employeeId'];
+    $pinvTitle = $_POST['pinvTitle'];
+    $pinvDate = $_POST['pinvDate'];
 
 
 
-    $productId = $_GET['productId'];
-    $qtyIn = $_GET['qtyIn'];
-    $locId = $_GET['locId'];
+    $productId = $_POST['productId'];
+    $qtyIn = $_POST['qtyIn'];
+    $locId = $_POST['locId'];
 
 
     require '../php/config.php';
