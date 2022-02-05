@@ -27,7 +27,7 @@
               <select class="form-select form-select" name="class_id">
                 <option>Choose...</option>
                   <?php
-                    include "source/php/config.php";
+                    include "php/config.php";
                     $records = mysqli_query($db, "SELECT * FROM class_tb");
                     while ($data = mysqli_fetch_array($records)) {
                         echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
