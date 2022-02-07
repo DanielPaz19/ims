@@ -33,9 +33,9 @@ LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
  ";
 
 if ($_POST['query'] != '') {
-    $query .= '
-  WHERE jo_no LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
+    $query .= "
+  WHERE customers_name LIKE '%" . $_POST['query'] . "%' OR jo_no LIKE '%" . $_POST['query'] . "%'
+  ";
 }
 
 $query .= 'ORDER BY jo_id DESC ';
