@@ -53,7 +53,8 @@ if (!isset($_SESSION['user'])) {
       <a href="#">&nbsp;Inventory</a>
       <a href="pos_report.php">&nbsp;POS</a>
       <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
-      <a href="ton_prcg_report.php">&nbsp;Stock-In PRCG </a>
+      <a href="ton_prcg_report.php">&nbsp;Stock-In PRCG (Detailed)</a>
+      <a href="ton_prcg_report_summary.php">&nbsp;Stock-In-PRCG (Summary) </a>
       <a href="#">&nbsp;Stock-Out </a>
       <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
     </div>
