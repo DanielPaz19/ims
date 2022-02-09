@@ -97,7 +97,7 @@
                     <tr>
                         <th>Product ID</th>
                         <th>Description</th>
-                        <th>Total Qty</th>
+                        <th style="text-align: right;">Total Qty</th>
                         <th>Unit</th>
                     </tr>
                 </thead>
@@ -126,7 +126,7 @@
                                     
                                     <td><?php echo str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT); ?></td>
                                     <td><?php echo $fetch['product_name'] ?></td>
-                                    <td><?php echo $fetch['total'] ?></td>
+                                    <td style="text-align: right;"> <b> <?php echo number_format($fetch['total'],2)  ?></b></td>
                                     <td><?php echo $fetch['unit_name'] ?></td>
                                 </tr>
                             <?php
