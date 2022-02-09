@@ -15,7 +15,7 @@
     <title>PACC IMS</title>
     <style>
         @media print {
-  body { font-size: 6pt; }
+  body { font-size: 8pt; }
 }
 
 @media screen {
@@ -36,30 +36,24 @@
 </head>
 
     <body style="background-color:#F4F4F4">
-    <div class="container shadow p-3 mb-5 bg-body rounded" style="margin-top:3%;">
-    <div class="row">
-        <center>
-    <div class="col-12"><h3 style="color: midnightblue; letter-spacing:3px">Philippine Acrylic & Chemical Corporation</h3></div>
-        <div class="col-12"><h4>Product Summary Report</h4></div>
-    </center>
-    <hr class="bg-danger border-2 border-top border-primary">
-    
+    <div class="container shadow p-3 mb-6 bg-body rounded" style="margin-top:3%;">
+
   <div class="row">
     <div class="col-3">
             <form class="form-inline" method="GET" action="">
                 <div class="range">
-                    <label style="float: left;">From:</label>
+                    <label style="float: left;">From: <span style="color: red;">*</span></label>
                         <input type="date" class="form-control" placeholder="Start" name="date1" /> <br>
-                    <label style="float: left;">To :</label>
+                    <label style="float: left;">To : <span style="color: red;">*</span></label>
                         <input type="date" class="form-control" placeholder="End" name="date2" /> <br>
-                    <label for="inputEmail4" class="form-label">Select Product Class <span style="color: red;">*</span> </label>
-              <select class="form-select form-select" name="class_id">
+                    <label for="inputEmail4" class="form-label">Select Option <span style="color: red;">*</span> </label>
+              <select class="form-select form-select" name="dept_id">
                 <option value="">Choose...</option>
                   <?php
                     include "php/config.php";
-                    $records = mysqli_query($db, "SELECT * FROM class_tb");
+                    $records = mysqli_query($db, "SELECT * FROM dept_tb ORDER BY dept_name ASC");
                     while ($data = mysqli_fetch_array($records)) {
-                        echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
+                        echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
                     }
                   ?>
               </select> <br>
@@ -87,9 +81,17 @@
             </div>
 
             </div>
-       
+ 
     <div class="col-9">  
         <div id="report">
+        <div class="row">
+        <center>
+    <div class="col-12"><h3 style="color: midnightblue; letter-spacing:3px">Philippine Acrylic & Chemical Corporation</h3></div>
+        <div class="col-12"><h4>Product TON Summary Report</h4></div>
+    </center>
+    
+            
+            
         <table class="table table-striped" style="width: 100%;">
                 <thead>
                     <tr>
@@ -97,7 +99,6 @@
                         <th>Description</th>
                         <th>Total Qty</th>
                         <th>Unit</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
@@ -106,15 +107,16 @@
                     if (isset($_GET['search'])) {
                         $date1 = date("Y-m-d", strtotime($_GET['date1']));
                         $date2 = date("Y-m-d", strtotime($_GET['date2']));
-                        $class_id = $_GET['class_id'];
+                        $dept_id = $_GET['dept_id'];
                         $query = mysqli_query($db, "SELECT stin_product.product_id,product.product_name,unit_tb.unit_name,
                         sum(stin_product.stin_temp_qty) AS total
                         FROM stin_product 
                         LEFT JOIN product ON product.product_id = stin_product.product_id
                         LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
                         LEFT JOIN stin_tb ON stin_tb.stin_id = stin_product.stin_id
-                        WHERE product.class_id = '$class_id' AND stin_tb.stin_date BETWEEN '$date1' AND '$date2'
+                        WHERE product.dept_id = '$dept_id' AND stin_tb.stin_date BETWEEN '$date1' AND '$date2'
                         GROUP BY stin_product.product_id
+                        ORDER BY product.product_name DESC
                         ");
                         $row = mysqli_num_rows($query);
                         if ($row > 0) {
@@ -122,7 +124,7 @@
                     ?>
                                 <tr>
                                     
-                                    <td><?php echo $fetch['product_id'] ?></td>
+                                    <td><?php echo str_pad($fetch['product_id'], 8, 0, STR_PAD_LEFT); ?></td>
                                     <td><?php echo $fetch['product_name'] ?></td>
                                     <td><?php echo $fetch['total'] ?></td>
                                     <td><?php echo $fetch['unit_name'] ?></td>
@@ -140,9 +142,7 @@
                     } 
                     else {
                         ?>
-                        
-                   
-                    
+                                           
                 </tbody>
             </table>
             <div class="alert alert-danger" role="alert" style="text-align: center;">No data found !</div>
