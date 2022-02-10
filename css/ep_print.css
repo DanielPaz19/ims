@@ -1,0 +1,37 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+.base {
+    border: transparent;
+    width:215.9mm;
+    height:279.4mm;
+}
+.ep_paper {
+    border: transparent;
+    width:213mm;
+    height:173mm;
+}
+
+.ep_table {
+    position: relative;
+    border: none;
+    width:198mm;
+    height:120mm;
+    margin-top: 42mm;
+    margin-bottom: 12mm;
+    margin-right: 7mm;
+    margin-left: 7mm;
+}
+
+.ep_table td{
+   border: transparent;
+
+}
+
+.ep_table table {
+    width: 100%;
+    border: transparent;
+    border-collapse: collapse;
+}
