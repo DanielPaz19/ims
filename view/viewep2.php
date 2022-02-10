@@ -61,8 +61,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                  </table>
                  <table style="position: absolute;">
                      <tr>
-                         <td style="width: 4.5cm;height:9mm">QTY</td>
-                         <td style="width: 15.2cm;height:9mm">Particulars</td>
+                         <td style="width: 4.5cm;height:9mm"></td>
+                         <td style="width: 15.2cm;height:9mm"></td>
                      </tr>
                  <?php
                 $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ep_product.ep_qty, ep_product.ep_price, ep_product.ep_totPrice, ep_tb.ep_remarks, ep_tb.ep_no
@@ -116,7 +116,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     <td style="font-size: small;" colspan="4"><p>NOTE: <?php echo $ep_remarks?></p></td>
                 </tr>
                  </table>
-                 <p style="position: absolute;top:10.1cm;left:4cm">/<?php echo $user_name?></p>
+                 <p style="position: absolute;top:9.6cm;left:4cm">/<?php echo $user_name?></p>
                  <p style="position: absolute;top:10.7cm;left:2cm">/ctg</p>
                  <p style="position: absolute;top:10.7cm;left:7cm">/re</p>
             </div>
