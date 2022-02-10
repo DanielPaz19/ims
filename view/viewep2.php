@@ -47,7 +47,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <p style="position: absolute;left:19cm;top:3.6cm;margin:0;"> <?php echo $ep_no?></p>
             <div class="ep_table">
                 <p style="position: absolute;left:3cm;top:0.4cm;margin:0;"> <?php echo $customers_name?></p>
-                <p style="position: absolute;left:2cm;top:1.2cm;margin:0;"> asdasdadasdasdasdasd ad asd as da sda d </p>
+                <p style="position: absolute;left:2cm;top:1.2cm;margin:0;">  </p>
                 <p style="position: absolute;left:15cm;top:1.2cm;margin:0;"> <?php echo $date?></p>
                 
                 <table>
