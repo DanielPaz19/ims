@@ -113,7 +113,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="font-size: small;" colspan="4"><p>NOTE: <?php echo $ep_remarks?></p></td>
+                    <td style="font-size: small;" colspan="4"><p><?php echo $ep_remarks?></p></td>
                 </tr>
                  </table>
                  <p style="position: absolute;top:9.6cm;left:4cm">/<?php echo $user_name?></p>
