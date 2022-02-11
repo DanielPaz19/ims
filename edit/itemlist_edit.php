@@ -97,7 +97,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                             <option class="select__option--class" value="<?php echo $_GET['class']; ?>"><?php echo $_GET['className']; ?></option>
                             <?php
                             include "config.php";
-                            $records = mysqli_query($db, "SELECT * FROM class_tb");
+                            $records = mysqli_query($db, "SELECT * FROM class_tb ORDER BY class_name ASC");
                             while ($data = mysqli_fetch_array($records)) {
                                 echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
                             }
