@@ -45,7 +45,7 @@
         <button class="dropbtn"><i class="fa fa-file-text-o"></i>&nbsp;Reports&nbsp<i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="#">&nbsp;Inventory</a>
+            <a href="inv_report.php">&nbsp;Inventory</a>
             <a href="pos_report.php">&nbsp;POS</a>
             <a href="#" onclick="showStinReport()">&nbsp;Stock-In </a>
             <a href="ton_prcg_report.php">&nbsp;Stock-In-PRCG (Detailed) </a>
