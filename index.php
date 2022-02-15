@@ -34,6 +34,7 @@ if (!isset($_SESSION['user'])) {
     </button>
 
     <div class="dropdown-content">
+      <a href="pos-utilities.php">POS</a>
       <a href="sup_main.php"><i class="fas fa-people-arrows"></i>&nbspSupplier</a>
       <a href="#" onclick="showPayments()"><i class="fa fa-plus-circle"></i>&nbsp;Payment Type</a>
       <a href="#" onclick="showBank()"><i class="fa fa-plus-circle"></i>&nbsp;Bank</a>
