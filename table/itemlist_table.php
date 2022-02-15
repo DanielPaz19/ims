@@ -24,10 +24,7 @@
       </div>
     </div>
   </div>
-</body>
-
-</html>
-<script>
+  <script>
   $(document).ready(function() {
 
     load_data(1);
@@ -59,3 +56,6 @@
 
   });
 </script>
+</body>
+
+</html>
