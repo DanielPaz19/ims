@@ -13,11 +13,13 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date
+SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date,order_status.order_status_name, order_tb.jo_id
                 FROM order_tb
                 LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
+                LEFT JOIN order_status ON order_status.order_status_id = order_tb.order_status_id
                 WHERE customers.customers_name LIKE '%$qry%' OR order_tb.dr_number LIKE '%$qry%'
                 ORDER BY order_tb.order_id DESC
+
                 
 ";
 
@@ -41,6 +43,7 @@ $output = '
 <th>DR NO.</th>
 <th>Customer</th>
 <th><center>Date</center></th>
+<th><center>Date</center></th>
 
 <th><center>Action</center></th>
 
@@ -57,11 +60,10 @@ if ($total_data > 0) {
       <td>' . $irow['dr_number'] . '</td>
       <td>' . $irow['customers_name'] . '</td>
       <td><center>' . $date . '</center></td>
+      <td><center>' . $irow['order_status_name'] . '</center></td>
       <td>
 <center>
-<a href="view/pos_report-view2.php?id='. $irow["order_id"] .'">
-<button type="button" class="btn btn-outline-success btn-sm"> <i class="bi bi-eye"></i> View</button></a>
-<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '">
+<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
 <button type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-in-down"></i> Return</button></a>
 
       </td>

@@ -126,7 +126,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <?php
       include "php/config.php";
 
-      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, ol_tb.ol_si, rt_tb.rt_no, pinv_tb.pinv_title
+      $sql = "SELECT move_product.move_id, move_type.mov_type_name, move_product.move_ref, po_tb.po_code, move_product.in_qty, move_product.out_qty, move_product.bal_qty, move_product.mov_date, move_product.mov_type_id, stout_tb.stout_code, stin_tb.stin_code, ep_tb.ep_no, ol_tb.ol_si, rt_tb.rt_no, pinv_tb.pinv_title, order_tb.order_id, order_tb.dr_number
 
        FROM move_product 
 
@@ -145,6 +145,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
        LEFT JOIN ol_tb ON move_product.move_ref = ol_tb.ol_id
        LEFT JOIN pinv_tb ON move_product.move_ref = pinv_tb.pinv_id
        LEFT JOIN rt_tb ON move_product.move_ref = rt_tb.rt_id
+       LEFT JOIN order_tb ON move_product.move_ref = order_tb.order_id
+
        WHERE move_product.product_id = '$id'
        ORDER BY move_id ASC";
 
@@ -176,7 +178,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     echo $irow['po_code'];
                     break;
                   case '4':
-                    echo 'pos';
+                    echo 'DR# '.$irow['dr_number'];
                     break;
                   case '5':
                     echo 'Beginning';
@@ -195,6 +197,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                   case '9':
                     echo $irow['rt_no'];
+                    break;
+
+                  case '10':
+                    echo 'Order No.  '.$irow['order_id'] . ' , DR#' .$irow['dr_number'];
                     break;
 
                   default:
@@ -243,6 +249,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     echo $irow['bal_qty'] + $irow['in_qty'];
                     break;
 
+                  case '10':
+                    echo $irow['bal_qty'] + $irow['in_qty'];
+                    break;
+
                   default:
                     break;
                 }
@@ -250,6 +260,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 ?>
             </td>
             <td style="font-weight: bolder; letter-spacing:2px;text-align: center;"><?php echo $date; ?></td>
+
+
           </tr>
       <?php }
       } ?>
