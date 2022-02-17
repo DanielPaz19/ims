@@ -627,7 +627,7 @@ const showPendingPayments = (data, container) => {
                           <td class="date">${transDate}</td>
                           <td class="table__options">
                           <span class="table__option table__option--pay">PAY</span>|
-                          <span class="table__option table__option--cancel">CANCEL</span>|
+                       
                           <span class="table__option table__option--view">VIEW</span>
                           </td>
 
