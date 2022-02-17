@@ -135,8 +135,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <th>Unit</th>
                         <th>Unit Price</th>
                         <th>Subtotal</th>
-                        <th>onhand</th>
-                        <th>qtytotal</th>
+
                     </tr>
                     <?php
                     $sql = "SELECT product.product_id, product.product_name, order_product.pos_temp_qty, unit_tb.unit_name, order_product.pos_temp_price, product.qty
@@ -163,8 +162,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <td><?php echo $irow["unit_name"] ?></td>
                             <td><input type="text" name="return_price[]" value="<?php echo $irow['pos_temp_price'] ?>" style="border: none;" readonly></td>
                             <td><?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)  ?></td>
-                            <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
-                            <td><input type="number" style="border: none" name="return_total[]" value="<?php echo $irow["qty"] + $irow["pos_temp_qty"]; ?>" contenteditable="false"></td>
+                            <td><input type="hidden" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
+                            <td><input type="hidden" style="border: none" name="return_total[]" value="<?php echo $irow["qty"] + $irow["pos_temp_qty"]; ?>" contenteditable="false"></td>
                         </tr>
                             <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
                     <?php }
