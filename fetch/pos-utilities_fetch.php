@@ -43,7 +43,7 @@ $output = '
 <th>DR NO.</th>
 <th>Customer</th>
 <th><center>Date</center></th>
-<th><center>Date</center></th>
+<th><center>Status</center></th>
 
 <th><center>Action</center></th>
 
