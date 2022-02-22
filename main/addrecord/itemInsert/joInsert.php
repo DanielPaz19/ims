@@ -35,52 +35,60 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
     echo "jo id:" . $joId . "<br>" . "<br>";
 
-    $limit = 0;
-    while (sizeof($productId) !== $limit) {
+        // Check product id from stout_product
+        $checkResult = mysqli_query($db, "SELECT jo_no FROM jo_tb WHERE jo_no ='" . $joNo . "'");
 
-        $sql = "INSERT INTO jo_product (product_id,jo_id, jo_product_qty,jo_product_price)
-            VALUES (" . $productId[$limit] . "," . $joId . "," . $qty[$limit] . "," . removeComma($price[$limit]) . ")";
-
-        if (mysqli_query($db, $sql)) {
-            echo "New record created successfully " . "<br>" . "<br>";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+        if (mysqli_num_rows($checkResult) > 0) {
+            // If product id already exist on stout_product, UPDATE   
+            echo "<script>alert('Duplicate JO No.')</script>";
+            echo "<script>location.href='../addjo.php'</script>";
+            
+            
         }
-
-        $limit++;
-    }
-
-    $limiter = 0;
-    while (sizeof($productId) !== $limiter) {
-        $sql = "UPDATE jo_product 
-                       SET jo_remarks ='" . $joRemarks[$limiter]
-            . "' WHERE product_id = " . $productId[$limiter] . " AND jo_id =" . $joId;
-
-
-        if (mysqli_query($db, $sql)) {
-            echo "New record created successfully " . "<br>" . "<br>";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
-        }
-
-        $limiter++;
-    }
-
-
-
-
-
-
-
-    $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id)
+        else {
+            $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id)
             VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$jo_type_id','" . $_SESSION['id'] . "')";
+            mysqli_query($db, $sql);
 
+        $limit = 0;
+        while (sizeof($productId) !== $limit) {
+
+            $sql = "INSERT INTO jo_product (product_id,jo_id, jo_product_qty,jo_product_price)
+                VALUES (" . $productId[$limit] . "," . $joId . "," . $qty[$limit] . "," . removeComma($price[$limit]) . ")";
+
+            if (mysqli_query($db, $sql)) {
+                echo "New record created successfully " . "<br>" . "<br>";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+            }
+
+            $limit++;
+        }
+
+        $limiter = 0;
+        while (sizeof($productId) !== $limiter) {
+            $sql = "UPDATE jo_product 
+                        SET jo_remarks ='" . $joRemarks[$limiter]
+                . "' WHERE product_id = " . $productId[$limiter] . " AND jo_id =" . $joId;
+
+
+            if (mysqli_query($db, $sql)) {
+                echo "New record created successfully " . "<br>" . "<br>";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+            }
+
+            $limiter++;
+        }
+            
+        }
     if (mysqli_query($db, $sql)) {
         echo "<script>alert('New Record Added')</script>";
         echo "<script>window.close();</script>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>";
     }
+
 } else {
 
     $url = "pos-main.html?";
@@ -91,3 +99,10 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     echo $url;
     // header("location: " .$url); //Go back to main page
 }
+
+
+
+
+    
+
+
