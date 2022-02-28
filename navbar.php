@@ -53,7 +53,8 @@
             <a href="ton_prcg_report_summary.php">&nbsp;Stock-In-PRCG (Summary) </a>
             <a href="#">&nbsp;Stock-Out </a>
             <a href="#" onclick="showSrr()">&nbsp;Purchase Order</a>
-            <a href="pinv_main.php">&nbsp;Physical Inventory</a>
+            <!-- <a href="pinv_main.php">&nbsp;Physical Inventory</a> -->
+            <a href="pinv_report.php">&nbsp;PINV</a>
         </div>
     </div>
 
