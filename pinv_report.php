@@ -32,6 +32,11 @@
   and (resolution: 150dpi) {
     body { line-height: 1.4; }
 }
+
+.table {
+    line-height: .5;
+    font-size: large;
+}
     </style>
 </head>
 
@@ -130,11 +135,9 @@ if($dbConnectionStatus->query("SELECT DATABASE()")){
     // printf("Default database is %s.\n", $row[0]);
     $result->close();
  
-     
-     
+        
      
 }
- 
  
  
 // DB Connect Successful
@@ -163,86 +166,64 @@ FROM pinv_product
 LEFT JOIN product ON product.product_id = pinv_product.product_id
 LEFT JOIN class_tb ON product.class_id = class_tb.class_id
 WHERE product.dept_id = '$dept_id'
-ORDER BY product.product_name";
+ORDER BY class_tb.class_name ASC";
 $selectCompany_Query = mysqli_query($dbConnectionStatus,$selectCompany );
 $companyArray =array();
      
 // Loop Through Company Records
- echo 'asdasd';
  while($rowsCompany=mysqli_fetch_assoc($selectCompany_Query)){
       
                  // Get the Company Name/ id
                 
-             $companyName =$rowsCompany['class_name'];
-              
+             
+                 $companyName =$rowsCompany['class_name'];
               
              // Check whether the Company Table is Created f No Create the Table
               if(! in_array($companyName,$comArray)){
+             
                              array_push($comArray,$companyName);
                               
                                      echo '<h5 '.$indent50.'>'.'<i class="bi bi-stop-fill"></i> Group by '.$companyName .'</h5>';
                                             echo '<div '.$indent100.'>';
-                                                 echo "<table border='0' class='table'>";
+                                                 echo "<table border='0' class='table table-striped'>";
                                                   
                                                    echo "<tr>";
-                                                    
-                                                            echo "<td>Product_id</td>";
-                                                            echo "<td>Item Description</td>";
-                                                            echo "<td>Qty</td>";
-                                                            echo "<td>Unit</td>";
-                                                            echo "<td>Location</td>";
-                                                             
+                                                            echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
+                                                            echo "<td style='width:60%;font-weight:bold'>Item Description</td>";
+                                                            echo "<td style='width:10%;font-weight:bold;text-align:right'>Qty</td>";
+                                                            echo "<td style='width:10%;font-weight:bold'>Unit</td>";
+                                                            echo "<td style='width:10%;font-weight:bold'>Location</td>";
                                                      echo "</tr>"; 
-                                                             
+                                                                               
                                                              //-----------------Add Row into the Selected Company --------------------------------
                                                               
-                                                              $selectPerson = "SELECT product.product_id, product.product_name, class_tb.class_name, product.qty, unit_tb.unit_name, unit_tb.unit_id, product.pro_remarks, loc_tb.loc_name,loc_tb.loc_id, product.barcode, product.price, product.cost, dept_tb.dept_name, dept_tb.dept_id, class_tb.class_id, product_type.product_type_name, product_type.product_type_id
-                                                              FROM product
-                                                              LEFT JOIN class_tb ON product.class_id = class_tb.class_id
-                                                              LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-                                                              LEFT JOIN loc_tb ON product.loc_id = loc_tb.loc_id
-                                                              LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id
-                                                              LEFT JOIN product_type ON product.product_type_id = product_type.product_type_id
-                                                              WHERE class_tb.class_name = '$companyName' 
+                                                              $selectPerson = "SELECT product.product_name, pinv_product.pinv_qty, class_tb.class_name,product.product_id,unit_tb.unit_name,loc_tb.loc_name
+                                                              FROM pinv_product
+                                                              LEFT JOIN product ON product.product_id = pinv_product.product_id
+                                                              LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                                              LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
+                                                              LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
+                                                              WHERE class_tb.class_name = '$companyName' AND pinv_product.pinv_qty > 0
                                                               ORDER BY product.product_name ASC";
                                                               $selectPerson_Query = mysqli_query($dbConnectionStatus,$selectPerson);
                                                               $arrayPerson = array();
                                                               while($personrows=mysqli_fetch_assoc($selectPerson_Query )){
                                                                    
-                                                                                               $arrayPerson[] = $personrows; 
- 
+                                                                  $arrayPerson[] = $personrows; 
                                                               }
-                                                               
-                                                             
-                                               
                                                               foreach($arrayPerson as $data){
-                                                                                
-         
+
                                                                                 echo'<tr>';
                                                                                // Search through the array print out value if see the Key  eg: 'id', 'firstname ' etc.
                                                                                 echo'<td>'.str_pad($data['product_id'], 8, 0, STR_PAD_LEFT).'</td>';
                                                                                 echo'<td>'.$data['product_name'].'</td>';
-                                                                                echo'<td>'.$data['qty'].'</td>';
+                                                                                echo'<td style="text-align:right">'.number_format($data['pinv_qty'],2) .'</td>';
                                                                                 echo'<td>'.$data['unit_name'].'</td>';
-                                                                               
-                                                                              
-                                                                              
+                                                                                echo'<td>'.$data['loc_name'].'</td>';
                                                                                 echo'</tr>';
-                                                                                 
-                                                                                 
-                                                                                 
-                                                                                 
-                                                             
+
                                                                             }
-                                                               
-                                                             
-                                                             
-                                                             
-                                                             
-                                                             
-                                                             
-                                                             
-                                    
+
                                                             //-------------------------------------------------------------------------------------
                                                     
                                                   echo "</table>";
