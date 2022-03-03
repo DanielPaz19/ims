@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+.base {
+    border: transparent;
+    width:215.9mm;
+    height:279.4mm;
+}
+.dr_paper {
+
+    /* border: 1px solid black; */
+    width:213mm;
+    height:255mm;
+}
+
+.dr_table {
+    position: relative;
+    /* border: 1px solid black; */
+    width:198mm;
+    height:120mm;
+    margin-top: 6cm;
+    margin-bottom: 12mm;
+    margin-right: .5cm;
+    margin-left: 7mm;
+}
+.items {
+    border-collapse: collapse;
+}
+.items td {
+    /* border: 1px solid black; */
+   ;
+}
+
+.ep_table table {
+    width: 100%;
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+}
