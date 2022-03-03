@@ -28,10 +28,7 @@ body{
 .items {
     border-collapse: collapse;
 }
-.items td {
-    /* border: 1px solid black; */
-   ;
-}
+
 
 .ep_table table {
     width: 100%;
