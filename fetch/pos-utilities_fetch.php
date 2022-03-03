@@ -63,8 +63,13 @@ if ($total_data > 0) {
       <td><center>' . $irow['order_status_name'] . '</center></td>
       <td>
 <center>
+<a href="view/viewdr2.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-eye"></i> View</button></a>
+<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
 <a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
 <button type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-in-down"></i> Return</button></a>
+
 
       </td>
      
