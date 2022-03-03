@@ -491,7 +491,7 @@ const getDrNumber = async function (orderId) {
 };
 
 const orderView = function (orderId) {
-  window.open(`php/pos-dr-print2.php?printPOS&id=${+orderId}`);
+  window.open(`php/viewdr2.php?printPOS&id=${+orderId}`);
 };
 
 const savePayment = function (e) {
