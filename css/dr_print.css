@@ -3,13 +3,8 @@ body{
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
 }
-.base {
-    border: transparent;
-    width:215.9mm;
-    height:279.4mm;
-}
-.dr_paper {
 
+.dr_paper {
     /* border: 1px solid black; */
     width:213mm;
     height:255mm;
@@ -26,7 +21,9 @@ body{
     margin-left: 7mm;
 }
 .items {
+    width: 100%;
     border-collapse: collapse;
+    /* border: 1px solid black; */
 }
 
 
