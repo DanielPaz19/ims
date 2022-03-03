@@ -47,31 +47,19 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <title>View DR</title>
     <link rel="stylesheet" href="../css/dr_print.css">
 </head>
-<body>
-    <div class="base">
-        <!-- <button  style="position: absolute;left:26cm">Print</button> -->
+<body>  
         <div class="dr_paper">
         <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo?></p>
         
-                <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
-                <p style="position: absolute;left:2cm;top:5cm;margin:0;"> <?php echo $customerAdd?></p>
-                <p style="position: absolute;left:2cm;top:1.2cm;margin:0;">  </p>
-                <p style="position: absolute;left:17cm;top:4.5cm;margin:0;font-size:small"> <?php echo $date?></p>
+                <p style="position: absolute;left:2.7cm;top:5.1cm;margin:0;"> <?php echo $customerName?></p>
+                <p style="position: absolute;left:2cm;top:5.6cm;margin:0;"> <?php echo $customerAdd?></p>
+                <p style="position: absolute;left:17cm;top:5.1cm;margin:0;font-size:15px;font-family:Arial, Helvetica, sans-serif"> <?php echo $date?></p>
                 <div class="dr_table">
-                <!-- <table>
-                    <tr>
-                        <td style="width: 135mm; height:9mm"></td>
-                        <td rowspan="2" style="width: 63mm; "></td>
-                     </tr>
-                     <tr>
-                        <td style="width: 135mm;height:9mm"></td>
-                     </tr>
-                 </table> -->
                  <table class="items" style="position: absolute;">
                      <tr>
-                         <td style="width: 1.9cm;height:0.6cm"></td>
-                         <td style="width: 1.9cm;height:0.6cm"></td>
-                         <td style="width: 15.9cm;height:0.6cm"></td>
+                         <td ></td>
+                         <td ></td>
+                         <td ></td>
 
                      </tr>
                  <?php
@@ -88,17 +76,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 if ($result->num_rows >  0) {
  
                     while ($irow = $result->fetch_assoc()) {
-                        $count = $count + 1;
                         $total[] = $irow["pos_temp_qty"] * $irow["pos_temp_price"];
 
                 ?>
                         <tr>
-                            <td><?php echo $irow['pos_temp_qty'] ?></td>
-                            <td><?php echo $irow['unit_name'] ?></td>
+                            <td style="width: 1.9cm;height:0.7cm;text-align:center"><?php echo $irow['pos_temp_qty'] ?></td>
+                            <td style="width: 1.9cm;height:0.7cm"><?php echo $irow['unit_name'] ?></td>
                             <td style="font-size: 12.5px;"><?php echo $irow['product_name'] ?></td>
                             <td >&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
-                            <td>&emsp;</td>
-                            <!-- <td>&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td> -->
+                            <td>&emsp;&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"],2)   ?></td>
                         </tr>
                 <?php }
                 } ?>
@@ -127,7 +113,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
                  </table>
                  <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name?></p>
-                 <p style="position: absolute;top:14.5cm;left:2.5cm">JO<?php echo $joNo?></p>
+                 <p style="position: absolute;top:15.4cm;left:2.5cm">JO<?php echo $joNo?></p>
 
 
             </div>
