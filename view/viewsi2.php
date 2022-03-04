@@ -50,11 +50,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 </head>
 <body>  
         <div class="dr_paper">
-            <p style="position: absolute;left:2.5cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
-            <p style="position: absolute;left:2.5cm;top:5.8cm;margin:0; font-size:small"> <?php echo $customerAdd?></p>
-            <p style="position: absolute;left:2.5cm;top:5.1cm;margin:0;"><?php echo $custin?> </p>
-            <p style="position: absolute;left:17cm;top:5.1cm;margin:0;"> <?php echo $drNo?></p>
-            <p style="position: absolute;left:16cm;top:4.5cm;margin:0;"> <?php echo $date?></p>
+            <p style="position: absolute;left:2.5cm;top:4cm;margin:0;"> <?php echo $customerName?></p>
+            <p style="position: absolute;left:2.5cm;top:4.6cm;margin:0;"><?php echo $custin?> </p>
+            <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0; font-size:small"> <?php echo $customerAdd?></p>
+
+            <p style="position: absolute;left:16cm;top:4cm;margin:0;"> <?php echo $date?></p>
+            <p style="position: absolute;left:17cm;top:4.6cm;margin:0;"> <?php echo $drNo?></p>
+            
               <div class="dr_table">
                  <table class="items" style="position: absolute;">
                  <?php
@@ -100,9 +102,9 @@ $anv = $grandTot / 112;
 $anvv = $anv * 100;
 $av = $grandTot - $anvv;
 ?>
- <p style="position: absolute;top:16.1cm;left:18.1cm"><?php echo number_format($anvv, 2)  ?></p>
- <p style="position: absolute;top:17.3cm;left:18.1cm"><?php echo number_format($anv, 2)  ?></p>
- <p style="position: absolute;top:18cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
+ <p style="position: absolute;top:15.6cm;left:18.1cm"><?php echo number_format($anvv, 2)  ?></p>
+ <p style="position: absolute;top:16.8cm;left:18.1cm"><?php echo number_format($anv, 2)  ?></p>
+ <p style="position: absolute;top:17.4cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
         </div>
     </div>
 </body>
