@@ -17,193 +17,70 @@ if (isset($_GET['addcus'])) {
   $customers_address=mysqli_real_escape_string($db, $_GET['customers_address']);
   $customers_contact=mysqli_real_escape_string($db, $_GET['customers_contact']);
   $customers_note=mysqli_real_escape_string($db, $_GET['customers_note']);
+  $customers_tin=mysqli_real_escape_string($db, $_GET['customers_tin']);
 
 
-    $query = "INSERT INTO customers (customers_company,customers_name,customers_address,customers_contact,customers_note) 
-  			  VALUES('$customers_company','$customers_name','$customers_address','$customers_contact','$customers_note')";
+    $query = "INSERT INTO customers (customers_company,customers_name,customers_address,customers_contact,customers_note,customers_tin) 
+  			  VALUES('$customers_company','$customers_name','$customers_address','$customers_contact','$customers_note','$customers_tin')";
 
       if(mysqli_query($db, $query))
       {
 
-      echo "<script>alert('Successfully stored');</script>";
+      echo "<script>
+      alert('Record Created Successfully!');
+      location.href = 'bo_customer.php';
+      </script>";
 				
     }
     else{
-        echo"<script>alert('Something wrong!!!');</script>";
+        echo"<script>alert('Failed to create record !');</script>";
     }
   	
-  	header('location: bo_customer.php');
+  
   
 }
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body {
-	font-family: sans-serif;
-	background-color: #B0C4DE;
-}
-
-.content {
-	padding: 30px;
-	    box-shadow:  0 0 10px  rgba(0,0,0,0.6);
-      -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-    margin-bottom: 10px;
-
-}
-table {
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px solid lightgrey;
-	    box-shadow:  0 0 10px  rgba(0,0,0,0.6);
-      -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-    margin-bottom: 10px;
-}
-
-table td {
-	border: 1px solid black;
-	padding: 10px;
-	background-color: white;
-}
-table th {
-text-align: left;
-color: white;
-background-color: midnightblue;
-}
-
-.label {
-	color: midnightblue;
-	font-weight: bolder;
-
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 50%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-}
-
-/* Add Animation */
-@-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0} 
-  to {top:0; opacity:1}
-}
-
-@keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
-
-/* The Close Button */
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: red;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.modal-header {
-  padding: 2px 16px;
-  background-color: midnightblue;
-  color: white;
-}
-
-.modal-body {padding: 2px 16px;}
-
-.modal-footer {
-  padding: 2px 16px;
-  background-color: none;
-  color: white;
-}
-
-.content {
-	background-color: #eee;
-	height: 100%;
-}
-
-h3 {
-	letter-spacing: 3px;
-}
-
-button {
-background-color: midnightblue;
- color: white;
- font-size: 15px;
- padding: 10px;
- letter-spacing: 2px;
- cursor: pointer;
-}
-
-input[type=text] {
-	height: 30px;
-	width: 50vh;
-}
-
-</style>
-<div class="content">
+<?php include ('../table/customer_table.html')?>
 
 
-	<!-- The Modal -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header"><br>
-      <span class="close">&times;</span>
-      <h3>Customer: Entering Records</h3>
-    </div>
-    <div class="modal-body">
-  <br>
-<fieldset style="border:none;">
-		<form METHOD="GET" action="#" autocomplete="off">
-				<label class="label">Company:</label><br>
-					<input type="text" name="customers_company" required><br><br>
-				<label class="label">Name:</label><br>
-					<input type="text" name="customers_name" required><br><br>
-				<label class="label">Address:</label><br>
-					<input type="text" name="customers_address"><br><br>
-				<label class="label">Contact No. :</label><br>
-					<input type="text" name="customers_contact"><br><br>
-						<button type="submit"  onclick="myFunction()" name="addcus" class="button">Save</button>
-			</form>
-		</fieldset>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"> <i class="bi bi-person-plus"></i> Create New Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="GET">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="Company Name" name="customers_company">
+            <label for="floatingInput">Company Name</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatingPassword" placeholder="Contact Person" name="customers_name">
+          <label for="floatingInput">Contact Person</label>
+        </div>
+        <br>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Company Address" id="floatingTextarea" name="customers_address"></textarea>
+            <label for="floatingTextarea">Company Address</label>
+        </div><br>
 
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatingPassword" placeholder="Contact Info" name="customers_contact">
+            <label for="floatingPassword">Contact Info</label>
+            <br>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="floatingPassword" placeholder="Tin No."  name="customers_tin">
+            <label for="floatingPassword">TIN No.</label>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" style="width: 30%;" name="addcus">Save Record</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<?php include ('../table/customer_table.html')?>
-

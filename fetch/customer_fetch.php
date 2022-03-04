@@ -22,15 +22,16 @@ if ($_POST['page'] > 1) {
 } else {
   $start = 0;
 }
-
+$qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT * FROM customers ";
+SELECT * FROM customers
+WHERE customers_name LIKE '%$qry%' OR customers_name LIKE '%$qry%' ";
 
-if ($_POST['query'] != '') {
-  $query .= '
-  WHERE customers_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
-  ';
-}
+// if ($_POST['query'] != '') {
+//   $query .= '
+//   WHERE customers_name LIKE "%' . str_replace(' ', '%', $_POST['query']) . ' AND customers_company LIKE "%' . str_replace(' ', '%', $_POST['query']) . '%" 
+//   ';
+// }
 
 $query .= 'ORDER BY customers_id ASC ';
 
@@ -47,13 +48,12 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table width="100%">
+<table class="table" style="width:100%;font-size:small;" >
     <th style="padding: 10px; text-align: center;" width="5%">Cust.ID</th>
     <th style="padding: 10px; text-align: left;" width="20%">Company</th>
     <th style="padding: 10px; text-align: left;" width="20%">Name</th>
     <th style="padding: 10px; text-align: left;" width="30%">Address</th>
     <th style="padding: 10px; text-align: left;" width="10%">Contact No.</th>
-    <th style="padding: 10px; text-align: left;" width="5%">Note</th>
     <th style="padding: 10px; text-align: center;" width="5%">Action</th>
   </tr>
 ';
@@ -64,14 +64,13 @@ if ($total_data > 0) {
 
     $output .= '
     <tr>
-      <td>' . $row["customers_id"] . '</td>
+      <td>' . str_pad($row["customers_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["customers_company"] . '</td>
       <td>' . $row["customers_name"] . '</td>
       <td>' . $row["customers_address"] . '</td>
       <td>' . $row["customers_contact"] . '</td>
-      <td>' . $row["customers_note"] . '</td>
       <td><center>
-                <a href="../edit/customer-edit.php?id=' . $row["customers_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
+                <a href="../edit/customer-edit.php?id=' . $row["customers_id"] . '"> <i class="bi bi-pencil-square" style="font-size:16px;" title="Edit Records"></i></a>
       </center>
                
       </td>
