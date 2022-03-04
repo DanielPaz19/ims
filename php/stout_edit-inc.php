@@ -48,7 +48,7 @@ if (isset($_GET['edit'])) {
 // If stout_edit-page.php update button is set
 if (isset($_POST['update'])) {
 
-    $stoutId = $_POST['stoutId'];
+    $stoutId = number_format($_POST['stoutId']);
     $employeeId = $_POST['employeeId'];
     $stoutTitle = $_POST['stoutTitle'];
     $stoutRemarks = $_POST['stoutRemarks'];

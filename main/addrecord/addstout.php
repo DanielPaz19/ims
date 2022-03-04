@@ -109,7 +109,6 @@
       border: 1px solid black;
       cursor: pointer;
       width: 100%;
-      overflow-y: scroll;
     }
 
     /* Style for crud-table */

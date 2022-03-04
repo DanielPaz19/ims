@@ -18,7 +18,6 @@ include 'php/stout_edit-inc.php';
                         STOUT ID:
                     </span>
                     <input type="text" name="stoutId" id="id" class="textId" value="<?php echo str_pad($stoutId, 8, 0, STR_PAD_LEFT) ?>" readonly>
-<?php echo str_pad($stoutId, 8, 0, STR_PAD_LEFT) ?>
                 </td>
             </tr>
             <tr>
