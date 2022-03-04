@@ -48,7 +48,7 @@ if (isset($_GET['edit'])) {
 // If po_edit-page.php update button is set
 if (isset($_POST['update'])) {
 
-    $stinId = number_format($_POST['stinId']);
+    $stinId = $_POST['stinId'];
     $employeeId = $_POST['employeeId'];
     $stinTitle = $_POST['stinTitle'];
     $stinRemarks = $_POST['stinRemarks'];

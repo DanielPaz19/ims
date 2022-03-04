@@ -51,9 +51,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <div class="dr_paper">
         <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo?></p>
         
-                <p style="position: absolute;left:2.7cm;top:5.1cm;margin:0;"> <?php echo $customerName?></p>
-                <p style="position: absolute;left:2cm;top:5.6cm;margin:0;"> <?php echo $customerAdd?></p>
-                <p style="position: absolute;left:17cm;top:5.1cm;margin:0;font-size:15px;font-family:Arial, Helvetica, sans-serif"> <?php echo $date?></p>
+                <p style="position: absolute;left:2.7cm;top:4.6cm;margin:0;"> <?php echo $customerName?></p>
+                <p style="position: absolute;left:2cm;top:5.2cm;margin:0;"> <?php echo $customerAdd?></p>
+                <p style="position: absolute;left:17cm;top:4.6cm;margin:0;font-size:15px;font-family:Arial, Helvetica, sans-serif"> <?php echo $date?></p>
                 <div class="dr_table">
                  <table class="items" style="position: absolute;">
                      <tr>
@@ -113,7 +113,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
                  </table>
                  <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name?></p>
-                 <p style="position: absolute;top:15.4cm;left:2.5cm">JO<?php echo $joNo?></p>
+                 <p style="position: absolute;top:14.4cm;left:1.6cm">JO<?php echo $joNo?></p>
 
 
             </div>

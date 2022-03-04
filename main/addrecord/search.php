@@ -7,7 +7,7 @@ if (isset($_GET["query"])) {
      $query = "SELECT product.product_name, product.product_id, loc_tb.loc_name, product.barcode, product.qty
                 FROM product
                 LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
-                WHERE product_name LIKE '%" . $_GET["query"] . "%' LIMIT 30";  //Select Items
+                WHERE product_name LIKE '%" . $_GET["query"] . "%' LIMIT 150";  //Select Items
 
      $result = mysqli_query($connect, $query);
      $output = '<ul>';  //Add <ul> tag to output
