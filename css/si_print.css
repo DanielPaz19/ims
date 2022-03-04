@@ -17,16 +17,16 @@ body{
     height:6.9cm;
     margin-left: 0.3cm;
     margin-right: 0.4cm;
-    margin-top: 7.9cm;
+    margin-top: 8.2cm;
 }
 .items {
     width: 100%;
     border-collapse: collapse;
     /* border: 1px solid black; */
 }
-.items td {
-    /* border: 1px solid black; */
-}
+/* .items td {
+    border: 1px solid black;
+} */
 
 /* .ep_table table {
     width: 100%;
