@@ -49,11 +49,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 </head>
 <body>  
         <div class="dr_paper">
-            <p style="position: absolute;left:2.5cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
-            <p style="position: absolute;left:2.5cm;top:5.6cm;margin:0;"> <?php echo $customerAdd?></p>
-            <p style="position: absolute;left:2.5cm;top:5cm;margin:0;"> TIN5646546</p>
-            <p style="position: absolute;left:17cm;top:5cm;margin:0;"> <?php echo $drNo?></p>
-            <p style="position: absolute;left:17cm;top:4.5cm;margin:0;font-size:15px;font-family:Arial, Helvetica, sans-serif"> <?php echo $date?></p>
+            <p style="position: absolute;left:2.5cm;top:4.8cm;margin:0;"> <?php echo $customerName?></p>
+            <p style="position: absolute;left:2.5cm;top:5.9cm;margin:0; font-size:small"> <?php echo $customerAdd?></p>
+            <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0;"> </p>
+            <p style="position: absolute;left:17cm;top:5.5cm;margin:0;"> <?php echo $drNo?></p>
+            <p style="position: absolute;left:17cm;top:4.8cm;margin:0;"> <?php echo $date?></p>
               <div class="dr_table">
                  <table class="items" style="position: absolute;">
                  <?php
