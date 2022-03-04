@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name
+    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name,customers_tin
     FROM order_tb
     LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
     LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
@@ -32,6 +32,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $reasonId = $row['reason_id'];
         $reasonName = $row['reason_name'];
         $user_name = $row['user_name'];
+        $custin = $row['customers_tin'];
     } else {
         echo "No results!";
     }
@@ -49,11 +50,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 </head>
 <body>  
         <div class="dr_paper">
-            <p style="position: absolute;left:2.5cm;top:4.8cm;margin:0;"> <?php echo $customerName?></p>
-            <p style="position: absolute;left:2.5cm;top:5.9cm;margin:0; font-size:small"> <?php echo $customerAdd?></p>
-            <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0;"> </p>
-            <p style="position: absolute;left:17cm;top:5.5cm;margin:0;"> <?php echo $drNo?></p>
-            <p style="position: absolute;left:16cm;top:4.8cm;margin:0;"> <?php echo $date?></p>
+            <p style="position: absolute;left:2.5cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
+            <p style="position: absolute;left:2.5cm;top:5.8cm;margin:0; font-size:small"> <?php echo $customerAdd?></p>
+            <p style="position: absolute;left:2.5cm;top:5.1cm;margin:0;"><?php echo $custin?> </p>
+            <p style="position: absolute;left:17cm;top:5.1cm;margin:0;"> <?php echo $drNo?></p>
+            <p style="position: absolute;left:16cm;top:4.5cm;margin:0;"> <?php echo $date?></p>
               <div class="dr_table">
                  <table class="items" style="position: absolute;">
                  <?php
@@ -99,9 +100,9 @@ $anv = $grandTot / 112;
 $anvv = $anv * 100;
 $av = $grandTot - $anvv;
 ?>
- <p style="position: absolute;top:15.7cm;left:18.1cm"><?php echo number_format($anvv, 2)  ?></p>
- <p style="position: absolute;top:17cm;left:18.1cm"><?php echo number_format($anv, 2)  ?></p>
- <p style="position: absolute;top:17.5cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
+ <p style="position: absolute;top:16.1cm;left:18.1cm"><?php echo number_format($anvv, 2)  ?></p>
+ <p style="position: absolute;top:17.3cm;left:18.1cm"><?php echo number_format($anv, 2)  ?></p>
+ <p style="position: absolute;top:18cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
         </div>
     </div>
 </body>
