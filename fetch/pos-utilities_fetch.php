@@ -13,7 +13,7 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date,order_status.order_status_name, order_tb.jo_id
+SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date,order_status.order_status_name, order_tb.jo_id,order_status.order_status_id
                 FROM order_tb
                 LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
                 LEFT JOIN order_status ON order_status.order_status_id = order_tb.order_status_id
@@ -49,26 +49,51 @@ $output = '
 
 </tr>
 ';
+
 if ($total_data > 0) {
   foreach ($result as $irow) {
-    $dateString = $irow['pos_date'];
+        $dateString = $irow['pos_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'm/d/y');
+        $stsId = $irow['order_status_id'];
+    if  ($stsId == 1) {
+      $str = '<div style="padding:4px" class="alert alert-primary" role="alert">
+      <i class="bi bi-hourglass-split"></i> Pending
+    </div>';
+    }
+    if  ($stsId == 2) {
+      $str = '<div style="padding:4px" class="alert alert-primary" role="alert">
+      Releasing
+    </div>';
+    }
+    if  ($stsId == 3) {
+      $str = '<div style="padding:4px" class="alert alert-success" role="alert">
+      <i class="bi bi-check2-circle"></i> Completed
+    </div>';
+    }    
+    if  ($stsId == 4) {
+      $str = '<div style="padding:4px" class="alert alert-danger" role="alert">
+      <i class="bi bi-x-circle"></i> Canceled
+    </div>';
+    }
+
     $output .= '
-    <tr>
-      <td>' . str_pad($irow['order_id'], 8, 0, STR_PAD_LEFT) . '</td>
-      <td>' . $irow['dr_number'] . '</td>
-      <td>' . $irow['customers_name'] . '</td>
+    <tr >
+      <td style="margin-bottom:0">' . str_pad($irow['order_id'], 8, 0, STR_PAD_LEFT) . '</td>
+      <td style="margin-bottom:0">' . $irow['dr_number'] . '</td>
+      <td style="margin-bottom:0">' . $irow['customers_name'] . '</td>
+      
       <td><center>' . $date . '</center></td>
-      <td><center>' . $irow['order_status_name'] . '</center></td>
+
+      <td><center>   '.$str.' </center></td>
       <td>
 <center>
 <a href="view/viewdr2.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
-<button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-eye"></i> View</button></a>
+<button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a>
+<a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<button type="button" class="btn  btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
 <a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
-<button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
-<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
-<button type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-in-down"></i> Return</button></a>
+<button type="button" class="btn  btn-outline-danger btn-sm"><i class="bi bi-box-arrow-in-down"></i> Return Item</button></a>
 
 
       </td>
