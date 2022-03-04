@@ -10,10 +10,11 @@ $customers_company=mysqli_real_escape_string($db, $_POST['customers_company']);
 $customers_address=mysqli_real_escape_string($db, $_POST['customers_address']);
 $customers_contact=mysqli_real_escape_string($db, $_POST['customers_contact']);
 $customers_note=mysqli_real_escape_string($db, $_POST['customers_note']);
+$customers_tin=mysqli_real_escape_string($db, $_POST['customers_tin']);
 
 
 mysqli_query($db,"UPDATE customers 
-                  SET customers_name='$customers_name', customers_company='$customers_company', customers_address='$customers_address', customers_contact='$customers_contact', customers_note='$customers_note' 
+                  SET customers_name='$customers_name', customers_company='$customers_company', customers_address='$customers_address', customers_contact='$customers_contact', customers_note='$customers_note', customers_tin='$customers_tin' 
                   WHERE customers_id='$id'");
 
 echo "<script>alert('Record updated sucessfully !!')";
@@ -38,6 +39,7 @@ $customers_company = $row['customers_company'];
 $customers_address = $row['customers_address'];
 $customers_contact = $row['customers_contact'];
 $customers_note = $row['customers_note'];
+$customers_tin = $row['customers_tin'];
 
 
 
@@ -132,11 +134,17 @@ color: midnightblue;
 <input type="text" class="form-control" size="80%" name="customers_note" value="<?php echo $customers_note; ?>" />
 </label></td>
 </tr>
+<tr>
+<td width="179"><b><font color='midnightblue'>Contact Tin<em>*</em></font></b></td>
+<td><label>
+<input type="text" class="form-control" size="80%" name="customers_tin" value="<?php echo $customers_tin; ?>" />
+</label></td>
+</tr>
 
 <tr>
 <td width="179"><input type="submit" class="butLink" name="submit" value="Update" ></td>
 <td><label>
-<input type=button onClick="parent.location='pos-customer.php'" class="butLink"
+<input type=button onClick="parent.location='../utilities/bo_customer.php'" class="butLink"
 value='Back'>
 </label></td>
 </tr>
