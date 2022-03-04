@@ -84,7 +84,7 @@ if (!$_SESSION['user']) {
                 <th>Unit</th>
                 <th>Discount</th>
                 <th>Total</th>
-                <th></th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
