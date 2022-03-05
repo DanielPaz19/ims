@@ -18,10 +18,11 @@ if (isset($_GET['addcus'])) {
   $customers_contact=mysqli_real_escape_string($db, $_GET['customers_contact']);
   $customers_note=mysqli_real_escape_string($db, $_GET['customers_note']);
   $customers_tin=mysqli_real_escape_string($db, $_GET['customers_tin']);
+  $tax_type_id=mysqli_real_escape_string($db, $_GET['tax_type_id']);
 
 
-    $query = "INSERT INTO customers (customers_company,customers_name,customers_address,customers_contact,customers_note,customers_tin) 
-  			  VALUES('$customers_company','$customers_name','$customers_address','$customers_contact','$customers_note','$customers_tin')";
+    $query = "INSERT INTO customers (customers_company,customers_name,customers_address,customers_contact,customers_note,customers_tin,tax_type_id) 
+  			  VALUES('$customers_company','$customers_name','$customers_address','$customers_contact','$customers_note','$customers_tin','$tax_type_id')";
 
       if(mysqli_query($db, $query))
       {
@@ -75,6 +76,20 @@ if (isset($_GET['addcus'])) {
           <input type="text" class="form-control" id="floatingPassword" placeholder="Tin No."  name="customers_tin">
             <label for="floatingPassword">TIN No.</label>
         </div>
+        <br>
+        <div class="form-floating">
+                  <select class="form-select" id="sel1" name="tax_type_id">
+                      <?php
+                      include "../php/config.php";
+                      $records = mysqli_query($db, "SELECT * FROM tax_type_tb");
+
+                      while ($data = mysqli_fetch_array($records)) {
+                          echo "<option value='" . $data['tax_type_id'] . "'>" . $data['tax_type_name'] . "</option>";
+                      }
+                      ?>
+                 </select>
+                    <label for="sel1" class="form-label">Tax Type</label>
+                </div>
       </div>
       
       <div class="modal-footer">
