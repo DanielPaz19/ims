@@ -115,9 +115,9 @@ $amountNetVat  = $grandTot/1.12;
 $addVat = $grandTot-$amountNetVat;
 
 ?>
- <p style="position: absolute;top:15.6cm;left:18.1cm"><?php echo number_format($amountNetVat, 2)  ?></p>
- <p style="position: absolute;top:16.8cm;left:18.1cm"><?php echo number_format($addVat, 2)  ?></p>
- <p style="position: absolute;top:17.4cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
+ <p style="position: absolute;top:15.1cm;left:18.1cm"><?php echo number_format($amountNetVat, 2)  ?></p>
+ <p style="position: absolute;top:16.3cm;left:18.1cm"><?php echo number_format($addVat, 2)  ?></p>
+ <p style="position: absolute;top:16.9cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
         </div>
     </div>
 </body>
