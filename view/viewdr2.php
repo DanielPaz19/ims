@@ -51,9 +51,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <div class="dr_paper">
         <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo?></p>
         
-                <p style="position: absolute;left:2.7cm;top:5.1cm;margin:0;"> <?php echo $customerName?></p>
-                <p style="position: absolute;left:2cm;top:5.6cm;margin:0;"> <?php echo $customerAdd?></p>
-                <p style="position: absolute;left:17cm;top:5.1cm;margin:0;font-size:15px;font-family:Arial, Helvetica, sans-serif"> <?php echo $date?></p>
+                <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
+                <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:28%;letter-spacing: -0px;font-size:14px"> <?php echo $customerAdd?></p>
+                <p style="position: absolute;left:16.7cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo $date?></p>
                 <div class="dr_table">
                  <table class="items" style="position: absolute;">
                      <tr>
