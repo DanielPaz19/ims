@@ -11,12 +11,12 @@ body{
 }
 
 .dr_table {
-    position: relative;
+    position: absolute;
     /* border: 1px solid black; */
     width:198mm;
     height:120mm;
-    margin-top: 6cm;
-    margin-bottom: 12mm;
+    top: 6.6cm;
+
     margin-right: .5cm;
     margin-left: 7mm;
 }
