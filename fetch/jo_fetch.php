@@ -25,7 +25,7 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.jo_type_id, jo_type.jo_type_name, jo_tb.jo_status_id
+SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.jo_type_id, jo_type.jo_type_name, jo_tb.jo_status_id,customers_company
 FROM jo_tb
 LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
 LEFT JOIN user ON user.user_id = jo_tb.user_id
@@ -98,7 +98,7 @@ if ($total_data > 0) {
     <tr>
       <td>' . str_pad($row["jo_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["jo_no"] . '</td>
-      <td>' . $row["customers_name"] . '</td>
+      <td>' . $row["customers_company"] . '</td>
       <td>' . $row["emp_name"] . '</td>
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
