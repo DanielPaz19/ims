@@ -10,7 +10,7 @@ if (isset($_GET['editJo'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id
+        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id,customers_company
         FROM jo_tb
         LEFT JOIN jo_product ON jo_product.jo_id = jo_tb.jo_id
         LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
@@ -28,7 +28,7 @@ if (isset($_GET['editJo'])) {
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while ($row = mysqli_fetch_assoc($result)) {
-            $customerName = $row['customers_name'];
+            $customerName = $row['customers_company'];
             $customerId = $row['customers_id'];
             $joNo = $row['jo_no'];
             $empName = $row['emp_name'];
