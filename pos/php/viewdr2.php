@@ -20,7 +20,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $id = $row['order_id'];
         $customerName = $row['customers_company'];
         $customerAdd = $row['customers_address'];
-        $joNo = $row['jo_no']; 
+        $joNo = $row['jo_no'];
         $joId = $row['jo_id'];
         $dateString = $row['pos_date'];
         $dateTimeObj = date_create($dateString);
@@ -40,6 +40,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,22 +48,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <title>View DR</title>
     <link rel="stylesheet" href="../../css/dr_print.css">
 </head>
-<body>  
-        <div class="dr_paper">
-        <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo?></p>
-        
-                <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName?></p>
-                <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:28%;letter-spacing: 0px;font-size:14px"> <?php echo $customerAdd?></p>
-                <p style="position: absolute;left:16.7cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo $date?></p>
-                <div class="dr_table">
-                 <table class="items" style="position: absolute;">
-                     <tr>
-                         <td ></td>
-                         <td ></td>
-                         <td ></td>
 
-                     </tr>
-                 <?php
+<body>
+    <div class="dr_paper" style="position: relative;">
+        <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo ?></p>
+
+        <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName ?></p>
+        <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:70%;letter-spacing: 0px;font-size:14px"> <?php echo $customerAdd ?></p>
+        <p style="position: absolute;left:16.7cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo $date ?></p>
+        <div class="dr_table">
+            <table class="items" style="position: absolute;">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+                <?php
                 $sql = "SELECT product.product_id, product.product_name, order_product.pos_temp_qty, unit_tb.unit_name, order_product.pos_temp_price, product.qty
                 FROM order_product
                 LEFT JOIN product ON product.product_id = order_product.product_id
@@ -74,7 +76,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 $count = 0;
 
                 if ($result->num_rows >  0) {
- 
+
                     while ($irow = $result->fetch_assoc()) {
                         $total[] = $irow["pos_temp_qty"] * $irow["pos_temp_price"];
 
@@ -83,41 +85,42 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <td style="width: 1.9cm;height:0.7cm;text-align:center"><?php echo $irow['pos_temp_qty'] ?></td>
                             <td style="width: 1.9cm;height:0.7cm"><?php echo $irow['unit_name'] ?></td>
                             <td style="font-size: 12.5px;"><?php echo $irow['product_name'] ?></td>
-                            <td >&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
-                            <td>&emsp;&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"],2)   ?></td>
+                            <td>&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                            <td>&emsp;&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)   ?></td>
                         </tr>
                 <?php }
                 } ?>
-                 <?php
-                    $limit = 0;
-                    $subTot = 0;
-                    $disTot = 0;
-                    while ($limit != count($total)) {
-                        $subTot += $total[$limit];
-                        // $disTot += $totaldisamount[$limit];
-                        $limit += 1;
-                    }
-                    $grandTot = $subTot - $disTot;
-                    ?>
-                    <tr style="text-align: center;">
+                <?php
+                $limit = 0;
+                $subTot = 0;
+                $disTot = 0;
+                while ($limit != count($total)) {
+                    $subTot += $total[$limit];
+                    // $disTot += $totaldisamount[$limit];
+                    $limit += 1;
+                }
+                $grandTot = $subTot - $disTot;
+                ?>
+                <tr style="text-align: center;">
                     <td></td>
                     <td style="font-size: small; padding-top:-5px" colspan="2">****** NOTHING FOLLOWS *****</td>
                     <td></td>
-                    <td style="text-decoration: overline;"> 
+                    <td style="text-decoration: overline;">
                         &#8369;<?php echo number_format($grandTot, 2) ?>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <!-- <td style="font-size: small;" colspan="4"><p><?php echo $ep_remarks?></p></td> -->
+                    <!-- <td style="font-size: small;" colspan="4"><p><?php echo $ep_remarks ?></p></td> -->
                 </tr>
-                 </table>
-                 <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name?></p>
-                 <p style="position: absolute;top:15.4cm;left:2.5cm">JO<?php echo $joNo?></p>
+            </table>
+            <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name ?></p>
+            <p style="position: absolute;top:15.4cm;left:2.5cm">JO<?php echo $joNo ?></p>
 
 
-            </div>
         </div>
     </div>
+    </div>
 </body>
+
 </html>
