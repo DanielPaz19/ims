@@ -327,6 +327,7 @@ if (!$_SESSION['user']) {
               <option value="1">BPI</option>
               <option value="2">BDO</option>
               <option value="3">MBTC</option>
+              <option value="4">CBC</option>
             </select>
             <label for="">Cheque Date:</label>
             <input type="date" class="cheque-date" name="payment_date" disabled />
