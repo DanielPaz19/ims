@@ -42,7 +42,7 @@
 // Database configuration
 $host = "localhost";
 $username = "root";
-$password = "@Dmin898";
+$password = "";
 $database_name = "inventorymanagement";
 
 // Get connection object and set the charset

@@ -1,6 +1,6 @@
 <?php
 
-$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "@Dmin898");
+$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "");
 
 
 $limit = '10';
@@ -52,26 +52,26 @@ $output = '
 
 if ($total_data > 0) {
   foreach ($result as $irow) {
-        $dateString = $irow['pos_date'];
-        $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm/d/y');
-        $stsId = $irow['order_status_id'];
-    if  ($stsId == 1) {
+    $dateString = $irow['pos_date'];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
+    $stsId = $irow['order_status_id'];
+    if ($stsId == 1) {
       $str = '<div style="padding:4px" class="alert alert-primary" role="alert">
       <i class="bi bi-hourglass-split"></i> Pending
     </div>';
     }
-    if  ($stsId == 2) {
+    if ($stsId == 2) {
       $str = '<div style="padding:4px" class="alert alert-primary" role="alert">
       Releasing
     </div>';
     }
-    if  ($stsId == 3) {
+    if ($stsId == 3) {
       $str = '<div style="padding:4px" class="alert alert-success" role="alert">
       <i class="bi bi-check2-circle"></i> Completed
     </div>';
-    }    
-    if  ($stsId == 4) {
+    }
+    if ($stsId == 4) {
       $str = '<div style="padding:4px" class="alert alert-danger" role="alert">
       <i class="bi bi-x-circle"></i> Canceled
     </div>';
@@ -85,14 +85,14 @@ if ($total_data > 0) {
       
       <td><center>' . $date . '</center></td>
 
-      <td><center>   '.$str.' </center></td>
+      <td><center>   ' . $str . ' </center></td>
       <td>
 <center>
-<a href="view/viewdr2.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<a href="view/viewdr2.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
 <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a>
-<a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
 <button type="button" class="btn  btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
-<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId='.$irow['jo_id'] .'">
+<a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
 <button type="button" class="btn  btn-outline-danger btn-sm"><i class="bi bi-box-arrow-in-down"></i> Return Item</button></a>
 
 

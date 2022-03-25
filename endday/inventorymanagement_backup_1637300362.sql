@@ -22659,9 +22659,9 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 INSERT INTO user VALUES("1","daniel","123456","1","12");
-INSERT INTO user VALUES("2","dave","@Dmin898","1","10");
+INSERT INTO user VALUES("2","dave","","1","10");
 INSERT INTO user VALUES("3","jks","123456","2","11");
-INSERT INTO user VALUES("4","pos_dave","@Dmin898","2","9");
+INSERT INTO user VALUES("4","pos_dave","","2","9");
 INSERT INTO user VALUES("5","test","1234","9","11");
 INSERT INTO user VALUES("6","admin","123456","99","1");
 

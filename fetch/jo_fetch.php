@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <?php
 
-$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "@Dmin898");
+$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "");
 
 /*function get_total_row($connect)
 {
