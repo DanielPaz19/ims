@@ -6,7 +6,10 @@
     <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
         body {
             padding: 10px;
@@ -31,20 +34,21 @@
             font-weight: bold;
         }
 
+        /* 
         th {
             background-color: #A5A4A4;
             color: white;
             border: 2px solid white;
 
-        }
+        } */
 
-        td {
+        /* td {
             border: 1px solid lightgrey;
             background-color: white;
             margin-left: 5px;
-        }
+        } */
 
-        button {
+        /* button {
             background-color: midnightblue;
             color: whitesmoke;
             cursor: pointer;
@@ -52,17 +56,17 @@
             height: 30px;
             width: 30px;
 
-        }
+        } */
 
-        input {
+        /* input {
             border: 1px solid lightgrey;
             height: 25px;
             text-shadow: aliceblue;
-        }
+        } */
 
         div#search {
             position: relative;
-            width: 80%;
+            width: 100%;
             left: 0;
         }
 
@@ -111,7 +115,7 @@
 
         /* Style for crud-table */
         #crud_table {
-            font-size: 12px;
+            font-size: 13px;
         }
 
         /* Style for Order ID Input box */
@@ -120,21 +124,13 @@
             color: red;
         }
 
-        .postb {
-            border: 1px solid #d3d3d3;
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            margin-top: 20px;
-            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); */
-        }
 
+
+        /* 
         input#item-name {
             position: relative;
             width: 430px;
-        }
+        } */
 
         .hidden {
             display: none;
@@ -283,14 +279,14 @@
                 var id = $("li.selected p").text(); //gets the value id
                 var qty = $(".item-qty").val();
                 var price = $(".item-price").val();
-                var remarks = $(".item-remarks").val();
+                // var remarks = $(".item-remarks").val();
                 if (addOrder(id)) {
                     $.get(
                         "../addrecord/addrow/add-item-row-jo.php", {
                             id: id,
                             qty: qty,
                             price: price,
-                            remarks: remarks,
+                            // remarks: remarks,
                         },
                         function(data, status) {
                             var noResult = "0 results";
@@ -310,7 +306,7 @@
                                 $("#item-name").val("");
                                 $(".item-qty").val(1);
                                 $(".item-price").val(0);
-                                $(".item-remarks").val("");
+                                // $(".item-remarks").val("");
                                 $("li.selected").removeClass("selected");
                             }
                         }
@@ -322,128 +318,147 @@
     </script>
 </head>
 
-<body bgcolor="#B0C4DE">
-    <div class="Incontainer">
-        <div class="inDetails">
-            <fieldset>
-                <legend>&nbsp;&nbsp;&nbsp;JOB-ORDER: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-                <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); width:60%; float: left;">
-                <br><br>
-                <div>
-                    <!-- Search Bar -->
-                    <div class="container">
-                        <div id="search">
-                            <label>Enter Item:&nbsp;&nbsp;</label>
-                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
+<body style="background-color:#B0C4DE">
+    <div class="container-sm">
+        <!-- <div class="shadow-lg p-2 mb-5 mt-5 bg-blue rounded"> -->
+        <div class="container">
+            <div id="search">
+                <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+                    <div class="card-header" style="background-color: midnightblue;color:white;letter-spacing:2px">Job Order: Entering records <i class="bi bi-pencil"></i></div>
+                    <div class="card-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="item-name" name="item">
+                            <label for="floatingInput">Search Item</label>
                             <div id="item-list"></div><!-- Dont Remove this -->
                         </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control item-qty" id="floatingInput" placeholder="Quantity" value="1">
+                                    <label for="floatingInput">Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control item-price" id="floatingInput" placeholder="Quantity" value="0">
+                                    <label for="floatingInput">Price</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-floating mb-3">
+                                    <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr><br>
+                        <form autocomplete="off" method="GET" action="../addrecord/itemInsert/joInsert.php">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col">&nbsp;JO ID : <span class=" newStinId"></span></div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="floatingInput" name="jo_no">
+                                            <label for="floatingInput">Job-Order No.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" id="floatingInput" name="jo_date">
+                                            <label for="floatingInput">Job-Order Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="jo_type_id">
+                                                <option></option>
+                                                <?php
+                                                include "../../php/config.php";
+                                                $records = mysqli_query($db, "SELECT * FROM jo_type ORDER BY jo_type_id ASC");
+
+                                                while ($data = mysqli_fetch_array($records)) {
+                                                    echo "<option value='" . $data['jo_type_id'] . "'>" . $data['jo_type_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <label for="floatingSelect">Job-Order Type</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="customers_id">
+                                                <option></option>
+                                                <?php
+                                                include "../../php/config.php";
+                                                $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_company ASC");
+
+                                                while ($data = mysqli_fetch_array($records)) {
+                                                    echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_company'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <label for="floatingSelect">Customer</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="emp_id">
+                                                <option></option>
+                                                <?php
+                                                include "../../php/config.php";
+                                                $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+
+                                                while ($data = mysqli_fetch_array($records)) {
+                                                    echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <label for="floatingSelect">Prepared by</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-floating mt-3">
+                                                <textarea class="form-control" id="floatingTextarea2" style="height: 100px;" name="jo_remarks"></textarea>
+                                                <label for=" floatingTextarea2">Job-Order Remarks</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <br>
+                                <div class="table-responsive">
+                                    <caption>Product Table</caption>
+                                    <table id="crud_table" class="postb table">
+                                        <tr>
+                                            <th>Item Description</th>
+                                            <th>Qty-Order</th>
+                                            <th>Price</th>
+                                            <th>Total Amount</th>
+                                            <th></th>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success" name="btnsave"><i class="bi bi-check2-circle"></i> Save Records</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <br>
-                    <!-- input for item qty -->
-                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input class="item-qty" type="number" placeholder="Quantity" value="1" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!-- input for discount -->
-                    <label>Price: &nbsp;&nbsp;</label>
-                    <input class="item-price" type="number" placeholder="Price" value="0" />&nbsp;<br> <br>
-                    <label>Item Remarks: &nbsp;&nbsp;</label>
-                    <textarea class="item-remarks" rows="4" cols="50"></textarea>&nbsp;<br> <br>
-                    <button class="add-button" title="Add Item">Add item to table</button> <br />
 
                 </div>
-                <br><br>
-                <hr>
-                <form autocomplete="off" method="GET" action="../addrecord/itemInsert/joInsert.php">
-                    <label>JO ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class=" newStinId"></span>
-                    <br> <br>
-                    <table class="jotb">
-                        <tr>
-                            <td><label>JO-No : </label> <br>
-                                <input type="text" name="jo_no" placeholder="21-00000" style="width: 50%;">
-                            </td>
 
-                            <td><label>Date:</label> <br>
-                                <input type="date" name="jo_date" style="width: 50%;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Customer:</label> <br>
-                                <select name="customers_id" style="width: 50%; height: 32px; border: 1px solid #B8B8B8;">
-                                    <option>
-                                        <center>--- Select Customer ---</center>
-                                    </option>
-                                    <?php
-                                    include "../../php/config.php";
-                                    $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_company ASC");
 
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_company'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-                            <td> <label>Prepared By:</label> <br>
-                                <select name="emp_id" style="width: 50%; height: 32px; border: 1px solid #B8B8B8;">
-                                    <option>
-                                        <center>--- Select Employee ---</center>
-                                    </option>
-                                    <?php
-                                    include "../../php/config.php";
-                                    $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
-
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-
-                            <td><label> JO-Type:</label>
-                                <select name="jo_type_id" style="width: 150px; height: 26px; border: 1px solid gray;">
-                                    <option></option>
-                                    <?php
-                                    include "config.php";
-                                    $records = mysqli_query($db, "SELECT * FROM jo_type ORDER BY jo_type_id ASC");
-
-                                    while ($data = mysqli_fetch_array($records)) {
-                                        echo "<option value='" . $data['jo_type_id'] . "'>" . $data['jo_type_name'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                        </tr>
-                    </table>
-
-                    <div>
-                        <!--Add item for order-->
-
-                        <br /><br />
-
-                        <button name="btnsave" class="stin-button-save">&nbsp;Save Record</button> <br> <br>
-                        <table id="crud_table" width="100%" class="postb">
-                            <tr>
-                                <th style="padding: 10px; text-align: left" width="50%">
-                                    Item Description
-                                </th>
-                                <th style="padding: 10px; text-align: left" width="5%">
-                                    Qty-Order
-                                </th>
-                                <th style="padding: 10px; text-align: left" width="10%">Price</th>
-                                <th style="padding: 10px; text-align: left" width="10%">Total Amount</th>
-                                <th style="padding: 10px; text-align: left" width="10%">Item Remarks</th>
-                                <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
-                            </tr>
-                        </table>
-                        <br>
-
-                </form>
+            </div>
         </div>
-        </fieldset>
     </div>
     </div>
+
 </body>
 
 </html>
