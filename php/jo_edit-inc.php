@@ -10,7 +10,7 @@ if (isset($_GET['editJo'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id,customers_company
+        "SELECT jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name, customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id,customers_company,jo_tb.jo_remarks
         FROM jo_tb
         LEFT JOIN jo_product ON jo_product.jo_id = jo_tb.jo_id
         LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
@@ -42,6 +42,7 @@ if (isset($_GET['editJo'])) {
             $unitId[] = $row['unit_id'];
             $unitName[] = $row['unit_name'];
             $itemPrice[] = $row['jo_product_price'];
+            $remarks = $row['jo_remarks'];
         }
     } else {
         echo "0 results";
@@ -54,6 +55,7 @@ if (isset($_POST['update'])) {
     $customerId = $_POST['customerId'];
     $joNo = $_POST['joNo'];
     $joDate = $_POST['joDate'];
+    $remarks = $_POST['jo_remarks'];
     $jo_type_id = $_POST['jo_type_id'];
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
@@ -65,7 +67,7 @@ if (isset($_POST['update'])) {
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate', jo_type_id='$jo_type_id'
+        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate', jo_type_id='$jo_type_id', jo_remarks='$remarks'
         WHERE jo_id='$joId' "
     );
 

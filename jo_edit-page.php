@@ -19,7 +19,6 @@ include 'php/jo_edit-inc.php';
         <input type="text" name="joId" id="id" class="textId" value="<?php echo str_pad($joId, 8, 0, STR_PAD_LEFT) ?>" readonly>
         <br>
 
-
         <span class="po__label">
             Jo No. :
         </span>&nbsp;&nbsp;
@@ -35,8 +34,7 @@ include 'php/jo_edit-inc.php';
         </span>
         <select name="jo_type_id" style="width: 250px; height: 26px; border: 1px solid gray;">
 
-            <option value="<option value=" <?php echo $jo_type_id ?>"><?php echo $jo_type_name ?></option>
-
+            <option value="<?php echo $jo_type_id ?>"><?php echo $jo_type_name; ?></option>
             <?php
             include "config.php";
             $records = mysqli_query($db, "SELECT * FROM jo_type ORDER BY jo_type_id ASC");
@@ -60,8 +58,11 @@ include 'php/jo_edit-inc.php';
                 echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_company'] . "</option>";
             }
             ?>
-        </select>
-
+        </select><br>
+        <span class="po__label">
+            Remarks:
+        </span>
+        <textarea name="jo_remarks" id="" cols="50" rows="3"><?php echo $remarks ?></textarea>
     </div>
 
     <div class="button__container--insert_item">
