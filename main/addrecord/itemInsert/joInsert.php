@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include_once "../../../php/config.php";
@@ -18,11 +19,12 @@ $qty = $_GET['qty_order'];
 $price = $_GET['price'];
 $total = $_GET['total'];
 $joNo = $_GET['jo_no'];
-$joRemarks = $_GET['remarks'];
+// $joRemarks = $_GET['remarks'];
 $customersId = $_GET['customers_id'];
 $joDate = $_GET['jo_date'];
 $emp_id = $_GET['emp_id'];
 $jo_type_id = $_GET['jo_type_id'];
+$remarks = $_GET['jo_remarks'];
 
 
 if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Products are Empty
@@ -35,20 +37,17 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
     echo "jo id:" . $joId . "<br>" . "<br>";
 
-        // Check product id from stout_product
-        $checkResult = mysqli_query($db, "SELECT jo_no FROM jo_tb WHERE jo_no ='" . $joNo . "'");
+    // Check product id from stout_product
+    $checkResult = mysqli_query($db, "SELECT jo_no FROM jo_tb WHERE jo_no ='" . $joNo . "'");
 
-        if (mysqli_num_rows($checkResult) > 0) {
-            // If product id already exist on stout_product, UPDATE   
-            echo "<script>alert('Duplicate JO No.')</script>";
-            echo "<script>location.href='../addjo.php'</script>";
-            
-            
-        }
-        else {
-            $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id)
-            VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$jo_type_id','" . $_SESSION['id'] . "')";
-            mysqli_query($db, $sql);
+    if (mysqli_num_rows($checkResult) > 0) {
+        // If product id already exist on stout_product, UPDATE   
+        echo "<script>alert('Duplicate JO No.')</script>";
+        echo "<script>location.href='../addjo.php'</script>";
+    } else {
+        $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id,jo_remarks)
+            VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$jo_type_id','" . $_SESSION['id'] . "','$remarks')";
+        mysqli_query($db, $sql);
 
         $limit = 0;
         while (sizeof($productId) !== $limit) {
@@ -80,15 +79,13 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
             $limiter++;
         }
-            
-        }
+    }
     if (mysqli_query($db, $sql)) {
         echo "<script>alert('New Record Added')</script>";
         echo "<script>window.close();</script>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>";
     }
-
 } else {
 
     $url = "pos-main.html?";
@@ -99,10 +96,3 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     echo $url;
     // header("location: " .$url); //Go back to main page
 }
-
-
-
-
-    
-
-
