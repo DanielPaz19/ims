@@ -10,7 +10,7 @@ include 'php/jo_edit-inc.php';
 
 
 <div class="container-sm">
-    <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%">
+    <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff">
         <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Job-Order Editing Records <i class="bi bi-pencil"></i></h4>
         <hr>
 
@@ -93,7 +93,7 @@ include 'php/jo_edit-inc.php';
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                                <tr style="text-align: left;">
+                                <tr style="text-align: left;background-color:#0d6efd;color:white">
                                     <th>&nbsp;&nbsp;Product ID</th>
                                     <th>&nbsp;&nbsp;Item Name</th>
                                     <th>&nbsp;&nbsp;Qty</th>
