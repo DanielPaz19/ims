@@ -56,10 +56,10 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table width="100%">
-  <tr>
-    <th width="5%"">Jo-ID</th>
-    <th width="15%">Jo-No. </th>
+<table class="table table-hover" width="100%" style="cursor:pointer;">
+  <tr style="background-color:#0d6efd;color:white">
+    <th width="5%"">JO ID</th>
+    <th width="15%">Job-Order No. </th>
     <th width="20%">Customer</th>
     <th width="10%">Prepared By</th>
     <th width="10%"><center>Create Date</th>
@@ -75,9 +75,9 @@ if ($total_data > 0) {
 
         if ($closed == 1) {
             $str = '<font color="green"><i class="bi bi-check-circle" style="font-size:24px" title="Normal"></i></font>';
-            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&joTypeId=' . $row['jo_type_id'] . '&joTypeName=' . $row['jo_type_name'] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
+            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&joTypeId=' . $row['jo_type_id'] . '&joTypeName=' . $row['jo_type_name'] . '" disabled> <i class="bi bi-pencil-square" style="font-size: 22px;color:green;"></i></a>
       &nbsp;&nbsp;&nbsp;
-                <a href="#"><font color="gray"><i class="fa fa-trash-o" style="font-size:26px"></i></font></a>
+     <i class="bi bi-x-circle" style="color:red;font-size:22px" title="Delete"></i></a>
                
       &nbsp;&nbsp;&nbsp;';
         } else {
@@ -128,6 +128,7 @@ $output .= '
 <label style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
+<nav aria-label="Page navigation example">
   <ul class="pagination">
 ';
 
@@ -175,7 +176,7 @@ for ($count = 0; $count < count($page_array); $count++) {
     if ($page == $page_array[$count]) {
         $page_link .= '
     <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only"></span></a>
     </li>
     ';
 
@@ -185,7 +186,7 @@ for ($count = 0; $count < count($page_array); $count++) {
         } else {
             $previous_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
+        <a class="page-link" href="#">&laquo;</a>
       </li>
       ';
         }
@@ -197,7 +198,7 @@ for ($count = 0; $count < count($page_array); $count++) {
       </li>
         ';
         } else {
-            $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
+            $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">&raquo;</a></li>';
         }
     } else {
         if ($page_array[$count] == '...') {
@@ -218,7 +219,7 @@ for ($count = 0; $count < count($page_array); $count++) {
 $output .= $previous_link . $page_link . $next_link;
 $output .= '
   </ul>
-
+  </nav>
 </div>
 ';
 

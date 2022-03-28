@@ -324,7 +324,7 @@
         <div class="container">
             <div id="search">
                 <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
-                    <div class="card-header" style="background-color: midnightblue;color:white;letter-spacing:2px">Job Order: Entering records <i class="bi bi-pencil"></i></div>
+                    <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Job Order: Entering records <i class="bi bi-pencil"></i></div>
                     <div class="card-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="item-name" name="item">

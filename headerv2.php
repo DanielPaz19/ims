@@ -23,4 +23,4 @@
 
 </head>
 
-<body style="margin: 0px; background-color:#B0C4DE">
+<body style="margin: 0px; background-color:#cce0ff">
