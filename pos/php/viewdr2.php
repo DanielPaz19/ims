@@ -86,9 +86,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <tr>
                             <td style="width: 1.9cm;height:0.7cm;text-align:center"><?php echo $irow['pos_temp_qty'] ?></td>
                             <td style="width: 1.9cm;height:0.7cm"><?php echo $irow['unit_name'] ?></td>
-                            <td style="font-size: 12.5px;"><?php echo $irow['product_name'] ?></td>
-                            <td>&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
-                            <td>&emsp;&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)   ?></td>
+                            <td style="font-size: 12.5px;" colspan="4"><?php echo $irow['product_name'] ?></td>
+                            <td style="text-align: right;">&#8369;<?php echo $irow['pos_temp_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                            <td style="text-align: right;">&emsp;&#8369;<?php echo number_format($irow["pos_temp_qty"] * $irow["pos_temp_price"], 2)   ?></td>
                         </tr>
                 <?php }
                 } ?>
@@ -104,25 +104,26 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 $grandTot = $subTot - $disTot;
                 ?>
                 <tr style="text-align: center;">
+
+
                     <td></td>
-                    <td style="font-size: small; padding-top:-5px" colspan="2">****** NOTHING FOLLOWS *****</td>
                     <td></td>
-                    <td style="text-decoration: overline;">
+                    <td style="font-size: small;text-align:left" colspan="5">
+                        <p>
+                            <?php
+                            $search = array(',', ':');
+                            $replace = array('<br />', '');
+                            echo $remarks = str_replace($search, $replace, $remarks);
+                            ?></p>
+                    </td>
+                    <td style="text-decoration: overline;text-align:right;vertical-align:top">
                         &#8369;<?php echo number_format($grandTot, 2) ?>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="font-size: small;" colspan="4">
-
-
-                        <p>
-                            <?php
-                            $search = array('.', ':');
-                            $replace = array('.<br />', '');
-                            echo $remarks = str_replace($search, $replace, $remarks);
-
-                            ?></p>
+                    <td style="font-size: small; padding-top:-5px" colspan="4">
+                        <center>****** NOTHING FOLLOWS *****</center>
                     </td>
                 </tr>
             </table>
