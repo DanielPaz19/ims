@@ -151,7 +151,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="row">
                     <div class="col">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" required>
+                            <input type="number" class="form-control" id="floatingInput" name="qty" onchange="setDecimal" min="0" max="9999999999" step="0.0000001">
                             <label for="floatingInput">Quantity</label>
                         </div>
                     </div>
