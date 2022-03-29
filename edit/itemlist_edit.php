@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 
 include('../php/config.php');
@@ -16,11 +18,14 @@ if (isset($_POST['submit'])) {
     $product_type_id = $_POST['product_type_id'];
 
     mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
+    echo "<script type='text/javascript'>alert('Update Records Successfully!');
+    location.href = '../itemlist_main.php'</script>";
 
 
 
-    header("Location:../itemlist_main.php");
+    // header("Location:../itemlist_main.php");
 }
+
 
 
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
@@ -56,57 +61,53 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
 }
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<title>EDIT | <?php echo $product_name; ?></title>
-
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/editform.css">
-    <style>
-        button {
-            background-color: midnightblue;
-            color: white;
-            padding: 7px 12px;
-            letter-spacing: 3px;
-            cursor: pointer;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itemlist: Editing Records</title>
 </head>
+<?php include('../main_header_v2.php'); ?>
 
-<body>
-
-    <div class="container">
-        <a href="../itemlist_main.php"><i class="fa fa-close" style="font-size:24px; float:right"></i></a>
-        <h1>EDITING RECORDS&nbsp;<i class="fa fa-pencil" style="font-size:36px"></i> </h1>
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-        <br><br>
-        <form method="post">
+<div class="container-sm mt-2">
+    <a class="back-button" href="../itemlist_main.php">
+        <p class="mt-3" style="float:right;padding:2%"><i class="bi bi-backspace"></i> Back to Itemlist</p>
+    </a>
+    <div class="shadow-lg p-5 mb-5 bg-rounded" style="background-color: white;border: 5px solid #cce0ff">
+        <h3 style="color: #0d6efd;"><i class="bi bi-boxes"></i> Itemlist: Editing Records</h3>
+        <hr>
+        <form method="POST">
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
-            <table class="items1" style=" width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th width="50%">Item Name</th>
-                    <th width="25%">Class</th>
-                    <th width="25%">Unit</th>
-                </tr>
+            <div class="row">
 
-                <tr>
-                    <td><input type="text" name="product_name" value="<?php echo $product_name; ?>" /></td>
-                    <td>
-                        <select name="class_id" class="select--class">
-                            <option class="select__option--class" value="<?php echo $_GET['class']; ?>"><?php echo $_GET['className']; ?></option>
-                            <?php
-                            include "config.php";
-                            $records = mysqli_query($db, "SELECT * FROM class_tb ORDER BY class_name ASC");
-                            while ($data = mysqli_fetch_array($records)) {
-                                echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
-                            }
-                            ?>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Item Name" name="product_name" value="<?php echo $product_name; ?>">
+                        <label for="floatingInput">Item Description</label>
+                    </div>
+                </div>
 
-                        </select>
-                    </td>
-                    <td>
-                        <select name="unit_id" class="select--unit">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="class_id">
+                                <option class="select__option--class" value="<?php echo $_GET['class']; ?>"><?php echo $_GET['className']; ?></option>
+                                <?php
+                                include "config.php";
+                                $records = mysqli_query($db, "SELECT * FROM class_tb ORDER BY class_name ASC");
+                                while ($data = mysqli_fetch_array($records)) {
+                                    echo "<option value='" . $data['class_id'] . "'>" . $data['class_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <label for="floatingSelect">Class</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="unit_id">
                             <option value="<?php echo $_GET['unitId']; ?>"><?php echo $_GET['unit']; ?></option>
                             <?php
                             include "config.php";
@@ -117,20 +118,20 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                             }
                             ?>
                         </select>
-                    </td>
-                </tr>
-            </table><br>
-
-            <table class="items1" style=" width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th width="50%">Remarks</th>
-                    <th width="25%">Location</th>
-                    <th width="25%">Barcode</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="pro_remarks" value="<?php echo $pro_remarks; ?>" class="input--pro__remarks" /></td>
-                    <td>
-                        <select name="loc_id" class="select--location">
+                        <label for="floatingSelect">Unit</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-floating">
+                        <textarea class="form-control" name="pro_remarks" id="floatingTextarea"><?php echo $pro_remarks; ?></textarea>
+                        <label for="floatingTextarea">Remarks</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="loc_id">
                             <option value="<?php echo $_GET['locId'] ?>"><?php echo $_GET['loc']; ?></option>
                             <?php
                             include "config.php";
@@ -141,37 +142,50 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                             }
                             ?>
                         </select>
-                    </td>
-                    <td><input type="text" class="form-control" name="barcode" value="<?php echo $barcode; ?>" /></td>
-                </tr>
-            </table><br>
+                        <label for="floatingSelect">Location</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Barcode" name="barcode" value="<?php echo $barcode; ?>">
+                        <label for="floatingInput">Barcode</label>
+                    </div>
+                </div>
+            </div>
 
-            <table class="items1" style=" width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th width="50%">Price</th>
-                    <th width="15%">Cost</th>
-                    <th width="25%" style="text-align: left;">&emsp;&emsp;&emsp;Department</th>
-                    <th width="10%" style="text-align: left;">Type</th>
-
-                </tr>
-                <tr>
-                    <td><input tabindex="2" required="number" type="number" name="price" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $price; ?>" /></td>
-                    <td><input tabindex="2" required="number" type="number" name="cost" onchange="setDecimal" min="0" max="9999999999" step="0.0000001" value="<?php echo $cost; ?>" /></td>
-                    <td style="text-align: center;">
-                        <select name="dept_id" class="select--dept">
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Price" name="price" value="<?php echo $price; ?>">
+                        <label for="floatingInput">Price</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Cost" name="cost" value="<?php echo $cost; ?>">
+                        <label for="floatingInput">Cost</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="dept_id">
                             <option value="<?php echo $_GET['deptId'] ?>"><?php echo $_GET['dept']; ?></option>
                             <?php
                             include "config.php";
-                            $records = mysqli_query($db, "SELECT * FROM dept_tb ORDER BY dept_id DESC ");
+                            $records = mysqli_query($db, "SELECT * FROM dept_tb");
 
                             while ($data = mysqli_fetch_array($records)) {
                                 echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
                             }
                             ?>
                         </select>
-                    </td>
-                    <td style="text-align: left;">
-                        <select name="product_type_id" style="width: 250px; height: 35px; border: 1px solid gray; border-radius: 5px;">
+                        <label for="floatingSelect">Department</label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="product_type_id">
                             <option value="<?php echo $_GET['typeId'] ?>"><?php echo $_GET['typeName']; ?></option>
                             <?php
                             include "config.php";
@@ -181,20 +195,41 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                                 echo "<option value='" . $data['product_type_id'] . "'>" . $data['product_type_name'] . "</option>";
                             }
                             ?>
-                    </td>
-                </tr>
-            </table>
-            <br> <br>
-            <button name="submit">Update</button>
-        </form><br><br><br><br>
-
-
-
-
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+                        </select>
+                        <label for="floatingSelect">Item-Type</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit"><i class="bi bi-check2-circle"></i> Update Records</button>
+        </form>
     </div>
-</body>
+</div>
+<script>
+    (function($) {
+        showSwal = function(type) {
+            'use strict';
+            if (type === 'auto-close') {
+                swal({
+                    title: 'Auto close alert!',
+                    text: 'I will close in 2 seconds.',
+                    timer: 2000,
+                    button: false
+                }).then(
+                    function() {},
+                    // handling the promise rejection
+                    function(dismiss) {
+                        if (dismiss === 'timer') {
+                            console.log('I was closed by the timer')
+                        }
+                    }
+                )
+            } else {
+                swal("Error occured !");
+            }
+        }
 
-
+    })(jQuery);
+</script>
+<?php include('../footer.php'); ?>
 
 </html>

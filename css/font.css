@@ -1,0 +1,12 @@
+body {
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Jost:wght@100&display=swap');
+    font-family: 'Jost', sans-serif;
+
+  }
+
+  table{
+    font-family: 'Anonymous Pro', monospace;
+  }
+  table th{
+    font-family: 'Jost', sans-serif;
+  }

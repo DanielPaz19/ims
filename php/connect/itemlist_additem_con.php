@@ -41,10 +41,11 @@ if (isset($_GET['add'])) {
 
     echo date('Y-m-d');
 
-    echo '<script type="text/javascript"> alert("Data Inserted Successfully!"); </script>';
+    // echo '<script type="text/javascript"> alert("Data Inserted Successfully!"); </script>';
   } else {
     echo '<script type="text/javascript"> alert("Error Uploading Data!"); </script>';  // when error occur
   }
-
-  header('location: ../../itemlist_main.php');
+  echo "<script type='text/javascript'>alert('New Record Added!');
+  location.href = '../../itemlist_main.php'</script>";
+  // header('location: ../../itemlist_main.php');
 }
