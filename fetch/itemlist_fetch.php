@@ -48,8 +48,8 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table width="100%" class="itemlist" id="hover">
-  <tr>
+<table width="100%" class="table table-hover" width="100%" style="cursor:pointer;">
+  <tr style="background-color:#0d6efd;color:white">
     <th width="10%">Prod. ID</th>
     <th width="30%">Item</th>
     <th width="10%">Class</th>
@@ -71,7 +71,7 @@ if ($total_data > 0) {
       <td>' . str_pad($row['product_id'], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["product_name"] . '</td>
       <td>' . $row["class_name"] . '</td>
-      <td>' . $row["qty"] . '</td>
+      <td style="text-align:right">' . $row["qty"] . '</td>
       <td>' . $row["unit_name"] . '</td>
       <td>' . $row["pro_remarks"] . '</td>
       <td>' . $row["loc_name"] . '</td>
@@ -81,9 +81,9 @@ if ($total_data > 0) {
       <td>' . $row["dept_name"] . '</td>
       <td>
 <center>
-      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . "&typeId=" . $row["product_type_id"] . "&typeName=" . $row["product_type_name"] . '" title="Edit Item"><i class="fa fa-edit" style="font-size:25px"></i></a>
+      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . "&typeId=" . $row["product_type_id"] . "&typeName=" . $row["product_type_name"] . '" title="Edit Item"><button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></a>
       &nbsp;
-      <a href="item_movement.php?id=' . $row["product_id"] . '" title="View History"><i class="fa fa-history" style="font-size:25px"></i></a>
+      <a href="item_movement.php?id=' . $row["product_id"] . '" title="View History"><button type="button" class="btn btn-secondary"><i class="bi bi-clock-history"></i></button></a>
       &nbsp;
     
 </center>
@@ -94,7 +94,9 @@ if ($total_data > 0) {
 } else {
   $output .= '
   <tr>
-    <td colspan="12" align="center"><font color="red"><b><i>RECORD NOT FOUND&nbsp;<i style="color: red;" class="fas fa-exclamation-circle"></i></i></b></font></td>
+    <td colspan="12" align="center"><div class="alert alert-danger" role="alert">
+   No Records found !
+  </div></td>
   </tr>
   ';
 }
@@ -153,17 +155,17 @@ for ($count = 0; $count < count($page_array); $count++) {
   if ($page == $page_array[$count]) {
     $page_link .= '
     <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only"></span></a>
     </li>
     ';
 
     $previous_id = $page_array[$count] - 1;
     if ($previous_id > 0) {
-      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '"><i class="fa fa-angle-double-left"></i></a></li>';
+      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">&laquo;</a></li>';
     } else {
       $previous_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#"><i class="fa fa-angle-double-left"></i></a>
+        <a class="page-link" href="#">&laquo;</a>
       </li>
       ';
     }
@@ -171,11 +173,11 @@ for ($count = 0; $count < count($page_array); $count++) {
     if ($next_id >= $total_links) {
       $next_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#"><i class="fa fa-angle-double-right"></i></a>
+        <a class="page-link" href="#">&raquo;</a>
       </li>
         ';
     } else {
-      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '"><i class="fa fa-angle-double-right"></i></a></li>';
+      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">&raquo;</a></li>';
     }
   } else {
     if ($page_array[$count] == '...') {

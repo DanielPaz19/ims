@@ -2,29 +2,37 @@
 <html>
 
 <head>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <link rel="stylesheet" href="css/tablepage.css">
+  <!-- <link rel="stylesheet" href="css/tablepage.css"> -->
   <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 </head>
 
-<body>
-  <br />
-  <div class="container">
-
-    <div class="card">
-
-      <div class="card-body">
-        <div class="form-group" style="align-content: right;">
-          <button id="myBtn" class="butLink" title="Create New Item"><i class="fas fa-plus"></i>&nbspNew</button>
-          <input type="text" name="search_box" id="search_box" style="width: 500px; height: 35px; float: right;" placeholder="🔎 Search Item Description....." />
-        </div>
-        <div class="table-responsive" id="dynamic_content">
+<div style="padding:2%">
+  <div class="shadow-lg p-5 mb-5 bg-rounded" style="background-color: white;border: 5px solid #cce0ff">
+    <h3 style="color: #0d6efd;"><i class="bi bi-boxes"></i> Itemlist</h3>
+    <hr>
+    <br>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" title="Create New Item" id="myBtn"><i class="bi bi-plus-circle"></i>
+          New Product</button>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text" style="background-color: whitesmoke;"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control" name="search_box" id="search_box" placeholder="Search anything here..">
         </div>
       </div>
     </div>
+
+    <div class="table-responsive" id="dynamic_content">
+
+    </div>
   </div>
-  <script>
+</div>
+
+</html>
+<script>
   $(document).ready(function() {
 
     load_data(1);
@@ -56,6 +64,3 @@
 
   });
 </script>
-</body>
-
-</html>

@@ -19,9 +19,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="../css/font.css">
     <!-- sidebar styles -->
-    <link rel="stylesheet" href="css/main_style.css">
+    <link rel="stylesheet" href="../css/main_style.css">
 
     <!-- sidebar script -->
     <script src="js/sidebar_scriot.js"></script>
@@ -31,4 +31,3 @@
 <!-- <body style="background-color:white"> -->
 
 <body style="background-color:#cce0ff">
-    <?php include('main_sidebar.php'); ?>

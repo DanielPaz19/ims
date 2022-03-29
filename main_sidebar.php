@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-house-door"></i> Home&emsp;</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"><i class="bi bi-archive"></i> Job-Order&emsp;</a>
+                    <a class="nav-link active" href="jo_main.php"><i class="bi bi-archive"></i> Job-Order&emsp;</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
