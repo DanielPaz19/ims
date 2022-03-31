@@ -445,7 +445,6 @@
                                         <th>Total Amount</th>
                                         <th></th>
                                     </tr>
-
                                 </table>
                             </div>
                             <div>

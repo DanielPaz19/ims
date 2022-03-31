@@ -282,6 +282,7 @@ if (!isset($_SESSION['user'])) {
 
 
 
+
             <!-- Scripts Starts here -->
 
 
@@ -423,9 +424,3 @@ if (!isset($_SESSION['user'])) {
 
                 classList.addEventListener('click', selectClass);
             </script>
-
-
-
-
-
-            <?php include "footer.php"; ?>

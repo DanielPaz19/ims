@@ -81,7 +81,6 @@ include 'php/jo_edit-inc.php';
 
 
             <div class="button__container--insert_item">
-
                 <div class="container--table">
                     <div class="row">
                         <div class="col">
@@ -115,20 +114,20 @@ include 'php/jo_edit-inc.php';
                                             # code...
                                             echo
                                             "<tr style='text-align:left;'>
-        <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
-        <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
-        <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
-        <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
-        <td class='td__edit td__edit--cost'>" . number_format($itemPrice[$limit], 2) . "</td>
-        <td class='td__compute td__compute--totalcost'>" . number_format($itemPrice[$limit] * $qtyIn[$limit], 2) . "</td>
-        <td class='td__edit td__edit--delete'>
-        <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
-      </td>
-         <input type='hidden' name='productId[]' value='$productId[$limit]' >
-         <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-         <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]' class='input__edit input__edit--cost'>
-         </tr>
-         ";
+                                            <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
+                                            <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
+                                            <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
+                                            <td class='td__readonly td__readonly--unit'>$unitName[$limit]</td>
+                                            <td class='td__edit td__edit--cost'>" . number_format($itemPrice[$limit], 2) . "</td>
+                                            <td class='td__compute td__compute--totalcost'>" . number_format($itemPrice[$limit] * $qtyIn[$limit], 2) . "</td>
+                                            <td class='td__edit td__edit--delete'>
+                                            <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
+                                        </td>
+                                            <input type='hidden' name='productId[]' value='$productId[$limit]' >
+                                            <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
+                                            <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]' class='input__edit input__edit--cost'>
+                                            </tr>
+                                             ";
                                         }
                                         $limit++;
                                     }

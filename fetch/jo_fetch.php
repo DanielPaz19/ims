@@ -75,9 +75,9 @@ if ($total_data > 0) {
 
         if ($closed == 1) {
             $str = '<font color="green"><i class="bi bi-check-circle" style="font-size:24px" title="Normal"></i></font>';
-            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&joTypeId=' . $row['jo_type_id'] . '&joTypeName=' . $row['jo_type_name'] . '" disabled> <i class="bi bi-pencil-square" style="font-size: 22px;color:green;"></i></a>
-      &nbsp;&nbsp;&nbsp;
-     <i class="bi bi-x-circle" style="color:red;font-size:22px" title="Delete"></i></a>
+            $disable = '<a href="../ims/jo_edit-page.php?editJo&id=' . $row["jo_id"] . '&joTypeId=' . $row['jo_type_id'] . '&joTypeName=' . $row['jo_type_name'] . '" disabled> <button class="btn btn-success" title="Edit"><i class="bi bi-pencil-fill"></i></button></a>
+   
+      <button class="btn btn-danger" title="Delete" style="cursor:not-allowed"><i class="bi bi-trash3-fill"></i></button></a>
                
       &nbsp;&nbsp;&nbsp;';
         } else {
@@ -117,7 +117,9 @@ if ($total_data > 0) {
 } else {
     $output .= '
   <tr>
-    <td colspan="10" align="center"><font color="red"><b>No Data Found ! </b></font></td>
+    <td colspan="10" align="center"><div class="alert alert-danger" role="alert">
+    No Records found !
+   </div></td>
   </tr>
   ';
 }

@@ -48,7 +48,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 /* TEST CODE END */
 ?>
-<style>
+<!-- <style>
 	body {
 		font-family: Verdana, Geneva, Tahoma, sans-serif;
 		padding: 5%;
@@ -98,72 +98,91 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 	.top {
 		line-height: 1%;
 	}
+</style> -->
+<?php include('../headerv2.php') ?>
+<style>
+	label {
+		font-weight: bold;
+	}
 </style>
-<title>POS REPORT</title>
-
-<body>
-
-	<div class="container" id="printDiv">
+<div class="container-sm">
+	<div class="shadow-lg p-5 mt-5 bg-body rounded printPage" style="width:100%;border:5px solid #cce0ff" id="printDiv">
 		<div class="top">
 			<center>
 				<h2>PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h2>
 				<h3>PRODUCTION TURN-OVER SLIP</h3>
-				<hr style="width: 50%;">
+				<hr>
 			</center>
 		</div>
-		<table class="header">
-			<tr>
-				<td><label for="">STIN ID :</label> <?php echo str_pad($id, 8, 0, STR_PAD_LEFT); ?></td>
-				<td colspan="3"></td>
+		<div class="row">
+			<div class="col-4">
+				<label for="">STIN ID :</label> <?php echo str_pad($id, 8, 0, STR_PAD_LEFT); ?>
+			</div>
+			<div class="col-4">
+				<label for="">TON No.:</label> <?php echo $stin_code; ?>
+			</div>
+			<div class="col-4">
+				<label for="">Job Order No. :</label> <?php echo $stin_title; ?>
+			</div>
+		</div>
+		<div class="row">
 
-			</tr>
-			<tr>
-				<td><label for="">TON No.:</label> <?php echo $stin_code; ?></td>
-				<td><label for="">Job Order No. :</label> <?php echo $stin_title; ?></td>
-				<td style="text-align:left;"><b>Prepared By:</b>&nbsp;&nbsp;&nbsp;<?php echo $emp_name; ?></td>
-				<td style="text-align: center;"><b>Department:</b>&nbsp;&nbsp;&nbsp;<?php echo $dept_name; ?></td>
-				<td><label for="">STIN Date :</label> <?php echo $date; ?></td>
 
-			</tr>
-		</table>
+			<div class="col">
+				<label for="">Prepared By:</label> <?php echo $emp_name; ?>
+			</div>
+			<div class="col">
+				<label for="">Department:</label> <?php echo $dept_name; ?>
+			</div>
+			<div class="col"><label for="">TON Date:</label> <?php echo $date; ?> </div>
+		</div>
 		<br>
+		<div class="table-responsive">
+			<table class="table">
+				<tr style="text-align: left;">
+					<th>ITEMS</th>
+					<th>QUANTITY</th>
+					<th>UNIT</th>
+				</tr>
+				<?php
+				include "../php/config.php";
+				$sql = "SELECT product.product_name,stin_product.stin_temp_qty,unit_tb.unit_name 
+				FROM stin_product 
+				LEFT JOIN product ON product.product_id = stin_product.product_id
+				LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
+				LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
 
-		<br>
+				$result = $db->query($sql);
+				$count = 0;
+				if ($result->num_rows >  0) {
 
-		<table class="itemtb">
-			<tr style="text-align: left;">
-				<th>ITEMS</th>
-				<th>QUANTITY</th>
-				<th>UNIT</th>
-			</tr>
-			<?php
-			include "../php/config.php";
-			$sql = "SELECT product.product_name,stin_product.stin_temp_qty,unit_tb.unit_name 
-   FROM stin_product 
-   LEFT JOIN product ON product.product_id = stin_product.product_id
-   LEFT JOIN stin_tb ON stin_product.stin_id=stin_tb.stin_id
-   LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE stin_product.stin_id='$id'";
-
-			$result = $db->query($sql);
-			$count = 0;
-			if ($result->num_rows >  0) {
-
-				while ($irow = $result->fetch_assoc()) {
-					$count = $count + 1;
-			?>
-					<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
-					<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?></td>
-					<td><?php echo $irow['unit_name'] ?></td>
-					</tr>
-			<?php }
-			} ?>
-		</table>
-		<br>
-		<label style="font-weight: bold;"> Remarks :</label> <?php echo $stin_remarks ?>
+					while ($irow = $result->fetch_assoc()) {
+						$count = $count + 1;
+				?>
+						<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
+						<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?></td>
+						<td><?php echo $irow['unit_name'] ?></td>
+						</tr>
+				<?php }
+				} ?>
+				<tr>
+					<td><label style="font-weight: bold;"> Remarks :</label> <?php echo $stin_remarks ?></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<br>
-	<a href="../stin_main.php"><button style="float: right;">Cancel</button></a> <button style="float: left;" id="doPrint">Print Record</button>
-</body>
+	<div class="row">
+		<div class="col">
+			<button class="btn btn-primary" id="doPrint">Print Record</button>
+			<a href="../stin_main.php"><button class="btn btn-danger"> Cancel</button></a>
+		</div>
+	</div>
+</div>
+</table>
+
 
 <script>
 	document.getElementById("doPrint").addEventListener("click", function() {

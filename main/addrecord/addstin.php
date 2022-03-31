@@ -2,67 +2,70 @@
 <html lang="en">
 
 <head>
-  <title>Add Stock-In Records</title>
-  <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+  <!-- font include -->
+
+  <link rel="stylesheet" href="../../css/font.css">
+  <!-- sidebar styles -->
+  <link rel="stylesheet" href="../../css/main_style.css">
+
+  <!-- sidebar script -->
+  <script src="js/sidebar_scriot.js"></script>
   <style>
     body {
       padding: 10px;
     }
 
-    fieldset {
-      padding: 20px;
-      font-family: sans-serif;
-      border: 5px solid lightgrey;
-      height: 97vmax;
-    }
 
-    legend {
-      letter-spacing: 3px;
-      font-weight: bolder;
-      color: midnightblue;
-      font-size: 24px;
-    }
+
+
 
     label {
       color: black;
       font-weight: bold;
     }
 
-    th {
-      background-color: #A5A4A4;
-      color: white;
-      border: 2px solid white;
+    /* 
+        th {
+            background-color: #A5A4A4;
+            color: white;
+            border: 2px solid white;
 
-    }
+        } */
 
-    td {
-      border: 1px solid lightgrey;
-      background-color: white;
-      margin-left: 5px;
-    }
+    /* td {
+            border: 1px solid lightgrey;
+            background-color: white;
+            margin-left: 5px;
+        } */
 
-    button {
-      background-color: midnightblue;
-      color: whitesmoke;
-      cursor: pointer;
-      padding: 5px;
-      height: 30px;
-      width: 30px;
+    /* button {
+            background-color: midnightblue;
+            color: whitesmoke;
+            cursor: pointer;
+            padding: 5px;
+            height: 30px;
+            width: 30px;
 
-    }
+        } */
 
-    input {
-      border: 1px solid lightgrey;
-      height: 25px;
-      text-shadow: aliceblue;
-    }
+    /* input {
+            border: 1px solid lightgrey;
+            height: 25px;
+            text-shadow: aliceblue;
+        } */
 
     div#search {
       position: relative;
-      width: 80%;
+      width: 100%;
       left: 0;
     }
 
@@ -72,7 +75,7 @@
 
     #item-list {
       position: absolute;
-      width: 800px;
+      width: 100%;
       margin: auto;
       z-index: 1;
     }
@@ -81,10 +84,11 @@
       list-style-type: none;
       margin-top: 0;
       margin-right: 50px;
-      margin-left: 50px;
       display: block;
       padding-left: 5px;
-      width: 800px;
+      width: 100%;
+      background-color: white;
+      cursor: pointer;
     }
 
     li:hover {
@@ -94,24 +98,27 @@
     li {
       text-align: left;
       padding: 10px;
-      border: 1px solid lightgrey;
-      width: 780px;
+      width: 100%;
+      background-color: transparent;
+
+      border: 1px solid lightgray;
     }
 
     li.selected {
       background: lightgrey;
+
     }
 
-    ul {
+    /* ul {
       background-color: white;
       border: 1px solid black;
       cursor: pointer;
       width: 100%;
-    }
+    } */
 
     /* Style for crud-table */
     #crud_table {
-      font-size: 12px;
+      font-size: 13px;
     }
 
     /* Style for Order ID Input box */
@@ -120,21 +127,13 @@
       color: red;
     }
 
-    .postb {
-      border: 1px solid #d3d3d3;
-      font-family: Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      margin-top: 20px;
-      /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); */
-    }
 
-    input#item-name {
-      position: relative;
-      width: 430px;
-    }
+
+    /* 
+        input#item-name {
+            position: relative;
+            width: 430px;
+        } */
 
     .hidden {
       display: none;
@@ -175,13 +174,23 @@
       font-weight: initial;
     }
 
+    .jotb td {
+      border: none;
+      background-color: transparent;
+      /* border: 1px solid black; */
+      width: 60%;
+    }
+
+    .jotb {
+      width: 80%;
+    }
+
     .add-button {
       width: 31%;
       letter-spacing: 2px;
 
     }
   </style>
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script>
     //Jquery codes
@@ -306,87 +315,127 @@
       });
     });
   </script>
+  <title>PACC IMS</title>
 </head>
 
-<body bgcolor="#B0C4DE">
-  <div class="Incontainer">
-    <div class="inDetails">
-      <fieldset>
-        <legend>&nbsp;&nbsp;&nbsp;Stock-Inventory IN: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-        <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); width:60%; float: left;">
-        <br><br>
-        <div>
-          <!-- Search Bar -->
-          <div class="container">
-            <div id="search">
-              <label>Enter Item:&nbsp;&nbsp;</label>
-              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
+<!-- <body style="background-color:white"> -->
+
+<body style="background-color:#cce0ff">
+  <div class="container-sm">
+    <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+      <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Stock-Inventory IN: Entering records <i class="bi bi-pencil"></i>
+      </div>
+      <div class="card-body">
+        <div id="search">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="item-name" name="item">
+                <label for="floatingInput">Search Item</label>
+              </div>
               <div id="item-list"></div><!-- Dont Remove this -->
             </div>
           </div>
-          <br>
-          <!-- input for item qty -->
-          <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input class="item-qty" type="number" placeholder="Quantity" value="1" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!-- input for discount -->
-          <label style="display: none;">Discount: &nbsp;&nbsp;</label>
-          <input class=" item-discount" type="number" placeholder="Discount" value="0" style="display: none;" /> <br /><br />
-          <button class="add-button" title="Add Item">Add item to table</button>
-        </div>
-        <br><br>
-        <hr>
-        <br><br>
-        <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
-          <label>STIN ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStinId"></span> <br> <br>
-          <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_code" placeholder="TON-00000" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="stin_title" placeholder="JO21-00000"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Date:&nbsp;&nbsp;</label>
-          <input type="date" name="stin_date"> <br><br>
-          <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <textarea name="stin_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Prepared By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select name="emp_id" style="width: 32%; height: 32px; border: 1px solid #B8B8B8;">
-            <option>
-              <center>--- Select Employee---</center>
-            </option>
-            <?php
-            include "../../php/config.php";
-            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+          <div class="row">
+            <div class="col-3">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control item-qty" name="qty">
+                <label for="floatingInput">Quantity</label>
+                <div id="item-list"></div><!-- Dont Remove this -->
+              </div>
+              <input class=" item-discount" type="number" placeholder="Discount" value="0" style="display: none;" />
+            </div>
+            <div class="col-2">
+              <div class="form-floating mb-3">
+                <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
 
-            while ($data = mysqli_fetch_array($records)) {
-              echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
-            }
-            ?>
-          </select>
-          <div>
-            <!--Add item for order-->
+            <div class="row">
+              <div class="col">&nbsp;STIN ID : <span class="newStinId"></span></div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="stin_code" required>
+                  <label for="floatingInput">Stock-In Code</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="stin_title" required>
+                  <label for="floatingInput">Job-Order</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="floatingInput" name="stin_date" required>
+                  <label for="floatingInput">Stock-In Date</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-floating">
+                  <textarea class="form-control" id="floatingTextarea" name="stin_remarks"></textarea>
+                  <label for="floatingTextarea">Stock-In Remarks</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="emp_id">
+                    <option></option>
+                    <?php
+                    include "../../php/config.php";
+                    $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+
+                    while ($data = mysqli_fetch_array($records)) {
+                      echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <label for="floatingSelect">Prepared by</label>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-4">
+
+
 
             <br /><br />
+            <div class="table-responsive">
+              <table id="crud_table" class="postb table">
+                <tr>
+                  <th>Item Description</th>
+                  <th>Qty-Order</th>
+                  <th>Price</th>
+                  <th>Total Amount</th>
+                  <th></th>
+                </tr>
+              </table>
+              <br>
+              <button name="btnsave" class="btn btn-success stin-button-save">&nbsp;Save Record</button> <br> <br>
+          </form>
+        </div>
 
-            <button name="btnsave" class="stin-button-save">&nbsp;Save Record</button> <br> <br>
-            <table id="crud_table" width="100%" class="postb">
-              <tr>
-                <th style="padding: 10px; text-align: left" width="50%">
-                  Item Description
-                </th>
-                <th style="padding: 10px; text-align: left" width="5%">
-                  Qty-Order
-                </th>
-                <th style="padding: 10px; text-align: left" width="10%">Price</th>
-                <th style="padding: 10px; text-align: left" width="10%">Discount Amount</th>
-                <th style="padding: 10px; text-align: left" width="10%">Total Amount</th>
-                <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
-              </tr>
-            </table>
-            <br>
 
-        </form>
+
+
+
+
+      </div>
     </div>
-    </fieldset>
-  </div>
+
+
+
+
+
+
   </div>
 </body>
-
-</html>
+<?php include('../../footer.php'); ?>

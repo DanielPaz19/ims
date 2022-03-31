@@ -54,14 +54,14 @@ h1 {
 #employee_name {
   width: 55%;
 }
-
+/* 
 .button__container--insert_item {
   width: 70%;
   text-align: right;
   margin: 0px auto;
-}
+} */
 
-.edit__button--insert__item {
+/* .edit__button--insert__item {
   cursor: pointer;
   height: 50px;
   width: 250px;
@@ -72,41 +72,41 @@ h1 {
   color: #ffffff;
   font-size: 18px;
   letter-spacing: 2px;
-}
+} */
 
 /* Table Style */
 
-.container--table {
+/* .container--table {
   background-color: #eaeaea;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-  width: 70%;
+  width: 100%;
   height: 500px;
   margin: 20px auto;
   border-radius: 10px;
   table-layout: fixed;
   padding: 10px;
   overflow-y: scroll;
-}
+} */
 
 .table {
   table-layout: fixed;
-  color: #ffffff;
+  /* color: #ffffff; */
   border-collapse: collapse;
   width: 100%;
 }
 
-.table thead {
+/* .table thead {
   background-color: midnightblue;
   height: 30px;
-}
+} */
 
-.table--item {
+/* .table--item {
   color: midnightblue;
-}
+} */
 
-.container--table tr:nth-child(even) {
+/* .container--table tr:nth-child(even) {
   background-color: lightgray;
-}
+} */
 
 .container--table th:nth-child(1) {
   width: 10%;
