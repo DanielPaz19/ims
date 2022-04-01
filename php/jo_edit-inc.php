@@ -55,6 +55,7 @@ if (isset($_POST['update'])) {
     $customerId = $_POST['customerId'];
     $joNo = $_POST['joNo'];
     $joDate = $_POST['joDate'];
+    $empId = $_POST['empId'];
     $remarks = $_POST['jo_remarks'];
     $jo_type_id = $_POST['jo_type_id'];
     $productId = $_POST['productId'];
@@ -67,7 +68,7 @@ if (isset($_POST['update'])) {
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId',  jo_date='$joDate', jo_type_id='$jo_type_id', jo_remarks='$remarks'
+        "UPDATE jo_tb SET jo_no='$joNo', customers_id='$customerId', emp_id='$empId',  jo_date='$joDate', jo_type_id='$jo_type_id', jo_remarks='$remarks'
         WHERE jo_id='$joId' "
     );
 
@@ -116,7 +117,7 @@ if (isset($_POST['delete'])) {
 if (isset($_GET['updated'])) {
     echo
     '<script>
-  alert("Successfully updated!");
-  location.href = "jo_edit-page.php?editJo&id=' . $_GET['id'] . '";
-  </script>';
+      alert("Successfully updated!");
+      location.href = "jo_edit-page.php?editJo&id=' . $_GET['id'] . '";
+      </script>';
 }
