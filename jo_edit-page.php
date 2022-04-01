@@ -28,6 +28,22 @@ include 'php/jo_edit-inc.php';
                     </div>
                 </div>
                 <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="empId">
+                            <option value="<?php echo $empId ?>"><?php echo $empName; ?></option>
+                            <?php
+                            include "config.php";
+                            $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+
+                            while ($data = mysqli_fetch_array($records)) {
+                                echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <label for="floatingSelect">Prepared By</label>
+                    </div>
+                </div>
+                <div class="col">
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" name="joDate" id="po_date" value="<?php echo $joDate ?>">
                         <label for="floatingInput">Job-Order Date</label>
