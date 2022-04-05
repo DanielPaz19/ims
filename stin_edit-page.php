@@ -4,7 +4,6 @@ include_once 'headerv2.php';
 include 'php/stin_edit-inc.php';
 ?>
 
-
 <link rel="stylesheet" href="css/stin_edit-style.css">
 <script defer src="js/stin_edit-script.js"></script>
 
@@ -17,7 +16,7 @@ include 'php/stin_edit-inc.php';
         <form action="php/stin_edit-inc.php" method="POST">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="stinId" id="id" value="<?php echo str_pad($stinId, 8, 0, STR_PAD_LEFT) ?>" style="width:auto;cursor:not-allowed" readonly>
-                <label for="floatingInput"> Job-Order ID</label>
+                <label for="floatingInput"> Stock-In ID</label>
             </div>
             <div class="row">
                 <div class="col">

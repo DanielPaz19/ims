@@ -49,165 +49,48 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 /* TEST CODE END */
 ?>
-<html>
-<title><?php echo $stout_code; ?></title>
 
-<head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../css/viewpoV2.css" type="text/css" media="print">
-	<link rel="stylesheet" href="../css/viewpoV2.css" type="text/css">
-	<style>
-		body {
-			font-family: sans-serif;
-			margin: none;
-			padding: 50px;
-		}
-
-		.top {
-
-			letter-spacing: 3px;
-			line-height: 1%;
-			padding-top: 10px;
-
-		}
-
-
-		.itemtb th {
-			text-align: left;
-			border: 1px solid lightgrey;
-			padding: 5px;
-		}
-
-		.itemtb th {
-			color: midnightblue;
-		}
-
-		label,
-		th {
-			color: midnightblue;
-		}
-
-
-		.itemtb2 th {
-			text-align: left;
-			border: 1px solid lightgrey;
-			padding: 5px;
-		}
-
-		.itemtb2 th {
-			color: midnightblue;
-		}
-
-
-
-		.content {
-			width: 100%;
-			position: relative;
-			/* border: 1px solid black; */
-		}
-
-		.footertb td {
-			padding: 10px;
-		}
-
-
-		@media print {
-			#printPageButton {
-				display: none;
-
-			}
-
-		}
-
-		.itemtb {
-			position: absolute;
-			border-collapse: collapse;
-			/* border: 1px solid black; */
-			width: 60%;
-
-		}
-
-
-
-		.itemtb2 {
-			position: absolute;
-			border-collapse: collapse;
-			/* border: 1px solid lightgray; */
-			width: auto;
-			margin-left: 60%;
-			align-content: right;
-		}
-
-		.itemtb tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-
-		.itemtb2 textarea {
-			border: none;
-			resize: none;
-			font-size: 16px;
-		}
-
-		.button {
-			margin-left: 80%;
-			margin-top: -8%;
-			position: absolute;
-		}
-
-		.textarea {
-			display: block;
-			width: 31%;
-			overflow: hidden;
-			resize: both;
-			border: none;
-			resize: none;
-
-		}
-
-		.itemtb td {
-			padding: 3px;
-		}
-	</style>
-
-</head>
-
-
-<body>
-	<div class="print-area">
-		<page id="print" size="A4">
-			<div class="top">
-				<center>
-					<h3 style="color: midnightblue;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
-					<h4 style="color: midnightblue;">REQUISITION SLIP</h4>
-					<hr width="50%">
-					<br>
-				</center>
+<?php include('../headerv2.php') ?>
+<style>
+	label {
+		font-weight: bold;
+	}
+</style>
+<div class="container-sm">
+	<div class="shadow-lg p-5 mt-5 bg-body rounded printPage" style="width:100%;border:5px solid #cce0ff" id="printDiv">
+		<div class="top">
+			<center>
+				<h3 style="letter-spacing: 3px;">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h3>
+				<h5 style="letter-spacing: 2px;">REQUISITION SLIP</h5>
+				<hr style="width: 80%;">
+			</center>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label for="">Job-Order No.:</label> <?php echo $stout_title; ?>
 			</div>
-
-			<div class="labels">
-				<table width="100%">
-					<tr>
-						<td><b>Job-Order.:</b>&nbsp;&nbsp;<?php echo $stout_title; ?></td>
-						<td width="40%"></td>
-						<td><b>RS No. :</b>&nbsp;&nbsp;<?php echo $stout_code; ?></td>
-					</tr>
-					<tr>
-						<td><b>Item Description:</b>&nbsp;&nbsp;<?php echo $itemdesc; ?></td>
-						<td width="40%"></td>
-						<td><b>Date:</b>&nbsp;&nbsp;<?php echo $date; ?></td>
-					</tr>
-				</table>
+			<div class="col" style="text-align: right;">
+				<label for="">RS No.:</label> <?php echo $stout_code; ?>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<label for="">Item Description:</label> <?php echo $itemdesc; ?>
+			</div>
+			<div class="col" style="text-align: right;">
+				<label for="">RS Date:</label> <?php echo $date; ?>
+			</div>
+		</div>
 
-			<br>
-
-			<div class="content">
-				<table class="itemtb">
+		<div class="row">
+			<div class="col-9">
+				<br>
+				<table class="table">
 					<tr>
 						<th>QTY</th>
 						<th>MATERIAL USE</th>
-
 					</tr>
+
 					<?php
 					$sql = "SELECT product.product_name,stout_product.stout_temp_qty,unit_tb.unit_name, stout_product.stout_temp_remarks 
 			   FROM stout_product 
@@ -225,10 +108,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 							$newtext = wordwrap($text, 50, "<br />", false);
 					?>
 							<tr>
-								<td style=" padding-left: 10px; vertical-align:top"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?></td>
-								<td><?php echo $irow['product_name'] ?><br>
-									<p style="font-size:smaller;line: height 2px;"> <?php echo $irow['stout_temp_remarks'] ?></p>
+								<td style=" padding-left: 10px; vertical-align:top"><?php echo $irow['stout_temp_qty'] ?><?php echo $irow['unit_name'] ?>
 								</td>
+								<td><?php echo $irow['product_name'] ?><br>
+									<p style="font-size:smaller;line-height: 15px;">
+										<?php
+										$search = array(',');
+										$replace = array('<br />', '');
+										echo $irow['stout_temp_remarks'] = str_replace($search, $replace, $irow['stout_temp_remarks']);
+										?>
+
+									</p>
 								</td>
 							</tr>
 					<?php }
@@ -236,27 +126,49 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 					?>
 				</table>
-				<table class="itemtb2">
+			</div>
+			<div class="col-3"><br>
+				<table class="table table-borderless">
 					<tr>
-						<th style="border: 1px solid lightgrey;">Remarks</th>
+						<th>Remarks</th>
 					</tr>
 					<tr>
-						<td><textarea cols="30" rows="10"><?php echo $stout_remarks ?></textarea></td>
+						<td>
+							<?php
+							$search = array(',', ':');
+							$replace = array('<br />', '');
+							echo $stout_remarks = str_replace($search, $replace, $stout_remarks);
+							?>
+						</td>
 					</tr>
 				</table>
 			</div>
+		</div>
 
-
-			<div class="button">
-
-			</div>
-		</page>
 	</div>
-</body>
+	<br>
+	<div class="col">
+		<button class="btn btn-primary" id="doPrint">Print Record</button>
+		<a href="../stout_main.php"><button class="btn btn-danger"> Cancel</button></a>
+	</div>
+</div>
+<br>
 
-<button class="noprint" onclick="window.print()">PRINT</button>
+</div>
 
 
 
 
-</html>
+
+
+
+
+<script>
+	document.getElementById("doPrint").addEventListener("click", function() {
+		var printContents = document.getElementById('printDiv').innerHTML;
+		var originalContents = document.body.innerHTML;
+		document.body.innerHTML = printContents;
+		window.print();
+		document.body.innerHTML = originalContents;
+	});
+</script>

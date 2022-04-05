@@ -38,9 +38,9 @@ const renderItem = function (data, container) {
       "beforeend",
       `<tr class='product-data product${index}'>
                           <td class='item-code'>${data.product_id.padStart(
-                            8,
-                            0
-                          )}</td>
+        8,
+        0
+      )}</td>
                           <td class='item-name'>${data.product_name}</td>
                           <td class='qty'>${data.qty}</td>
                           <td class='barcode'>${data.barcode}</td>
@@ -206,7 +206,7 @@ const selectItem = function (e) {
     <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
     <td class='td__readonly td__readonly--barcode' style='text-align:center;'>${itemBarcode}</td>
     <td>
-    <textarea name='itemRemarks[]' rows='1' cols='20' placeholder='&#9999; Item remarks...' id='itemRemarks'></textarea>
+    <textarea class='form-control' id='exampleFormControlTextarea1' rows='1.5' id='itemRemarks' name='itemRemarks[]'></textarea>
     </td> 
     <td class='td__edit td__edit--delete'>
    <i class="fa fa-trash-o" style="font-size:24px"></i>
@@ -242,9 +242,8 @@ const showTableData = (data, container) => {
   console.log(data);
 
   data.forEach((data, index) => {
-    let row = `<tr class='product-data product${index}' data-id ='${
-      data.product_id
-    }'>
+    let row = `<tr class='product-data product${index}' data-id ='${data.product_id
+      }'>
                     <td class='item-code'>${data.product_id.padStart(8, 0)}</td>
                     <td class='item-name'>${data.product_name}</td>
                     <td class='qty'>${data.qty}</td>

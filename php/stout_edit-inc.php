@@ -49,7 +49,7 @@ if (isset($_GET['edit'])) {
 if (isset($_POST['update'])) {
 
     $stoutId = $_POST['stoutId'];
-    $employeeId = $_POST['employeeId'];
+    $empId = $_POST['empId'];
     $stoutTitle = $_POST['stoutTitle'];
     $stoutRemarks = $_POST['stoutRemarks'];
     $stoutDate = $_POST['stoutDate'];
@@ -67,7 +67,7 @@ if (isset($_POST['update'])) {
     // Update stout_tb
     if (!mysqli_query(
         $db,
-        "UPDATE stout_tb SET emp_id ='$employeeId', stout_title = '$stoutTitle', stout_code = '$stoutCode', stout_remarks = '$stoutRemarks',  stout_date = '$stoutDate' 
+        "UPDATE stout_tb SET emp_id ='$empId', stout_title = '$stoutTitle', stout_code = '$stoutCode', stout_remarks = '$stoutRemarks',  stout_date = '$stoutDate' 
     WHERE stout_id = '$stoutId'"
     )) {
         printf("Error message: %s\n", mysqli_error($link));
