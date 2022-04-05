@@ -102,16 +102,28 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 $grandTot = $subTot - $disTot;
                 ?>
                 <tr style="text-align: center;">
+
+
                     <td></td>
-                    <td style="font-size: small; padding-top:-5px" colspan="2">****** NOTHING FOLLOWS *****</td>
                     <td></td>
-                    <td style="text-decoration: overline;">
+                    <td style="font-size: small; padding-top:-5px" colspan="5">
+                        <center>****** NOTHING FOLLOWS *****</center>
+                    </td>
+                    <td style="text-decoration: overline;text-align:right;vertical-align:top">
                         &#8369;<?php echo number_format($grandTot, 2) ?>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <!-- <td style="font-size: small;" colspan="4"><p><?php echo $ep_remarks ?></p></td> -->
+                    <td style="font-size: small;text-align:left" colspan="5">
+                        <p>
+                            <?php
+                            $search = array(',', ':');
+                            $replace = array('<br />', '');
+                            echo $remarks = str_replace($search, $replace, $remarks);
+                            ?></p>
+                    </td>
+
                 </tr>
             </table>
             <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name ?></p>
