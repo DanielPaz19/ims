@@ -38,9 +38,9 @@ const renderItem = function (data, container) {
       "beforeend",
       `<tr class='product-data product${index}'>
                           <td class='item-code'>${data.product_id.padStart(
-                            8,
-                            0
-                          )}</td>
+        8,
+        0
+      )}</td>
                           <td class='item-name'>${data.product_name}</td>
                           <td class='qty'>${data.qty}</td>
                           <td class='unit'>${data.unit_name}</td>
@@ -207,7 +207,7 @@ const selectItem = function (e) {
     <td class='td__edit td__edit--cost'>${formatNumber(itemPrice)}</td> 
     <td class='td__compute td__compute--totalcost'>${formatNumber(totalCost)}</td>
     <td class='td__edit td__edit--delete'>
-   <i class="fa fa-trash-o" style="font-size:24px"></i>
+    <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
     </td>
     </tr>
     <input type='hidden' name='productId[]' value='${itemCode}'>
@@ -241,9 +241,8 @@ const showTableData = (data, container) => {
   console.log(data);
 
   data.forEach((data, index) => {
-    let row = `<tr class='product-data product${index}' data-id ='${
-      data.product_id
-    }'>
+    let row = `<tr class='product-data product${index}' data-id ='${data.product_id
+      }'>
                     <td class='item-code'>${data.product_id.padStart(8, 0)}</td>
                     <td class='item-name'>${data.product_name}</td>
                     <td class='qty'>${formatNumber(data.qty)}</td>
@@ -290,12 +289,12 @@ function showadditem() {
     "../edit/item_edit_addnew.php",
     "Contact The Code Ninja",
     "menubar=no,resizable=yes,width=1300,height=600,scrollbars=yes,left=" +
-      left +
-      ",top=" +
-      top +
-      ",screenX=" +
-      left +
-      ",screenY=" +
-      top
+    left +
+    ",top=" +
+    top +
+    ",screenX=" +
+    left +
+    ",screenY=" +
+    top
   );
 }
