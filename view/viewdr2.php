@@ -115,6 +115,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
                 <tr>
                     <td></td>
+                    <td></td>
                     <td style="font-size: small;text-align:left" colspan="5">
                         <p>
                             <?php
