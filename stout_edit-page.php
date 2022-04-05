@@ -113,7 +113,7 @@ include 'php/stout_edit-inc.php';
                                     </td>
 
                                         <td class='td__edit td__edit--delete'>
-                                            <i class='fa fa-trash-o' style='font-size:26px' title='Remove'></i>
+                                        <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
                                         </td>
                                         <input type='hidden' name='productId[]' value='$productId[$limit]' >
                                         <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>

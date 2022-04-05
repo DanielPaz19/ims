@@ -4,6 +4,7 @@ h1 {
   letter-spacing: 5px;
 }
 
+/* 
 .container--details {
   background-color: #eaeaea;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -13,7 +14,7 @@ h1 {
   margin-top: 10px;
   padding: 20px;
   box-sizing: border-box;
-}
+} */
 
 .input__label {
   text-align: left;
@@ -43,29 +44,30 @@ h1 {
   margin: 5px;
   width: 200px;
 }
-.container--details select {
+
+/* .container--details select {
   padding: 2px 10px;
   margin: 5px;
-}
+} */
 
-.button__container--insert_item {
+/* .button__container--insert_item {
   width: 70%;
   text-align: right;
   margin: 0px auto;
-}
+} */
 
-.edit__button--insert__item {
+/* .edit__button--insert__item {
   cursor: pointer;
   height: 50px;
   width: 250px;
   border-radius: 5px;
   background-color: midnightblue;
   color: #ffffff;
-}
+} */
 
 /* Table Style */
 
-.container--table {
+/* .container--table {
   background-color: #eaeaea;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   width: 100%;
@@ -74,23 +76,24 @@ h1 {
   border-radius: 10px;
   table-layout: fixed;
   padding: 25px;
-}
+} */
 
-.table {
+/* .table {
   table-layout: fixed;
   color: #ffffff;
   border-collapse: collapse;
   width: 100%;
-}
+} */
 
+/* 
 .table thead {
   background-color: midnightblue;
   height: 30px;
-}
+} */
 
-.table--item {
+/* .table--item {
   color: midnightblue;
-}
+} */
 
 .container--table tr:nth-child(even) {
   background-color: lightgray;
@@ -100,21 +103,27 @@ h1 {
 .container--table th:nth-child(1) {
   width: 10%;
 }
+
 .container--table th:nth-child(2) {
   width: 45%;
 }
+
 .container--table th:nth-child(3) {
   width: 10%;
 }
+
 .container--table th:nth-child(4) {
   width: 10%;
 }
+
 .container--table th:nth-child(5) {
   width: 10%;
 }
+
 .container--table th:nth-child(6) {
   width: 10%;
 }
+
 .container--table th:nth-child(7) {
   width: 5%;
 }
@@ -146,7 +155,7 @@ h1 {
   margin: 0px auto;
 }
 
-.container--edit__button button {
+/* .container--edit__button button {
   margin: 0px 5px;
   cursor: pointer;
   height: 50px;
@@ -154,7 +163,7 @@ h1 {
   border-radius: 5px;
   background-color: midnightblue;
   color: #ffffff;
-}
+} */
 
 .td__edit {
   cursor: pointer;

@@ -80,14 +80,14 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <div class="row">
 
-                <div class="col">
+                <div class="col-7">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" placeholder="Item Name" name="product_name" value="<?php echo $product_name; ?>">
                         <label for="floatingInput">Item Description</label>
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-3">
                     <div class="form-floating mb-3">
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="class_id">
@@ -105,7 +105,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                     </div>
                 </div>
 
-                <div class="col">
+                <div class="col-2">
                     <div class="form-floating">
                         <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="unit_id">
                             <option value="<?php echo $_GET['unitId']; ?>"><?php echo $_GET['unit']; ?></option>

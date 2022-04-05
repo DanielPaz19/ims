@@ -147,13 +147,13 @@ input[type="date"] {
   padding: 2px 5px;
 }
 
-.button--add__item {
+/* .button--add__item {
   color: #ffffff;
   background-color: midnightblue;
   height: 35px;
   width: 100px;
   margin-bottom: 10px;
-}
+} */
 
 .input--search {
   width: 500px;
@@ -233,11 +233,11 @@ input[type="date"] {
   text-align: right;
 }
 
-.button__add--item {
+/* .button__add--item {
   color: white;
   cursor: pointer;
   background-color: midnightblue;
-}
+} */
 
 .highlight {
   font-weight: bolder;
@@ -254,6 +254,7 @@ th {
   /* border: 1px solid black; */
   padding: 5px;
 }
+
 textarea {
   width: 85%;
   height: 150px;
@@ -282,6 +283,7 @@ input[type="text"] {
   background-color: #f1f1f1;
   font-size: 15px;
 }
+
 input[type="number"] {
   width: 80%;
   padding: 8px 10px;
@@ -290,6 +292,7 @@ input[type="number"] {
   background-color: #f1f1f1;
   font-size: 15px;
 }
+
 input[type="date"] {
   width: 80%;
   padding: 8px 10px;
@@ -298,6 +301,7 @@ input[type="date"] {
   background-color: #f1f1f1;
   font-size: 15px;
 }
+
 .split {
   height: auto;
   width: 90%;
@@ -353,12 +357,12 @@ h1 {
   font-weight: bold;
 }
 
-.alert > p,
-.alert > ul {
+.alert>p,
+.alert>ul {
   margin-bottom: 0;
 }
 
-.alert > p + p {
+.alert>p+p {
   margin-top: 5px;
 }
 
@@ -531,6 +535,7 @@ h1 {
   border-color: #54a754;
   background: #60c060;
 }
+
 .close {
   float: right;
   font-size: 21px;

@@ -30,129 +30,53 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 ?>
 
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            color: black;
-            padding: 50px;
-        }
-
-        .item-details {
-            border-collapse: collapse;
-            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-            -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); */
-        }
-
-        .item-details th {
-            background-color: midnightblue;
-            color: white;
-            padding: 10px;
-            border: 1px solid grey;
-            text-align: left;
-            font-size: 15px;
-            letter-spacing: 1px;
-        }
-
-
-        .item-details td {
-            padding: 7px;
-            border-left: 1px solid lightgrey;
-            text-align: left;
-            font-size: 15px;
-            background-color: white;
-            font-family: Arial, Helvetica, sans-serif;
-            letter-spacing: 1px;
-
-        }
-
-        .fieldset {
-            border: none;
-        }
-
-        h2 {
-            color: midnightblue;
-            letter-spacing: 4px;
-            font-size: 35px;
-        }
-
-
-        .button {
-            background-color: midnightblue;
-            /* Green */
-            border: none;
-            color: white;
-            padding: 7px 16px;
-            text-align: center;
-            letter-spacing: 2px;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            -webkit-transition-duration: 0.4s;
-            /* Safari */
-            transition-duration: 0.4s;
-            width: 10%;
-            height: 5%;
-        }
-
-        .button:hover {
-            /* box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); */
-            font-size: 18px;
-        }
-
-        .head {
-            color: black;
-            font-size: 24px
-        }
-
-        .stock-details td {
-            padding: 20px;
-        }
-
-        .container {
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        input[type=number] {
-            color: red;
-            font-weight: bolder;
-        }
-    </style>
-</head>
-
-<body style="margin: 0px;" bgcolor="#B0C4DE">
-    <h2>Exit-Pass: Commiting Records</h2>
-    <div class="container">
+<?php include('../headerv2.php') ?>
+<div class="container-sm">
+    <div class="shadow p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff">
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
-        <!-- Stock-Out Details -->
-        <table class="stock-details" width="100%">
-            <tr>
-
-                <td class="head"><b>EP No. :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ep_no; ?></td>
-                <td class="head"><b> Title: </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ep_title; ?></td>
-                <td class="head">Customer :</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $customers_name; ?></td>
-                <td class="head"><b> Date:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $date; ?></td>
-
-
-            </tr>
-        </table>
-        <!-- Items Details -->
+        <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Exitpass : Commiting Records <i class="bi bi-pencil"></i></h4>
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" value="<?php echo str_pad($id, 8, 0, STR_PAD_LEFT) ?>" style="cursor:not-allowed" readonly>
+                    <label for="floatingInput">Exitpass ID</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" value="<?php echo $ep_no ?>" style="cursor:not-allowed" readonly>
+                    <label for="floatingInput">Exitpass No</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" value="<?php echo $ep_title ?>" style="cursor:not-allowed" readonly>
+                    <label for="floatingInput">Job-Order No.</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" value="<?php echo $date ?>" style="cursor:not-allowed" readonly>
+                    <label for="floatingInput">Exitpass Date</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" value="<?php echo $customers_name ?>" style="cursor:not-allowed" readonly>
+                    <label for="floatingInput">Customer</label>
+                </div>
+            </div>
+        </div>
         <form method="GET" action="../commit/que/ep_commit_que.php">
             <input type="hidden" name="ep_id" value="<?php echo $_GET['id'] ?>">
             <input type="hidden" name='mov_date' class='date'>
-            <table class="item-details">
+            <table class="table item-details">
                 <tr>
                     <th width="10%">Product ID</th>
-                    <th width="30%">Item Name</th>
+                    <th width="35%">Item Name</th>
                     <th width="10%">Beg. Qty</th>
                     <th width="10%">Qty Out</th>
                     <th width="5%">Unit</th>
@@ -177,9 +101,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <tr>
                             <td><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT); ?></td>
                             <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                            <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
+                            <td><input type="text" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;width:100px" readonly></td>
                             <td contenteditable="false">
-                                <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['ep_qty'] ?>" style="border: none;"></font>
+                                <font color="red"><input type="number" name="out_qty[]" value="<?php echo $irow['ep_qty'] ?>" style="border: none;width:100px"></font>
                             </td>
                             <td contenteditable="false"><?php echo $irow['unit_name'] ?></td>
                             <td>
@@ -196,12 +120,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </center>
             </table>
             <br>
-            <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
-            <a href="../ep_main.php"> <input type="button" class="button" value="Cancel"></a>
+            <button type="submit" name="submit" class="btn btn-primary">Commit Records</button>
+            <a href="../stout_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
         </form>
-        </fieldset>
     </div>
-</body>
+</div>
+
+
+
+
+<!-- Items Details -->
+
 
 <script type="text/javascript">
     function PrintPage() {

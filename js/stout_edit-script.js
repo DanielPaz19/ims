@@ -209,7 +209,7 @@ const selectItem = function (e) {
     <textarea class='form-control' id='exampleFormControlTextarea1' rows='1.5' id='itemRemarks' name='itemRemarks[]'></textarea>
     </td> 
     <td class='td__edit td__edit--delete'>
-   <i class="fa fa-trash-o" style="font-size:24px"></i>
+    <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
     </td>
     <input type='hidden' name='productId[]' value='${itemCode}'>
     <input type='hidden' name='qtyIn[]' value='${poQty}'  class='input__edit input__edit--qty'>
