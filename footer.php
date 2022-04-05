@@ -4,7 +4,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      background-color: #0d6efd;
+      background-color: #3333cc;
       color: white;
       text-align: center;
       font-size: 15px;
