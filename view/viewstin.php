@@ -8,9 +8,6 @@ if (isset($_POST['stin_submit'])) {
 	$stin_title = mysqli_real_escape_string($db, $_POST['stin_title']);
 	$stin_remarks = mysqli_real_escape_string($db, $_POST['stin_remarks']);
 	$stin_date = mysqli_real_escape_string($db, $_POST['stin_date']);
-
-
-
 	mysqli_query($db, "UPDATE stin_tb SET stin_code='$stin_code', stin_title='$stin_title' ,stin_remarks='$stin_remarks',stin_date='$stin_date'  WHERE stin_id='$id'");
 
 	header("Location:http://localhost/pacc3/main/stin_main.php");
@@ -43,62 +40,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 		echo "No results!";
 	}
 }
-
-/* TEST CODE*/
-
-/* TEST CODE END */
 ?>
-<!-- <style>
-	body {
-		font-family: Verdana, Geneva, Tahoma, sans-serif;
-		padding: 5%;
-		background-color: lightgray;
-	}
 
-	.container {
-		background-color: white;
-		padding: 2%;
-		-webkit-box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
-		box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.39);
-	}
-
-	.header {
-		width: 100%;
-	}
-
-	label {
-		font-weight: bold;
-	}
-
-	.itemtb {
-		width: 100%;
-		border: 1px solid black;
-		padding: 2px;
-		border-collapse: collapse;
-	}
-
-	.itemtb td {
-
-		border-right: 1px solid black;
-		padding: 3px;
-	}
-
-	.itemtb th {
-
-		border: 1px solid black;
-		padding: 4px;
-	}
-
-	button {
-		height: 35px;
-		width: 120px;
-		font-weight: bolder;
-	}
-
-	.top {
-		line-height: 1%;
-	}
-</style> -->
 <?php include('../headerv2.php') ?>
 <style>
 	label {
