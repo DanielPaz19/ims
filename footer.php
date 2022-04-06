@@ -393,7 +393,7 @@
 <script>
    "use strict";
 
-   function showadditem() {
+   function showadditemPO() {
       //set the width and height of the
       //pop up window in pixels
       var width = 1700;
