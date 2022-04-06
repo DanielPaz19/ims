@@ -56,11 +56,11 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table class="table table-hover" width="100%" style="cursor:pointer;">
+<table class="table table-hover table-sm" width="100%" style="cursor:pointer;">
   <tr style="background-color:#0d6efd;color:white">
-    <th width="5%"">JO ID</th>
-    <th width="15%">Job-Order No. </th>
-    <th width="20%">Customer</th>
+    <th width="10%"">JO ID</th>
+    <th width="10%">Job-Order No. </th>
+    <th width="30%">Customer</th>
     <th width="10%">Prepared By</th>
     <th width="10%"><center>Create Date</th>
     <th width="15%"><center>Action</th>

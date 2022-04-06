@@ -1,13 +1,10 @@
-<?php include('header.php');
-include('navbar.php');
-
+<?php include('header_main.php');
 if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
-
 ?>
 
-<style>
+<!-- <style>
     /* .content-area {
         border-radius: 10px;
         padding: 20px;
@@ -196,23 +193,7 @@ if (!isset($_SESSION['user'])) {
         color: red;
 
     }
-</style>
-
-<div class="con-form">
-    <div class="content-area">
-        <fieldset style="border: none;">
-            <legend>
-                <h2 style="letter-spacing: 5px;">
-                    <font color="midnightblue">Physical Inventory</font>
-                </h2>
-            </legend>
-            <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-            <?php include('table/pinv_table.html') ?>
-    </div>
-    </fieldset>
-</div>
-
-
-
+</style> -->
+<?php include('table/pinv_table.html') ?>
 
 <?php include "footer.php"; ?>

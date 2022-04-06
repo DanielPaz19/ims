@@ -45,7 +45,7 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table class="table table-hover" width="100%">
+<table class="table table-hover table-sm" width="100%" style="cursor:pointer;">
 <tr style="background-color:#0d6efd;color:white">
   <th width="10%">STIN ID</th>
     <th width="5%" style="display:none;">ID</th>
