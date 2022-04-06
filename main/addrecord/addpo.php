@@ -6,31 +6,33 @@
   <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
+  <!-- bootstrap5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+  <!-- font include -->
+
+  <link rel="stylesheet" href="../../css/font.css">
+  <!-- sidebar styles -->
+  <link rel="stylesheet" href="../../css/main_style.css">
+
+  <!-- sidebar script -->
+  <script src="js/sidebar_scriot.js"></script>
   <style>
-    body {
+    /* body {
       padding: 10px;
-    }
+    } */
 
-    fieldset {
-      padding: 20px;
-      font-family: sans-serif;
-      border: 5px solid lightgrey;
-    }
 
-    legend {
-      letter-spacing: 3px;
-      font-weight: bolder;
-      color: midnightblue;
-      font-size: 24px;
-    }
 
-    label {
+    /* label {
       color: black;
       font-weight: bold;
-    }
+    } */
 
-    th {
+    /* th {
       background-color: #A5A4A4;
       color: white;
       border: 2px solid white;
@@ -41,15 +43,15 @@
       border: 1px solid lightgrey;
       background-color: white;
       margin-left: 5px;
-    }
+    } */
 
-    button {
+    /* button {
       background-color: midnightblue;
       color: whitesmoke;
       cursor: pointer;
       padding: 5px;
 
-    }
+    } */
 
     input {
       border: 1px solid lightgrey;
@@ -57,11 +59,12 @@
       text-shadow: aliceblue;
     }
 
+    /* 
     div#search {
       position: relative;
       width: 80%;
       left: 0;
-    }
+    } */
 
     #relative {
       position: relative;
@@ -118,7 +121,7 @@
       color: red;
     }
 
-    .postb {
+    /* .postb {
       border: 1px solid #d3d3d3;
       font-family: Arial, Helvetica, sans-serif;
       border-collapse: collapse;
@@ -127,12 +130,12 @@
       -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-    }
+    } */
 
-    input#item-name {
+    /* input#item-name {
       position: relative;
       width: 430px;
-    }
+    } */
 
     .hidden {
       display: none;
@@ -148,7 +151,7 @@
         height: 700px;
       }*/
 
-    .inDetails {
+    /* .inDetails {
       background-color: #EAEAEA;
       padding: 30px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -157,13 +160,13 @@
       -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       height: 100%;
       color: black;
-    }
+    } */
 
     .delete {
       background-color: none;
     }
 
-    .add-button {
+    /* .add-button {
       width: 31%;
       letter-spacing: 2px;
 
@@ -177,7 +180,7 @@
       float: right;
       font-weight: initial;
       margin-bottom: 20px;
-    }
+    } */
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -309,108 +312,152 @@
   </script>
 </head>
 
-<body bgcolor="#B0C4DE">
-  <div class="Incontainer">
-    <div class="inDetails">
-      <fieldset>
-        <legend>&nbsp;&nbsp;&nbsp;Purchase Order: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-        <br>
-        <div>
-          <!-- Search Bar -->
-          <div class="container">
-            <div id="search">
-              <label>Enter Item:&nbsp;&nbsp;</label>
-              <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
+
+<body style="background-color:#cce0ff">
+  <div class="container-sm">
+    <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+      <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Purchase-Order: Entering records <i class="bi bi-pencil"></i>
+      </div>
+      <div class="card-body">
+        <div id="search">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="item-name" name="item">
+                <label for="floatingInput">Search Item</label>
+              </div>
               <div id="item-list"></div><!-- Dont Remove this -->
             </div>
           </div>
-          <br>
-          <!-- input for item qty -->
-          <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input class="item-qty" type="number" placeholder="Quantity" value="1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Cost: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input class="item-cost" type="number" placeholder="Cost" value="0" />
+          <div class="row">
+            <div class="col-5">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control item-qty" id="floatingInput" value="1">
+                <label for="floatingInput">Quantity</label>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control item-cost" id="floatingInput" value="0">
+                <label for="floatingInput">Cost</label>
+              </div>
+            </div>
+            <label style="display: none;">Discount: &nbsp;&nbsp;</label>
+            <input style="display: none;" class=" item-discount" type="number" placeholder="Discount" value="0" />
+            <div class="col-2">
+              <div class="form-floating mb-3">
+                <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <form autocomplete="off" method="GET" action="../addrecord/itemInsert/poInsert.php">
+            <div class="row">
+              <div class="col">&nbsp;Purchase-Order ID : <span class="newpoId"></span></div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="po_code" required>
+                  <label for="floatingInput">Purchase-Order Code</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="po_title" required>
+                  <label for="floatingInput">Purchase-Order Title</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="floatingInput" name="po_date" required>
+                  <label for="floatingInput">Purchase-Order Date</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-floating">
+                  <textarea class="form-control" id="floatingTextarea" name="po_remarks"></textarea>
+                  <label for="floatingTextarea">Purchase-Order Remarks</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="sup_id" required>
+                    <option></option>
+                    <?php
+                    include "../../php/config.php";
+                    $records = mysqli_query($db, "SELECT sup_id,sup_name From sup_tb ORDER BY sup_name ASC");
 
-          <!-- input for discount -->
-          <label style="display: none;">Discount: &nbsp;&nbsp;</label>
-          <input style="display: none;" class=" item-discount" type="number" placeholder="Discount" value="0" /> <br /><br />
-          <button class="add-button" title="Add Item">Add Item to table</button>
+                    while ($data = mysqli_fetch_array($records)) {
+                      echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <label for="floatingSelect">Supplier</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput">
+                  <label for="floatingInput">Terms</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="po_type_id" required>
+                    <option></option>
+                    <?php
+                    include "../../php/config.php";
+                    $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
+
+                    while ($data = mysqli_fetch_array($records)) {
+                      echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <label for="floatingSelect">Purchase-Order Type</label>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="crud_table" width="100%" class="postb table">
+                <tr>
+                  <th style="padding: 10px; text-align: left" width="50%">
+                    Item Description
+                  </th>
+                  <th style="padding: 10px; text-align: left" width="10%">
+                    Qty-Order
+                  </th>
+                  <th style="padding: 10px; text-align: left" width="10%">Cost</th>
+                  <th style="padding: 10px; text-align: left" width="10%">
+                    Discount Amount
+                  </th>
+                  <th style="padding: 10px; text-align: left" width="10%">
+                    Total Amount
+                  </th>
+                  <th style="padding: 10px; text-align: left" width="5%">
+                    &nbsp;
+                  </th>
+                </tr>
+              </table>
+            </div>
+            <button name="btnsave" class="btn btn-success stin-button-save">&nbsp;Save Record</button>
+          </form>
+
+
+
         </div>
-        <br><br>
-        <hr>
-        <br><br>
-        <form autocomplete="off" method="GET" action="../addrecord/itemInsert/poInsert.php">
-          <label>PO ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><span class="newpoId"></span><br><br>
-          <label>Code: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="po_code" placeholder="PO-00000" required>&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="text" name="po_title" placeholder="Enter Title here...">&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Remarks:&nbsp;&nbsp;</label>
-          <input type="text" name="po_remarks">&nbsp;&nbsp;&nbsp;&nbsp;
-          <label>Date:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="date" name="po_date" required> <br><br>
-          <label for="name"><b>Supplier:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-          <select name="sup_id" style="height:25px; border: 1px solid lightgrey;" required>
-            <option>--- Select Supplier ---</option>
-            <?php
-            include "../../php/config.php";
-            $records = mysqli_query($db, "SELECT sup_id,sup_name From sup_tb ORDER BY sup_name ASC");
-
-            while ($data = mysqli_fetch_array($records)) {
-              echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
-            }
-            ?>
-          </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-          <label>Terms:&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="text" name="po_terms">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <label> PO-Type:</label>
-          <select name="po_type_id" style="width: 150px; height: 26px; border: 1px solid gray;">
-            <option></option>
-            <?php
-            include "config.php";
-            $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
-
-            while ($data = mysqli_fetch_array($records)) {
-              echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
-            }
-            ?>
-          </select>
-
-
-
-          <div>
-            <!--Add item for order-->
-
-            <br /> <br />
-            <button name="btnsave" class="stin-button-save">Save Records </button>
-            <table id="crud_table" width="100%" class="postb">
-              <tr>
-                <th style="padding: 10px; text-align: left" width="50%">
-                  Item Description
-                </th>
-                <th style="padding: 10px; text-align: left" width="10%">
-                  Qty-Order
-                </th>
-                <th style="padding: 10px; text-align: left" width="10%">Cost</th>
-                <th style="padding: 10px; text-align: left" width="10%">
-                  Discount Amount
-                </th>
-                <th style="padding: 10px; text-align: left" width="10%">
-                  Total Amount
-                </th>
-                <th style="padding: 10px; text-align: left" width="5%">
-                  &nbsp;
-                </th>
-              </tr>
-            </table>
-            <br>
-
-        </form>
+      </div>
     </div>
-    </fieldset>
-
-
 </body>
 
-</html>
+
+
+
+
+<div>
+  <!--Add item for order-->
+
+  <br /> <br />

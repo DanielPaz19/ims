@@ -65,7 +65,6 @@ include 'php/ep_edit-inc.php';
                     </div>
                 </div>
             </div>
-
             <br>
             <hr>
             <div class="button__container--insert_item">
@@ -80,12 +79,6 @@ include 'php/ep_edit-inc.php';
 
                 </div>
             </div>
-
-
-
-
-
-
             <table class='table'>
                 <thead>
                     <tr style="text-align: left;background-color:#0d6efd;color:white">
