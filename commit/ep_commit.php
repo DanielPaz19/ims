@@ -31,7 +31,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 ?>
 
 <?php include('../headerv2.php') ?>
-<div class="container-sm">
+<div style="padding:3%">
     <div class="shadow p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff">
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Exitpass : Commiting Records <i class="bi bi-pencil"></i></h4>

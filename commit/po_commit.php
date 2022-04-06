@@ -4,7 +4,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
   $id = $_GET['id'];
 
-  $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address, po_tb.po_terms, sup_tb.sup_tin FROM sup_tb INNER JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  WHERE po_id=" . $_GET['id']);
+  $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address, po_tb.po_terms, sup_tb.sup_tin, po_type.po_type_name
+  FROM sup_tb 
+  LEFT JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  
+  LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id
+
+  WHERE po_tb.po_id=" . $_GET['id']);
 
 
   $row = mysqli_fetch_array($result);
@@ -21,6 +26,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     $sup_address = $row['sup_address'];
     $sup_tin = $row['sup_tin'];
     $po_terms = $row['po_terms'];
+    $po_type = $row['po_type_name'];
   } else {
     echo "No results!";
   }
@@ -28,163 +34,77 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
 ?>
-
-<html>
-
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <style>
-    body {
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      color: black;
-      padding: 50px;
-    }
-
-
-    .item-details {
-      border-collapse: collapse;
-      /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); */
-    }
-
-
-    .item-details th {
-      background-color: midnightblue;
-      color: white;
-      padding: 10px;
-      border: 1px solid grey;
-      text-align: left;
-      font-size: 15px;
-      letter-spacing: 1px;
-    }
-
-
-    .item-details td {
-      padding: 7px;
-      border-left: 1px solid lightgrey;
-      text-align: left;
-      font-size: 15px;
-      background-color: white;
-      font-family: Arial, Helvetica, sans-serif;
-      letter-spacing: 1px;
-
-    }
-
-    .fieldset {
-      border: none;
-    }
-
-    h2 {
-      color: midnightblue;
-      letter-spacing: 4px;
-      font-size: 35px;
-    }
-
-    .button {
-      background-color: midnightblue;
-      /* Green */
-      border: none;
-      color: white;
-      padding: 7px 16px;
-      text-align: center;
-      letter-spacing: 2px;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      -webkit-transition-duration: 0.4s;
-      /* Safari */
-      transition-duration: 0.4s;
-      width: 10%;
-      height: 5%;
-    }
-
-    .button:hover {
-      /* box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); */
-      font-size: 18px;
-    }
-
-
-    .head {
-      color: black;
-      font-size: 24px
-    }
-
-    .stock-details {
-      border-collapse: collapse;
-    }
-
-    .stock-details th {
-      font-size: 24px;
-      text-align: left;
-      padding: 5px;
-
-    }
-
-    .stock-details td {
-      padding: 5px;
-    }
-
-
-    /* .container {
-      padding: 30px;
-      background-color: #EAEAEA;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      height: 1000px;
-    } */
-
-    input[type=number] {
-      color: red;
-      font-weight: bolder;
-    }
-  </style>
-</head>
-
+<?php include('../headerv2.php') ?>
 
 
 <!-- VIEW PO END -->
-<input type="hidden" name="id" value="<?php echo $id; ?>" />
-<h2>Purchase Order : Commiting Records</h2>
-
-<body style="margin: 0px;" bgcolor="#B0C4DE">
-  <!-- PO Details -->
-  <div class="container">
-    <fieldset style="border:none;">
-      <legend>
-
-      </legend>
-      <table class="stock-details" width="100%">
-        <tr>
-          <th><b>PO Code</b></th>
-          <th><b>Supplier</b></th>
-          <th><b>PO Title </b></th>
-          <th><b>PO Date </b></th>
-
-        </tr>
-        <tr>
-          <td class="head"> <?php echo $po_code; ?> </td>
-          <td class="head"> <?php echo $sup_name; ?> </td>
-          <td class="head"><?php echo $po_title; ?></td>
-          <td class="head"><?php echo $date; ?></td>
-        </tr>
-      </table>
-
-
-
+<div style="padding: 2%;">
+  <div class="shadow p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff">
+    <input type="hidden" name="id" value="<?php echo $id; ?>" />
+    <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Purchase-Order : Commiting Records <i class="bi bi-pencil"></i></h4>
+    <hr>
+    <div class="row">
+      <div class="row">
+        <div class="col-4">
+          <div class="form-floating mb-3">
+            <input type="text" id="id" class="form-control" name="poId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+            <label for="floatingInput">Purchase-Order ID</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $po_code ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Purchase-Order Code</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $po_title ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Purchase-Order Title</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $po_terms ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Purchase-Order Terms</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $date ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Purchase-Order Date</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <textarea class="form-control" id="floatingTextarea" style="cursor:not-allowed" readonly><?php echo $po_remarks ?></textarea>
+            <label for="floatingTextarea">Purchase-Order Remarks</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $sup_name ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Supplier</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" value="<?php echo $po_type ?>" style="cursor:not-allowed" readonly>
+            <label for="floatingInput">Purchase-Order Type</label>
+          </div>
+        </div>
+      </div>
       <br>
-
-      <!-- Items Details -->
+      <hr>
+      <br>
       <form method="GET" action="../commit/que/po_commit_que.php">
         <input type="hidden" name="po_id" value="<?php echo $_GET['id'] ?>">
         <input type="hidden" name='mov_date' class='date'>
-        <table class="item-details">
+        <table class="table">
           <tr>
             <th width="10%">Product ID</th>
             <th width="30%">Item Name</th>
@@ -217,12 +137,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                 <td contenteditable="false"><?php echo str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT) ?></td>
                 <td contenteditable="false"><?php echo $irow['product_name'] ?></td>
-                <td><input type="number" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;" readonly></td>
-                <td contenteditable="false"><input style="border:none;" type="number" name="in_qty[]" value="<?php echo $irow['item_qtyorder'] ?>" readonly></td>
+                <td><input type="number" name="bal_qty[]" value="<?php echo $irow['qty'] ?>" style="border: none;width:100px" readonly></td>
+                <td contenteditable="false"><input style="border:none;width:100px;text-align:right" type="number" name="in_qty[]" value="<?php echo $irow['item_qtyorder'] ?>" readonly></td>
                 <td contenteditable="true"><?php echo $irow['item_qtyorder'] ?></td>
                 <td contenteditable="true"><?php echo $irow['unit_name'] ?></td>
                 <td contenteditable="true"><?php echo $irow['cost'] ?></td>
-                <td class="item_totcost"><input type="number" name="item_totcost[]" style="border: none;" value="<?php echo $irow["item_qtyorder"] * $irow["cost"]; ?>" contenteditable="false"></td>
+                <td class="item_totcost"><input type="number" name="item_totcost[]" style="border: none;width:100px;" value="<?php echo $irow["item_qtyorder"] * $irow["cost"]; ?>" contenteditable="false"></td>
                 <td contenteditable="true"><?php echo $irow['item_disamount'] ?></td>
                 <td class="po_temp_tot"><input type="number" name="po_temp_tot[]" style="border: none;" value="<?php echo $irow["qty"] + $irow["item_qtyorder"]; ?>" contenteditable="false"></td>
               </tr>
@@ -232,46 +152,53 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         </table>
         <br>
-        <input type="submit" name="submit" value="Commit" class="button" onclick="confirmUpdate()">
-        <a href="../po_main.php"> <input type="button" class="button" value="Cancel"></a>
+        <button type="submit" name="submit" class="btn btn-primary">Commit Records</button>
+        <a href="../po_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
       </form>
 
 
-      <script type="text/javascript">
-        function PrintPage() {
-          window.print();
-        }
+    </div>
+  </div>
 
-        function HideBorder(id) {
-          var myInput = document.getElementById(id).style;
-          myInput.borderStyle = "none";
-        }
-      </script>
-      <script>
-        //date
-        document.querySelector('.date').value = new Date().toISOString();
 
-        function confirmUpdate() {
-          let confirmUpdate = confirm("Are you sure you want to Commit record?\n \nNote: Double Check Input Records");
-          if (confirmUpdate) {
-            alert("Update Record Database Successfully!");
-          } else {
+  <!-- Items Details -->
 
-            alert("Action Canceled");
-          }
-        }
-      </script>
 
-      <script>
-        function confirmCancel() {
-          let confirmUpdate = confirm("Are you sure you want to cancel ?");
-          if (confirmUpdate) {
-            alert("Nothing Changes");
-          } else {
+  <script type="text/javascript">
+    function PrintPage() {
+      window.print();
+    }
 
-            alert("Action Canceled");
-          }
-        }
-      </script>
+    function HideBorder(id) {
+      var myInput = document.getElementById(id).style;
+      myInput.borderStyle = "none";
+    }
+  </script>
+  <script>
+    //date
+    document.querySelector('.date').value = new Date().toISOString();
 
-</html>
+    function confirmUpdate() {
+      let confirmUpdate = confirm("Are you sure you want to Commit record?\n \nNote: Double Check Input Records");
+      if (confirmUpdate) {
+        alert("Update Record Database Successfully!");
+      } else {
+
+        alert("Action Canceled");
+      }
+    }
+  </script>
+
+  <script>
+    function confirmCancel() {
+      let confirmUpdate = confirm("Are you sure you want to cancel ?");
+      if (confirmUpdate) {
+        alert("Nothing Changes");
+      } else {
+
+        alert("Action Canceled");
+      }
+    }
+  </script>
+
+  </html>

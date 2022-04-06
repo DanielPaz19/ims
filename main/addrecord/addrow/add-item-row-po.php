@@ -22,7 +22,7 @@ if (mysqli_num_rows($result) > 0) {
     <td><input name='cost[]' style='border:none;' style='border:none;' value='" . number_format($item_cost, 2) . "' readonly></td>
     <td><input name='disamount[]' style='border:none;' value='" . number_format($item_discount, 2) . "' readonly></td>
     <td><input name='total[]' style='border:none;' value='" . number_format($total_amount, 2) . "' readonly></td>
-    <td style='text-align:center;'><span><a href='#' class='delete' id='" . $row['product_id'] . " title='remove' ><font color='red'><i class='fa fa-trash-o' style='font-size:20px'></i></font></a></span></td>
+    <td style='text-align:center;'><span><a href='#' class='delete' id='" . $row['product_id'] . " title='remove' ><font color='red'><i class='bi bi-trash3-fill' style='font-size:18px'></i></font></a></span></td>
     </tr>";
     }
 } else {

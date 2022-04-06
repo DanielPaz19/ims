@@ -1,124 +1,143 @@
 <?php
 
-include_once 'header.php';
+include_once 'headerv2.php';
 include 'php/po_edit-inc.php';
 ?>
-
 
 <link rel="stylesheet" href="css/po_edit-style.css">
 <script defer src="js/po_edit-script.js"></script>
 
-<h1>Edit Purchase Order</h1>
-<form action="php/po_edit-inc.php" method="POST">
-  <div class='container--po__details'>
-    <a href="po_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
-    <span class="po__label">
-      PO ID:
-    </span>
-    <input type="text" name="poId" id="po_id" class="textId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly> <br>
-    <span class="po__label">
-      PO Code:
-    </span>&emsp;&emsp;&emsp;&nbsp;
-    <input type="text" name="poCode" id="po_code" value="<?php echo $poCode ?>">
-    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-    <span class=" po__label">
-      PO Title:
-    </span>
-    <input type="text" name="poTitle" id="po_title" value="<?php echo $poTitle ?>">
-    <span class="po__label">
-      Terms:
-    </span>
-    <input type="text" name="poTerms" id="po_terms" value="<?php echo $poTerms ?>">&emsp;
-    <span class="po__label">
-      PO Date:
-    </span>
-    <input type="date" name="poDate" id="po_date" value="<?php echo $poDate ?>"><br>
-    <span class="po__label po__label--supplier">
-      Supplier Name:
-    </span>
-    <select name="supplierId" id="supplier_name">
-      <option value=" <?php echo $supId ?>"><?php echo $supName ?></option>
-      // Show supplier name as options for Select input
-      <?php include 'php/render-select-supplier.php' ?>
+<div style="padding: 2%;">
+  <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff">
+    <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Purchase-Order: Editing Records <i class="bi bi-pencil"></i></h4>
+    <hr>
+    <form action="php/po_edit-inc.php" method="POST">
+      <div class="row">
+        <div class="col-4">
+          <div class="form-floating mb-3">
+            <input type="text" id="id" class="form-control" name="poId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+            <label for="floatingInput">Purchase-Order ID</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="poCode" value="<?php echo $poCode ?>">
+            <label for="floatingInput">Purchase-Order Code</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="poTitle" value="<?php echo $poTitle ?>">
+            <label for="floatingInput">Purchase-Order Title</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="poTerms" value="<?php echo $poTerms ?>">
+            <label for="floatingInput">Purchase-Order Terms</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="date" class="form-control" name="poDate" value="<?php echo $poDate ?>">
+            <label for="floatingInput">Purchase-Order Date</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <textarea class="form-control" id="floatingTextarea" name="poRemarks"><?php echo $poRemarks ?></textarea>
+            <label for="floatingTextarea">Purchase-Order Remarks</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="supplierId">
+              <option value="<?php echo $supId ?>"><?php echo $supName; ?></option>
+              <?php
+              include "config.php";
+              $records = mysqli_query($db, "SELECT * FROM sup_tb ORDER BY sup_name ASC");
 
-    </select>
-    <span class="po__label">
-      Remarks:
-    </span>
-    <input type="text" name="poRemarks" id="po_remarks" value="<?php echo $poRemarks ?>">
-    <span class="po__label">
-      PO Type:
-    </span>
-    <select name="po_type_id" style="width: 250px; height: 26px; border: 1px solid gray;">
-      <option value=" <?php echo $po_type_id ?>"><?php echo $po_type_name ?></option>
-      <?php
-      include "config.php";
-      $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
+              while ($data = mysqli_fetch_array($records)) {
+                echo "<option value='" . $data['sup_id'] . "'>" . $data['sup_name'] . "</option>";
+              }
+              ?>
+            </select>
+            <label for="floatingSelect">Supplier</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="po_type_id">
+              <option value=" <?php echo $po_type_id ?>"><?php echo $po_type_name ?></option>
+              <?php
+              include "config.php";
+              $records = mysqli_query($db, "SELECT * FROM po_type ORDER BY po_type_id ASC");
 
-      while ($data = mysqli_fetch_array($records)) {
-        echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
-      }
-      ?>
-    </select>
-  </div>
-  <div class="button__container--insert_item">
-    <!-- <button class="po__button button--insert__item">Add item</button> -->
-  </div>
+              while ($data = mysqli_fetch_array($records)) {
+                echo "<option value='" . $data['po_type_id'] . "'>" . $data['po_type_name'] . "</option>";
+              }
+              ?>
+            </select>
+            <label for="floatingSelect">Purchase-Order Type</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <hr>
+      <div class="button__container--insert_item">
+        <!-- <button class="po__button button--insert__item">Add item</button> -->
+      </div>
 
-  <div class="container--po__table">
-    <button class="po__button button--insert__item" style="float: left; margin-bottom:5px;width: 150px;"><i class="fa fa-plus"></i>&nbsp;Add item</button>
-    <!-- <button class="edit__button button--cancelupdate" name='cancelupdate' style="float: right; margin-bottom:5px;  cursor: pointer;
-  height: 50px;
-  width: 100px;
-  border-radius: 5px;
-  background-color: midnightblue;
-  color: #ffffff;">Cancel</button> -->
-    <button class="po__button button--po__update" name='updatepo' style="float: right; margin-bottom:5px;  cursor: pointer;
-   cursor: pointer;
-  height: 50px;
-  width: 150px;
-  border-radius: 5px;
-  background-color: midnightblue;
-  color: #ffffff;
-  font-size: 18px;
-  letter-spacing: 2px;"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
-    <table class='po__table'>
-      <thead>
-        <tr>
-          <th>Product ID</th>
-          <th>Item Name</th>
-          <th>Qty-In</th>
-          <th>Unit</th>
-          <th>Cost</th>
-          <th>Total Cost</th>
-          <th>%Discount</th>
-          <th>Dscnt. Val.</th>
-          <th>Sub-total</th>
-          <th>
-          </th>
-        </tr>
-      </thead>
-      <tbody class='po__table--item'>
+      <div class="container--po__table">
 
-        <?php
-        $limit = 0;
+        <div class="row">
+          <div class="col">
+            <h5>Product Table</h5>
+          </div>
+          <div class="col"> <button class="po__button button--insert__item btn btn-primary" style="float: right; margin-bottom:5px"><i class="bi bi-plus-circle"></i> Add Product</button>
+          </div>
+        </div>
+        <table class='po__table table'>
+          <thead>
+            <tr style="text-align: left;background-color:#0d6efd;color:white">
+              <th>Product ID</th>
+              <th>Item Name</th>
+              <th>Qty-In</th>
+              <th>Unit</th>
+              <th>Cost</th>
+              <th>Total Cost</th>
+              <th>%Discount</th>
+              <th>Dscnt. Val.</th>
+              <th>Sub-total</th>
+              <th>
+              </th>
+            </tr>
+          </thead>
+          <tbody class=' po__table--item'>
 
-        if (isset($productId)) {
-          while (count($productId) !== $limit) {
-            if ($productId[$limit] != 0) {
-              echo
-              "<tr>
+            <?php
+            $limit = 0;
+
+            if (isset($productId)) {
+              while (count($productId) !== $limit) {
+                if ($productId[$limit] != 0) {
+                  echo
+                  "<tr>
              <td class='td__readonly td__readonly--productid'>$productId[$limit]</td>
              <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
              <td class='td__edit td__edit--qty'>" . number_format($qtyIn[$limit], 2) . "</td>
-             <td>$unitName[$limit]</td>
+             <td >$unitName[$limit]</td>
              <td class='td__edit td__edit--cost'>" . number_format($itemCost[$limit], 2) . "</td>
              <td class='td__compute td__compute--totalcost'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
              <td class='td__edit td__edit--discpercent'>" . number_format($itemDiscpercent[$limit], 2) . "</td>
              <td class='td__compute td__compute--discount'>" . number_format($itemDisamount[$limit], 2) . "</td>
              <td class='td__compute td__compute--subtotal'>" . number_format($itemTotal[$limit], 2) . "</td>
              <td class='td__edit td__edit--delete'>
-                <i class='fa fa-trash-o' style='font-size:26px'></i>
+             <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
               </td>
               <input type='hidden' name='productId[]' value='$productId[$limit]' >
               <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
@@ -128,21 +147,25 @@ include 'php/po_edit-inc.php';
               <input type='hidden' name='itemTotal[]' value='" . $itemCost[$limit] * $qtyIn[$limit] . "' class='input__edit input__edit--total'>
              </tr>
              ";
+                }
+
+                $limit++;
+              }
             }
+            ?>
 
-            $limit++;
-          }
-        }
-        ?>
+          </tbody>
+        </table>
 
-      </tbody>
-    </table>
+        <div class="pull-right">
+          <button class="po__button button--po__update btn btn-success" name='updatepo'><i class="bi bi-check2-circle"></i> Update Records</button>
+          <a href="po_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
+        </div>
+    </form>
+    <br>
   </div>
-  <div class="container--po__button">
+</div>
 
-
-  </div>
-</form>
 
 
 <div class="container--modal">
