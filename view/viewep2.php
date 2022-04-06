@@ -73,7 +73,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 LEFT JOIN product ON product.product_id = ep_product.product_id
                 LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
             
-                WHERE ep_tb.ep_no='$ep_no'  ";
+                WHERE ep_tb.ep_no='$ep_no' 
+                ORDER BY ep_product.ep_product_id ASC ";
 
                     $result = $db->query($sql);
                     $count = 0;

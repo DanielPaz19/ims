@@ -15,7 +15,7 @@ if (isset($_GET['editEp'])) {
         LEFT JOIN customers ON customers.customers_id = ep_tb.customers_id
         LEFT JOIN product ON ep_product.product_id = product.product_id
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-        WHERE ep_tb.ep_id ='$epId'"
+        WHERE ep_tb.ep_id ='$epId' ORDER BY ep_product.ep_product_id ASC"
     );
 
 
