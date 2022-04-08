@@ -27,9 +27,8 @@ if (mysqli_num_rows($result) > 0) {
     }
 } else {
 
-    echo '0 results';
+    echo '<script>
+    alert("No Item Selected !");
+    ;
+    </script>';
 }
-
-?>
-<input type='button' value='X'>
-<button></button>

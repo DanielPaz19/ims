@@ -20,7 +20,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>PACC IMS</title>
-
+    <style>
+        .bg-body {
+            background-color: #FCFCFE !important;
+        }
+    </style>
 </head>
 
 <body style="margin: 0px; background-color:#cce0ff">

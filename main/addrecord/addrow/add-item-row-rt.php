@@ -19,5 +19,8 @@ if (mysqli_num_rows($result) > 0) {
         </tr>";
     }
 } else {
-    echo '0 results';
+    echo '<script>
+    alert("No Item Selected !");
+    ;
+    </script>';
 }
