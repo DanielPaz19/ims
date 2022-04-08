@@ -1,14 +1,23 @@
 <?php include('../main_header_v2.php'); ?>
 <style>
     .report--content {
-        border: 1px solid lightgray;
+        border: 2px solid lightgray;
         padding: 2px;
         background-color: #F8F8F8;
+        font-size: small;
+
+    }
+
+    @media screen {
+        body {
+            color: green;
+        }
     }
 
     @media print {
-        .report--content {
-            font-size: 12px;
+        body {
+            color: black;
+            font-size: small;
         }
     }
 </style>
@@ -23,7 +32,8 @@
                         <label style="float: left;">To :</label>
                         <input type="date" class="form-control" placeholder="End" name="date2" /> <br>
                         <center><button class="btn btn-primary" name="search" style="width: 100%;">Generate Report</button></center> <br> <br>
-                        <button class="btn btn-success" id="doPrint">Print Records</button>
+                        <button class="btn btn-success" id="doPrint">Print Records</button>&emsp;
+                        <button class="btn btn-danger" onClick="self.close()">Close Page</button>
                     </div>
                 </form>
             </div>
@@ -31,6 +41,7 @@
 
         <div class="col-9">
             <div class="shadow-lg p-5 mt-5 bg-body rounded printPage" style="width:100%;border:5px solid #cce0ff" id="printDiv">
+                <h5> Job-Order Reports Detailed</h5>
                 <?php
                 include "../php/config.php";
                 if (isset($_POST['search'])) {
@@ -147,17 +158,22 @@
                             $grandTot = $subTot - $disTot;
 
 
-                            echo " <tr><td style='font-weight:bold;text-align:right' colspan='5'>Grand Total: " . number_format($grandTot, 2)  . "</td></tr>  </table>
-
+                            echo " <tr><td style='font-weight:bold;text-align:right;text-decoration: overline;' colspan='5'>Grand Total: " . number_format($grandTot, 2)  . "</td></tr>  </table>
+                           
                         </div>
-                       <center> ****************************************************** </center>
+                       <center> ************************** END OF REPORT **************************** </center>
                 
                         ";
                         }
                     }
+                } else {
+                    echo '<div class="alert alert-primary" role="alert">
+                    No data to display.
+                  </div>';
                 }
                 ?>
             </div>
+
 
         </div>
     </div>
