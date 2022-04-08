@@ -4,7 +4,7 @@
 $connect = mysqli_connect("localhost", "root", "@Dmin898", "inventorymanagement");
 if (isset($_GET["query"])) {
      $output = '';  //Output Initialization
-     $query = "SELECT product.product_name, product.product_id, loc_tb.loc_name, product.barcode, product.qty
+     $query = "SELECT product.product_name, product.product_id, loc_tb.loc_name, product.barcode, product.qty, loc_tb.loc_name
                 FROM product
                 LEFT JOIN loc_tb ON loc_tb.loc_id = product.loc_id
                 WHERE product_name LIKE '%" . $_GET["query"] . "%' LIMIT 30";  //Select Items

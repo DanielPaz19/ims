@@ -2,22 +2,26 @@
 <html lang="en">
 
 <head>
-    <title>Create New Records</title>
-    <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
-    <style>
-        body {
-            padding: 10px;
-            font-family: sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-        fieldset {
+    <!-- font include -->
+
+    <link rel="stylesheet" href="../../css/font.css">
+    <!-- sidebar styles -->
+    <link rel="stylesheet" href="../../css/main_style.css">
+    <style>
+        /* fieldset {
             padding: 20px;
             font-family: sans-serif;
             border: 5px solid lightgrey;
-            height: 97vmax;
+
         }
 
         legend {
@@ -25,47 +29,45 @@
             font-weight: bolder;
             color: midnightblue;
             font-size: 24px;
-        }
+        } */
 
-        label {
+        /* label {
             color: black;
             font-weight: bold;
-        }
+        } */
 
-        th {
+        /* th {
             background-color: #A5A4A4;
             color: white;
             border: 2px solid white;
-
         }
 
         td {
+
             border: 1px solid lightgrey;
             background-color: white;
             margin-left: 5px;
-        }
+        } */
 
+        /* 
         button {
             background-color: midnightblue;
             color: whitesmoke;
             cursor: pointer;
             padding: 5px;
-            height: 30px;
-            width: 30px;
+        } */
 
-        }
-
-        input {
+        /* input {
             border: 1px solid lightgrey;
             height: 25px;
             text-shadow: aliceblue;
-        }
+        } */
 
-        div#search {
+        /* div#search {
             position: relative;
             width: 80%;
             left: 0;
-        }
+        } */
 
         #relative {
             position: relative;
@@ -121,121 +123,46 @@
             color: red;
         }
 
-        .postb {
+        /* .postb {
             border: 1px solid #d3d3d3;
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             margin-top: 20px;
-            /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-      -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); */
-        }
+        } */
 
-        input#item-name {
+        /* input#item-name {
             position: relative;
             width: 430px;
-        }
+        } */
 
         .hidden {
             display: none;
         }
 
-        /*   .Incontainer {
-        background-color: none;
-        padding: 20px;
-        box-shadow:  0 0 10px  rgba(0,0,0,0.6);
-      -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-      -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
-        height: 700px;
-      }*/
-
-        .inDetails {
+        /* .inDetails {
             background-color: #EAEAEA;
             padding: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
             -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            height: 100%;
             color: black;
-            height: 100vmax;
-        }
+        } */
 
         .delete {
             background-color: none;
         }
 
-
-        .pinv-button-save {
-            width: 300px;
+        /* 
+        .stin-button-save {131231
             height: 40px;
             font-size: 15px;
             letter-spacing: 5px;
             float: right;
             font-weight: initial;
-        }
-
-        .add-button {
-            width: 31%;
-            letter-spacing: 2px;
-        }
-
-        .newItemBtn {
-            width: 10%;
-            letter-spacing: 2px;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 100px;
-            /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
-
-        }
-
-        /* Modal Content */
-        .modal-content {
-
-            background-color: lightgray;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            height: 65%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: red;
-            text-decoration: none;
-            cursor: pointer;
-        }
+            margin-bottom: 20px;
+        } */
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -334,6 +261,7 @@
                             id: id,
                             qty: qty,
                             location: location,
+
                         },
                         function(data, status) {
                             var noResult = "0 results";
@@ -362,109 +290,144 @@
             });
         });
     </script>
-
+    <title>PINV Adding records</title>
 </head>
 
-<body bgcolor="#B0C4DE">
-    <div class="Incontainer">
-        <div class="inDetails">
-            <fieldset>
-                <legend>&nbsp;&nbsp;&nbsp;Physical Inventory: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-                <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); width:60%; float: left;">
-                <br><br>
-                <div>
-                    <!-- Search Bar -->
-                    <div class="container">
-                        <div id="search">
-                            <label>Enter Item:&nbsp;&nbsp;</label>
-                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
-                            <button onclick="myFunction()" class="newItemBtn">New Item</button>
+<body style="background-color:#cce0ff">
+
+    <div class="container-sm">
+        <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+            <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Physical Inventory: Entering records <i class="bi bi-pencil"></i>
+            </div>
+            <div class="card-body">
+                <div id="search">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="item-name" name="item">
+                                <label for="floatingInput">Search Item</label>
+                            </div>
                             <div id="item-list"></div><!-- Dont Remove this -->
                         </div>
+                        <div class="col-2 mt-2">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i class="bi bi-boxes"></i> New Product
+                            </button>
+                        </div>
                     </div>
-                    <br>
-                    <!-- input for item qty -->
-                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input class="item-qty" type="number" placeholder="Quantity" value="1" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!-- input for discount -->
-                    <label>Location: &nbsp;&nbsp;</label>
-                    <select class="item-location" style="width: 9%; height: 32px; border: 1px solid #B8B8B8;">
-                        <option>
-                            <center>--- Select Location---</center>
-                        </option>
-                        <?php
-                        include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM loc_tb");
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="item-qty form-control" id="floatingInput" value="1">
+                                <label for="floatingInput">Quantity</label>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-floating">
+                                <select class="item-location form-select" id="floatingSelect" aria-label="Floating label select example">
+                                    <option>
 
-                        while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['loc_id'] . "'>" . $data['loc_name'] . "</option>";
-                        }
-                        ?>
-                    </select> <br /><br />
-                    <button class="add-button" title="Add Item">Add item to table</button>
+                                    </option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM loc_tb");
+
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['loc_id'] . "'>" . $data['loc_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="floatingSelect">Location</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add to table</button>
+                        </div>
+                    </div>
+
                 </div>
-                <br><br>
-                <hr>
-                <br><br>
                 <form method="GET" action="../addrecord/itemInsert/pinvInsert.php">
-                    <label>PINV ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStinId"></span> <br> <br>
-                    <label>Title:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="pinv_title"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label>Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="pinv_date"> <br><br>
-                    <label>Prepared By:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select name="emp_id" style="width: 20%; height: 32px; border: 1px solid #B8B8B8;">
-                        <option>
-                            <center>--- Select Employee---</center>
-                        </option>
-                        <?php
-                        include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+                    <div class="row">
+                        <div class="col">&nbsp;PINV ID : <span class="newStinId"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="pinv_title">
+                                <label for="floatingInput">PINV Title</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingInput" name="pinv_date">
+                                <label for="floatingInput">PINV Date</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="emp_id">
+                                    <option></option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
 
-                        while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                    <div>
-                        <!--Add item for order-->
-                        <br /><br />
-
-                        <button name="btnsave" class="pinv-button-save">&nbsp;Save Record</button> <br> <br>
-                        <center>
-                            <table id="crud_table" width="100%" class="postb">
-                                <tr>
-                                    <th style="padding: 10px; text-align: left" width="5%">Product ID</th>
-                                    <th style="padding: 10px; text-align: left" width="50%">
-                                        Item Description
-                                    </th>
-                                    <th style="padding: 10px; text-align: left" width="5%">
-                                        QTY
-                                    </th>
-                                    <th style="padding: 10px; text-align: left" width="10%">Location</th>
-                                    <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
-                                </tr>
-                            </table>
-                        </center>
-                        <br>
-
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="floatingSelect">Prepared By</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="crud_table" width="100%" class="postb table">
+                            <tr style="background-color: #cce0ff;">
+                                <th style="padding: 10px; text-align: left" width="5%">Product ID</th>
+                                <th style="padding: 10px; text-align: left" width="50%">
+                                    Item Description
+                                </th>
+                                <th style="padding: 10px; text-align: left" width="5%">
+                                    Quantity
+                                </th>
+                                <th style="padding: 10px; text-align: left" width="10%">Location ID</th>
+                                <th style="padding: 10px; text-align: left" width="2%">&nbsp;</th>
+                            </tr>
+                        </table>
+                        <button name="btnsave" class="pinv-button-save btn btn-success">Save Record</button>
+                    </div>
                 </form>
+
+
+            </div>
         </div>
-        </fieldset>
     </div>
-    </div>
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-
-            <?php include "add_new_item.php" ?>
-
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color:#F5F5F5;border:5px solid #A9A9A9">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><i class="bi bi-boxes"></i> Itemlist: Entering records</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php include("add_new_item.php") ?>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div> -->
+            </div>
         </div>
-
     </div>
+
+
+
+
+
+
+
+
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
