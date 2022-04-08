@@ -14,9 +14,7 @@
 <center>
     <div class="noprint">
         <form class="form-inline" method="POST" action="">
-
             <p><i class="fa fa-lightbulb-o" style="font-size:24px"></i>&nbsp;<b>Hint:</b> You can choose which data to include from this report by creating filter for fields for the fields below. <br> </p>
-
             <div class="range">
                 <label style="float: left;">From:</label>
                 <input type="date" class="form-control" placeholder="Start" name="date1" /> <br>
