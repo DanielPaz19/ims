@@ -51,8 +51,8 @@
                         <li> <a class="dropdown-item" href="pos_report.php"><i class="bi bi-caret-right"></i>&nbsp;POS</a></li>
                         <li> <a class="dropdown-item" href="#" onclick="showJoReport()"><i class="bi bi-caret-right"></i>&nbsp;Job-Order</a></li>
                         <li> <a class="dropdown-item" href="#" onclick="showStinReport()"><i class="bi bi-caret-right"></i>&nbsp;Stock-In </a></li>
-                        <li> <a class="dropdown-item" href="ton_prcg_report.php"><i class="bi bi-caret-right"></i>&nbsp;Stock-In-PRCG (Detailed) </a></li>
-                        <li> <a class="dropdown-item" href="ton_prcg_report_summary.php"><i class="bi bi-caret-right"></i>&nbsp;Stock-In-PRCG (Summary) </a></li>
+                        <!-- <li> <a class="dropdown-item" href="ton_prcg_report.php"><i class="bi bi-caret-right"></i>&nbsp;Stock-In-PRCG (Detailed) </a></li>
+                        <li> <a class="dropdown-item" href="ton_prcg_report_summary.php"><i class="bi bi-caret-right"></i>&nbsp;Stock-In-PRCG (Summary) </a></li> -->
                         <li> <a class="dropdown-item" href="#"><i class="bi bi-caret-right"></i>&nbsp;Stock-Out </a></li>
                         <li> <a class="dropdown-item" href="#" onclick="showSrr()"><i class="bi bi-caret-right"></i>&nbsp;Purchase Order</a></li>
                         <li> <a class="dropdown-item" href="pinv_report.php"><i class="bi bi-caret-right"></i>&nbsp;PINV</a></li>
@@ -63,6 +63,7 @@
                     <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">Others</a>
                     <ul class="dropdown-menu">
                         <li> <a class="dropdown-item" href="pivdr_main.php"><i class="bi bi-caret-right"></i>&nbsp;PIVDR</a></li>
+                        <li> <a class="dropdown-item" href="item_location_gen.php"><i class="bi bi-caret-right"></i>&nbsp;Item Location Generator</a></li>
 
                     </ul>
                 </li>
