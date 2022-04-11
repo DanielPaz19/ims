@@ -1,4 +1,5 @@
 <?php include('../main_header_v2.php'); ?>
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
 <style>
     .report--content {
         border: 2px solid lightgray;
@@ -8,16 +9,32 @@
 
     }
 
-    @media screen {
-        body {
-            color: green;
-        }
-    }
-
     @media print {
-        body {
-            color: black;
+        #printDiv {
+            background-color: white;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 15px;
             font-size: small;
+            line-height: 18px;
+        }
+
+        .report--content {
+            border: 2px solid lightgray;
+            padding: 2px;
+            background-color: #F8F8F8;
+            font-size: small;
+
+        }
+
+        @media print {
+            footer {
+                page-break-after: always;
+            }
         }
     }
 </style>
@@ -161,7 +178,7 @@
                             echo " <tr><td style='font-weight:bold;text-align:right;text-decoration: overline;' colspan='5'>Grand Total: " . number_format($grandTot, 2)  . "</td></tr>  </table>
                            
                         </div>
-                       <center> ************************** END OF REPORT **************************** </center>
+                       <div class='endline'><center> ************************** END OF REPORT **************************** </center></div>
                 
                         ";
                         }
