@@ -143,8 +143,7 @@
                                         LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id
                                         LEFT JOIN product ON product.product_id = jo_product.product_id                  
                                         LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-                                        WHERE jo_product.jo_id = $joId 
-                                    ";
+                                        WHERE jo_product.jo_id = $joId  ";
 
                                 $resultItem = $db->query($sqlItem);
                                 $prodId = [];
@@ -184,6 +183,7 @@
                             </tr>";
 
                                 $limit = 0;
+                                $total = [];
                                 while (count($prodId) !== $limit) {
                                     $total[$limit] = $qty[$limit] * $price[$limit];
                                     echo "<tr>
@@ -193,22 +193,23 @@
                                 <td>" . number_format($price[$limit], 2) . "/$unit[$limit]</td>
                                 <td>" . number_format($total[$limit], 2) . "</td>
                                 </tr>
-                              
-                                 
-                
-                              ";
 
+                              ";
                                     $limit++;
                                 }
-                                $limit = 0;
+
+
+
+                                $limitt = 0;
                                 $subTot = 0;
-                                $disTot = 0;
-                                while ($limit != count($total)) {
-                                    $subTot += $total[$limit];
+                                // $disTot = 0;
+                                while ($limitt != count($total)) {
+                                    $subTot += $total[$limitt];
                                     // $disTot += $totaldisamount[$limit];
-                                    $limit += 1;
+
+                                    $limitt++;
                                 }
-                                $grandTot = $subTot - $disTot;
+                                $grandTot = $subTot;
 
 
                                 echo " <tr>
