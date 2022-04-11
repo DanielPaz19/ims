@@ -74,8 +74,6 @@
 
 
 <body style="background-color:#cce0ff">
-
-
     <div style="padding: 2%;">
         <div class="row">
             <div class="col-3">
@@ -87,8 +85,11 @@
                             <label style="float: left;">To :</label>
                             <input type="date" class="form-control" placeholder="End" name="date2" /> <br>
                             <center><button class="btn btn-primary" name="search" style="width: 100%;">Generate Report</button></center> <br> <br>
-                            <button class="btn btn-success" id="print">Print Records</button>&emsp;
-                            <button class="btn btn-danger" onClick="self.close()">Close Page</button>
+                            <div class="row">
+                                <div class="col"> <button class="btn btn-success" id="print" style="width: 100%;">Print Records</button></div>
+                                <div class="col"><button class="btn btn-danger" onClick="self.close()" style="width: 100%;">Close Page</button></div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -97,6 +98,8 @@
             <div class="col-9">
                 <div class="shadow-lg p-5 mt-5 bg-body rounded printPage" style="width:100%;border:5px solid #cce0ff" id="report">
                     <h5> Job-Order Reports Detailed</h5>
+                    <hr>
+                    <br>
                     <?php
                     include "../php/config.php";
                     if (isset($_POST['search'])) {
