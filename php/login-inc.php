@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['level'] = $row['user_level'];
 
       if ($_SESSION['level'] == 1) {
-        header('location: ../index.php');
+        header('location: ../itemlist_main.php');
         exit();
       }
       if ($_SESSION['level'] == 2) {
