@@ -2,82 +2,36 @@
 <html lang="en">
 
 <head>
-    <title>Add Return-Slip Records</title>
-    <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- font include -->
+
+    <link rel="stylesheet" href="../../css/font.css">
+    <!-- sidebar styles -->
+    <link rel="stylesheet" href="../../css/main_style.css">
+
+    <!-- sidebar script -->
+    <script src="js/sidebar_scriot.js"></script>
     <style>
-        body {
-            padding: 50px;
-        }
-
-        fieldset {
-            padding: 20px;
-            font-family: sans-serif;
-            border: 5px solid lightgrey;
-            height: 97vmax;
-
-
-        }
-
-        legend {
-            letter-spacing: 3px;
-            font-weight: bolder;
-            color: midnightblue;
-            font-size: 24px;
-        }
-
-        label {
-            color: black;
-            font-weight: bold;
-        }
-
-        th {
-            background-color: #A5A4A4;
-            color: white;
-            border: 2px solid white;
-        }
-
-        td {
-
-            border: 1px solid lightgrey;
-            background-color: white;
-            margin-left: 5px;
-        }
-
-        button {
-            background-color: midnightblue;
-            color: whitesmoke;
-            cursor: pointer;
-            padding: 5px;
-            height: 30px;
-            width: 30px;
-
-        }
-
-        input {
-            border: 1px solid lightgrey;
-            height: 25px;
-            text-shadow: aliceblue;
-        }
-
-        div#search {
-            position: relative;
-            width: 80%;
-            left: 0;
-        }
+        /* 
 
         #relative {
             position: relative;
-        }
+        } */
 
-        #item-list {
+        /* #item-list {
             position: absolute;
             width: 800px;
             margin: auto;
             z-index: 1;
-        }
+        } */
 
         ul {
             list-style-type: none;
@@ -117,7 +71,7 @@
         }
 
         /* Style for Order ID Input box */
-        .newID {
+        /* .newID {
             margin-left: 5px;
             color: red;
         }
@@ -127,12 +81,12 @@
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             margin-top: 20px;
-        }
-
+        } */
+        /* 
         input#item-name {
             position: relative;
             width: 430px;
-        }
+        } */
 
         .hidden {
             display: none;
@@ -301,85 +255,104 @@
     </script>
 </head>
 
-<body bgcolor="#B0C4DE">
-    <div class="Incontainer">
-        <div class="inDetails">
-            <fieldset>
-                <legend>&nbsp;&nbsp;&nbsp;Return Slip: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-
-                <br>
-                <div>
-                    <!-- Search Bar -->
-                    <div class="container">
-                        <div id="search">
-                            <label>Enter Item:&nbsp;&nbsp;</label>
-                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
-                            <br>
+<body style="background-color:#cce0ff">
+    <div class="container-sm">
+        <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+            <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Return Slip: Entering records <i class="bi bi-pencil"></i>
+            </div>
+            <div class="card-body">
+                <div id="search">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="item-name" name="item">
+                                <label for="floatingInput">Search Item</label>
+                            </div>
                             <div id="item-list"></div><!-- Dont Remove this -->
                         </div>
                     </div>
-                    <br>
-                    <!-- input for item qty -->
-                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input class="item-qty" type="number" placeholder="Quantity" value="1" />
-                    &nbsp;&nbsp;&nbsp;
-                    <!-- input for discount -->
-                    <label style="display: none;">Discount: &nbsp;&nbsp;</label>
-                    <input class="item-discount" type="number" placeholder="Discount" value="0" style="display: none;" /> <br /><br />
-
-
-                    <button class="add-button" title="Add Item">Add item to table</button>
                 </div>
-                <br><br>
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control item-qty" id="floatingInput" value="0">
+                            <label for="floatingInput">Quantity</label>
+                            <label style="display: none;">Discount: &nbsp;&nbsp;</label>
+                            <input class="item-discount" type="number" placeholder="Discount" value="0" style="display: none;" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
                 <hr>
-                <br>
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/rtInsert.php">
+                    <div class="row">
+                        <div class="col">&nbsp;RT ID : <span class="newStoutId"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="rt_no">
+                                <label for="floatingInput">Return-Slip No.</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="customers_id">
+                                    <option></option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
 
-                    <label>RT ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newStoutId"></span><br><br>
-
-                    <label>RT No.: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="rt_no" placeholder="000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Customer :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select name="customers_id" style="width: 15%; height: 32px; border: 1px solid #B8B8B8;">
-                        <option>
-                            <center>--- Select Customer ---</center>
-                        </option>
-                        <?php
-                        include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
-
-                        while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
-                        }
-                        ?>
-                    </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>RT Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="rt_date"><br><br>
-
-                    <label>Reason: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <textarea name="rt_reason" id="" cols="30" rows="5" placeholder="Enter reason here...."></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <!-- <label>Remarks:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <textarea name="stout_remarks"></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Note: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <textarea name="rt_note" id="" cols="30" rows="5" placeholder="Enter note here...."></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Driver: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="rt_driver" placeholder="A.Cruz">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Guard On Duty: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="rt_guard" placeholder="C.Santos">
-
-                    <div>
-                        <!--Add item for order-->
-
-                        <br /> <br />
-
-                        <button name="btnsave" class="stout-button-save">&nbsp;Save Record </button> <br> <br>
-                        <table id="crud_table" width="100%" class="postb">
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="floatingSelect">Customer</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingInput" name="rt_date">
+                                <label for="floatingInput">Return-Slip Date</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating">
+                                <textarea class="form-control" name="rt_reason" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">Reason</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <textarea class="form-control" name="rt_note" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">Note</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="floatingInput" name="rt_driver">
+                                <label for="floatingInput">Driver</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="floatingInput" name="rt_guard">
+                                <label for="floatingInput">Guard-On-Duty</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <table id="crud_table" width="100%" class="postb table">
                             <tr>
                                 <th style="padding: 10px; text-align: left" width="50%">
                                     Item Description
@@ -396,13 +369,17 @@
                             </tr>
                         </table>
                         <br>
-
+                        <button name="btnsave" class="btn btn-success stin-button-save">Save Record</button> <br> <br>
                 </form>
+            </div>
         </div>
-        </fieldset>
-        </fieldset>
     </div>
     </div>
 </body>
+
+
+
+
+
 
 </html>
