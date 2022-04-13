@@ -36,15 +36,15 @@
             }
 
             td {
-                font-size: 7pt;
+                font-size: 9pt;
             }
 
-            table {
+            /* table {
                 line-height: .5;
-            }
+            } */
 
             th {
-                font-size: 8pt;
+                font-size: 10pt;
             }
 
             .report--content {
@@ -60,9 +60,9 @@
         }
 
         @media print {
-            body {
+            /* body {
                 line-height: .5;
-            }
+            } */
         }
 
         @media only screen and (min-width: 320px) and (max-width: 480px) and (resolution: 150dpi) {
