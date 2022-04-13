@@ -52,7 +52,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <body>
     <div class="dr_paper" style="position:relative">
         <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $drNo ?></p>
-
         <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName ?></p>
         <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:70%;letter-spacing: -0px;font-size:14px"> <?php echo $customerAdd ?></p>
         <p style="position: absolute;left:16.7cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo $date ?></p>
@@ -124,13 +123,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             echo $remarks = str_replace($search, $replace, $remarks);
                             ?></p>
                     </td>
-
                 </tr>
             </table>
             <p style="position: absolute;top:13.3cm;left:2.5cm">/<?php echo $user_name ?></p>
             <p style="position: absolute;top:15.4cm;left:2.5cm">JO<?php echo $joNo ?></p>
-
-
         </div>
     </div>
     </div>

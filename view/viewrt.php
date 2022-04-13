@@ -29,51 +29,113 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     }
 }
 ?>
-<html>
-<title>RT #<?php echo $rt_no; ?></title>
+
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../css/viewrt.css" type="text/css" media="print">
-    <link rel="stylesheet" href="../css/viewrt.css" type="text/css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .base {
+            /* border: 1px solid black; */
+            width: 21.6cm;
+            height: 27.9cm;
+        }
+
+        .ep_paper {
+            /* border: 1px solid black; */
+            width: 21.6;
+            height: 14.85cm;
+        }
+
+
+        .rt-header {
+            margin: 0%;
+        }
+
+        .rt-subHead {
+            padding: 2%;
+        }
+
+        .rt-table {
+            padding: 2%;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .ep_table {
+            position: relative;
+            border: 1px solid black;
+            border-collapse: collapse;
+
+            /* margin-top: 42mm;
+            margin-bottom: 12mm;
+            margin-right: 7mm;
+            margin-left: 7mm; */
+        }
+
+        .ep_table td {
+            border: transparent;
+            border: 1px solid lightgray;
+            padding: 5px;
+
+        }
+
+        .ep_table th {
+            border: transparent;
+            border: 1px solid lightgray;
+            padding: 5px;
+
+        }
+
+        .ep_table table {
+            width: 100%;
+            border: transparent;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
-<script>
-    function printDiv() {
-        var divContents = document.getElementById("print-area").innerHTML;
-        var a = window.open('', '', 'height=1000, width=1300');
-        a.document.write(divContents);
-        a.document.close();
-        a.print();
-    }
-</script>
-<button class="noprint" onclick="window.print()">PRINT DOCUMENT</button>
 
 <body>
-
-    <div class="print-area">
-        <page id="print" size="A4">
+    <div class="base">
+        <!-- <button  style="position: absolute;left:26cm">Print</button> -->
+        <div class="ep_paper">
+            <br>
             <center>
-                <div class="heading">
-                    <p> PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</p>
-                    <p class="title">RETURN SLIP</p>
-                    <hr style="width: 70%">
+                <div class="rt-header">
+                    <h4 style="letter-spacing: 4px;font-size:larger">PHILIPPINE ACRYLIC & CHEMICAL CORPORATION</h4>
+                    <h5 style="letter-spacing: 3px;font-size:large; margin-top:-20px">RETURN SLIP</h5>
+                    <hr style="width:90%;margin-top:-20px">
                 </div>
             </center>
-            <div class="head2">
+            <div class="rt-subHead">
                 <table style="width: 100%;">
                     <tr>
-                        <td> <label>RT # :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rt_no; ?></td>
-                        <td style="text-align: right;"> <label>DATE :</label>&nbsp;&nbsp;&nbsp;<?php echo $date ?></td>
+                        <td><label for="">RT #:</label> <?php echo $rt_no; ?></td>
+                        <td style="text-align: right;"><label for="">Date:</label> <?php echo $date; ?></td>
                     </tr>
                     <tr>
-                        <td><label> COMPANY :</label>&nbsp;&nbsp;&nbsp;<?php echo $customer ?></td>
+                        <td><label for="">Company:</label> <?php echo $customer; ?></td>
                     </tr>
                 </table>
             </div>
-
-            <br>
-            <div class="itemTB">
-                <table style="width: 100%;">
-
+            <div style="padding:2%;">
+                <table style="width:100%;" class="ep_table">
+                    <tr style="text-align: left;">
+                        <th style="text-align: center;">Quantity</th>
+                        <th>Item Description</th>
+                    </tr>
                     <?php
                     $sql = "SELECT product.product_name, rt_product.rt_qty, unit_tb.unit_name
                                   FROM product
@@ -91,63 +153,56 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                     ?>
                             <tr>
-                                <td><?php echo $irow['rt_qty']; ?><?php echo $irow['unit_name']; ?></td>
+                                <td style="text-align: center;"><?php echo $irow['rt_qty']; ?> <?php echo $irow['unit_name']; ?></td>
                                 <td><?php echo $irow['product_name']; ?></td>
                             </tr>
                     <?php }
                     } ?>
                 </table>
-            </div>
 
+                <div style="position: absolute;top:11cm">
+                    <table style="width:20cm">
+                        <tr>
+                            <td><label for="">Reason:</label> <?php echo $rt_reason ?></td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Note:</label> <?php echo $rt_note ?></td>
+                        </tr>
+                    </table>
+                </div>
 
-            <div class="others">
-                <table style="width: 100%;">
-                    <tr>
-                        <td><label>Reason: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rt_reason ?></td>
-                    </tr>
-                    <tr>
-                        <td><label>Note: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rt_note ?></td>
-                    </tr>
-                </table>
-            </div>
+                <!-- <p style=""><?php echo $rt_driver ?></p> -->
 
-            <div class="bottom">
-                <table>
+                <table style="position: absolute;top:13cm;left:1cm;">
                     <tr style="text-align:center;">
                         <td><?php echo $rt_driver ?></td>
                     </tr>
-                    <tr>
-                        <td>___________________________</td>
-                    </tr>
-
                     <tr style="text-align:center;">
                         <td>
-                            <label> DRIVER/TRUCK</label>
+                            <label style="text-decoration: overline"> DRIVER/TRUCK</label>
                         </td>
                     </tr>
                 </table>
-            </div>
 
-
-            <div class="bottom2">
-                <table>
+                <table style="position: absolute;top:13cm;left:15cm;">
                     <tr style="text-align:center;">
                         <td><?php echo $rt_guard ?></td>
                     </tr>
-                    <tr>
-                        <td>___________________________</td>
-                    </tr>
-
                     <tr style="text-align:center;">
                         <td>
-                            <label> GUARD ON DUTY</label>
+                            <label style="text-decoration: overline">GUARD ON DUTY</label>
                         </td>
                     </tr>
                 </table>
-            </div>
-        </page>
-    </div>
-</body>
 
+
+
+
+
+            </div>
+
+
+
+</body>
 
 </html>
