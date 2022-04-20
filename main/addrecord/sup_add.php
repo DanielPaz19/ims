@@ -2,39 +2,31 @@
 
 // connect to the database
 include_once "../../php/config.php";
-if (mysqli_connect_errno())
-    {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
 
 
 // Add item
 if (isset($_POST['add_sup'])) {
   // receive all input values from the form
-  echo "connect";
-  $sup_name=mysqli_real_escape_string($db, $_POST['sup_name']);
-  $sup_conper=mysqli_real_escape_string($db, $_POST['sup_conper']);
-  $sup_tel=mysqli_real_escape_string($db, $_POST['sup_tel']);
-  $sup_address=mysqli_real_escape_string($db, $_POST['sup_address']);
-  $sup_email=mysqli_real_escape_string($db, $_POST['sup_email']);
-  $sup_tin=mysqli_real_escape_string($db, $_POST['sup_tin']);
 
-    $query = "INSERT INTO sup_tb (sup_name,sup_conper,sup_tel,sup_address,sup_email,sup_tin) 
+  $sup_name = mysqli_real_escape_string($db, $_POST['sup_name']);
+  $sup_conper = mysqli_real_escape_string($db, $_POST['sup_conper']);
+  $sup_tel = mysqli_real_escape_string($db, $_POST['sup_tel']);
+  $sup_address = mysqli_real_escape_string($db, $_POST['sup_address']);
+  $sup_email = mysqli_real_escape_string($db, $_POST['sup_email']);
+  $sup_tin = mysqli_real_escape_string($db, $_POST['sup_tin']);
+
+  $query = "INSERT INTO sup_tb (sup_name,sup_conper,sup_tel,sup_address,sup_email,sup_tin) 
   			  VALUES('$sup_name','$sup_conper','$sup_tel','$sup_address','$sup_email','$sup_tin')";
 
-      if(mysqli_query($db, $query))
-      {
-
-      echo "<script>alert('New Supplier Added !')</script>";
-      echo "<script>window.close();</script>";
-    }
-    else{
-        echo"<script>alert('Something wrong!!!');</script>";
-    }
-  	
-
+  if (mysqli_query($db, $query)) {
+  } else {
+    echo "<script>alert('Something wrong!!!');</script>";
+  }
 }
-?>
-
-
-
+echo "<script>
+alert('Successfully updated!');
+location.href = '../../sup_main.php';
+</script>";
