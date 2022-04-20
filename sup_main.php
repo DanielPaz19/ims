@@ -1,12 +1,13 @@
-<?php include('header.php');
-include('navbar.php');
+<?php
+
+include('header_main.php');
+
 
 if (!isset($_SESSION['user'])) {
-  header("location: ../login-page.php");
+  header("location: login-page.php");
 }
-
 ?>
-<style>
+<!-- <style>
   .content-area {
     border-radius: 10px;
     padding: 20px;
@@ -187,25 +188,11 @@ if (!isset($_SESSION['user'])) {
     color: red;
 
   }
-</style>
+</style> -->
 
 
-<div class="con-form">
-  <div class="content-area">
-    <fieldset style="border: none;">
-      <legend>
-        <h2 style="letter-spacing: 5px;">
-          <font color="midnightblue">SUPPLIER</font>
-        </h2>
-      </legend>
-      <hr style=" border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
-      <?php include('table/sup_table.html') ?>
-  </div>
-  </fieldset>
-</div>
-
-
-
+<?php include('table/sup_table.html') ?>
+<?php include('main/addrecord/addsup.php') ?>
 
 
 <!--SCRIPTS STARTS HERE-->
@@ -223,7 +210,7 @@ if (!isset($_SESSION['user'])) {
 
 
 <script type='text/javascript'>
-  function showadditem() {
+  function showaddsup() {
     //set the width and height of the 
     //pop up window in pixels
     var width = 1400;

@@ -3,34 +3,37 @@
 
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <link rel="stylesheet" href="css/tablepage.css">
+  <!-- <link rel="stylesheet" href="css/tablepage.css"> -->
   <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 </head>
 
-<body>
-  <br />
-  <div class="container">
-
-    <br />
-    <div class="card">
-
-      <div class="card-body">
-        <div class="form-group" style="align-content: right;">
-          <button class="butLink" title="Create New Item" onclick="showadditem()"><i
-              class="fas fa-plus"></i>&nbspNew</button>
-          <a href="sup_main.php"><button style="float: right; height: 40px; background-color: midnightblue;"><i
-                class="fa fa-refresh fa-spin" style="font-size:16px; color:white" title="Refresh"></i></button></a>
-          <input type="text" name="search_box" id="search_box" style="width: 500px; height: 40px; float: right;"
-            placeholder=" &#x1F50E;&nbsp;Search Code.....">
-        </div>
-
-        <div class="table-responsive" id="dynamic_content">
-
+<div style="padding:2%">
+  <div class="shadow-lg p-5 mb-5 bg-rounded" style="background-color: white;border: 5px solid #cce0ff">
+    <h3 style="color: #0d6efd;"><i class="bi bi-people-fill"></i> Supplier
+    </h3>
+    <hr>
+    <br>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <i class="bi bi-plus-circle"></i>
+          New Record</button>
+        <!-- <button class="btn btn-primary" title="Create New Item" onclick="showaddsup()"><i class="bi bi-plus-circle"></i>
+          New Record</button> -->
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text" style="background-color: whitesmoke;"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control" name="search_box" id="search_box"
+            placeholder="Search anything here..">
         </div>
       </div>
     </div>
+    <div class="table-responsive" id="dynamic_content">
+
+    </div>
   </div>
-</body>
+</div>
 
 </html>
 <script>

@@ -44,120 +44,72 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
-<html>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<style>
-  .con-form {
-    font-family: Arial, Helvetica, sans-serif;
-    border: 1px;
-    color: midnightblue;
-  }
-
-  .butLink {
-
-    background-color: midnightblue;
-    border-radius: 4px;
-    color: white;
-    padding: 7px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .center {
-    margin: auto;
-    width: 100%;
-    height: 1050px;
-    padding: 100px;
-    border-radius: 5px;
-    background-color: #EAEAEA;
-  }
-</style>
-<title>Edit Supplier</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itemlist: Editing Records</title>
 </head>
+<?php include('../main_header_v2.php'); ?>
 
-<body bgcolor="green">
-  <div class="con-form">
-    <div class="center">
-      <a href="../sup_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:red;"></i><a>
-          <div class="con-form">
-            <h2>Edit Supplier Records</h2>
-            <form method="post">
-              <input type="hidden" name="id" value="<?php echo $id; ?>" />
-
-              <table width="100%">
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Supplier Name<em>*</em></font>
-                    </b></td>
-                  <td width="80%"><label>
-                      <input type="text" class="form-control" size="80%" name="sup_name" value="<?php echo $sup_name; ?>" />
-                    </label></td>
-                </tr>
-
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Contact Person<em>*</em></font>
-                    </b></td>
-                  <td><label>
-                      <input type="text" class="form-control" name="sup_conper" value="<?php echo $sup_conper; ?>" />
-                    </label></td>
-                </tr>
-
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Telephone<em>*</em></font>
-                    </b></td>
-                  <td><label>
-                      <input type="text" class="form-control" name="sup_tel" value="<?php echo $sup_tel; ?>">
-                    </label></td>
-                </tr>
-
-
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Address<em>*</em></font>
-                    </b></td>
-                  <td><label>
-                      <input type="text" class="form-control" name="sup_address" value="<?php echo $sup_address; ?>" />
-                    </label></td>
-                </tr>
-
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Email<em>*</em></font>
-                    </b></td>
-                  <td><label>
-                      <input type="email" class="form-control" name="sup_email" value="<?php echo $sup_email; ?>" />
-                    </label></td>
-                </tr>
-
-
-                <tr>
-                  <td width="179"><b>
-                      <font color='midnightblue'>Tin<em>*</em></font>
-                    </b></td>
-                  <td><label>
-                      <input type="text" class="form-control" name="sup_tin" value="<?php echo $sup_tin; ?>" />
-                    </label></td>
-                </tr>
-
-
-                <tr>
-                  <td width="179"><input type="submit" class="butLink" name="sup_submit" value="Update"></td>
-                  <td><label>
-                    </label></td>
-                </tr>
-
-
-              </table>
-            </form>
-</body>
-
-</html>
+<div class="container-sm mt-2">
+  <a class="back-button" href="../sup_main.php">
+    <p class="mt-3" style="float:right;padding:2%"><i class="bi bi-backspace"></i> Back to Supplier</p>
+  </a>
+  <div class="shadow-lg p-5 mb-5 bg-rounded" style="background-color: white;border: 5px solid #cce0ff">
+    <h3 style="color: #0d6efd;"><i class="bi bi-people-fill"></i> Supplier: Editing Records</h3>
+    <hr>
+    <form method="post">
+      <input type="hidden" name="id" value="<?php echo $id; ?>" />
+      <div class="row">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="sup_name" value="<?php echo $sup_name; ?>">
+            <label for="floatingInput">Supplier Name</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="sup_conper" value="<?php echo $sup_conper; ?>">
+            <label for="floatingInput">Contact Person</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="sup_tel" value="<?php echo $sup_tel; ?>">
+            <label for="floatingInput">Telephone</label>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="sup_address" value="<?php echo $sup_address; ?>">
+            <label for="floatingInput">Address</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" name="sup_email" value="<?php echo $sup_email; ?>">
+            <label for="floatingInput">Email</label>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="sup_tin" value="<?php echo $sup_tin; ?>">
+            <label for="floatingInput">Tin No.</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-success" name="sup_submit">Update Record</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
