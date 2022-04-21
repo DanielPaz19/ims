@@ -47,33 +47,30 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table width="100%">
-  <tr style="text-align:left;">
-    <th style="padding:10px; margin-left:5px;">ID</th>
-    <th>Class</th>
-    <th>Action</th>
+<table class="table table-hover table-sm" width="100%" style="cursor:pointer;">
+  <tr style="background-color:#0d6efd;color:white">
+    <th >Class ID</th>
+    <th>Class Name</th>
+
   </tr>
 ';
 if ($total_data > 0) {
   foreach ($result as $row)
 
 
-
     $output .= '
     <tr>
-      <td>' . $row["class_id"] . '</td>
+      <td>' . str_pad($row["class_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["class_name"] . '</td>
-      <td><center>
-                <a href="edit/sup_edit.php?id=' . $row["class_id"] . '"> <i class="fa fa-edit" style="font-size:26px" title="Edit"></i></a>
-      </center>
-               
-      </td>
+     
     </tr>
     ';
 } else {
   $output .= '
   <tr>
-    <td colspan="10" align="center"><font color="red"><b>No Data Found ! </b></font></td>
+    <td colspan="10" align="center"><div class="alert alert-danger" role="alert">
+    No Records found !
+   </div></td>
   </tr>
   ';
 }
@@ -84,6 +81,7 @@ $output .= '
 <label style="float:right; color:gray;">Total Records - ' . $total_data . '</label>
 <br />
 <div align="center">
+<nav aria-label="Page navigation example">
   <ul class="pagination">
 ';
 
@@ -91,6 +89,7 @@ $total_links = ceil($total_data / $limit);
 $previous_link = '';
 $next_link = '';
 $page_link = '';
+$page_array = [];
 
 //echo $total_links;
 
@@ -130,17 +129,17 @@ for ($count = 0; $count < count($page_array); $count++) {
   if ($page == $page_array[$count]) {
     $page_link .= '
     <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only"></span></a>
     </li>
     ';
 
     $previous_id = $page_array[$count] - 1;
     if ($previous_id > 0) {
-      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
+      $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">&laquo;</a></li>';
     } else {
       $previous_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
+        <a class="page-link" href="#">&laquo;</a>
       </li>
       ';
     }
@@ -148,11 +147,11 @@ for ($count = 0; $count < count($page_array); $count++) {
     if ($next_id >= $total_links) {
       $next_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#">Next</a>
+        <a class="page-link" href="#">&raquo;</a>
       </li>
         ';
     } else {
-      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
+      $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">&raquo;</a></li>';
     }
   } else {
     if ($page_array[$count] == '...') {
@@ -173,7 +172,7 @@ for ($count = 0; $count < count($page_array); $count++) {
 $output .= $previous_link . $page_link . $next_link;
 $output .= '
   </ul>
-
+  </nav>
 </div>
 ';
 

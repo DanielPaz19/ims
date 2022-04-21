@@ -48,7 +48,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Itemlist: Editing Records</title>
+  <title>Supplier: Editing Records </title>
 </head>
 <?php include('../main_header_v2.php'); ?>
 
