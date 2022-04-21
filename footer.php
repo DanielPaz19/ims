@@ -89,8 +89,8 @@
    function showUnit() {
       //set the width and height of the 
       //pop up window in pixels
-      var width = 500;
-      var height = 500;
+      var width = 1100;
+      var height = 900;
 
       //Get the TOP coordinate by
       //getting the 50% of the screen height minus
@@ -109,7 +109,7 @@
       //values of the variables above
       window.open('utilities/addunit.php',
          "Contact The Code Ninja",
-         "menubar=no,resizable=yes,width=450,height=600,scrollbars=yes,left=" +
+         "menubar=no,resizable=no,width=1000,height=800,scrollbars=no,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
    }
 </script>
