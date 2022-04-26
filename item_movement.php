@@ -48,7 +48,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     <div class="shadow-lg p-5 mb-5 mt-5 bg-rounded" style="background-color: white;border: 5px solid #cce0ff">
       <h3 style="color: #0d6efd;letter-spacing:2px"><i class="bi bi-boxes"></i> Itemlist : Item Movement </h3>
       <hr>
+      <div class="row">
+        <div class="col-4">
+          <h5><?php echo str_pad($id, 8, 0, STR_PAD_LEFT) ?></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5><?php echo $product_name ?></h5>
+        </div>
+      </div>
+
+
       <br>
+
       <div class="table-responsive">
         <table class="table table-hover" style="height: 100%;">
           <tr>
