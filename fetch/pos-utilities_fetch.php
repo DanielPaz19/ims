@@ -1,6 +1,6 @@
 <?php
 
-$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "@Dmin898");
+$connect = new PDO("mysql:host=localhost; dbname=inventorymanagement", "root", "");
 
 
 $limit = '10';

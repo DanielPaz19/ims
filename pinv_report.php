@@ -107,7 +107,7 @@
  
 $hostName  ="localhost";
 $userName ="root";
-$userPassword ="@Dmin898";
+$userPassword ="";
 $database ="inventorymanagement";
 $comArray = array(); 
 $orderClause ='';

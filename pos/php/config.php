@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "@Dmin898";
+$password = "";
 $dbname = "inventorymanagement";
 
 // Create connection
