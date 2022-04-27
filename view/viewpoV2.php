@@ -95,7 +95,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <td> <b>Contact:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-                                                                            if ($sup_tel == 0) {
+                                                                            if ($sup_tel == "") {
                                                                                 echo "N/A";
                                                                             } else {
                                                                                 echo $sup_tel;
@@ -104,17 +104,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <td><b>TIN:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-
-                                                                                                                echo $sup_tin;
-
-
+                                                                                                                if ($sup_tin == "") {
+                                                                                                                    echo "N/A";
+                                                                                                                } else {
+                                                                                                                    echo $sup_tin;
+                                                                                                                }
                                                                                                                 ?></td>
                     </tr>
                     <tr>
                         <td> <b> Email: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-
-                                                                                            echo $sup_email;
-
+                                                                                            if ($sup_email == "") {
+                                                                                                echo "N/A";
+                                                                                            } else {
+                                                                                                echo $sup_email;
+                                                                                            }
                                                                                             ?></td>
                     </tr>
                 </table>
@@ -164,7 +167,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     </tr>
                     <tr>
                         <td>
-                            <b> Terms:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $po_terms; ?>
+                            <b> Terms:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
+                                                                            if ($po_terms == "") {
+                                                                                echo "N/A";
+                                                                            } else {
+                                                                                echo $po_terms;
+                                                                            }
+                                                                            ?>
                         </td>
                     </tr>
 
