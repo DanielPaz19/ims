@@ -203,7 +203,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                             $totaldisamount[] =  $irow["item_disamount"];
 
-                    ?> <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
+                    ?>
                             <tr>
                                 <td><?php echo $irow['product_name'] ?></td>
                                 <td><?php echo $irow['item_qtyorder'] ?></td>
@@ -214,7 +214,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td><?php echo number_format($irow['item_disamount'], 2)  ?></td>
                                 <td class="po_temp_tot"><?php echo number_format($irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"], 2); ?></td>
                             </tr>
-
+                            <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
                     <?php }
                     } ?>
                 </table>
