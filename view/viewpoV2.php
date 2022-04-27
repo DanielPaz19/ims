@@ -98,27 +98,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                                                             if ($sup_tel == 0) {
                                                                                 echo "N/A";
                                                                             } else {
-                                                                                echo number_format($sup_tel, -1, " ", " ");
+                                                                                echo $sup_tel;
                                                                             }
                                                                             ?></td>
                     </tr>
                     <tr>
                         <td><b>TIN:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-                                                                                                                if ($sup_tin == 0) {
-                                                                                                                    echo "N/A";
-                                                                                                                } else {
-                                                                                                                    echo number_format($sup_tin, -1, "-", "-");
-                                                                                                                }
+
+                                                                                                                echo $sup_tin;
+
 
                                                                                                                 ?></td>
                     </tr>
                     <tr>
                         <td> <b> Email: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
-                                                                                            if ($sup_tin == 0) {
-                                                                                                echo "N/A";
-                                                                                            } else {
-                                                                                                echo $sup_email;
-                                                                                            }
+
+                                                                                            echo $sup_email;
+
                                                                                             ?></td>
                     </tr>
                 </table>
@@ -195,7 +191,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                   ON product.product_id = po_product.product_id
                                   LEFT JOIN unit_tb
                                   ON product.unit_id = unit_tb.unit_id
-                                  WHERE po_product.po_id = '$id' ";
+                                  WHERE po_product.po_id = '$id'";
 
                     $result = $db->query($sql);
                     $count = 0;
@@ -207,7 +203,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                             $totaldisamount[] =  $irow["item_disamount"];
 
-                    ?>
+                    ?> <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
                             <tr>
                                 <td><?php echo $irow['product_name'] ?></td>
                                 <td><?php echo $irow['item_qtyorder'] ?></td>
@@ -218,7 +214,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                 <td><?php echo number_format($irow['item_disamount'], 2)  ?></td>
                                 <td class="po_temp_tot"><?php echo number_format($irow["item_qtyorder"] * $irow["item_cost"] - $irow["item_disamount"], 2); ?></td>
                             </tr>
-                            <input type="hidden" name="product_id[]" value="<?php echo $irow['product_id'] ?>">
+
                     <?php }
                     } ?>
                 </table>
