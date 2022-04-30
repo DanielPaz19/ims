@@ -14,13 +14,13 @@ include('../php/config.php');
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#home">Job-Order</a>
+            <a class="nav-link" data-bs-toggle="tab" style="color: grey;cursor:not-allowed">Job-Order</a>
         </li>
         <li class="nav-item" style="cursor: not-allowed;">
             <a class="nav-link disabled" data-bs-toggle="tab" href="#" style="color: grey;cursor:not-allowed">Cashiering/Payments</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="pos-dr.php">Delivery Reciepts</a>
+            <a class="nav-link active" href="pos-dr.php">Delivery Reciepts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="pos-si.php">Sales Invoice</a>
@@ -33,11 +33,10 @@ include('../php/config.php');
             <!-- Tab panes -->
             <div class="tab-content">
                 <div id="home" class="tab-pane active" style="background-color: white;padding:1% ;border-left:1px solid #dee2e6;border-bottom:1px solid #dee2e6;border-right:1px solid #dee2e6;">
-                    <?php include_once 'php/jo_modal-inc.php' ?>
-                    <!-- <link rel="stylesheet" href="styles/jo_modal-style.css"> -->
-                    <script defer src="js/jo_modal-script.js"></script>
+
 
                     <div style="padding: 2%;">
+                        <a href="index.php"> <button type="button" class="btn btn-danger mb-3"><i class="bi bi-box-arrow-in-left"></i> Back to Job-Order</button> </a>
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
                             <input type="text" class="form-control jo__modal--input jo__modal--input__search" placeholder="Search JO-Order No..." aria-label="Username" aria-describedby="addon-wrapping" style="width: 50%;">
@@ -77,4 +76,8 @@ include('../php/config.php');
                             </tbody>
                         </table>
                     </div>
+
                 </div>
+            </div>
+        </div>
+    </div>
