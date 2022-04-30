@@ -66,10 +66,13 @@ if (isset($_GET['editJo'])) {
             <a class="nav-link disabled" data-bs-toggle="tab" href="#">Job-Order</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#menu1">Cashiering</a>
+            <a class="nav-link active" data-bs-toggle="tab" href="#menu1">Cashiering/Payments</a>
         </li>
-        <li class="nav-item" style="cursor: not-allowed;">
-            <a class="nav-link disabled" data-bs-toggle="tab" href="#">Payments</a>
+        <li class="nav-item">
+            <a class="nav-link" href="pos-dr.php">Delivery Reciepts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="pos-si.php">Sales Invoice</a>
         </li>
 
 
@@ -253,7 +256,10 @@ if (isset($_GET['editJo'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button class="btn btn-success" style="width: 100%;"><i class="bi bi-check2-circle"></i> Save Transaction</button>
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="width:100%"><i class="bi bi-check2-circle"></i> Proceed to Payment</button>
+                                    </div>
+                                    <div class="col">
+                                        <a href="index.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
                                     </div>
                                 </div>
                             </fieldset>
@@ -261,7 +267,7 @@ if (isset($_GET['editJo'])) {
 
                     </div>
 
-
+                    <?php include('payment-modal.php'); ?>
 
 
                     <div>
