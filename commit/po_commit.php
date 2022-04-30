@@ -47,7 +47,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <div class="row">
         <div class="col-4">
           <div class="form-floating mb-3">
-            <input type="text" id="id" class="form-control" name="poId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+            <input type="text" id="id" class="form-control" name="poId" value="<?php echo str_pad($id, 8, 0, STR_PAD_LEFT) ?>" readonly>
             <label for="floatingInput">Purchase-Order ID</label>
           </div>
         </div>
