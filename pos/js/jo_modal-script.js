@@ -15,7 +15,9 @@ const renderJoTable = function (data, tbody) {
       `<tr>
     <td class='jo__modal--td__jonumber'>${data.jo_no}</td>
     <td>${data.customers_name}</td>
+    <td>${data.jo_product_price}</td>
     <td>${data.jo_date}</td>
+    <td></td>
     </tr>`
     );
   });
@@ -88,8 +90,7 @@ const selectJo = function (e) {
           <td class="td__locked price">${formatNumber(
             product.jo_product_price
           )}</td>
-          <td class="${
-            product.jo_product_qty > 0 ? "td__edit" : "td__locked"
+          <td class="${product.jo_product_qty > 0 ? "td__edit" : "td__locked"
           } qty">${product.jo_product_qty}</td>
           <td class="unit">${product.unit_name}</td>
           <td class="td__locked discount">0.00</td>
