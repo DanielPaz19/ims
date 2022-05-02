@@ -26,20 +26,43 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="payment-details">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control payment-balance" id="floatingInput" value="0.00">
-                        <label for="floatingInput">Amount</label>
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-3 mt-4">
+                            <div class="col">
+                                <label for="">Amount Due: </label>
+                            </div>
+                            <div class="col">
+                                <label for=""><?php echo number_format($grandTot, 2) ?></label>
+                            </div>
+                        </div>
+                        <div class="row mb-3" style="color: red;">
+                            <div class="col">
+                                <label for="">Balance: </label>
+                            </div>
+                            <div class="col">
+                                <label for=""><?php echo number_format($grandTot, 2) ?></label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control payment-tendered" id="floatingInput" value="0.00">
-                        <label for="floatingInput">Tendered Amount</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control payment-change" id="floatingInput" value="0.00">
-                        <label for="floatingInput">Change</label>
+                    <div class="col">
+                        <div class="payment-details">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control payment-balance" id="floatingInput" value="0.00">
+                                <label for="floatingInput">Amount</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control payment-tendered" id="floatingInput" value="0.00">
+                                <label for="floatingInput">Tendered Amount</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control payment-change" id="floatingInput" value="0.00">
+                                <label for="floatingInput">Change</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <div class="row">
@@ -60,6 +83,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="row mb-3 mt-4">
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
                 <div class="form-floating mb-3">
                     <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="empId">
                         <option>.....</option>

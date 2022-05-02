@@ -13,9 +13,9 @@ include('../php/config.php');
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" style="color: grey;cursor:not-allowed">Job-Order</a>
-        </li>
+        </li> -->
         <li class="nav-item" style="cursor: not-allowed;">
             <a class="nav-link disabled" data-bs-toggle="tab" href="#" style="color: grey;cursor:not-allowed">Cashiering/Payments</a>
         </li>
