@@ -173,12 +173,11 @@
 
                         if (isset($_GET['search'])) {
                             $dept_id = $_GET['dept_id'];
-
-
                             $selectCompany = "SELECT product.product_id, product.product_name,class_tb.class_name
-                                        FROM product
-                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                            WHERE product.dept_id = '$dept_id'";
+                                                FROM product
+                                                LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                                    WHERE product.dept_id = '$dept_id'
+                                                    ";
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
                             $companyArray = array();
 
@@ -195,10 +194,10 @@
 
                                     array_push($comArray, $companyName);
                                     echo '<br>';
-                                    echo '<div style="padding:2%; border:2px solid lightgrey;">';
+                                    echo '<div style="padding:2%; border:2px dashed lightgrey;">';
                                     echo '<h5' . $indent50 . ' >' . '<i class="bi bi-caret-right-fill"></i> Group by <b>' . $companyName . '</b></h5>';
                                     echo '<div ' . $indent100 . '>';
-                                    echo "<table border='0' class='table'>";
+                                    echo "<table border='0' class='table'";
 
                                     echo "<tr>";
                                     echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
@@ -210,12 +209,15 @@
 
                                     //-----------------Add Row into the Selected Company --------------------------------
 
-                                    $selectPerson = "SELECT product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name
+                                    $selectPerson = "SELECT product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
                                 FROM product
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
-                                                 WHERE class_tb.class_name = '$companyName' ORDER BY product.product_name ASC";
+                                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
+                                                 WHERE class_tb.class_name = '$companyName' 
+                                                 AND dept_tb.dept_id = '$dept_id' 
+                                                 ORDER BY product.product_name ASC";
                                     $selectPerson_Query = mysqli_query($dbConnectionStatus, $selectPerson);
                                     $arrayPerson = array();
                                     while ($personrows = mysqli_fetch_assoc($selectPerson_Query)) {
@@ -239,7 +241,7 @@
 
                                     echo "</table>";
                                     echo '</div>';
-                                    echo '</div>';
+                                    echo '</div><br>';
                                 }
                             }
 
