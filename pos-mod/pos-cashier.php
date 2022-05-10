@@ -62,9 +62,9 @@ if (isset($_GET['editJo'])) {
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item" style="cursor: not-allowed;">
+        <!-- <li class="nav-item" style="cursor: not-allowed;">
             <a class="nav-link disabled" data-bs-toggle="tab" href="#">Job-Order</a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link active" data-bs-toggle="tab" href="#menu1">Cashiering/Payments</a>
         </li>
@@ -336,5 +336,5 @@ if (isset($_GET['editJo'])) {
 
     <script>
         //date
-        document.querySelector('.date').value = new Date().toISOString(); <
+        document.querySelector('.date').value = new Date().toISOString();
     </script>
