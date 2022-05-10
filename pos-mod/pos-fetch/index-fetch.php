@@ -27,7 +27,6 @@ if ($_POST['page'] > 1) {
 $query = "
 SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.jo_type_id, jo_type.jo_type_name, jo_tb.jo_status_id,customers_company
 FROM jo_tb
-LEFT JOIN jo_product ON jo_product.jo_id = jo_tb.jo_id
 LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
 LEFT JOIN user ON user.user_id = jo_tb.user_id
 LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id

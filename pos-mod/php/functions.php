@@ -77,7 +77,7 @@ function getPaymentBalance($db, $joId)
             order_payment.order_payment_balance,
             order_payment.order_payment_id  
             FROM order_payment 
-            INNER JOIN order_tb ON order_tb.order_id = order_payment.order_id
+            LEFT JOIN order_tb ON order_tb.order_id = order_payment.order_id
             WHERE order_tb.jo_id = '$joId' ORDER BY order_payment_id  DESC LIMIT 1";
 
     $result = mysqli_query($db, $qry);
