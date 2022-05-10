@@ -18,10 +18,10 @@ $total_record = get_total_row($connect);*/
 $limit = '12';
 $page = 1;
 if ($_POST['page'] > 1) {
-    $start = (($_POST['page'] - 1) * $limit);
-    $page = $_POST['page'];
+  $start = (($_POST['page'] - 1) * $limit);
+  $page = $_POST['page'];
 } else {
-    $start = 0;
+  $start = 0;
 }
 
 $query = "
@@ -36,7 +36,7 @@ LEFT JOIN jo_status ON jo_status.jo_status_id = jo_tb.jo_status_id
  ";
 
 if ($_POST['query'] != '') {
-    $query .= "
+  $query .= "
   WHERE customers.customers_name LIKE '%" . $_POST['query'] . "%' OR jo_tb.jo_no LIKE '%" . $_POST['query'] . "%' 
   ";
 }
@@ -76,30 +76,44 @@ $output = '
   </tr>
 ';
 if ($total_data > 0) {
-    foreach ($result as $row) {
+  foreach ($result as $row) {
 
-        $joId = $row["jo_id"];
-        $closed = $row["jo_status_id"];
-        $dateString = $row["jo_date"];
-        $dateTimeObj = date_create($dateString);
-        $date = date_format($dateTimeObj, 'm/d/y');
+    $joId = $row["jo_id"];
+    $closed = $row["jo_status_id"];
+    $dateString = $row["jo_date"];
+    $dateTimeObj = date_create($dateString);
+    $date = date_format($dateTimeObj, 'm/d/y');
 
 
-        $output .= '
+    include '../php/config.php';
+    $joTotalQry = "SELECT jo_product.jo_product_price * jo_product.jo_product_qty AS jo_product_total FROM jo_product WHERE jo_product.jo_id = '$joId'";
+    $joTotalResult = mysqli_query($db, $joTotalQry);
+    $joTotalAmount = 0;
+
+    if (mysqli_num_rows($joTotalResult) > 0) {
+
+      while ($joTotalRow = mysqli_fetch_assoc($joTotalResult)) {
+        // Add every item total
+        $joTotalAmount += $joTotalRow['jo_product_total'];
+      }
+    }
+
+
+    $output .= '
     <tr>
       <td>' . str_pad($row["jo_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["jo_no"] . '</td>
       <td>' . $row["customers_company"] . '</td>
-      <td>DITO YUNG PRICE</td>
+      <td>' . number_format($joTotalAmount, 2, '.', ',')  . '</td>
       <td>DITO YUNG BALANCE</td>
     
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><a href="pos-cashier.php?editJo&id=' . $joId . '" disabled> <button class="btn btn-primary" title="Edit">Next <i class="bi bi-caret-right-fill"></i></button></a></td>
     </tr>
     ';
-    }
+  }
 } else {
-    $output .= '
+  $output .= '
   <tr>
     <td colspan="10" align="center"><div class="alert alert-danger" role="alert">
     No Records found !
@@ -123,23 +137,23 @@ echo $output;
 ?>
 
 <script>
-    function confirmAction() {
-        let confirmAction = confirm("Are you sure you want to delete?");
-        if (confirmAction) {
-            alert("Deleted item successfully!!!");
-        } else {
+  function confirmAction() {
+    let confirmAction = confirm("Are you sure you want to delete?");
+    if (confirmAction) {
+      alert("Deleted item successfully!!!");
+    } else {
 
-            alert("Action canceled");
-        }
+      alert("Action canceled");
     }
+  }
 
-    function confirmUpdate() {
-        let confirmUpdate = confirm("Are you sure you want to CONFIRM record?\n \nNote: Double Check Input Records");
-        if (confirmUpdate) {
-            alert("CONFIRM Record successfully!");
-        } else {
+  function confirmUpdate() {
+    let confirmUpdate = confirm("Are you sure you want to CONFIRM record?\n \nNote: Double Check Input Records");
+    if (confirmUpdate) {
+      alert("CONFIRM Record successfully!");
+    } else {
 
-            alert("Action Canceled");
-        }
+      alert("Action Canceled");
     }
+  }
 </script>
