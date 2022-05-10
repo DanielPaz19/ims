@@ -69,3 +69,23 @@ function getOnlinePlatforms($db)
 
     return $output;
 }
+
+
+function getPaymentBalance($db, $joId)
+{
+    $qry = "SELECT 
+            order_payment.order_payment_balance,
+            order_payment.order_payment_id  
+            FROM order_payment 
+            INNER JOIN order_tb ON order_tb.order_id = order_payment.order_id
+            WHERE order_tb.jo_id = '$joId' ORDER BY order_payment_id  DESC LIMIT 1";
+
+    $result = mysqli_query($db, $qry);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['order_payment_balance'];
+    }
+    return 0;
+}

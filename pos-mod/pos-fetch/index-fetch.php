@@ -98,6 +98,14 @@ if ($total_data > 0) {
       }
     }
 
+    // Get the latest balance
+    include_once '../php/functions.php';
+
+    $balance = getPaymentBalance($db, $joId);
+
+    if ($balance == 0) {
+      continue;
+    }
 
     $output .= '
     <tr>
@@ -105,7 +113,7 @@ if ($total_data > 0) {
       <td>' . $row["jo_no"] . '</td>
       <td>' . $row["customers_company"] . '</td>
       <td>' . number_format($joTotalAmount, 2, '.', ',')  . '</td>
-      <td>DITO YUNG BALANCE</td>
+      <td>' . number_format($balance, 2, '.', ',')  . '</td>
     
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><a href="pos-cashier.php?editJo&id=' . $joId . '" disabled> <button class="btn btn-primary" title="Edit">Next <i class="bi bi-caret-right-fill"></i></button></a></td>
