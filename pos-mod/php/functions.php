@@ -69,3 +69,53 @@ function getOnlinePlatforms($db)
 
     return $output;
 }
+
+
+function getPaymentBalance($db, $joId)
+{
+    $qry = "SELECT 
+            order_payment.order_payment_balance,
+            order_payment.order_payment_id  
+            FROM order_payment 
+            LEFT JOIN order_tb ON order_tb.order_id = order_payment.order_id
+            WHERE order_tb.jo_id = '$joId' ORDER BY order_payment_id  DESC LIMIT 1";
+
+    $result = mysqli_query($db, $qry);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['order_payment_balance'];
+    }
+    return 0;
+}
+
+function getJobOrderData($db, $filter = '')
+{
+
+
+    $qry = "SELECT jo_tb.jo_id, jo_tb.jo_no, customers.customers_name, employee_tb.emp_name, jo_tb.jo_date, jo_tb.closed, user.user_name, jo_tb.jo_type_id, jo_type.jo_type_name, jo_tb.jo_status_id,customers_company
+    FROM jo_tb
+    LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
+    LEFT JOIN user ON user.user_id = jo_tb.user_id
+    LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
+    LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
+    LEFT JOIN jo_status ON jo_status.jo_status_id = jo_tb.jo_status_id
+    ";
+
+    if ($filter != '') {
+        $qry .= " " . "$filter";
+    }
+
+    $result = mysqli_query($db, $qry);
+
+    if (mysqli_num_rows($result) > 0) {
+        $output = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $output[] = $row;
+        }
+        return $output;
+    } else {
+        return [];
+    }
+}

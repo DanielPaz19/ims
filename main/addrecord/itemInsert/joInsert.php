@@ -48,6 +48,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
         $sql = "INSERT INTO jo_tb (jo_id, jo_no, customers_id ,emp_id ,jo_date, jo_type_id, user_id,jo_remarks)
             VALUES ('$joId','$joNo','$customersId','$emp_id','$joDate','$jo_type_id','" . $_SESSION['id'] . "','$remarks')";
         mysqli_query($db, $sql);
+        $lastJoId = mysqli_insert_id($db);
+        echo $lastJoId;
 
         $limit = 0;
         while (sizeof($productId) !== $limit) {
@@ -63,6 +65,35 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
             $limit++;
         }
+
+        // get the total amount of JO
+        $joTotalQry = "SELECT jo_product.jo_product_price * jo_product.jo_product_qty AS jo_product_total FROM jo_product WHERE jo_product.jo_id = '$lastJoId'";
+        $joTotalResult = mysqli_query($db, $joTotalQry);
+        $joTotalAmount = 0;
+
+        if (mysqli_num_rows($joTotalResult) > 0) {
+
+            while ($joTotalRow = mysqli_fetch_assoc($joTotalResult)) {
+                // Add every item total
+                $joTotalAmount += $joTotalRow['jo_product_total'];
+            }
+        }
+
+
+        // Insert order_tb using lastid of JO
+        $order_tb_sql = "INSERT INTO order_tb (jo_id, customer_id,total, user_id)
+        VALUES ('$lastJoId','$customersId','$joTotalAmount','" . $_SESSION['id'] . "')";
+        mysqli_query($db, $order_tb_sql);
+        $lastOrderId = mysqli_insert_id($db);
+
+        // Insert order payment using lastid of order_tb
+        $order_payment_sql = "INSERT INTO order_payment (order_id,order_payment_credit,order_payment_balance,payment_status_id)
+        VALUES ('$lastOrderId','$joTotalAmount','$joTotalAmount','1')";
+        mysqli_query($db, $order_payment_sql);
+
+
+
+
 
         $limiter = 0;
         while (sizeof($productId) !== $limiter) {
