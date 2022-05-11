@@ -1,84 +1,69 @@
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- bootstrap5 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<style>
+    label {
+        font-weight: bold;
+    }
 
-    <!-- font include -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
-
-    <!-- sidebar styles -->
-    <link rel="stylesheet" href="../css/../main_style.css">
-
-    <!-- sidebar script -->
-    <script src="js/sidebar_scriot.js"></script>
-    <style>
-        label {
-            font-weight: bold;
+    @media print {
+        body {
+            font-size: 6pt;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        @media print {
-            body {
-                font-size: 6pt;
-                font-family: 'Courier New', Courier, monospace;
-            }
-
-            td {
-                font-size: 7pt;
-            }
-
-            table {
-                line-height: .5;
-            }
-
-            th {
-                font-size: 8pt;
-            }
-
-            .report--content {
-                /* page-break-before: always !important; */
-                border: 1px solid black;
-            }
+        td {
+            font-size: 7pt;
         }
 
-        @media screen {
-            body {
-                font-size: medium;
-            }
+        table {
+            line-height: 1;
         }
 
-        @media print {
-            body {
-                line-height: .5;
-            }
+        th {
+            font-size: 8pt;
         }
 
-        @media only screen and (min-width: 320px) and (max-width: 480px) and (resolution: 150dpi) {
-            body {
-                line-height: 1.4;
-            }
+        .report--content {
+            /* page-break-before: always !important; */
+            border: 1px solid black;
         }
-    </style>
-    <title>PACC IMS</title>
+    }
+
+    @media screen {
+        body {
+            font-size: medium;
+        }
+    }
+
+    @media print {
+        body {
+            line-height: .5;
+        }
+    }
+
+    @media only screen and (min-width: 320px) and (max-width: 480px) and (resolution: 150dpi) {
+        body {
+            line-height: .5;
+        }
+    }
+</style>
+<title>PACC IMS</title>
 </head>
 <!-- <link rel="stylesheet" type="text/css" href="css/print.css" media="print" /> -->
+<?php include('main_header_v2.php'); ?>
 
 
 <body style="background-color:#cce0ff">
+    <?php include('main_sidebar.php') ?>
     <div style="padding: 2%;">
         <div class="row">
             <div class="col-4">
-                <div style="padding: 10%; background-color:aliceblue">
-                    <p>Select Department to Generate Report.</p>
+                <div style="padding: 10%; background-color:none">
+
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="bi bi-info-circle-fill"></i> Choose on <strong>Department</strong> listed below to generate reports based on inventory records.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+
                     <form class="form-inline" method="GET" action="">
                         <div class="range">
                             <div class="form-floating mb-5">
@@ -94,13 +79,14 @@
                                 </select>
                                 <label for="floatingSelect">Department List</label>
 
+
                             </div>
 
 
 
                             <div class="row">
                                 <div class="col-4"><button class="btn btn-primary" name="search" id='button' style="width:100%"><i class="bi bi-tools"></i> Generate</button></div>
-                                <div class="col-4"><button class="btn btn-success" id="print" style="width:100%"><i class="bi bi-printer"></i> Print Report</button></div>
+                                <div class="col-4"><button class="btn btn-success" type="button" id="print" style="width:100%"><i class="bi bi-printer"></i> Print Report</button></div>
                                 <div class="col-4"> <a href="itemlist_main.php"> <button type="button" class="btn btn-danger" style="width:100%">Cancel</button></a></div>
                             </div>
                             <br>
@@ -112,6 +98,53 @@
 
             <div class="col-8" style="background-color: white;">
                 <div id="report">
+                    <div class="header mt-3" style="text-align:center;">
+                        <h5>Philippine Acrylic & Chemical Corporation</h5>
+                        <h6 style="line-height: .5;">Inventory Management System</h6>
+                        <h6>Inventory Reports</h6>
+                    </div>
+                    <div class=" dept-title">
+                        <?php
+
+                        $dept_id = $_GET['dept_id'];
+                        $date = date('m/d/Y', time());
+                        $result = mysqli_query(
+                            $db,
+                            "SELECT * FROM dept_tb WHERE dept_id  = '$dept_id'"
+                        );
+
+                        if (mysqli_num_rows($result) > 0) {
+                            // output data of each row
+                            while ($row = mysqli_fetch_assoc($result)) {
+
+                                $dept_name = $row['dept_name'];
+                            }
+                        } else {
+                            echo "0 results";
+                        }
+
+                        ?>
+                        <div class="row">
+                            <div class="col">
+                                <strong>Department :</strong> <?php echo $dept_name ?>
+                            </div>
+                            <div class="col" style="text-align:right">
+                                <strong>Date Generated :</strong> <?php echo $date ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <strong>Submitted by:</strong> <?php echo $_SESSION["empName"]; ?>
+                            </div>
+                        </div>
+                        <hr>
+
+
+                        <!-- <script>
+                            //date
+                            document.querySelector('.date').value = new Date().toISOString();
+                        </script> -->
+                    </div>
                     <?php
                     /*
  
@@ -175,10 +208,12 @@
                             $dept_id = $_GET['dept_id'];
 
 
-                            $selectCompany = "SELECT product.product_id, product.product_name,class_tb.class_name
+                            $selectCompany = "SELECT product.product_id, product.product_name,class_tb.class_name,dept_tb.dept_name
                                         FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                             WHERE product.dept_id = '$dept_id'";
+
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
                             $companyArray = array();
 
@@ -194,8 +229,9 @@
                                 if (!in_array($companyName, $comArray)) {
 
                                     array_push($comArray, $companyName);
+
                                     echo '<br>';
-                                    echo '<div style="padding:2%; border:2px solid lightgrey;">';
+                                    echo '<div style="padding:2%; border:2px dotted lightgrey;">';
                                     echo '<h5' . $indent50 . ' >' . '<i class="bi bi-caret-right-fill"></i> Group by <b>' . $companyName . '</b></h5>';
                                     echo '<div ' . $indent100 . '>';
                                     echo "<table border='0' class='table'>";
@@ -215,7 +251,7 @@
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
-                                                 WHERE class_tb.class_name = '$companyName' ORDER BY product.product_name ASC";
+                                                 WHERE class_tb.class_name = '$companyName' AND product.qty > 0 ORDER BY product.product_name ASC";
                                     $selectPerson_Query = mysqli_query($dbConnectionStatus, $selectPerson);
                                     $arrayPerson = array();
                                     while ($personrows = mysqli_fetch_assoc($selectPerson_Query)) {
@@ -281,7 +317,7 @@
         }
     </script>
 
-
+    <?php include 'footer.php' ?>
 </body>
 
 </body>
