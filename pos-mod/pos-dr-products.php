@@ -209,7 +209,6 @@ if (isset($_GET['next'])) {
                                             </span></div>
                                     </div>
                                 </div>
-
                                 <div class="summary_label-container mb-2">
                                     <div class="row">
                                         <div class="col-8"><span class="summary-label">Net-Sales:</span></div>
@@ -218,7 +217,6 @@ if (isset($_GET['next'])) {
                                             </span></div>
                                     </div>
                                 </div>
-
                                 <div class="summary_label-container mb-2">
                                     <div class="row">
                                         <div class="col-8"><span class="summary-label">Discount Amount:</span></div>
@@ -227,7 +225,6 @@ if (isset($_GET['next'])) {
                                             </span></div>
                                     </div>
                                 </div>
-
                                 <div class="summary_label-container mb-2">
                                     <div class="row">
                                         <div class="col-8"><span class="summary-label">Total Quantity:</span></div>
@@ -236,7 +233,6 @@ if (isset($_GET['next'])) {
                                             </span></div>
                                     </div>
                                 </div>
-
                                 <div class="summary_label-container">
                                     <div class="row">
                                         <div class="col-8"> <span class="summary-label">Gross Amount:</span></div>
@@ -259,7 +255,7 @@ if (isset($_GET['next'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
+                                        <button class="btn btn-primary" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
                                     </div>
                                     <div class="col">
                                         <a href="pos-dr.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
@@ -270,7 +266,6 @@ if (isset($_GET['next'])) {
 
                     </div>
 
-                    <?php include('payment-modal.php'); ?>
 
 
                     <div>
@@ -304,17 +299,10 @@ if (isset($_GET['next'])) {
                                                 <td>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                 <td>$productName[$limit]</td>
                                                 <td>" . number_format($itemPrice[$limit], 2) . "</td>
-                                                <td>" . $qtyIn[$limit] . "</td>
+                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic' required type='number' value='$qtyIn[$limit]' max='$qtyIn[$limit]' min='0' style='width:50%'/></td>
                                                 <td>$unitName[$limit]</td>
                                                 
                                                 <td>" . number_format($itemPrice[$limit] * $qtyIn[$limit], 2) . "</td>
-                                                <td>
-                                                <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
-                                            </td>
-
-                                                <input type='hidden' name='productId[]' value='$productId[$limit]' >
-                                                <input type='hidden' name='qtyIn[]' value='$qtyIn[$limit]' class='input__edit input__edit--qty'>
-                                                <input type='hidden' name='itemPrice[]' value='$itemPrice[$limit]' class='input__edit input__edit--cost'>
                                                 </tr>
                                                 ";
                                             }
@@ -338,6 +326,10 @@ if (isset($_GET['next'])) {
     </div>
 
     <script>
-        //date
         document.querySelector('.date').value = new Date().toISOString();
     </script>
+
+
+    </body>
+
+    </html>
