@@ -180,7 +180,7 @@ include './php/database.php';
 
                                     ?>
                                             <tr>
-                                                <td><input type="checkbox" name="jo_id[]" value="<?php echo $jo_id ?>" /></td>
+                                                <td><input class="jo__checkbox" type="checkbox" name="jo_id[]" value="<?php echo $jo_id ?>" /></td>
                                                 <td><?php echo $row['jo_no'] ?></td>
                                                 <td><?php echo $row['customers_name'] ?></td>
                                                 <td class="text-center"><?php echo $totalReleased . "/" . $totalJoProduct ?></td>
@@ -209,7 +209,7 @@ include './php/database.php';
                                 </tbody>
                             </table>
                             <div class="text-end">
-                                <button type="submit" name="next" class="btn btn-success text-end">Next <i class="bi bi-arrow-right"></i></button>
+                                <button type="submit" name="next" class="btn__next btn btn-success text-end disabled">Next <i class="bi bi-arrow-right"></i></button>
                             </div>
                         </form>
                     </div>
@@ -218,3 +218,31 @@ include './php/database.php';
             </div>
         </div>
     </div>
+
+    <script>
+        const joCheckbox = document.querySelectorAll('.jo__checkbox');
+        const btnNext = document.querySelector('.btn__next');
+
+        function checkBoxes(nodeList) {
+            let checked = false;
+
+            nodeList.forEach(element => {
+                if (element.checked) checked = true;
+            });
+
+            return checked;
+        }
+
+        joCheckbox.forEach(el => {
+            el.addEventListener('change', function() {
+                btnNext.classList.remove('disabled');
+
+                if (!checkBoxes(joCheckbox)) {
+                    btnNext.classList.add('disabled');
+                }
+            })
+        })
+    </script>
+    </body>
+
+    </html>
