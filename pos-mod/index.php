@@ -7,6 +7,7 @@ include('../php/config.php');
 ?>
 
 
+
 <div style="padding:2%;margin-top:-1.4cm;">
     <!-- <h2>IMS CASHIERING</h2> -->
     <br>

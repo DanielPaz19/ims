@@ -256,7 +256,9 @@ if (isset($_GET['editJo'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="width:100%"><i class="bi bi-check2-circle"></i> Proceed to Payment</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            <i class="bi bi-check2-circle"></i> Proceed to Payment</button>
+
                                     </div>
                                     <div class="col">
                                         <a href="index.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
@@ -267,7 +269,7 @@ if (isset($_GET['editJo'])) {
 
                     </div>
 
-                    <?php include('payment-modal.php'); ?>
+                    <?php include('payment-modal2.php'); ?>
 
 
                     <div>
