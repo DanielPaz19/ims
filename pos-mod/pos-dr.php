@@ -44,7 +44,7 @@ include './php/database.php';
                                 <span class="col-1 input-group-text pe-0" id="addon-wrapping"><i class="bi bi-search"></i>
                                 </span>
                                 <span class="form-group col ps-0">
-                                    <select class="form-select" name="qry" id="">
+                                    <select class="form-select" name="qry" id="" onchange="this.form.submit()">
 
                                         <?php if (isset($_GET['qry'])) {
                                             $customer_id = $_GET['qry'];
@@ -78,7 +78,6 @@ include './php/database.php';
                                         ?>
                                     </select>
                                 </span>
-                                <button type="submit" class="col-2 btn btn-primary">Search</button>
                             </form>
                         </div>
                         <br>

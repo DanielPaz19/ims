@@ -3,12 +3,13 @@ if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
 include('../php/config.php');
-if (isset($_GET['editJo'])) {
+if (isset($_GET['next'])) {
 
-    $joId = $_GET['id'];
-    $joId = $_GET['id'];
+    $joId = $_GET['jo_id'];
 
     require 'php/config.php';
+
+    $filter = 'WHERE jo_tb.jo_id IN (' . implode(',', $joId) . ')';
 
     $result = mysqli_query(
         $db,
@@ -20,9 +21,11 @@ if (isset($_GET['editJo'])) {
         LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
         LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
         LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
-        WHERE jo_tb.jo_id ='$joId'
+        $filter
         ORDER BY jo_product.jo_product_id ASC"
     );
+
+
 
 
 
@@ -62,14 +65,14 @@ if (isset($_GET['editJo'])) {
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <!-- <li class="nav-item" style="cursor: not-allowed;">
-            <a class="nav-link disabled" data-bs-toggle="tab" href="#">Job-Order</a>
+        <!-- <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" style="color: grey;cursor:not-allowed">Job-Order</a>
         </li> -->
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#menu1">Cashiering/Payments</a>
+            <a class=" nav-link" href="./index.php">Cashiering/Payments</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="pos-dr.php">Delivery Reciepts</a>
+            <a class="nav-link active" href="pos-dr.php">Delivery Reciepts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="pos-si.php">Sales Invoice</a>
@@ -256,10 +259,10 @@ if (isset($_GET['editJo'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="width:100%"><i class="bi bi-check2-circle"></i> Proceed to Payment</button>
+                                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
                                     </div>
                                     <div class="col">
-                                        <a href="index.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
+                                        <a href="pos-dr.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
                                     </div>
                                 </div>
                             </fieldset>
