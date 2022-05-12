@@ -297,8 +297,8 @@ if (!$_SESSION['user']) {
               <option value="">-Select Field-</option>
 
               <?php
-              include './php/config.php';
-              include './php/functions.php';
+              include 'php/config.php';
+              include 'php/functions.php';
 
               $onlinePlatforms = getOnlinePlatforms($db);
               foreach ($onlinePlatforms as $value) {
