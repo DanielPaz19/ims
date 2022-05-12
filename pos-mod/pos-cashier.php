@@ -269,7 +269,7 @@ if (isset($_GET['editJo'])) {
 
                     </div>
 
-                    <?php include('payment-modal2.php'); ?>
+
 
 
                     <div>
@@ -329,6 +329,7 @@ if (isset($_GET['editJo'])) {
 
                             </table>
                         </div>
+                        <?php include('payment-modal2.php'); ?>
                     </div>
                     <br>
                 </div>
