@@ -82,22 +82,24 @@ include './php/database.php';
                             </form>
                         </div>
                         <br>
-                        <table class="jo__modal--table table table-hover">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>JO No.</th>
-                                    <th>Customer Name</th>
-                                    <th class="text-center">Items Released</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+                        <form action="pos-dr-products.php" method="get">
+                            <table class="jo__modal--table table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>JO No.</th>
+                                        <th>Customer Name</th>
+                                        <th class="text-center">Items Released</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
 
-                                $jo = new Database();
+                                <tbody>
+                                    <?php
 
-                                $table = "
+                                    $jo = new Database();
+
+                                    $table = "
                                 jo_tb
                                 LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
                                 LEFT JOIN user ON user.user_id = jo_tb.user_id
@@ -105,7 +107,7 @@ include './php/database.php';
                                 LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
                                 LEFT JOIN jo_status ON jo_status.jo_status_id = jo_tb.jo_status_id";
 
-                                $column = "
+                                    $column = "
                                         jo_tb.jo_id, 
                                         jo_tb.jo_no, 
                                         customers.customers_name, 
@@ -117,116 +119,99 @@ include './php/database.php';
                                         jo_tb.jo_status_id, 
                                         customers_company";
 
+                                    if (isset($_GET['qry']) && $_GET['qry'] !== '') {
+                                        $query = $_GET['qry'];
+                                    } else {
+                                        $query = " ";
+                                    }
 
+                                    $filter = "customers.customers_id = '$query' ORDER BY jo_tb.jo_date DESC";
 
-                                // $filter = "customers.customers_id = '30'";
+                                    $joResult = $jo->select(
+                                        $column,
+                                        $table,
+                                        $filter
+                                    );
 
-                                // $result = $jo->select(
-                                //     $column,
-                                //     $table,
-                                //     $filter
-                                // );
+                                    if (mysqli_num_rows($joResult) > 0) {
+                                        while ($row = mysqli_fetch_assoc($joResult)) {
+                                            $jo_id = $row['jo_id'];
 
-                                if (isset($_GET['qry']) && $_GET['qry'] !== '') {
-                                    $query = $_GET['qry'];
-                                } else {
-                                    $query = " ";
-                                }
-
-                                $filter = "customers.customers_id = '$query' ORDER BY jo_tb.jo_date DESC";
-
-                                $joResult = $jo->select(
-                                    $column,
-                                    $table,
-                                    $filter
-                                );
-
-
-
-
-
-                                if (mysqli_num_rows($joResult) > 0) {
-                                    while ($row = mysqli_fetch_assoc($joResult)) {
-                                        $jo_id = $row['jo_id'];
-
-                                        // Get Item already Released
-                                        $joItems = new Database();
-                                        $joItemsColumn = "order_product.order_id,
+                                            // Get Item already Released
+                                            $joItems = new Database();
+                                            $joItemsColumn = "order_product.order_id,
                                                         order_product.product_id, 
                                                         order_product.pos_temp_qty, 
                                                         jo_tb.jo_id";
 
-                                        $joItemsTable = "order_product
+                                            $joItemsTable = "order_product
                                                         LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
                                                         LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id";
 
-                                        $joItemsFilter = "jo_tb.jo_id = '$jo_id'";
+                                            $joItemsFilter = "jo_tb.jo_id = '$jo_id'";
 
-                                        $joItemsResult = $joItems->select($joItemsColumn, $joItemsTable, $joItemsFilter);
+                                            $joItemsResult = $joItems->select($joItemsColumn, $joItemsTable, $joItemsFilter);
 
-                                        $totalReleased = 0;
-                                        if (mysqli_num_rows($joItemsResult)) {
-                                            while ($joItemsRow = mysqli_fetch_assoc($joItemsResult)) {
-                                                $totalReleased += $joItemsRow['pos_temp_qty'];
+                                            $totalReleased = 0;
+                                            if (mysqli_num_rows($joItemsResult)) {
+                                                while ($joItemsRow = mysqli_fetch_assoc($joItemsResult)) {
+                                                    $totalReleased += $joItemsRow['pos_temp_qty'];
+                                                }
                                             }
-                                        }
 
 
-                                        // Get JO Product total qty
-                                        $joProduct = new Database();
-                                        $joProductColumn = "jo_product.jo_id, jo_product.jo_product_qty";
-                                        $joProductTable = "jo_product";
-                                        $joProductFilter = "jo_product.jo_id = '$jo_id'";
+                                            // Get JO Product total qty
+                                            $joProduct = new Database();
+                                            $joProductColumn = "jo_product.jo_id, jo_product.jo_product_qty";
+                                            $joProductTable = "jo_product";
+                                            $joProductFilter = "jo_product.jo_id = '$jo_id'";
 
 
-                                        $joProductResult = $joProduct->select($joProductColumn, $joProductTable, $joProductFilter);
-                                        $totalJoProduct = 0;
-                                        if (mysqli_num_rows($joProductResult)) {
-                                            while ($joProductRow = mysqli_fetch_assoc($joProductResult)) {
-                                                $totalJoProduct += $joProductRow['jo_product_qty'];
+                                            $joProductResult = $joProduct->select($joProductColumn, $joProductTable, $joProductFilter);
+                                            $totalJoProduct = 0;
+                                            if (mysqli_num_rows($joProductResult)) {
+                                                while ($joProductRow = mysqli_fetch_assoc($joProductResult)) {
+                                                    $totalJoProduct += $joProductRow['jo_product_qty'];
+                                                }
                                             }
-                                        }
 
-                                ?>
-                                        <tr>
-                                            <td><input type="checkbox" /></td>
-                                            <td><?php echo $row['jo_no'] ?></td>
-                                            <td><?php echo $row['customers_name'] ?></td>
-                                            <td class="text-center"><?php echo $totalReleased . "/" . $totalJoProduct ?></td>
-                                            <td><?php echo $row['jo_date'] ?></td>
-                                        </tr>
+                                            // Exclude completed transactions
+                                            if ($totalReleased / $totalJoProduct >= 1) continue;
 
-                                    <?php
-                                    }
-                                } else {
                                     ?>
+                                            <tr>
+                                                <td><input type="checkbox" name="jo_id[]" value="<?php echo $jo_id ?>" /></td>
+                                                <td><?php echo $row['jo_no'] ?></td>
+                                                <td><?php echo $row['customers_name'] ?></td>
+                                                <td class="text-center"><?php echo $totalReleased . "/" . $totalJoProduct ?></td>
+                                                <td><?php echo $row['jo_date'] ?></td>
+                                            </tr>
 
-
-                                    <?php
-
-                                    if (isset($_GET['qry'])) {
-                                        echo ' <div class="alert alert-danger text-center fs-5">No record found!</div>';
+                                        <?php
+                                        }
                                     } else {
-                                        echo ' <div class="alert alert-warning text-center fs-5">Choose Customer!</div>';
+                                        ?>
+
+
+                                        <?php
+
+                                        if (isset($_GET['qry'])) {
+                                            echo ' <div class="alert alert-danger text-center fs-5">No record found!</div>';
+                                        } else {
+                                            echo ' <div class="alert alert-warning text-center fs-5">Choose Customer!</div>';
+                                        }
+
+                                        ?>
+
+                                    <?php
                                     }
-
                                     ?>
-
-                                <?php
-                                }
-                                ?>
-
-
-
-
-                                <!-- <tr>
-            <td>12-23456</td>
-            <td>Philippine Acrylic and Chemical Corp.</td>
-            <td>999,999.99</td>
-            <td>01-01-2021</td>
-          </tr> -->
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <button type="submit" name="next" class="btn btn-success text-end">Next <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </form>
                     </div>
 
                 </div>
