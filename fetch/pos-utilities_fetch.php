@@ -95,7 +95,7 @@ if ($total_data > 0) {
 <a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
 <button type="button" class="btn  btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
 
-<a href="view/viewor.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
+<a href="#">
 <button type="button" class="btn  btn-outline-info btn-sm">Generate OR</button></a>
 
 <a href="pos-utilities_return.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
