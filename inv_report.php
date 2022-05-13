@@ -255,6 +255,7 @@
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
+                                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
 
                                                  WHERE class_tb.class_name = '$companyName' AND product.qty > 0 ORDER BY product.product_name ASC";
 
