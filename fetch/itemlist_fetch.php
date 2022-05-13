@@ -81,9 +81,9 @@ if ($total_data > 0) {
       <td>' . $row["dept_name"] . '</td>
       <td>
 <center>
-      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . "&typeId=" . $row["product_type_id"] . "&typeName=" . $row["product_type_name"] . '" title="Edit Item"><button class="btn btn-success" title="Edit"><i class="bi bi-pencil-fill"></i></button></a>
+      <a href="edit/itemlist_edit.php?id=' . $row["product_id"] . "&class=" . $row["class_id"] . "&className=" . $row["class_name"] . "&unitId=" . $row["unit_id"] . "&unit=" . $row["unit_name"] . "&dept=" . $row["dept_name"] . "&deptId=" . $row["dept_id"] . "&loc=" . $row["loc_name"] . "&locId=" . $row["loc_id"] . "&proRemarks=" . $row["pro_remarks"] . "&price=" . $row["price"] . "&cost=" . $row["cost"] . "&barcode=" . $row["barcode"] . "&typeId=" . $row["product_type_id"] . "&typeName=" . $row["product_type_name"] . '" title="Edit Item"><button class="btn btn-success  btn-sm" title="Edit"><i class="bi bi-pencil-fill"></i></button></a>
       &nbsp;
-      <a href="item_movement.php?id=' . $row["product_id"] . '" title="View History"><button type="button" class="btn btn-secondary"><i class="bi bi-clock-history"></i></button></a>
+      <a href="item_movement.php?id=' . $row["product_id"] . '" title="View History"><button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-clock-history"></i></button></a>
       &nbsp;
     
 </center>
