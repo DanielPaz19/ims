@@ -50,7 +50,7 @@ if (isset($_GET['next'])) {
             $unitId[] = $row['unit_id'];
             $unitName[] = $row['unit_name'];
             $itemPrice[] = $row['jo_product_price'];
-            $total[] = $row["jo_product_qty"] * $row["jo_product_price"];
+            $total[] = $row["totalQty"] * $row["jo_product_price"];
             $remarks = $row['jo_remarks'];
             $totalQty[] = $row['totalQty'];
         }
@@ -301,7 +301,7 @@ if (isset($_GET['next'])) {
                                                 <td>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                 <td>$productName[$limit]</td>
                                                 <td>" . number_format($itemPrice[$limit], 2) . "</td>
-                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic' required type='number' value='$totalQty[$limit]' max='$totalQty[$limit]' min='0' style='width:50%'/></td>
+                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input__qty' required type='number' value='$totalQty[$limit]' max='$totalQty[$limit]' min='0' style='width:50%'/></td>
                                                 <td>$unitName[$limit]</td>
                                                 
                                                 <td>" . number_format($itemPrice[$limit] * $totalQty[$limit], 2) . "</td>
@@ -329,6 +329,21 @@ if (isset($_GET['next'])) {
 
     <script>
         document.querySelector('.date').value = new Date().toISOString();
+
+        const inputQty = document.querySelectorAll('.input__qty');
+
+        function editQty(e) {
+            const target = e.target;
+            const newValue = target.value;
+            if (Number(newValue) > Number(target.max)) {
+                target.value = target.max;
+                return alert(`You can't input number higher than ${target.max}`);
+            }
+        }
+
+        inputQty.forEach(element => {
+            element.addEventListener('change', editQty);
+        });
     </script>
 
 
