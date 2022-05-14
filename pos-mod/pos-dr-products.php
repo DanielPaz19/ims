@@ -142,7 +142,7 @@ if (isset($_GET['next'])) {
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input type="text" class="form-control" id="customerName floatingInput" style="width: 30%;height:50px" value="<?php echo str_pad($customerId, 8, 0, STR_PAD_LEFT)  ?>" disabled>
+                                        <input disabled type="text" class="form-control" id="customerName floatingInput" style="width: 30%;height:50px" value="<?php echo str_pad($customerId, 8, 0, STR_PAD_LEFT)  ?>" disabled>
                                         <label for="floatingInput">Customer ID</label>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@ if (isset($_GET['next'])) {
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customerName ?>" disabled>
+                                        <input disabled type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customerName ?>">
                                         <label for="floatingInput">Customer Name</label>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@ if (isset($_GET['next'])) {
 
 
                                         ?>
-                                        <input type="text" id="jonumber" disabled value="<?php echo implode('; ', $joArr); ?>" />
+                                        <input disabled type="text" id="jonumber" disabled value="<?php echo implode('; ', $joArr); ?>" />
                                     </span>
                                 </div>
                             </div>
@@ -368,13 +368,11 @@ if (isset($_GET['next'])) {
     </div>
 
     <script>
-        document.querySelector('.date').value = new Date().toISOString();
-
         const inputQty = document.querySelectorAll('.input__qty');
 
         function editQty(e) {
             const target = e.target;
-            const newValue = target.value;
+            const newValue = Math.round(target.value);
             if (Number(newValue) > Number(target.max)) {
                 target.value = target.max;
                 return alert(`You can't input number higher than ${target.max}`);
@@ -384,6 +382,9 @@ if (isset($_GET['next'])) {
                 target.value = target.min;
                 return alert(`You can't input number lower than ${target.min}`);
             }
+
+            target.value = newValue;
+
         }
 
         inputQty.forEach(element => {
