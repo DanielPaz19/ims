@@ -36,7 +36,7 @@ if (isset($_GET['next'])) {
             $customerId = $row['customers_id'];
             $customerCon = $row['customers_contact'];
             $customerAdd = $row['customers_address'];
-            $joNo = $row['jo_no'];
+            $joNo[] = $row['jo_no'];
             $joIdArr[] = $row['jo_id'];
             $empName = $row['emp_name'];
             $empId = $row['emp_id'];
@@ -180,21 +180,9 @@ if (isset($_GET['next'])) {
 
                             <div class="row">
                                 <div class="col">
-                                    <span class="container-transaction_number">
-                                        <label for="transactionNumber">Transaction Number:</label>
-                                        <input type="text" id="transactionNumber" value="0000000001" disabled />
-                                    </span>
-                                </div>
-                                <div class="col">
-                                    <span class="container-transaction_date">
-                                        <label for="transactionDate">Transaction Date:</label>
-                                        <input type="text" id="transactionDate" class="date" disabled />
-                                    </span>
-                                </div>
-                                <div class="col">
                                     <span class="container-jo__number">
-                                        <label for="jonumber">JO Number:</label>
-                                        <input type="text" id="jonumber" disabled value="<?php echo implode(',', $joId); ?>" />
+                                        <label for="jonumber">JO Number(s):</label>
+                                        <input type="text" id="jonumber" disabled value="<?php echo implode("; ", array_unique($joNo)); ?>" />
                                     </span>
                                 </div>
                             </div>
@@ -379,6 +367,11 @@ if (isset($_GET['next'])) {
             if (Number(newValue) > Number(target.max)) {
                 target.value = target.max;
                 return alert(`You can't input number higher than ${target.max}`);
+            }
+
+            if (Number(newValue) < Number(target.min)) {
+                target.value = target.min;
+                return alert(`You can't input number lower than ${target.min}`);
             }
         }
 
