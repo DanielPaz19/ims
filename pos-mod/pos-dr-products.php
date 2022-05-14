@@ -3,6 +3,7 @@ if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
 include('../php/config.php');
+include './php/database.php';
 if (isset($_GET['next'])) {
 
     $joId = $_GET['jo_id'];
@@ -27,9 +28,6 @@ if (isset($_GET['next'])) {
     );
 
 
-
-
-
     // PO Details
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -39,6 +37,7 @@ if (isset($_GET['next'])) {
             $customerCon = $row['customers_contact'];
             $customerAdd = $row['customers_address'];
             $joNo = $row['jo_no'];
+            $joIdArr[] = $row['jo_id'];
             $empName = $row['emp_name'];
             $empId = $row['emp_id'];
             $joDate = $row['jo_date'];
@@ -53,6 +52,45 @@ if (isset($_GET['next'])) {
             $total[] = $row["totalQty"] * $row["jo_product_price"];
             $remarks = $row['jo_remarks'];
             $totalQty[] = $row['totalQty'];
+
+            // SELECT order_product.product_id,
+            // order_product.order_product_id, 
+            // order_product.order_id, 
+            // order_product.pos_temp_qty
+            // order_tb.jo_id
+            // FROM order_product
+            // LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
+            // LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
+
+            // GET total delivered
+            $drRow = "
+            SUM(order_product.pos_temp_qty) AS totalDelivered,
+            order_product.product_id, 
+            order_product.order_product_id, 
+            order_product.order_id, 
+            order_product.pos_temp_qty,
+            order_product.pos_temp_price,
+            order_tb.jo_id";
+            $drTable = "order_product
+            LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
+            LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id ";
+
+            $drFilter = "order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id'] . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
+            $delivery = new Database();
+            $deliveryResults = $delivery->select($drRow, $drTable, $drFilter);
+
+            if (mysqli_num_rows($deliveryResults) > 0) {
+                while ($deliveryRow = mysqli_fetch_assoc($deliveryResults)) {
+                    $deliveryArr[] = $deliveryRow['totalDelivered'];
+                    $amountArr[] = $deliveryRow['pos_temp_price'] * $deliveryRow['totalDelivered'];
+                }
+            } else {
+                $deliveryArr[] = 0;
+                $amountArr[] = 0;
+            }
+
+            // Summ all deliverd product 
+            // Subtract delivered product to actual product
         }
     } else {
         echo "0 results";
@@ -164,13 +202,13 @@ if (isset($_GET['next'])) {
 
                         <?php
                         $limit = 0;
-                        $tax = $total[$limit] / 1.12 * 0.12;
+                        $tax = ($total[$limit] - $amountArr[$limit]) / 1.12 * 0.12;
                         $subTot = 0;
                         $disTot = 0;
 
                         $grandTot = $subTot - $disTot;
                         while ($limit != count($total)) {
-                            $subTot += $total[$limit];
+                            $subTot += ($total[$limit] - $amountArr[$limit]);
                             // $disTot += $totaldisamount[$limit];
                             $limit += 1;
                         }
@@ -295,16 +333,19 @@ if (isset($_GET['next'])) {
                                     if (isset($productId)) {
                                         while (count($productId) !== $limit) {
                                             if ($productId[$limit] != 0) {
+
+                                                $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
+
                                                 # code...
                                                 echo
                                                 "<tr>
                                                 <td>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                 <td>$productName[$limit]</td>
                                                 <td>" . number_format($itemPrice[$limit], 2) . "</td>
-                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input__qty' required type='number' value='$totalQty[$limit]' max='$totalQty[$limit]' min='0' style='width:50%'/></td>
+                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input__qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
                                                 <td>$unitName[$limit]</td>
                                                 
-                                                <td>" . number_format($itemPrice[$limit] * $totalQty[$limit], 2) . "</td>
+                                                <td>" . number_format($itemPrice[$limit] * $remainingItems, 2) . "</td>
                                                 </tr>
                                                 ";
                                             }

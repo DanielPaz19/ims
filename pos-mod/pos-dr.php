@@ -245,3 +245,14 @@ include './php/database.php';
     </body>
 
     </html>
+
+    <!-- 
+    SELECT order_product.product_id,
+    order_product.order_product_id, 
+    order_product.order_id, 
+    order_product.pos_temp_qty
+    order_tb.jo_id
+    FROM order_product
+    LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
+    LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
+ -->
