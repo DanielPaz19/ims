@@ -55,7 +55,6 @@ $tot = $grandTot ?>
                                     <div class="">
                                         <button class="btn btn-success" style="width:100%">Save Payment</button></a>
                                     </div>
-
                             </form>
                         </div>
 
