@@ -182,7 +182,18 @@ if (isset($_GET['next'])) {
                                 <div class="col">
                                     <span class="container-jo__number">
                                         <label for="jonumber">JO Number(s):</label>
-                                        <input type="text" id="jonumber" disabled value="<?php echo implode("; ", array_unique($joNo)); ?>" />
+                                        <?php
+
+                                        $joNumber = new Database();
+                                        $joNumberResult = $joNumber->select('*', 'jo_tb', 'jo_id IN (' . implode(',', $joId) . ')');
+
+                                        while ($joNumRow = mysqli_fetch_assoc($joNumberResult)) {
+                                            $joArr[] = $joNumRow['jo_no'];
+                                        }
+
+
+                                        ?>
+                                        <input type="text" id="jonumber" disabled value="<?php echo implode('; ', $joArr); ?>" />
                                     </span>
                                 </div>
                             </div>
