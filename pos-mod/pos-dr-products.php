@@ -219,7 +219,10 @@ if (isset($_GET['next'])) {
                         $qtyTot = 0;
                         $limit = 0;
                         while ($limit != count($qtyIn)) {
-                            $qtyTot += $qtyIn[$limit];
+
+                            $totItems =  $totalQty[$limit] - $deliveryArr[$limit];
+
+                            $qtyTot += $totItems;
                             // $disTot += $totaldisamount[$limit];
                             $limit += 1;
                         }
@@ -288,7 +291,7 @@ if (isset($_GET['next'])) {
                                                 <h4>Grand Total:</h4>
                                             </span></div>
                                         <div class="col-4"> <span class="label-total_payable">
-                                                <h4><?php echo '₱ ' . number_format($grandTot, 2) ?></h4>
+                                                <h4 class="label--grand__total"><?php echo '₱ ' . number_format($grandTot, 2) ?></h4>
                                             </span></div>
                                     </div>
                                 </div>
@@ -340,11 +343,11 @@ if (isset($_GET['next'])) {
                                                 "<tr>
                                                 <td>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                 <td>$productName[$limit]</td>
-                                                <td>" . number_format($itemPrice[$limit], 2) . "</td>
-                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input__qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
+                                                <td class='label--price'>" . number_format($itemPrice[$limit], 2) . "</td>
+                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
                                                 <td>$unitName[$limit]</td>
                                                 
-                                                <td>" . number_format($itemPrice[$limit] * $remainingItems, 2) . "</td>
+                                                <td class='label--subtotal'>" . number_format($itemPrice[$limit] * $remainingItems, 2) . "</td>
                                                 </tr>
                                                 ";
                                             }
@@ -367,30 +370,7 @@ if (isset($_GET['next'])) {
         </div>
     </div>
 
-    <script>
-        const inputQty = document.querySelectorAll('.input__qty');
-
-        function editQty(e) {
-            const target = e.target;
-            const newValue = Math.round(target.value);
-            if (Number(newValue) > Number(target.max)) {
-                target.value = target.max;
-                return alert(`You can't input number higher than ${target.max}`);
-            }
-
-            if (Number(newValue) < Number(target.min)) {
-                target.value = target.min;
-                return alert(`You can't input number lower than ${target.min}`);
-            }
-
-            target.value = newValue;
-
-        }
-
-        inputQty.forEach(element => {
-            element.addEventListener('change', editQty);
-        });
-    </script>
+    <script type='module' src="./js/script.js"> </script>
 
 
     </body>
