@@ -91,6 +91,8 @@ function editQty(e) {
 
 function init() {
   const inputQty = document.querySelectorAll('.input--qty');
+  const btnSubmit = document.querySelector('.btn--submit__form');
+
   inputQty.forEach((element) => {
     element.addEventListener('change', editQty);
   });

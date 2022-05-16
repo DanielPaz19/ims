@@ -195,6 +195,15 @@ if (isset($_GET['next'])) {
                                         ?>
                                         <input disabled type="text" id="jonumber" disabled value="<?php echo implode('; ', $joArr); ?>" />
                                     </span>
+                                    <form action="./index.php" method="post">
+                                        <div class="form-group row mt-3 ">
+                                            <div class="col-1 p-2">
+                                                <label for="drNumber" class="form-label">DR Number:</label>
+                                            </div>
+                                            <div class="col-3">
+                                                <input autocomplete="off" pattern="\d\d-\d\d\d\d\d" title="Example: 22-12345" name="drNumber" type="text" class="form-control" id="drNumber" required>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -229,6 +238,7 @@ if (isset($_GET['next'])) {
 
                         ?>
                         <div class="col-3">
+
                             <fieldset class="fieldset-summary" style="background-color: white;border:none;">
                                 <legend>Order Billing Statement</legend>
                                 <div class="summary_label-container mb-2">
@@ -271,7 +281,7 @@ if (isset($_GET['next'])) {
                                     <div class="row">
                                         <div class="col-8"><span class="summary-label">Total Quantity:</span></div>
                                         <div class="col-4"><span class="total_qty-value">
-                                                <input class="input__summary input__summary--qty" type="text" value="<?php echo number_format($qtyTot, 2)  ?>" style="background-color: transparent;border:none" disabled />
+                                                <input class="input__summary input__summary--qty" name="totalQty" type="text" value="<?php echo number_format($qtyTot, 2)  ?>" style="background-color: transparent;border:none;" disabled />
                                             </span></div>
                                     </div>
                                 </div>
@@ -297,7 +307,7 @@ if (isset($_GET['next'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button class="btn btn-primary" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
+                                        <button type='submit' class="btn btn-primary btn--submit__form" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
                                     </div>
                                     <div class="col">
                                         <a href="pos-dr.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
@@ -369,6 +379,7 @@ if (isset($_GET['next'])) {
 
 
                             </table>
+                            </form>
                         </div>
                     </div>
                     <br>
