@@ -334,10 +334,17 @@ if (isset($_GET['next'])) {
 
                                     if (isset($productId)) {
                                         while (count($productId) !== $limit) {
+                                            $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
+
+                                            if ($remainingItems == 0) {
+                                                $limit++;
+                                                continue;
+                                            }
+
                                             if ($productId[$limit] != 0) {
 
-                                                $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
 
+                                                // if ($remainingItems == 0) continue;
                                                 # code...
                                                 echo
                                                 "<tr>
