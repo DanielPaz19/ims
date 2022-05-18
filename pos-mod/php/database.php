@@ -20,13 +20,20 @@ class Database
         // echo "Connected successfully";
     }
 
-    public function select($rows = "*", $table, $where = null)
+    public function select($column = "*", $table, $where = null)
     {
         if ($where != null) {
-            $sql = "SELECT $rows FROM $table WHERE $where";
+            $sql = "SELECT $column FROM $table WHERE $where";
         } else {
-            $sql = "SELECT $rows FROM $table";
+            $sql = "SELECT $column FROM $table";
         }
+
+        return $this->mysqli->query($sql);
+    }
+
+    public function insert($table, $column, $values)
+    {
+        $sql = "INSERT INTO $table($column) VALUES ($values)";
 
         return $this->mysqli->query($sql);
     }

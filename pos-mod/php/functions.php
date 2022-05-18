@@ -78,7 +78,7 @@ function getPaymentBalance($db, $joId)
             order_payment.order_payment_id  
             FROM order_payment 
             LEFT JOIN order_tb ON order_tb.order_id = order_payment.order_id
-            WHERE order_tb.jo_id = '$joId' ORDER BY order_payment_id  DESC LIMIT 1";
+            WHERE order_payment.jo_id = '$joId' ORDER BY order_payment_id  DESC LIMIT 1";
 
     $result = mysqli_query($db, $qry);
 
@@ -86,8 +86,9 @@ function getPaymentBalance($db, $joId)
         $row = mysqli_fetch_assoc($result);
 
         return $row['order_payment_balance'];
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 function getJobOrderData($db, $filter = '')
