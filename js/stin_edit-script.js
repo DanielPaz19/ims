@@ -203,10 +203,9 @@ const selectItem = function (e) {
     <td class='td__readonly td__readonly--itemname'>${itemName}</td>
     <td class='td__edit td__edit--qty' style='text-align:center;'>${poQty}</td>
     <td class='td__readonly td__readonly--unit' style='text-align:center;'>${itemUnit}</td>
-    <td class='td__edit td__edit--cost' style='text-align:center;'>${formatNumber(itemCost)}</td> 
-    <td class='td__compute td__compute--totalcost' style='text-align:center;'>${formatNumber(
-      totalCost
-    )}</td>
+    <td>
+    <textarea class='form-control' id='exampleFormControlTextarea1' rows='1' style='width:170px'  id='itemRemarks' name='itemRemarks[]'></textarea>
+    </td> 
     <td class='td__edit td__edit--delete'>
     <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
     </td>

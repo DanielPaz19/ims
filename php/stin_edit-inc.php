@@ -12,7 +12,7 @@ if (isset($_GET['edit'])) {
         "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, stin_tb.emp_id,
         stin_tb.stin_remarks, stin_product.product_id, stin_product.stin_temp_qty,  stin_product.stin_temp_cost, 
         stin_product.stin_temp_disamount, stin_product.stin_temp_tot, product.product_name, unit_tb.unit_name,
-        employee_tb.emp_name
+        employee_tb.emp_name,stin_product.stin_temp_remarks
  FROM stin_tb  
  LEFT JOIN stin_product ON stin_product.stin_id = stin_tb.stin_id
  LEFT JOIN product ON stin_product.product_id = product.product_id
@@ -39,6 +39,7 @@ if (isset($_GET['edit'])) {
             $qtyIn[] = $row['stin_temp_qty'];
             $unitName[] = $row['unit_name'];
             $itemCost[] = $row['stin_temp_cost'];
+            $itemRemarks[] = $row['stin_temp_remarks'];
         }
     } else {
         echo "0 results";
@@ -59,6 +60,7 @@ if (isset($_POST['update'])) {
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
     $itemCost = $_POST['itemCost'];
+    $itemRemarks = $_POST['itemRemarks'];
 
 
     require '../php/config.php';
@@ -81,7 +83,7 @@ if (isset($_POST['update'])) {
 
         if (mysqli_num_rows($checkResult) > 0) {
             // If product id already exist on stin_product, UPDATE
-            $sql = "UPDATE stin_product SET stin_temp_qty = '$qtyIn[$limit]', stin_temp_cost = '$itemCost[$limit]'  WHERE stin_id = '$stinId' AND product_id ='$productId[$limit]'";
+            $sql = "UPDATE stin_product SET stin_temp_qty = '$qtyIn[$limit]', stin_temp_cost = '$itemCost[$limit]',stin_temp_remarks = '$itemRemarks[$limit]'  WHERE stin_id = '$stinId' AND product_id ='$productId[$limit]'";
         } else {
             // If product id dont exist on stin_product, INSERT
             if ($productId[$limit] != 0) {

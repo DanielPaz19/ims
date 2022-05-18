@@ -350,7 +350,7 @@
       //title of the pop up
       //and other parameter where we will use the
       //values of the variables above
-      window.open('report/stin_report.php',
+      window.open('report/stin_report.php?date1=&date2=',
          "Contact The Code Ninja",
          "menubar=no,resizable=yes,width=1600,height=1000,scrollbars=yes,left=" +
          left + ",top=" + top + ",screenX=" + left + ",screenY=" + top);
