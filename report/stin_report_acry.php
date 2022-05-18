@@ -66,8 +66,8 @@
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a href="stin_report.php?date1=&date2="><button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Fabrication</button></a>
-            <a href="stin_report_acry.php?date1=&date2="><button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Acrylic</button></a>
+            <a href="stin_report.php?date1=&date2="><button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Fabrication</button></a>
+            <a href="stin_report_acry.php?date1=&date2="> <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Acrylic</button></a>
             <a href="stin_report_prcg.php?date1=&date2="><button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">PRCG</button></a>
         </div>
     </nav>
@@ -99,7 +99,7 @@
                     <div class="col-9">
                         <div class="p-5 mt-3 bg-body rounded printPage" style="width:100%;border:5px solid #cce0ff" id="report">
                             <h5> Turn-Over Slip Reports</h5>
-                            <h6>Department : Fabrication</h6>
+                            <h6>Department : Acrylic</h6>
                             <?php
                             $dateString = $_GET['date1'];
                             $dateTimeObj = date_create($dateString);
@@ -123,7 +123,7 @@
                                 LEFT JOIN employee_tb ON employee_tb.emp_id=stin_tb.emp_id
                                 LEFT JOIN dept_tb ON dept_tb.dept_id = employee_tb.dept_id
                                 WHERE stin_tb.stin_date 
-                                    BETWEEN '$date1' AND '$date2' AND dept_tb.dept_name LIKE '%FABR%'
+                                    BETWEEN '$date1' AND '$date2' AND dept_tb.dept_name LIKE '%CUTTER%'
                                 ";
 
                                     $result = $db->query($sql);
