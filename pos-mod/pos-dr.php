@@ -144,7 +144,7 @@ include './php/database.php';
                                                         jo_tb.jo_id";
 
                                             $joItemsTable = "order_product
-                                                        LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
+                                                        LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
                                                         LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id";
 
                                             $joItemsFilter = "jo_tb.jo_id = '$jo_id'";

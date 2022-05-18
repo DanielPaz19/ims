@@ -72,7 +72,7 @@ if (isset($_GET['next'])) {
             order_product.pos_temp_price,
             order_tb.jo_id";
             $drTable = "order_product
-            LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
+            LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
             LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id ";
 
             $drFilter = "order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id'] . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
@@ -195,13 +195,13 @@ if (isset($_GET['next'])) {
                                         ?>
                                         <input disabled type="text" id="jonumber" disabled value="<?php echo implode('; ', $joArr); ?>" />
                                     </span>
-                                    <form action="./index.php" method="post">
+                                    <form action="./php/dr_save.php?<?php echo http_build_query(array('jo_id' => $joId)); ?>" method="post">
                                         <div class="form-group row mt-3 ">
                                             <div class="col-1 p-2">
                                                 <label for="drNumber" class="form-label">DR Number:</label>
                                             </div>
                                             <div class="col-3">
-                                                <input autocomplete="off" pattern="\d\d-\d\d\d\d\d" title="Example: 22-12345" name="drNumber" type="text" class="form-control" id="drNumber" required>
+                                                <input autocomplete="off" pattern="\d\d\d\d\d" title="Example: 12345" name="dr_number" type="text" class="form-control" id="drNumber" required>
                                             </div>
                                         </div>
                                 </div>
@@ -307,7 +307,7 @@ if (isset($_GET['next'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button type='submit' class="btn btn-primary btn--submit__form" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
+                                        <button type='submit' name="save" class="btn btn-primary btn--submit__form" style="width:100%"><i class="bi bi-check2-circle"></i> Save and Print</button>
                                     </div>
                                     <div class="col">
                                         <a href="pos-dr.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
@@ -358,9 +358,9 @@ if (isset($_GET['next'])) {
                                                 # code...
                                                 echo
                                                 "<tr>
-                                                <td>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
+                                                <td><input name='product_id[]' type='hidden' value='$productId[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                 <td>$productName[$limit]</td>
-                                                <td class='label--price'>" . number_format($itemPrice[$limit], 2) . "</td>
+                                                <td class='label--price'><input name='product_price[]' type='hidden' value='$itemPrice[$limit]'/>" . number_format($itemPrice[$limit], 2) . "</td>
                                                 <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
                                                 <td>$unitName[$limit]</td>
                                                 
