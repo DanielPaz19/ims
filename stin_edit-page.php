@@ -75,8 +75,7 @@ include 'php/stin_edit-inc.php';
                                     <th style="text-align:left;">Item Name</th>
                                     <th>Qty-In</th>
                                     <th>Unit</th>
-                                    <th>Cost</th>
-                                    <th>Total Cost</th>
+                                    <th>P.Remarks</th>
                                     <th>
                                     </th>
                                 </tr>
@@ -95,9 +94,12 @@ include 'php/stin_edit-inc.php';
                  <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                  <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
                  <td class='td__edit td__edit--qty' style='text-align:center;'>" . $qtyIn[$limit] . "</td>
+                 
                  <td class='td__readonly td__readonly--unit' style='text-align:center;'>$unitName[$limit]</td>
-                 <td class='td__edit td__edit--cost' style='text-align:center;'>" . number_format($itemCost[$limit], 2) . "</td>
-                 <td class='td__compute td__compute--totalcost' style='text-align:center;'>" . number_format($itemCost[$limit] * $qtyIn[$limit], 2) . "</td>
+                 <td>
+                 <textarea class='form-control' style='width:170px' id='exampleFormControlTextarea1' rows='1' id='itemRemarks' name='itemRemarks[]'>$itemRemarks[$limit]</textarea>
+                 </td>
+                 
                  <td class='td__edit td__edit--delete'>
                  <i class='bi bi-x-circle' style='font-size:22px' title='Delete'></i>
                   </td>

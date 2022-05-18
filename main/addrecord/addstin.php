@@ -281,12 +281,14 @@
         var id = $("li.selected p").text(); //gets the value id
         var qty = $(".item-qty").val();
         var discount = $(".item-discount").val();
+        var remarks = $(".item-remarks").val();
         if (addOrder(id)) {
           $.get(
             "../addrecord/addrow/add-item-row.php", {
               id: id,
               qty: qty,
               discount: discount,
+              remarks: remarks,
             },
             function(data, status) {
               var noResult = "0 results";
@@ -306,6 +308,7 @@
                 $("#item-name").val("");
                 $(".item-qty").val(1);
                 $(".item-discount").val(0);
+                $(".item-remarks").val("");
                 $("li.selected").removeClass("selected");
               }
             }
@@ -337,99 +340,109 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-3">
+            <div class="col">
               <div class="form-floating mb-3">
                 <input type="number" class="form-control item-qty" name="qty">
-                <label for="floatingInput">Quantity</label>
+                <label for="floatingInput">M-Quantity</label>
                 <div id="item-list"></div><!-- Dont Remove this -->
               </div>
               <input class=" item-discount" type="number" placeholder="Discount" value="0" style="display: none;" />
             </div>
-            <div class="col-2">
+            <div class="col">
+              <div class="form-floating">
+                <textarea class="form-control item-remarks " id="floatingTextarea" name="stin_temp_remarks"></textarea>
+                <label for="floatingTextarea">Item Remarks</label>
+              </div>
+            </div>
+            <input class=" item-discount" type="number" placeholder="Discount" value="0" style="display: none;" />
+            <div class="col">
               <div class="form-floating mb-3">
                 <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
               </div>
             </div>
           </div>
-          <hr>
-          <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
 
-            <div class="row">
-              <div class="col">&nbsp;STIN ID : <span class="newStinId"></span></div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInput" name="stin_code" required>
-                  <label for="floatingInput">Stock-In Code</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInput" name="stin_title" required>
-                  <label for="floatingInput">Job-Order No.</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-floating mb-3">
-                  <input type="date" class="form-control" id="floatingInput" name="stin_date" required>
-                  <label for="floatingInput">Stock-In Date</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="form-floating">
-                  <textarea class="form-control" id="floatingTextarea" name="stin_remarks"></textarea>
-                  <label for="floatingTextarea">Stock-In Remarks</label>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col">
-                <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="emp_id">
-                    <option></option>
-                    <?php
-                    include "../../php/config.php";
-                    $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
-
-                    while ($data = mysqli_fetch_array($records)) {
-                      echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
-                    }
-                    ?>
-                  </select>
-                  <label for="floatingSelect">Prepared by</label>
-                </div>
-              </div>
-            </div>
-            <hr class="mt-4">
-
-
-
-            <br /><br />
-            <div class="table-responsive">
-              <table id="crud_table" class="postb table">
-                <tr>
-                  <th>Item Description</th>
-                  <th>Qty-Order</th>
-                  <th>Price</th>
-                  <th>Total Amount</th>
-                  <th></th>
-                </tr>
-              </table>
-              <br>
-              <button name="btnsave" class="btn btn-success stin-button-save">&nbsp;Save Record</button> <br> <br>
-          </form>
         </div>
+        <hr>
+        <form autocomplete="off" method="GET" action="../addrecord/itemInsert/stinInsert.php">
+
+          <div class="row">
+            <div class="col">&nbsp;STIN ID : <span class="newStinId"></span></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="stin_code" required>
+                <label for="floatingInput">Stock-In Code</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="stin_title" required>
+                <label for="floatingInput">Job-Order No.</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="floatingInput" name="stin_date" required>
+                <label for="floatingInput">Stock-In Date</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-floating">
+                <textarea class="form-control" id="floatingTextarea" name="stin_remarks"></textarea>
+                <label for="floatingTextarea">Stock-In Remarks</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="emp_id">
+                  <option></option>
+                  <?php
+                  include "../../php/config.php";
+                  $records = mysqli_query($db, "SELECT * FROM employee_tb ORDER BY emp_name ASC");
+
+                  while ($data = mysqli_fetch_array($records)) {
+                    echo "<option value='" . $data['emp_id'] . "'>" . $data['emp_name'] . "</option>";
+                  }
+                  ?>
+                </select>
+                <label for="floatingSelect">Prepared by</label>
+              </div>
+            </div>
+          </div>
+          <hr class="mt-4">
 
 
 
-
-
-
+          <br /><br />
+          <div class="table-responsive">
+            <table id="crud_table" class="postb table">
+              <tr>
+                <th style="width: 40%;">Item Description</th>
+                <th>Qty-Order</th>
+                <th>Item Remarks</th>
+                <th>Price</th>
+                <th>Total Amount</th>
+                <th></th>
+              </tr>
+            </table>
+            <br>
+            <button name="btnsave" class="btn btn-success stin-button-save">&nbsp;Save Record</button> <br> <br>
+        </form>
       </div>
+
+
+
+
+
+
     </div>
+  </div>
 
 
 
