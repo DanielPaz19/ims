@@ -5,6 +5,7 @@ include '../../../php/config.php';
 $product_id = $_GET['id'];
 $product_qty = $_GET['qty'];
 $item_discount = $_GET['discount'];
+$item_remarks = $_GET['remarks'];
 $sql = "SELECT * FROM product WHERE product_id = '$product_id' LIMIT 1";
 $result = mysqli_query($db, $sql);
 
@@ -16,8 +17,9 @@ if (mysqli_num_rows($result) > 0) {
 
     echo "<tr>
         <td class='hidden'><input id='product" . $row['product_id'] . "' name='product-id[]' class='hidden' value='" . $row['product_id'] . "'></td>
-        <td >" . $row['product_name'] . "</td>
+        <td style='width:40%;'>" . $row['product_name'] . "</td>
         <td><input name='qty_order[]' style='border:none;' value='" . $product_qty . "' readonly></td>
+        <td><input name='stin_temp_remarks[]' style='border:none;' value='" . $item_remarks . "' readonly></td>
         <td><input name='cost[]' style='border:none;' style='border:none;' value='" . number_format($row['cost'], 2) . "' readonly></td>
         <td><input name='disamount[]' style='border:none;' value='" . number_format($item_discount, 2) . "' readonly></td>
         <td><input name='total[]' style='border:none;' value='" . number_format($total_amount, 2) . "' readonly></td>

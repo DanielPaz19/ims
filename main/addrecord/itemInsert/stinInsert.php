@@ -21,6 +21,7 @@ $total = $_GET['total'];
 $stinCode = $_GET['stin_code'];
 $stinTitle = $_GET['stin_title'];
 $stinDate = $_GET['stin_date'];
+$stin_temp_remarks = $_GET['stin_temp_remarks'];
 $stinRemarks = $_GET['stin_remarks'];
 $emp_id = $_GET['emp_id'];
 
@@ -49,6 +50,24 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
     $limit++;
   }
+
+  $limiter = 0;
+  while (sizeof($productId) !== $limiter) {
+    $sql = "UPDATE stin_product 
+                     SET stin_temp_remarks ='" . $stin_temp_remarks[$limiter]
+      . "' WHERE product_id = " . $productId[$limiter] . " AND stin_id =" . $stinId;
+
+    if (mysqli_query($db, $sql)) {
+      echo "New record created successfully " . "<br>" . "<br>";
+    } else {
+      echo "Error: " . $sql . "<br>" . mysqli_error($db) . "<br>" . "<br>";
+    }
+
+    $limiter++;
+  }
+
+
+
 
   $sql = "INSERT INTO stin_tb (stin_id,stin_code, stin_title ,stin_date ,stin_remarks, emp_id, user_id)
             VALUES ('$stinId','$stinCode','$stinTitle','$stinDate','$stinRemarks','$emp_id','" . $_SESSION['id'] . "')";
