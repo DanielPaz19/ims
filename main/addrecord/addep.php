@@ -337,7 +337,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control item-price" id="floatingInput" type="number" name="ep_no" required>
+                                    <input class="form-control item-price" id="floatingInput" type="text" name="ep_no" required>
                                     <label for="floatingInput">Exitpass No.</label>
                                 </div>
                             </div>
