@@ -218,6 +218,23 @@ include './php/database.php';
         </div>
     </div>
 
+    <?php
+    if (isset($_GET['dr'])) {
+        $dr = $_GET['dr'];
+
+        if ($dr === 'saved') {
+    ?>
+            <script>
+                alert('Transaction Success:\n\nDR Transaction Saved!');
+            </script>
+    <?php
+
+        }
+    }
+
+    ?>
+
+
     <script>
         const joCheckbox = document.querySelectorAll('.jo__checkbox');
         const btnNext = document.querySelector('.btn__next');

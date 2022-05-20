@@ -47,7 +47,8 @@ if (isset($_POST['save'])) {
     // Insert into order_product
     $limit = 0;
     while (count($product_id) != $limit) {
-        if ($product_id[$limit] == 0) {
+        if ($product_id[$limit] == 0 || $product_qty[$limit] == 0) {
+            $limit++;
             continue;
         }
 

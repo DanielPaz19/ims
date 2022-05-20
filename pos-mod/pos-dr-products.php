@@ -388,6 +388,31 @@ if (isset($_GET['next'])) {
         </div>
     </div>
 
+    <?php
+    if (isset($_GET['error'])) {
+        $err = $_GET['error'];
+
+        if ($err === 'zero-qty') {
+    ?>
+            <script>
+                alert('Transaction Error:\n\nYou cannot proceed with ZERO total quantity!');
+            </script>
+        <?php
+
+        }
+
+        if ($err === 'duplicate-dr') {
+        ?>
+            <script>
+                alert('Transaction Error:\n\nDR Number already used!\nPlease use NEW DR Number!');
+            </script>
+    <?php
+
+        }
+    }
+    ?>
+
+
     <script type='module' src="./js/script.js"> </script>
 
 
