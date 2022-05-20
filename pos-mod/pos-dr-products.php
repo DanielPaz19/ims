@@ -75,7 +75,8 @@ if (isset($_GET['next'])) {
             LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
             LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id ";
 
-            $drFilter = "order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id'] . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
+            $drFilter = "order_product.pos_temp_price ='" . $row['jo_product_price'] . "' AND order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id']
+                . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
             $delivery = new Database();
             $deliveryResults = $delivery->select($drRow, $drTable, $drFilter);
 
