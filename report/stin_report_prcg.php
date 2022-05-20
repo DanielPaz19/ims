@@ -153,7 +153,7 @@
                                             }
 
 
-                                            $sqlItem = "SELECT stin_product.stin_id, product.product_name, product.product_id, stin_product.stin_temp_qty, unit_tb.unit_name,stin_tb.stin_date
+                                            $sqlItem = "SELECT stin_product.stin_id, product.product_name, product.product_id, stin_product.stin_temp_qty, unit_tb.unit_name,stin_tb.stin_date,stin_product.stin_temp_remarks
                                     FROM stin_product 
                                     INNER JOIN stin_tb ON stin_tb.stin_id = stin_product.stin_id
                                     LEFT JOIN product ON product.product_id = stin_product.product_id                  
@@ -166,12 +166,14 @@
                                             $prodName = [];
                                             $qty = [];
                                             $unit = [];
+                                            $itemRemarks = [];
                                             if ($result->num_rows >  0) {
                                                 while ($irow = $resultItem->fetch_assoc()) {
                                                     $prodId[] = str_pad($irow["product_id"], 8, 0, STR_PAD_LEFT);
                                                     $prodName[] = $irow["product_name"];
                                                     $qty[] = $irow["stin_temp_qty"];
                                                     $unit[] = $irow["unit_name"];
+                                                    $itemRemarks[] = $irow["stin_temp_remarks"];
                                                 }
                                             }
 
@@ -203,6 +205,7 @@
                                 <th>Item Name</th>
                                 <th>Qty-IN</th>
                                 <th>Unit</th>
+                                <th>Item Remarks</th>
                             </tr>";
 
                                             $limit = 0;
@@ -212,6 +215,7 @@
                                 <td>$prodName[$limit]</td>
                                 <td>$qty[$limit]</td>
                                 <td>$unit[$limit]</td>
+                                <td>$itemRemarks[$limit]</td>
                                 </tr>";
 
                                                 $limit++;
