@@ -326,57 +326,63 @@ if (isset($_GET['next'])) {
                         <br>
                         <div class='order-list-table_container table-responsive'>
                             <table class="order-list table">
+                                <thead>
+                                    <tr>
+                                        <th>JO Number</th>
+                                        <th>Item Code</th>
+                                        <th>Item Decription</th>
+                                        <th>Unit Price</th>
+                                        <th>Qty</th>
+                                        <th>Unit</th>
+                                        <!-- <th>Discount</th> -->
+                                        <th>Sub-Total</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                <tr>
-                                    <th>Item Code</th>
-                                    <th>Item Decription</th>
-                                    <th>Unit Price</th>
-                                    <th>Qty</th>
-                                    <th>Unit</th>
-                                    <!-- <th>Discount</th> -->
-                                    <th>Sub-Total</th>
-                                    <th>&nbsp;</th>
-                                </tr>
+                                    <tr>
+                                        <?php
+                                        $limit = 0;
+
+                                        if (isset($productId)) {
+                                            while (count($productId) !== $limit) {
+                                                $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
+
+                                                if ($remainingItems == 0) {
+                                                    $limit++;
+                                                    continue;
+                                                }
+
+                                                if ($productId[$limit] != 0) {
 
 
-                                <tr>
-                                    <?php
-                                    $limit = 0;
-
-                                    if (isset($productId)) {
-                                        while (count($productId) !== $limit) {
-                                            $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
-
-                                            if ($remainingItems == 0) {
+                                                    // if ($remainingItems == 0) continue;
+                                                    # code...
+                                                    echo
+                                                    "
+                                                    <td>$joIdArr[$limit]</td>
+                                                    <td><input name='product_id[]' type='hidden' value='$productId[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
+                                                    <td>$productName[$limit]</td>
+                                                    <td class='label--price'><input name='product_price[]' type='hidden' value='$itemPrice[$limit]'/>" . number_format($itemPrice[$limit], 2) . "</td>
+                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
+                                                    <td>$unitName[$limit]</td>
+                                                    
+                                                    <td class='label--subtotal'>" . number_format($itemPrice[$limit] * $remainingItems, 2) . "</td>
+                                                    </tr>
+                                                    ";
+                                                }
                                                 $limit++;
-                                                continue;
                                             }
-
-                                            if ($productId[$limit] != 0) {
-
-
-                                                // if ($remainingItems == 0) continue;
-                                                # code...
-                                                echo
-                                                "<tr>
-                                                <td><input name='product_id[]' type='hidden' value='$productId[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
-                                                <td>$productName[$limit]</td>
-                                                <td class='label--price'><input name='product_price[]' type='hidden' value='$itemPrice[$limit]'/>" . number_format($itemPrice[$limit], 2) . "</td>
-                                                <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
-                                                <td>$unitName[$limit]</td>
-                                                
-                                                <td class='label--subtotal'>" . number_format($itemPrice[$limit] * $remainingItems, 2) . "</td>
-                                                </tr>
-                                                ";
-                                            }
-                                            $limit++;
                                         }
-                                    }
 
-                                    ?>
+                                        ?>
 
 
-                                </tr>
+                                    </tr>
+                                </tbody>
+
+
 
 
                             </table>

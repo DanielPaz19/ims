@@ -5,6 +5,9 @@ if (isset($_POST['save'])) {
     session_start();
     $user_id = $_SESSION['id'];
 
+    session_start();
+    $user_id = $_SESSION['id'];
+
     include "./database.php";
 
     $dr_number = $_POST['dr_number'];
