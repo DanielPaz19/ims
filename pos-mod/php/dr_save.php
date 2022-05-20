@@ -3,6 +3,9 @@
 
 if (isset($_POST['save'])) {
 
+    session_start();
+    $user_id = $_SESSION['id'];
+
     include "./database.php";
 
     $dr_number = $_POST['dr_number'];
@@ -37,7 +40,7 @@ if (isset($_POST['save'])) {
     }
 
     // Save dr Number
-    $dr->insert("delivery_receipt", 'dr_number', $dr_number);
+    $dr->insert("delivery_receipt", 'dr_number,user_id', "$dr_number,$user_id");
 
     // Insert into order_tb
     foreach ($jo_id as $id) {
