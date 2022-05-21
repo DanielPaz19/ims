@@ -175,12 +175,25 @@ if (isset($_GET['next'])) {
                             </div>
 
                             <form action="./php/dr_save.php?<?php echo http_build_query(array('jo_id' => $joId)); ?>" method="post">
-                                <div class="float-end me-5 mt-3">
-                                    <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="dr_number" type="text" class="form-control" id="drNumber" placeholder='Enter DR Number' required>
-                                </div>
                                 <div class="row order-list-container">
                                     <div class="col">
                                         <h4><i class="bi bi-cart4"></i> Order Details</h4>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-sm-3">
+                                        <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="dr_number" type="text" class="form-control" id="drNumber" placeholder='Enter DR Number' required>
+                                    </div>
+                                    <div class="col-sm-6 text-end">
+                                        <h6 class="fw-bold">
+                                            Grand Total:
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-3 text-end ">
+                                        <h6 class="fw-bold me-5 text-info lbl--grand__total">
+                                            {%GRAND_TOTAL%}
+                                        </h6>
                                     </div>
                                 </div>
                         </div>
@@ -248,66 +261,70 @@ if (isset($_GET['next'])) {
                                     echo "<h5 class='fst-italic'>JO Number: $jo_num</h5>";
 
                                 ?>
-                                    <table class="order-list table table-striped table-secondary" style="table-layout:fixed">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 8%;">Item Code</th>
-                                                <th style="width: 42%;">Item Decription</th>
-                                                <th style="width: 12%;">Unit Price</th>
-                                                <th style="width: 12%;">Qty</th>
-                                                <th style="width: 8%;">Unit</th>
-                                                <!-- <th>Discount</th> -->
-                                                <th style="width: 8%;">Sub-Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                    <div class="table__container">
 
-                                            <tr>
-                                                <?php
-                                                $limit = 0;
-                                                $grandTotal = 0;
-                                                while (count($prod_id) !== $limit) {
-                                                    // $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
+                                        <table class="order-list table table-striped table-light" style="table-layout:fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 8%;">Item Code</th>
+                                                    <th style="width: 42%;">Item Decription</th>
+                                                    <th style="width: 12%;">Unit Price</th>
+                                                    <th style="width: 12%;">Qty</th>
+                                                    <th style="width: 13%;">Unit</th>
+                                                    <!-- <th>Discount</th> -->
+                                                    <th style="width: 13%;">Sub-Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                                    // if ($remainingItems == 0) {
-                                                    //     $limit++;
-                                                    //     continue;
-                                                    // }
+                                                <tr>
+                                                    <?php
+                                                    $limit = 0;
+                                                    $grandTotal = 0;
+                                                    while (count($prod_id) !== $limit) {
+                                                        // $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
 
-                                                    $grandTotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
+                                                        // if ($remainingItems == 0) {
+                                                        //     $limit++;
+                                                        //     continue;
+                                                        // }
 
-                                                    if ($prod_id[$limit] != 0) {
+                                                        $grandTotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
+
+                                                        if ($prod_id[$limit] != 0) {
 
 
-                                                        // if ($remainingItems == 0) continue;
-                                                        # code...
-                                                        echo
-                                                        "
+                                                            // if ($remainingItems == 0) continue;
+                                                            # code...
+                                                            echo
+                                                            "
                                                     <td><input name='product_id[]' type='hidden' value='$prod_id[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                     <td>$prod_name[$limit]</td>
                                                     <td class='label--price'><input name='product_price[]' type='hidden' value='$jo_prod_price[$limit]'/>" . number_format($jo_prod_price[$limit], 2) . "</td>
-                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$jo_product_qty[$limit]' max='' min='0' style='width:50%'/></td>
+                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$jo_product_qty[$limit]' max='$jo_product_qty[$limit]' min='0' style='width:50%'/></td>
                                                     <td>$unitName[$limit]</td>
                                                     
                                                     <td class='label--subtotal'>" . number_format($jo_prod_price[$limit] * $jo_product_qty[$limit], 2) . "</td>
                                                     </tr>
                                                     ";
+                                                        }
+                                                        $limit++;
                                                     }
-                                                    $limit++;
-                                                }
 
-                                                ?>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="row container text-end mb-3">
-                                        <div class="col-sm-11">
-                                            <h6 class="fw-bold ">Total:₱</h6>
-                                        </div>
-                                        <div class="col-sm-1 text-end">
-                                            <h6 class="fw-bold "><span class="text-success"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                                    ?>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="row container text-end mb-3">
+                                            <div class="col-sm-11">
+                                                <h6 class="fw-bold ">Total:₱</h6>
+                                            </div>
+                                            <div class="col-sm-1 text-end">
+                                                <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                            </div>
                                         </div>
                                     </div>
+
                                 <?php } ?>
                                 <div class="mt-5 text-end">
                                     <button type='submit' name="save" class="btn btn-primary btn--submit__form"><i class="bi bi-check2-circle"></i> Save and Print</button>

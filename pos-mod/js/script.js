@@ -16,40 +16,41 @@ function getTotalQty() {
   return totalQty;
 }
 
-function updateSummary(grandTotal) {
-  const lblSummSubTotal = document.querySelector('.input__summary--subtotal');
-  const lblSummTax = document.querySelector('.input__summary--tax');
-  const lblSummNetSales = document.querySelector('.input__summary--netsales');
-  const lblSummTotalQty = document.querySelector('.input__summary--qty');
-  const lblSummGross = document.querySelector('.input__summary--gross');
-
-  lblSummSubTotal.value = formatNumber(grandTotal);
-  lblSummGross.value = formatNumber(grandTotal);
-
-  const tax = (grandTotal / 1.12) * 0.12;
-  lblSummTax.value = formatNumber(tax);
-
-  lblSummNetSales.value = formatNumber(grandTotal - tax);
-
-  lblSummTotalQty.value = formatNumber(getTotalQty());
-}
-
 function updateGrandTotal() {
-  const inputQty = document.querySelectorAll('.input--qty');
-  const lblGrandTotal = document.querySelector('.label--grand__total');
+  const tableTotal = document.querySelectorAll('.lbl--table__total');
+  const lblGrandTotal = document.querySelector('.lbl--grand__total');
   const total = [];
 
-  inputQty.forEach((el) => {
-    total.push(el.closest('tr').querySelector('.label--subtotal').innerText);
+  tableTotal.forEach((el) => {
+    total.push(el.innerText);
   });
 
   const grandTotal = total
-    .map((subtotal) => Number(subtotal.replace(',', '')))
+    .map((subtotal) => Number(subtotal.replaceAll(',', '')))
     .reduce((prev, curr) => prev + curr);
 
   lblGrandTotal.innerText = '₱ ' + formatNumber(grandTotal);
+}
 
-  return grandTotal;
+function updateTableSubtotal(target) {
+  const lblRowSubtotal = target
+    .closest('.table__container')
+    .querySelectorAll('.label--subtotal');
+
+  const lblTableSubtotal = target
+    .closest('.table__container')
+    .querySelector('.lbl--table__total');
+
+  const total = [];
+  lblRowSubtotal.forEach((el) => {
+    total.push(el.innerText);
+  });
+
+  const subtotal = total
+    .map((subtotal) => Number(subtotal.replaceAll(',', '')))
+    .reduce((prev, curr) => prev + curr);
+
+  lblTableSubtotal.innerText = formatNumber(subtotal);
 }
 
 function updateRowSubtotal(target) {
@@ -61,12 +62,13 @@ function updateRowSubtotal(target) {
     Number(lblUnitPrice.innerText.replace(',', '')) * Number(inputQty.value);
 
   lblSubTotal.innerText = formatNumber(newValue);
+
+  updateTableSubtotal(target);
 }
 
 function update(target) {
   updateRowSubtotal(target);
-  const grandTotal = updateGrandTotal();
-  updateSummary(grandTotal);
+  updateGrandTotal();
 }
 
 function editQty(e) {
@@ -91,7 +93,6 @@ function editQty(e) {
 
 function init() {
   const inputQty = document.querySelectorAll('.input--qty');
-  const btnSubmit = document.querySelector('.btn--submit__form');
 
   inputQty.forEach((element) => {
     element.addEventListener('change', editQty);
