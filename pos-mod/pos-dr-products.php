@@ -192,7 +192,6 @@ if (isset($_GET['next'])) {
                                     </div>
                                     <div class="col-sm-3 text-end ">
                                         <h6 class="fw-bold me-5 text-info lbl--grand__total">
-                                            {%GRAND_TOTAL%}
                                         </h6>
                                     </div>
                                 </div>
@@ -280,7 +279,7 @@ if (isset($_GET['next'])) {
                                                 <tr>
                                                     <?php
                                                     $limit = 0;
-                                                    $grandTotal = 0;
+                                                    $subtotal = 0;
                                                     while (count($prod_id) !== $limit) {
                                                         // $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
 
@@ -289,7 +288,7 @@ if (isset($_GET['next'])) {
                                                         //     continue;
                                                         // }
 
-                                                        $grandTotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
+                                                        $subtotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
 
                                                         if ($prod_id[$limit] != 0) {
 
@@ -320,7 +319,7 @@ if (isset($_GET['next'])) {
                                                 <h6 class="fw-bold ">Total:₱</h6>
                                             </div>
                                             <div class="col-sm-1 text-end">
-                                                <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                                <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($subtotal, 2) ?></span></h6>
                                             </div>
                                         </div>
                                     </div>

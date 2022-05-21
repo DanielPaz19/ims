@@ -94,6 +94,8 @@ function editQty(e) {
 function init() {
   const inputQty = document.querySelectorAll('.input--qty');
 
+  updateGrandTotal();
+
   inputQty.forEach((element) => {
     element.addEventListener('change', editQty);
   });
