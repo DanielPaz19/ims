@@ -104,6 +104,9 @@ if (isset($_GET['dr_number'])) {
         JO NUMBER:<br>
         <?php echo implode(", ", $jo) ?>
     </div>
+    <div style="position: fixed; bottom: 1cm">
+        <a href="../index.php">Exit Page</a>
+    </div>
 
 </body>
 
