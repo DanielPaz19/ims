@@ -15,7 +15,7 @@ include 'php/po_edit-inc.php';
       <div class="row">
         <div class="col-4">
           <div class="form-floating mb-3">
-            <input type="text" id="id" class="form-control" name="poId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
+            <input type="text" id="po_id" class="form-control" name="poId" value="<?php echo str_pad($poId, 8, 0, STR_PAD_LEFT) ?>" readonly>
             <label for="floatingInput">Purchase-Order ID</label>
           </div>
         </div>
