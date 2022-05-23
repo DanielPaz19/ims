@@ -43,6 +43,7 @@ if (isset($_POST['save'])) {
 
     // Insert into dr_products
     foreach ($jo_product_id as $key => $prod_id) {
+        if ($product_qty[$key] <= 0) continue;
         $dr->insert("dr_products", "dr_number,jo_product_id,dr_product_qty", "$dr_number,$jo_product_id[$key],$product_qty[$key]");
     }
 
@@ -68,5 +69,5 @@ if (isset($_POST['save'])) {
 
     // UPDATE dr number from order_tb with jo_numbers
 
-    header('Location: ../pos-dr.php?dr=saved');
+    header('Location: ./print_dr.php?dr_number=' . $dr_number);
 }
