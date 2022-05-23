@@ -54,15 +54,17 @@ if (isset($_GET['dr_number'])) {
         <?php
 
         $itemResult = $dr->getProductDetails($dr_number);
+        $grandTotal = 0;
         if ($itemResult->num_rows > 0) {
             while ($itemRow = $itemResult->fetch_assoc()) {
 
+                $grandTotal += $itemRow['subTotal'];
         ?>
 
 
                 <div>
                     <div style="display:inline-block ;">
-                        <?php echo $itemRow['dr_product_qty'] ?>
+                        <?php echo number_format($itemRow['dr_product_qty'], 2) ?>
                     </div>
                     <div style="display:inline-block ;">
                         <?php echo $itemRow['unit_name'] ?>
@@ -71,10 +73,10 @@ if (isset($_GET['dr_number'])) {
                         <?php echo $itemRow['product_name'] ?>
                     </div>
                     <div style="display:inline-block ;">
-                        <?php echo $itemRow['jo_product_price'] ?>
+                        <?php echo number_format($itemRow['jo_product_price'], 2) ?>
                     </div>
                     <div style="display:inline-block ;">
-                        <?php echo $itemRow['subTotal'] ?>
+                        <?php echo number_format($itemRow['subTotal'], 2) ?>
                     </div>
                 </div>
 
@@ -84,6 +86,12 @@ if (isset($_GET['dr_number'])) {
         }
 
         ?>
+
+        <br>
+        <div>
+            <?php echo number_format($grandTotal, 2) ?>
+        </div>
+
         <div>
             ****** NOTHING FOLLOWS ******
         </div>
