@@ -3,7 +3,7 @@ if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
 include('../php/config.php');
-include './php/database.php';
+include './php/Delivery.php';
 if (isset($_GET['next'])) {
 
     $joId = $_GET['jo_id'];
@@ -77,7 +77,7 @@ if (isset($_GET['next'])) {
 
             $drFilter = "order_product.pos_temp_price ='" . $row['jo_product_price'] . "' AND order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id']
                 . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
-            $delivery = new Database();
+            $delivery = new Delivery();
             $deliveryResults = $delivery->select($drRow, $drTable, $drFilter);
 
             if (mysqli_num_rows($deliveryResults) > 0) {
@@ -238,7 +238,7 @@ if (isset($_GET['next'])) {
                                     $itemTable = "jo_product LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id LEFT JOIN product ON product.product_id = jo_product.product_id";
                                     $itemFilter = "jo_product.jo_id = '$id'";
 
-                                    $item = new Database();
+                                    $item = new Delivery();
                                     $itemResult = $item->select($itemCol, $itemTable, $itemFilter);
 
 
@@ -248,8 +248,10 @@ if (isset($_GET['next'])) {
                                         $prod_name = [];
                                         $jo_prod_price = [];
                                         $jo_product_qty = [];
+                                        $jo_prod_id = [];
                                         while ($itemRow = mysqli_fetch_assoc($itemResult)) {
                                             $jo_num = $itemRow['jo_no'];
+                                            $jo_prod_id[] = $itemRow['jo_product_id'];
                                             $prod_id[] = $itemRow['product_id'];
                                             $prod_name[] = $itemRow['product_name'];
                                             $jo_prod_price[] = $itemRow['jo_product_price'];
@@ -281,12 +283,16 @@ if (isset($_GET['next'])) {
                                                     $limit = 0;
                                                     $subtotal = 0;
                                                     while (count($prod_id) !== $limit) {
-                                                        // $remainingItems =  $totalQty[$limit] - $deliveryArr[$limit];
 
-                                                        // if ($remainingItems == 0) {
-                                                        //     $limit++;
-                                                        //     continue;
-                                                        // }
+                                                        // Get total Delivered
+                                                        $delivered = $item->getItemTotalDelivered($jo_prod_id[$limit]);
+
+                                                        $remainingItems = $jo_product_qty[$limit] - $delivered;
+
+                                                        if ($remainingItems <= 0) {
+                                                            $limit++;
+                                                            continue;
+                                                        }
 
                                                         $subtotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
 
@@ -297,13 +303,13 @@ if (isset($_GET['next'])) {
                                                             # code...
                                                             echo
                                                             "
-                                                    <td><input name='product_id[]' type='hidden' value='$prod_id[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
+                                                    <td><input name='jo_product_id[]' type='hidden' value='$jo_prod_id[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                     <td>$prod_name[$limit]</td>
                                                     <td class='label--price'><input name='product_price[]' type='hidden' value='$jo_prod_price[$limit]'/>" . number_format($jo_prod_price[$limit], 2) . "</td>
-                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$jo_product_qty[$limit]' max='$jo_product_qty[$limit]' min='0' style='width:50%'/></td>
+                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$$remainingItems' min='0' style='width:50%'/></td>
                                                     <td>$unitName[$limit]</td>
                                                     
-                                                    <td class='label--subtotal'>" . number_format($jo_prod_price[$limit] * $jo_product_qty[$limit], 2) . "</td>
+                                                    <td class='label--subtotal'>" . number_format($jo_prod_price[$limit] * $remainingItems, 2) . "</td>
                                                     </tr>
                                                     ";
                                                         }

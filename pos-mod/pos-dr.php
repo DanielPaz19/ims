@@ -3,7 +3,7 @@ if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
 include('../php/config.php');
-include './php/database.php';
+include './php/Delivery.php';
 
 
 ?>
@@ -48,7 +48,7 @@ include './php/database.php';
 
                                         <?php if (isset($_GET['qry'])) {
                                             $customer_id = $_GET['qry'];
-                                            $getCustName = new Database();
+                                            $getCustName = new Delivery();
                                             $nameResult = $getCustName->select('*', 'customers', 'customers_id = ' . $customer_id);
 
                                             $nameRow = mysqli_fetch_assoc($nameResult);
@@ -63,7 +63,7 @@ include './php/database.php';
 
 
                                         <?php
-                                        $customer = new Database();
+                                        $customer = new Delivery();
                                         $customerResult = $customer->select('*', 'customers ', 'customers_name != "" ORDER BY customers_name ASC');
 
                                         while ($customerRow = mysqli_fetch_assoc($customerResult)) {
@@ -96,7 +96,7 @@ include './php/database.php';
                                 <tbody>
                                     <?php
 
-                                    $jo = new Database();
+                                    $jo = new Delivery();
 
                                     $table = "
                                 jo_tb
@@ -136,31 +136,34 @@ include './php/database.php';
                                         while ($row = mysqli_fetch_assoc($joResult)) {
                                             $jo_id = $row['jo_id'];
 
-                                            // Get Item already Released
-                                            $joItems = new Database();
-                                            $joItemsColumn = "order_product.order_id,
-                                                        order_product.product_id, 
-                                                        order_product.pos_temp_qty, 
-                                                        jo_tb.jo_id";
+                                            // // Get Item already Released
+                                            // $joItems = new Delivery();
+                                            // $joItemsColumn = "order_product.order_id,
+                                            //             order_product.product_id, 
+                                            //             order_product.pos_temp_qty, 
+                                            //             jo_tb.jo_id";
 
-                                            $joItemsTable = "order_product
-                                                        LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
-                                                        LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id";
+                                            // $joItemsTable = "order_product
+                                            //             LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
+                                            //             LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id";
 
-                                            $joItemsFilter = "jo_tb.jo_id = '$jo_id'";
+                                            // $joItemsFilter = "jo_tb.jo_id = '$jo_id'";
 
-                                            $joItemsResult = $joItems->select($joItemsColumn, $joItemsTable, $joItemsFilter);
+                                            // $joItemsResult = $joItems->select($joItemsColumn, $joItemsTable, $joItemsFilter);
+
+                                            // $totalReleased = 0;
+                                            // if (mysqli_num_rows($joItemsResult)) {
+                                            //     while ($joItemsRow = mysqli_fetch_assoc($joItemsResult)) {
+                                            //         $totalReleased += $joItemsRow['pos_temp_qty'];
+                                            //     }
+                                            // }
 
                                             $totalReleased = 0;
-                                            if (mysqli_num_rows($joItemsResult)) {
-                                                while ($joItemsRow = mysqli_fetch_assoc($joItemsResult)) {
-                                                    $totalReleased += $joItemsRow['pos_temp_qty'];
-                                                }
-                                            }
+                                            $totalReleased = $jo->getJoTotalDelivered($jo_id);
 
 
                                             // Get JO Product total qty
-                                            $joProduct = new Database();
+                                            $joProduct = new Delivery();
                                             $joProductColumn = "jo_product.jo_id, jo_product.jo_product_qty";
                                             $joProductTable = "jo_product";
                                             $joProductFilter = "jo_product.jo_id = '$jo_id'";

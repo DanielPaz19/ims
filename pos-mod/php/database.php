@@ -6,7 +6,7 @@ class Database
     private $username = 'root';
     private $password = '';
     private $dbname = 'inventorymanagement';
-    private $mysqli = '';
+    protected $mysqli = '';
 
     public function __construct()
     {
