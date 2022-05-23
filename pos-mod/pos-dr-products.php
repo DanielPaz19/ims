@@ -293,7 +293,7 @@ if (isset($_GET['next'])) {
                                                         if ($remainingItems <= 0) {
                                                             // $limit++;
                                                             // continue;
-                                                            $disabled = 'disabled';
+                                                            $disabled = 'readonly';
                                                         }
 
                                                         $subtotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
