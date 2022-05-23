@@ -306,7 +306,7 @@ if (isset($_GET['next'])) {
                                                     <td><input name='jo_product_id[]' type='hidden' value='$jo_prod_id[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
                                                     <td>$prod_name[$limit]</td>
                                                     <td class='label--price'><input name='product_price[]' type='hidden' value='$jo_prod_price[$limit]'/>" . number_format($jo_prod_price[$limit], 2) . "</td>
-                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$$remainingItems' min='0' style='width:50%'/></td>
+                                                    <td><input name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
                                                     <td>$unitName[$limit]</td>
                                                     
                                                     <td class='label--subtotal'>" . number_format($jo_prod_price[$limit] * $remainingItems, 2) . "</td>
