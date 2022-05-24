@@ -25,6 +25,7 @@ $poRemarks = $_GET['po_remarks'];
 $poTerms = $_GET['po_terms'];
 $supId = $_GET['sup_id'];
 $po_type_id = $_GET['po_type_id'];
+$ref_num = $_GET['ref_num'];
 
 if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Products are Empty
 
@@ -51,8 +52,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
     $limit++;
   }
 
-  $sql = "INSERT INTO po_tb (po_id,po_code, po_title ,po_date ,po_remarks, po_terms, po_type_id, sup_id, user_id)
-            VALUES ('$poId','$poCode','$poTitle','$poDate','$poRemarks','$poTerms','$po_type_id','$supId','" . $_SESSION['id'] . "')";
+  $sql = "INSERT INTO po_tb (po_id,po_code, po_title ,po_date ,po_remarks, po_terms, po_type_id, sup_id, user_id,ref_num)
+            VALUES ('$poId','$poCode','$poTitle','$poDate','$poRemarks','$poTerms','$po_type_id','$supId','" . $_SESSION['id'] . "','$ref_num')";
 
   if (mysqli_query($db, $sql)) {
     echo "<script>alert('New Record Added')</script>";
