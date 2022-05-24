@@ -370,6 +370,12 @@
               </div>
               <div class="col">
                 <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="ref_num" required>
+                  <label for="floatingInput">Reference No.</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-floating mb-3">
                   <input type="date" class="form-control" id="floatingInput" name="po_date" required>
                   <label for="floatingInput">Purchase-Order Date</label>
                 </div>

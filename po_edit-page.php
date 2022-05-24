@@ -41,6 +41,12 @@ include 'php/po_edit-inc.php';
         </div>
         <div class="col">
           <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="refNum" value="<?php echo $refNum ?>">
+            <label for="floatingInput">Reference No.</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating mb-3">
             <input type="date" class="form-control" name="poDate" value="<?php echo $poDate ?>">
             <label for="floatingInput">Purchase-Order Date</label>
           </div>

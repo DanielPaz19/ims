@@ -144,7 +144,7 @@
                                 if (isset($_POST['search'])) {
                                     $date1 = date("Y-m-d", strtotime($_POST['date1']));
                                     $date2 = date("Y-m-d", strtotime($_POST['date2']));
-                                    $query = mysqli_query($db, "SELECT po_tb.po_date, sup_tb.sup_name, po_tb.po_code, product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.pro_remarks, po_tb.po_type_id
+                                    $query = mysqli_query($db, "SELECT po_tb.po_date, sup_tb.sup_name, po_tb.po_code, product.product_name, po_product.item_qtyorder, unit_tb.unit_name, product.pro_remarks, po_tb.po_type_id,po_tb.ref_num
                                     FROM po_tb
                                     LEFT JOIN sup_tb ON sup_tb.sup_id = po_tb.sup_id
                                     LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
@@ -165,7 +165,7 @@
                                             <tr>
                                                 <td><?php echo $date ?><br></td>
                                                 <td><?php echo $fetch['sup_name'] ?></td>
-                                                <td><?php echo $fetch['po_code'] ?></td>
+                                                <td><?php echo $fetch['ref_num'] ?></td>
                                                 <td><?php echo $fetch['product_name'] ?></td>
                                                 <td><?php echo $fetch['item_qtyorder'] ?></td>
                                                 <td><?php echo $fetch['unit_name'] ?></td>
