@@ -1,9 +1,9 @@
 <?php
 
-include 'database.php';
+include 'PointOfSales.php';
 
 
-class Delivery extends Database
+class Delivery extends PointOfSales
 {
     function getItemTotalDelivered($jo_prod_id)
     {
