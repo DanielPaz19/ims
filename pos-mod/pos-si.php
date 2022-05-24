@@ -3,6 +3,8 @@ if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
 include('../php/config.php');
+include './php/Delivery.php';
+
 
 ?>
 
@@ -16,8 +18,8 @@ include('../php/config.php');
         <!-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" style="color: grey;cursor:not-allowed">Job-Order</a>
         </li> -->
-        <li class="nav-item" style="cursor: not-allowed;">
-            <a class="nav-link disabled" data-bs-toggle="tab" href="#" style="color: grey;cursor:not-allowed">Cashiering/Payments</a>
+        <li class="nav-item">
+            <a class=" nav-link" href="./index.php">Cashiering/Payments</a>
         </li>
         <li class="nav-item">
             <a class="nav-link " href="pos-dr.php">Delivery Reciepts</a>
@@ -33,48 +35,160 @@ include('../php/config.php');
             <!-- Tab panes -->
             <div class="tab-content">
                 <div id="home" class="tab-pane active" style="background-color: white;padding:1% ;border-left:1px solid #dee2e6;border-bottom:1px solid #dee2e6;border-right:1px solid #dee2e6;">
+
+
                     <div style="padding: 2%;">
-                        <a href="index.php"> <button type="button" class="btn btn-danger mb-3"><i class="bi bi-box-arrow-in-left"></i> Back to Job-Order</button> </a>
+
                         <div class="input-group flex-nowrap">
-                            <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
-                            <input type="text" class="form-control jo__modal--input jo__modal--input__search" placeholder="Search JO-Order No..." aria-label="Username" aria-describedby="addon-wrapping" style="width: 50%;">
+                            <form action="" method="get" class="row">
+                                <span class="col-1 input-group-text pe-0" id="addon-wrapping"><i class="bi bi-search"></i>
+                                </span>
+                                <span class="form-group col ps-0">
+                                    <select class="form-select" name="qry" id="" onchange="this.form.submit()">
+
+                                        <?php if (isset($_GET['qry'])) {
+                                            $customer_id = $_GET['qry'];
+                                            $getCustName = new Delivery();
+                                            $nameResult = $getCustName->select('*', 'customers', 'customers_id = ' . $customer_id);
+
+                                            $nameRow = mysqli_fetch_assoc($nameResult);
+
+                                            echo  "<option value='" . $nameRow['customers_id'] . "'>" .
+                                                $nameRow['customers_name'] . "
+                                            </option>";
+                                        } else {
+                                            echo  "<option value=''>Select Customer ...
+                                            </option>";
+                                        } ?>
+
+
+                                        <?php
+                                        $customer = new Delivery();
+                                        $customerResult = $customer->select('*', 'customers ', 'customers_name != "" ORDER BY customers_name ASC');
+
+                                        while ($customerRow = mysqli_fetch_assoc($customerResult)) {
+                                            $customerName = $customerRow['customers_name'];
+
+                                        ?>
+                                            <option value="<?php echo $customerRow['customers_id'] ?>">
+                                                <?php echo $customerRow['customers_name'] ?>
+                                            </option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </span>
+                            </form>
                         </div>
                         <br>
-                        <table class="jo__modal--table table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>JO No.</th>
-                                    <th>Customer</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (isset($joId)) {
-                                    $jolimit = 0;
-                                    while (count($joId) !== $jolimit) {
-                                        echo
-                                        "<tr>
-                                            <td class='jo__modal--td__jonumber'>" . $joNum[$jolimit] . "</td>
-                                            <td>" . $joCustomerName[$jolimit] . "</td>
-                                            <td>" . $joDate[$jolimit] . "</td>
-                                            <td><a href='pos-cashier.php?editJo&id=$joId[$jolimit] '><button class='btn btn-primary' title='Select'><i class='bi bi-caret-right-fill'></i></button></a></td>
-                                        </tr>";
+                        <form action="pos-si-items.php" method="get">
+                            <table class="jo__modal--table table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-center">DR No.</th>
+                                        <th class="text-center">Customer Name</th>
+                                        <th class="text-center">Amount</th>
+                                        <th class="text-center">Date</th>
+                                    </tr>
+                                </thead>
 
-                                        $jolimit++;
+                                <tbody>
+                                    <?php
+
+                                    if (isset($_GET['qry']) && $_GET['qry'] !== '') {
+                                        $query = $_GET['qry'];
+                                    } else {
+                                        $query = " ";
                                     }
-                                }
-                                ?>
-                                <!-- <tr>
-            <td>12-23456</td>
-            <td>Philippine Acrylic and Chemical Corp.</td>
-            <td>999,999.99</td>
-            <td>01-01-2021</td>
-          </tr> -->
-                            </tbody>
-                        </table>
+
+                                    $dr = new Delivery();
+                                    $drResult = $dr->getDrList($query);
+
+                                    if ($drResult->num_rows > 0) {
+                                        while ($drRow = $drResult->fetch_assoc()) {
+                                    ?>
+                                            <tr>
+                                                <td><input class="jo__checkbox" type="checkbox" name="dr_number[]" value="<?php echo $drRow['dr_number'] ?>" /></td>
+                                                <td class="text-center"><?php echo $drRow['dr_number'] ?></td>
+                                                <td><?php echo $drRow['customers_name'] ?></td>
+                                                <td class="text-end"><?php echo number_format($drRow['subTotal'], 2) ?></td>
+                                                <td class="text-center"><?php echo $drRow['dr_date'] ?></td>
+                                            </tr>
+
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+
+
+                                        <?php
+
+                                        if (isset($_GET['qry'])) {
+                                            echo ' <div class="alert alert-danger text-center fs-5">No record found!</div>';
+                                        } else {
+                                            echo ' <div class="alert alert-warning text-center fs-5">Choose Customer!</div>';
+                                        }
+
+                                        ?>
+
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <button type="submit" name="next" class="btn__next btn btn-success text-end disabled">Next <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <?php
+    if (isset($_GET['dr'])) {
+        $dr = $_GET['dr'];
+
+        if ($dr === 'saved') {
+    ?>
+            <script>
+                alert('Transaction Success:\n\nDR Transaction Saved!');
+            </script>
+    <?php
+
+        }
+    }
+
+    ?>
+
+
+    <script>
+        const joCheckbox = document.querySelectorAll('.jo__checkbox');
+        const btnNext = document.querySelector('.btn__next');
+
+        function checkBoxes(nodeList) {
+            let checked = false;
+
+            nodeList.forEach(element => {
+                if (element.checked) checked = true;
+            });
+
+            return checked;
+        }
+
+        joCheckbox.forEach(el => {
+            el.addEventListener('change', function() {
+                btnNext.classList.remove('disabled');
+
+                if (!checkBoxes(joCheckbox)) {
+                    btnNext.classList.add('disabled');
+                }
+            })
+        })
+    </script>
+    </body>
+
+    </html>
