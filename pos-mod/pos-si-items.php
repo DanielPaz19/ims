@@ -10,93 +10,7 @@ if (isset($_GET['next'])) {
 
     $dr = new Delivery();
 
-
-    $filter = 'WHERE jo_tb.jo_id IN (' . implode(',', $joId) . ')';
-
-    $result = mysqli_query(
-        $db,
-        "SELECT SUM(jo_product.jo_product_qty) AS totalQty, jo_tb.jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name,customers.customers_contact,customers.customers_address,customers.customers_id, jo_product.product_id, jo_product.jo_product_qty, jo_product.jo_product_price, product.product_name, unit_tb.unit_name, unit_tb.unit_id, employee_tb.emp_name, employee_tb.emp_id, jo_tb.jo_type_id, jo_type.jo_type_name, jo_type.jo_type_id,customers_company,jo_tb.jo_remarks
-        FROM jo_tb
-        LEFT JOIN jo_product ON jo_product.jo_id = jo_tb.jo_id
-        LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
-        LEFT JOIN product ON jo_product.product_id = product.product_id
-        LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-        LEFT JOIN employee_tb ON employee_tb.emp_id = jo_tb.emp_id
-        LEFT JOIN jo_type ON jo_type.jo_type_id = jo_tb.jo_type_id
-        $filter
-        GROUP BY jo_product.product_id, jo_product.jo_product_price
-        ORDER BY jo_product.jo_product_id ASC"
-    );
-
-
-    // PO Details
-    if (mysqli_num_rows($result) > 0) {
-        // output data of each row
-        while ($row = mysqli_fetch_assoc($result)) {
-            $customerName = $row['customers_company'];
-            $customerId = $row['customers_id'];
-            $customerCon = $row['customers_contact'];
-            $customerAdd = $row['customers_address'];
-            $joNo[] = $row['jo_no'];
-            $joIdArr[] = $row['jo_id'];
-            $empName = $row['emp_name'];
-            $empId = $row['emp_id'];
-            $joDate = $row['jo_date'];
-            $jo_type_id = $row['jo_type_id'];
-            $jo_type_name = $row['jo_type_name'];
-            $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
-            $productName[] = $row['product_name'];
-            $qtyIn[] = $row['jo_product_qty'];
-            $unitId[] = $row['unit_id'];
-            $unitName[] = $row['unit_name'];
-            $itemPrice[] = $row['jo_product_price'];
-            $total[] = $row["totalQty"] * $row["jo_product_price"];
-            $remarks = $row['jo_remarks'];
-            $totalQty[] = $row['totalQty'];
-
-            // SELECT order_product.product_id,
-            // order_product.order_product_id, 
-            // order_product.order_id, 
-            // order_product.pos_temp_qty
-            // order_tb.jo_id
-            // FROM order_product
-            // LEFT JOIN order_tb ON order_tb.order_id = order_product.order_id
-            // LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
-
-            // GET total delivered
-            $drRow = "
-            SUM(order_product.pos_temp_qty) AS totalDelivered,
-            order_product.product_id, 
-            order_product.order_product_id, 
-            order_product.order_id, 
-            order_product.pos_temp_qty,
-            order_product.pos_temp_price,
-            order_tb.jo_id";
-            $drTable = "order_product
-            LEFT JOIN order_tb ON order_tb.dr_number = order_product.dr_number
-            LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id ";
-
-            $drFilter = "order_product.pos_temp_price ='" . $row['jo_product_price'] . "' AND order_tb.jo_id ='" . $row['jo_id'] . "' AND order_product.product_id ='" . $row['product_id']
-                . "' GROUP BY  order_product.product_id, order_product.pos_temp_price";
-            $delivery = new Delivery();
-            $deliveryResults = $delivery->select($drRow, $drTable, $drFilter);
-
-            if (mysqli_num_rows($deliveryResults) > 0) {
-                while ($deliveryRow = mysqli_fetch_assoc($deliveryResults)) {
-                    $deliveryArr[] = $deliveryRow['totalDelivered'];
-                    $amountArr[] = $deliveryRow['pos_temp_price'] * $deliveryRow['totalDelivered'];
-                }
-            } else {
-                $deliveryArr[] = 0;
-                $amountArr[] = 0;
-            }
-
-            // Summ all deliverd product 
-            // Subtract delivered product to actual product
-        }
-    } else {
-        echo "0 results";
-    }
+    $customer = $dr->getCustomerDetails(implode(",", $dr_number));
 }
 ?>
 
@@ -114,10 +28,10 @@ if (isset($_GET['next'])) {
             <a class=" nav-link" href="./index.php">Cashiering/Payments</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="pos-dr.php">Delivery Reciepts</a>
+            <a class="nav-link " href="pos-dr.php">Delivery Reciepts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="pos-si.php">Sales Invoice</a>
+            <a class="nav-link active" href="pos-si.php">Sales Invoice</a>
         </li>
 
 
@@ -145,7 +59,7 @@ if (isset($_GET['next'])) {
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input disabled type="text" class="form-control" id="customerName floatingInput" style="width: 30%;height:50px" value="<?php echo str_pad($customerId, 8, 0, STR_PAD_LEFT)  ?>" disabled>
+                                        <input disabled type="text" class="form-control" id="customerName floatingInput" style="width: 30%;height:50px" value="<?php echo str_pad($customer['customers_id'], 8, 0, STR_PAD_LEFT)  ?>" disabled>
                                         <label for="floatingInput">Customer ID</label>
                                     </div>
                                 </div>
@@ -154,13 +68,13 @@ if (isset($_GET['next'])) {
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input disabled type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customerName ?>">
+                                        <input disabled type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo  $customer['customers_name'] ?>">
                                         <label for="floatingInput">Customer Name</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customerCon ?>" disabled>
+                                        <input type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customer['customers_contact'] ?>" disabled>
                                         <label for="floatingInput">Contact Number</label>
                                     </div>
                                 </div>
@@ -169,7 +83,7 @@ if (isset($_GET['next'])) {
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating mb-2">
-                                        <input type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customerAdd ?>" disabled>
+                                        <input type="text" class="form-control" id="floatingInput" style="height:50px" value="<?php echo $customer['customers_address'] ?>" disabled>
                                         <label for="floatingInput">Customer Address</label>
                                     </div>
                                 </div>
@@ -184,49 +98,10 @@ if (isset($_GET['next'])) {
 
                                 <div class="row mt-3">
                                     <div class="col-sm-3">
-                                        <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="dr_number" type="text" class="form-control" id="drNumber" placeholder='Enter DR Number' required>
-                                    </div>
-                                    <div class="col-sm-6 text-end">
-                                        <h6 class="fw-bold">
-                                            Grand Total:
-                                        </h6>
-                                    </div>
-                                    <div class="col-sm-3 text-end ">
-                                        <h6 class="fw-bold me-5 text-info lbl--grand__total">
-                                        </h6>
+                                        <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="invoice_number" type="text" class="form-control" id="drNumber" placeholder='Enter Invoice Number' required>
                                     </div>
                                 </div>
                         </div>
-
-                        <?php
-                        $limit = 0;
-                        $tax = ($total[$limit] - $amountArr[$limit]) / 1.12 * 0.12;
-                        $subTot = 0;
-                        $disTot = 0;
-
-                        $grandTot = $subTot - $disTot;
-                        while ($limit != count($total)) {
-                            $subTot += ($total[$limit] - $amountArr[$limit]);
-                            // $disTot += $totaldisamount[$limit];
-                            $limit += 1;
-                        }
-                        $net = $subTot - $tax;
-                        $grandTot = $subTot
-                        ?>
-
-                        <?php
-                        $qtyTot = 0;
-                        $limit = 0;
-                        while ($limit != count($qtyIn)) {
-
-                            $totItems =  $totalQty[$limit] - $deliveryArr[$limit];
-
-                            $qtyTot += $totItems;
-                            // $disTot += $totaldisamount[$limit];
-                            $limit += 1;
-                        }
-
-                        ?>
                         <div class="col-3">
 
                         </div>
@@ -234,109 +109,60 @@ if (isset($_GET['next'])) {
 
                             <br>
                             <div class='order-list-table_container table-responsive'>
-                                <?php foreach ($joId as $id) {
-                                    $itemCol = "product.product_name, jo_product.jo_product_id, jo_product.jo_id, jo_product.product_id, jo_product.jo_product_price, jo_product.jo_product_qty, jo_tb.jo_no";
-                                    $itemTable = "jo_product LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id LEFT JOIN product ON product.product_id = jo_product.product_id";
-                                    $itemFilter = "jo_product.jo_id = '$id'";
 
-                                    $item = new Delivery();
-                                    $itemResult = $item->select($itemCol, $itemTable, $itemFilter);
+                                <div class="table__container">
 
+                                    <table class="order-list table table-striped table-light" style="table-layout:fixed">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 8%;">Item Code</th>
+                                                <th style="width: 42%;">Item Decription</th>
+                                                <th style="width: 12%;">Unit Price</th>
+                                                <th style="width: 12%;">Qty</th>
+                                                <th style="width: 13%;">Unit</th>
+                                                <!-- <th>Discount</th> -->
+                                                <th style="width: 13%;">Sub-Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
+                                            <?php
 
-                                    if (mysqli_num_rows($itemResult) > 0) {
-                                        $prod_id = [];
-                                        $prod_name = [];
-                                        $jo_prod_price = [];
-                                        $jo_product_qty = [];
-                                        $jo_prod_id = [];
-                                        while ($itemRow = mysqli_fetch_assoc($itemResult)) {
-                                            $jo_num = $itemRow['jo_no'];
-                                            $jo_prod_id[] = $itemRow['jo_product_id'];
-                                            $prod_id[] = $itemRow['product_id'];
-                                            $prod_name[] = $itemRow['product_name'];
-                                            $jo_prod_price[] = $itemRow['jo_product_price'];
-                                            $jo_product_qty[] = $itemRow['jo_product_qty'];
-                                        }
-                                    }
+                                            $drItemsResult = $dr->getDrItems(implode(",", $dr_number));
 
-                                    echo "<h5 class='fst-italic'>JO Number: $jo_num</h5>";
-
-                                ?>
-                                    <div class="table__container">
-
-                                        <table class="order-list table table-striped table-light" style="table-layout:fixed">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 8%;">Item Code</th>
-                                                    <th style="width: 42%;">Item Decription</th>
-                                                    <th style="width: 12%;">Unit Price</th>
-                                                    <th style="width: 12%;">Qty</th>
-                                                    <th style="width: 13%;">Unit</th>
-                                                    <!-- <th>Discount</th> -->
-                                                    <th style="width: 13%;">Sub-Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <?php
-                                                    $limit = 0;
-                                                    $subtotal = 0;
-                                                    while (count($prod_id) !== $limit) {
-
-                                                        // Get total Delivered
-                                                        $delivered = $item->getItemTotalDelivered($jo_prod_id[$limit]);
-
-                                                        $remainingItems = $jo_product_qty[$limit] - $delivered;
-
-                                                        $disabled = '';
-                                                        if ($remainingItems <= 0) {
-                                                            // $limit++;
-                                                            // continue;
-                                                            $disabled = 'readonly';
-                                                        }
-
-                                                        $subtotal += $jo_prod_price[$limit] * $jo_product_qty[$limit];
-
-                                                        if ($prod_id[$limit] != 0) {
-
-
-                                                            // if ($remainingItems == 0) continue;
-                                                            # code...
-                                                            echo
-                                                            "
-                                                    <td><input name='jo_product_id[]' type='hidden' value='$jo_prod_id[$limit]'/>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
-                                                    <td>$prod_name[$limit]</td>
-                                                    <td class='label--price'><input name='product_price[]' type='hidden' value='$jo_prod_price[$limit]'/>" . number_format($jo_prod_price[$limit], 2) . "</td>
-                                                    <td><input $disabled name='qty[]' class='text-center border-0 text-danger fst-italic input--qty' required type='number' value='$remainingItems' max='$remainingItems' min='0' style='width:50%'/></td>
-                                                    <td>$unitName[$limit]</td>
-                                                    
-                                                    <td class='label--subtotal'>" . number_format($jo_prod_price[$limit] * $remainingItems, 2) . "</td>
+                                            $grandTotal = 0;
+                                            if ($drItemsResult->num_rows > 0) {
+                                                while ($itemRows = $drItemsResult->fetch_assoc()) {
+                                                    $grandTotal += $itemRows['totalRowAmount'];
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo str_pad($itemRows['product_id'], 8, 0, STR_PAD_LEFT) ?></td>
+                                                        <td><?php echo $itemRows['product_name'] ?></td>
+                                                        <td class='label--price'><?php echo number_format($itemRows['jo_product_price'], 2) ?></td>
+                                                        <td><?php echo number_format($itemRows['totalQty'], 2) ?></td>
+                                                        <td><?php echo $itemRows['unit_name'] ?></td>
+                                                        <td class='label--subtotal text-end'><?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
                                                     </tr>
-                                                    ";
-                                                        }
-                                                        $limit++;
-                                                    }
+                                            <?php
+                                                }
+                                            }
 
-                                                    ?>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="row container text-end mb-3">
-                                            <div class="col-sm-11">
-                                                <h6 class="fw-bold ">Total:₱</h6>
-                                            </div>
-                                            <div class="col-sm-1 text-end">
-                                                <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($subtotal, 2) ?></span></h6>
-                                            </div>
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <div class="row container text-end mb-3">
+                                        <div class="col-sm-11">
+                                            <h6 class="fw-bold ">Total:₱</h6>
+                                        </div>
+                                        <div class="col-sm-1 text-end">
+                                            <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
                                         </div>
                                     </div>
+                                </div>
 
-                                <?php } ?>
                                 <div class="mt-5 text-end">
                                     <button type='submit' name="save" class="btn btn-primary btn--submit__form"><i class="bi bi-check2-circle"></i> Save and Print</button>
-                                    <a href="pos-dr.php"><button type="button" class="btn btn-secondary">Go Back</button></a>
+                                    <a href="pos-si.php"><button type="button" class="btn btn-secondary">Go Back</button></a>
                                     </form>
                                 </div>
                             </div>
@@ -373,11 +199,6 @@ if (isset($_GET['next'])) {
         }
     }
     ?>
-
-
-    <script type='module' src="./js/script.js"> </script>
-
-
     </body>
 
     </html>
