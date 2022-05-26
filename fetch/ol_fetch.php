@@ -47,7 +47,8 @@ $total_filter_data = $statement->rowCount();
 
 $output = '
 <br>
-<table width="100%">
+
+<table class="table table-hover" width="100%">
   <tr>
     <th>OL ID</th>
     <th>DR No.</th>
@@ -69,25 +70,26 @@ if ($total_data > 0) {
 
 
         if ($closed == 0) {
-            $str = '<font color="green"><i class="fas fa-unlock" style="font-size:24px" title="Transaction Open"></i></font>';
+            $str = '<font color="green"><i class="bi bi-unlock-fill" style="font-size:24px"></i></font>';
             $disable = ' 
 
-                <a href="../ims/ol_edit-page.php?editOl&id=' . $row["ol_id"] . '" disabled> <i class="fa fa-edit" style="font-size:26px" title="Edit" ></i></a>
-      &nbsp;&nbsp;&nbsp;
-                <a href="#" onclick="confirmAction()"><font color="red"><i class="fa fa-trash-o" style="font-size:26px" title="Delete Record"></i></font></a>
-      &nbsp;&nbsp;&nbsp;
+                <a href="../ims/ol_edit-page.php?editOl&id=' . $row["ol_id"] . '" disabled> <button class="btn btn-success" title="Edit"><i class="bi bi-pencil-fill"></i></button></a>
+
+
+               
+     
                 <a href="commit/ol_commit.php?id=' . $row["ol_id"] . '">
-                    <i class="fa fa-check-square-o" style="font-size:26px" title="Commit"></i></a>
-      &nbsp;&nbsp;&nbsp;';
+                    <button class="btn btn-primary" title="Commit Record"><i class="bi bi-check2-circle"></i></button></a>
+
+
+                    <a href="#" onclick="confirmAction()"><font color="red"><button class="btn btn-danger" title="Delete"><i class="bi bi-trash3-fill"></i></button></a>
+    ';
         } else {
-            $str = '<font color="red"><i class="fas fa-lock" style="font-size:24px" title="Transaction Closed"></i></font>';
+            $str = '<font color="red"><i class="bi bi-lock-fill" style="font-size:24px;"></i></font>';
             $disable = '
-       <i class="fa fa-edit" style="font-size:26px; color: gray" title="Transaction Already Closed !" ></i>
-       &nbsp;&nbsp;&nbsp;
-      <i class="fa fa-trash-o" style="font-size:26px; color: gray" title="Transaction Already Closed !"></i>
-      &nbsp;&nbsp;&nbsp;
-      <i class="fa fa-check-square-o" style="font-size:26px; color: gray"" title="Transaction Already Closed !"></i>
-      &nbsp;&nbsp;&nbsp;';
+            <button class="btn" title="Edit" style="cursor:not-allowed;background-color:lightgrey"><i class="bi bi-pencil-fill" ></i></button>
+            <button class="btn" style="cursor:not-allowed;background-color:lightgrey"><i class="bi bi-check2-circle"></i></button>
+             <button class="btn" title="Delete" style="cursor:not-allowed;background-color:lightgrey"><i class="bi bi-trash3-fill"></i></button>';
         }
         $output .= '
     <tr>
@@ -98,8 +100,8 @@ if ($total_data > 0) {
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td><center>
                ' . $disable . '
-                <a href="view/viewol.php?id=' . $row["ol_id"] . '">
-                <i class="fa fa-print" style="font-size:26px" title="Details"></i></a>
+                <a href="view/viewsi_2.php?id=' . $row["ol_id"] . '"><button class="btn btn-info" title="Details" style="color:white"><i class="bi bi-printer-fill"></i></button></a>
+              
       </center>
      
       </td>
@@ -171,17 +173,17 @@ for ($count = 0; $count < count($page_array); $count++) {
     if ($page == $page_array[$count]) {
         $page_link .= '
     <li class="page-item active">
-      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only">(current)</span></a>
+      <a class="page-link" href="#">' . $page_array[$count] . ' <span class="sr-only"></span></a>
     </li>
     ';
 
         $previous_id = $page_array[$count] - 1;
         if ($previous_id > 0) {
-            $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">Previous</a></li>';
+            $previous_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $previous_id . '">&laquo;</a></li>';
         } else {
             $previous_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#">Previous</a>
+        <a class="page-link" href="#">&laquo;</a>
       </li>
       ';
         }
@@ -189,11 +191,11 @@ for ($count = 0; $count < count($page_array); $count++) {
         if ($next_id >= $total_links) {
             $next_link = '
       <li class="page-item disabled">
-        <a class="page-link" href="#">Next</a>
+        <a class="page-link" href="#">&raquo;</a>
       </li>
         ';
         } else {
-            $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">Next</a></li>';
+            $next_link = '<li class="page-item"><a class="page-link" href="javascript:void(0)" data-page_number="' . $next_id . '">&raquo;</a></li>';
         }
     } else {
         if ($page_array[$count] == '...') {

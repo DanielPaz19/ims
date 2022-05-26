@@ -1,99 +1,103 @@
 <?php
 
-include_once 'header.php';
+include_once 'headerv2.php';
 include 'php/ol_edit-inc.php';
 ?>
 
 
 <link rel="stylesheet" href="css/ol_edit-style.css">
 <script defer src="js/ol_edit-script.js"></script>
-
-<h1 style="float: left; margin-left: 50px">Online Transactions: Editing Records</h1> <br><br><br>
-<hr>
-<form action="php/ol_edit-inc.php" method="POST">
-    <div class='container--details'>
-        <a href="ol_main.php"><i class="fa fa-close" style="font-size:24px; float:right; color:midnightblue;" title="Exit"></i></a>
-        <span class="po__label">
-            OL ID:
-        </span>
-        <input type="text" name="olId" id="id" class="textId" value="<?php echo str_pad($olId, 8, 0, STR_PAD_LEFT) ?>" readonly>
-        <br>
-        <span class="po__label">
-            Sales type:
-        </span>
-        <select name="oltypeId" style="width: 180px;">
-            <option value="<?php echo $oltypeId ?>"><?php echo $olTypeName; ?></option>
-            <?php
-            include "config.php";
-            $records = mysqli_query($db, "SELECT * FROM ol_type ORDER BY ol_type_name ASC");
-
-            while ($data = mysqli_fetch_array($records)) {
-                echo "<option value='" . $data['ol_type_id'] . "'>" . $data['ol_type_name'] . "</option>";
-            }
-            ?>
-        </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;
+<div style="padding: 2%;">
+    <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff;height:80vh;">
+        <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Online Transactions : Editing Records <i class="bi bi-pencil"></i></h4>
+        <hr>
 
 
-        <span class=" po__label">
-            OR No.:
-        </span>
-        <input type="text" name="olTitle" id="po_title" value="<?php echo $olTitle ?>">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span class=" po__label">
-            SI No.:
-        </span>
-        <input type="text" name="olSi" id="po_title" value="<?php echo $olSi ?>">
-        <span class="po__label">
-            OL Date:
-        </span>
-        <input type="date" name="olDate" id="po_date" value="<?php echo $olDate ?>">
+
+        <form action="php/ol_edit-inc.php" method="POST">
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="id" name="olId" value="<?php echo str_pad($olId, 8, 0, STR_PAD_LEFT) ?>" style="width:auto" readonly>
+                <label for="floatingInput"> Online Trans ID</label>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" name="oltypeId">
+                            <option value="<?php echo $oltypeId ?>"><?php echo $olTypeName; ?></option>
+                            <?php
+                            include "config.php";
+                            $records = mysqli_query($db, "SELECT * FROM ol_type ORDER BY ol_type_name ASC");
+
+                            while ($data = mysqli_fetch_array($records)) {
+                                echo "<option value='" . $data['ol_type_id'] . "'>" . $data['ol_type_name'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <label for="floatingSelect">Online Platform</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="olTitle" class="form-control" id="floatingInput" value="<?php echo $olTitle ?>">
+                        <label for="floatingInput">OR No. </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="olSi" class="form-control" id="floatingInput" value="<?php echo $olSi ?>">
+                        <label for="floatingInput">SI No. </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="date" name="olDate" class="form-control" id="floatingInput" value="<?php echo $olDate ?>">
+                        <label for="floatingInput">Online Transaction Date </label>
+                    </div>
+                </div>
+            </div>
 
 
-    </div>
 
-    <div class="button__container--insert_item">
 
-        <div class="container--table">
-            <button class="edit__button edit__button--insert__item" style="float: left; margin-bottom:5px;"><i class="fa fa-plus"></i>&nbsp;Add item</button>
-            <button class="edit__button button--update" name='update' style="float: right; margin-bottom:5px;  cursor: pointer;
-   cursor: pointer;
-  height: 50px;
-  width: 150px;
-  border-radius: 5px;
-  background-color: midnightblue;
-  color: #ffffff;
-  font-size: 18px;
-  letter-spacing: 2px;"><i class="fa fa-check" style="color:chartreuse;"></i>&nbsp;Update</button>
-            <table class='table'>
-                <thead>
-                    <tr style="text-align: left;">
-                        <th style="width: 15%;">&nbsp;&nbsp;Product ID</th>
-                        <th style="width: 50%;">&nbsp;&nbsp;Item Name</th>
-                        <th style="width: 10%;">&nbsp;&nbsp;Qty</th>
-                        <th style="width: 10%;">&nbsp;&nbsp;Unit</th>
-                        <th style="width: 8%;">&nbsp;&nbsp;SRP</th>
-                        <th style="width: 10%;">&nbsp;&nbsp;Less Fee</th>
-                        <th style="width: 15%;">&nbsp;&nbsp;Total Price</th>
-                        <th style="width: 10%;">
-                        </th>
+            <div class="row">
+                <div class="col">
+                    <h5>Product Table</h5>
+                </div>
+                <div class="col"> <button class="edit__button edit__button--insert__item btn btn-primary" style="float: right; margin-bottom:5px"><i class="bi bi-plus-circle"></i> Add Product</button>
+                </div>
+            </div>
+            <div class="table-responsive" style="height: 40vh;overflow-y:scroll">
+                <table class='table'>
+                    <thead>
+                        <tr style="text-align: left;">
+                            <th style="width: 10%;">&nbsp;&nbsp;Product ID</th>
+                            <th style="width: 40%;">&nbsp;&nbsp;Item Name</th>
+                            <th style="width: 10%;">&nbsp;&nbsp;Qty</th>
+                            <th style="width: 10%;">&nbsp;&nbsp;Unit</th>
+                            <th style="width: 10%;">&nbsp;&nbsp;SRP</th>
+                            <th style="width: 10%;">&nbsp;&nbsp;Less Fee</th>
+                            <th style="width: 10%;">&nbsp;&nbsp;Total Price</th>
+                            <th style="width: 10%;">
+                            </th>
 
-                    </tr>
-                </thead>
-                <tbody class='table--item'>
+                        </tr>
+                    </thead>
+                    <tbody class='table--item'>
 
-                    <?php
+                        <?php
 
-                    $limit = 0;
-                    $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
+                        $limit = 0;
+                        $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
 
-                    if (isset($productId)) {
-                        while (count($productId) !== $limit) {
-                            if ($productId[$limit] != 0) {
-                                $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
-                                # code...
-                                echo
-                                "<tr style='text-align:left;'>
+                        if (isset($productId)) {
+                            while (count($productId) !== $limit) {
+                                if ($productId[$limit] != 0) {
+                                    $total = $itemPrice[$limit] * $qtyIn[$limit] - $itemFee[$limit];
+                                    # code...
+                                    echo
+                                    "<tr style='text-align:left;'>
         <td class='td__readonly td__readonly--productid'>" . str_pad($productId[$limit], 8, 0, STR_PAD_LEFT) . "</td>
         <td class='td__readonly td__readonly--itemname'>$productName[$limit]</td>
         <td class='td__edit td__edit--qty'>" . $qtyIn[$limit] . "</td>
@@ -111,18 +115,25 @@ include 'php/ol_edit-inc.php';
          <input type='hidden' name='itemTotal[]' value='$total' class='input__edit input__edit--total'>
          </tr>
          ";
+                                }
+                                $limit++;
                             }
-                            $limit++;
                         }
-                    }
 
-                    ?>
+                        ?>
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="container--edit__button">
+                <button class="edit__button button--update btn btn-success" name='update'><i class="bi bi-check2-circle"></i> Update Records</button>
+                <a href="ol_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
+            </div>
+        </form>
+    </div>
 
-</form>
+</div>
 
 
 <div class="container--modal">
