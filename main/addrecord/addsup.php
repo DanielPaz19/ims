@@ -32,6 +32,19 @@
             <input type="number" class="form-control" id="floatingInput" name="sup_tin">
             <label for="floatingInput"> TIN No.</label>
           </div>
+          <div class="form-floating  mb-3">
+            <select class="form-select" id="sel1" name="tax_type_id">
+              <?php
+              include "php/config.php";
+              $records = mysqli_query($db, "SELECT * FROM tax_type_tb");
+
+              while ($data = mysqli_fetch_array($records)) {
+                echo "<option value='" . $data['tax_type_id'] . "'>" . $data['tax_type_name'] . "</option>";
+              }
+              ?>
+            </select>
+            <label for="sel1" class="form-label">Tax Type</label>
+          </div>
           <button type="submit" class="btn btn-success" name="add_sup">Save Record</button>
         </form>
       </div>

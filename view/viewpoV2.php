@@ -254,20 +254,29 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     }
 
                     $grandTot = $subTot - $disTot;
-
+                    $ewt1 = $grandTot / 1.12;
+                    $ewt2 = $ewt1 * 0.01;
+                    $grandTot2 = $grandTot - $ewt2;
                     ?>
                     <tr>
-                        <td><label class="totDiv"> Sub Total:</label>&nbsp;</td>
-                        <td>&#8369;&nbsp;<?php echo number_format($subTot, 2); ?></td>
-                    </tr>
-
-                    <tr>
-                        <td><label class="totDiv"> Total Discount:</label></td>
-                        <td>&#8369;&nbsp;<?php echo number_format($disTot, 2)  ?></td>
+                        <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
+                        <td>: <?php echo number_format($subTot, 2); ?></td>
                     </tr>
                     <tr>
-                        <td><label class="totDivGrand"> Grand Total:&nbsp; </label></td>
-                        <td><label class="totDivGrand">&#8369;&nbsp;<?php echo number_format($grandTot, 2) ?></label></td>
+                        <td><label class="totDiv"> Discount Total</label></td>
+                        <td>: <?php echo number_format($disTot, 2)  ?></td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv">Gross&nbsp; </label></td>
+                        <td><label class="totDiv">: <?php echo number_format($grandTot, 2) ?></label></td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv"> EWT</label></td>
+                        <td>: <?php echo number_format($ewt2, 2)  ?></td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDivGrand"> Grand Total</label></td>
+                        <td><label class="totDivGrand">: &#8369;&nbsp;<?php echo number_format($grandTot2, 2)  ?></label></td>
                     </tr>
                 </table>
 

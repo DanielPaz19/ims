@@ -10,20 +10,26 @@ if (isset($_POST['sup_submit'])) {
   $sup_address = mysqli_real_escape_string($db, $_POST['sup_address']);
   $sup_email = mysqli_real_escape_string($db, $_POST['sup_email']);
   $sup_tin = mysqli_real_escape_string($db, $_POST['sup_tin']);
+  $tax_type_id = mysqli_real_escape_string($db, $_POST['tax_type_id']);
 
 
 
 
-  mysqli_query($db, "UPDATE sup_tb SET sup_name='$sup_name', sup_conper='$sup_conper' ,sup_tel='$sup_tel' ,sup_address='$sup_address' ,sup_email='$sup_email', sup_tin='$sup_tin' WHERE sup_id='$id'");
+  mysqli_query($db, "UPDATE sup_tb SET sup_name='$sup_name', sup_conper='$sup_conper' ,sup_tel='$sup_tel' ,sup_address='$sup_address' ,sup_email='$sup_email', sup_tin='$sup_tin', tax_type_id='$tax_type_id' WHERE sup_id='$id'");
 
-  header("Location:../sup_main.php");
+
+  echo
+  '<script>
+alert("Successfully updated!");
+location.href = "sup_edit.php?id=' . $id . '";
+</script>';
 }
 
 
 if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
   $id = $_GET['id'];
-  $result = mysqli_query($db, "SELECT * FROM sup_tb WHERE sup_id=" . $_GET['id']);
+  $result = mysqli_query($db, "SELECT * FROM sup_tb INNER JOIN tax_type_tb ON tax_type_tb.tax_type_id = sup_tb.tax_type_id WHERE sup_id=" . $_GET['id']);
 
   $row = mysqli_fetch_array($result);
 
@@ -36,6 +42,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     $sup_address = $row['sup_address'];
     $sup_email = $row['sup_email'];
     $sup_tin = $row['sup_tin'];
+    $tax_type_id = $row['tax_type_id'];
+    $tax_type_name = $row['tax_type_name'];
   } else {
     echo "No results!";
   }
@@ -98,10 +106,26 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <label for="floatingInput">Email</label>
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-5">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" name="sup_tin" value="<?php echo $sup_tin; ?>">
             <label for="floatingInput">Tin No.</label>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-floating  mb-3">
+            <select class="form-select" id="sel1" name="tax_type_id">
+              <option value="<?php echo $tax_type_id ?>"><?php echo $tax_type_name; ?></option>
+              <?php
+              include "php/config.php";
+              $records = mysqli_query($db, "SELECT * FROM tax_type_tb");
+
+              while ($data = mysqli_fetch_array($records)) {
+                echo "<option value='" . $data['tax_type_id'] . "'>" . $data['tax_type_name'] . "</option>";
+              }
+              ?>
+            </select>
+            <label for="sel1" class="form-label">Tax Type</label>
           </div>
         </div>
       </div>
