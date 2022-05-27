@@ -17,9 +17,10 @@ if (isset($_POST['add_sup'])) {
   $sup_address = mysqli_real_escape_string($db, $_POST['sup_address']);
   $sup_email = mysqli_real_escape_string($db, $_POST['sup_email']);
   $sup_tin = mysqli_real_escape_string($db, $_POST['sup_tin']);
+  $tax_type_id = mysqli_real_escape_string($db, $_POST['tax_type_id']);
 
-  $query = "INSERT INTO sup_tb (sup_name,sup_conper,sup_tel,sup_address,sup_email,sup_tin) 
-  			  VALUES('$sup_name','$sup_conper','$sup_tel','$sup_address','$sup_email','$sup_tin')";
+  $query = "INSERT INTO sup_tb (sup_name,sup_conper,sup_tel,sup_address,sup_email,sup_tin,tax_type_id) 
+  			  VALUES('$sup_name','$sup_conper','$sup_tel','$sup_address','$sup_email','$sup_tin','$tax_type_id')";
 
   if (mysqli_query($db, $query)) {
   } else {
