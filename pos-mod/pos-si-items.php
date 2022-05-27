@@ -41,7 +41,8 @@ if (isset($_GET['next'])) {
         <div class="col">
             <!-- Tab panes -->
             <div class="tab-content">
-                <div id="menu1" class="tab-pane active" style="background-color: white;padding:1% ;border-left:1px solid #dee2e6;border-bottom:1px solid #dee2e6;border-right:1px solid #dee2e6;"><br>
+                <div id="menu1" class="tab-pane active" style="background-color: white;padding:1% ;border-left:1px solid #dee2e6;border-bottom:1px solid #dee2e6;border-right:1px solid #dee2e6;">
+                    <br>
                     <div class="container">
                         <div class="row" style="margin-top: -30px;">
                             <div class="row">
@@ -98,7 +99,50 @@ if (isset($_GET['next'])) {
 
                                 <div class="row mt-3">
                                     <div class="col-sm-3">
-                                        <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="invoice_number" type="text" class="form-control" id="drNumber" placeholder='Enter Invoice Number' required>
+                                        <?php
+
+                                        $inputInvoice = "<input autocomplete='off' 
+                                                        pattern='\d\d\d\d\d\d' 
+                                                        title='Example: 123456' 
+                                                        name='invoice_number' 
+                                                        type='text' 
+                                                        class='form-control' 
+                                                        id='drNumber' 
+                                                        placeholder='Enter Invoice Number' required>";
+
+                                        if (isset($_GET['error'])) {
+                                            if ($_GET['error'] == 'duplicate_invoice') {
+                                                $inputInvoice = "<input autocomplete='off' 
+                                               pattern='\d\d\d\d\d\d' 
+                                               title='Example: 123456' 
+                                               name='invoice_number' 
+                                               type='text' 
+                                               class='form-control border-danger' 
+                                               id='drNumber' 
+                                               value='" . $_GET['invoice_number'] . "'
+                                               placeholder='Enter Invoice Number' required>";
+                                            }
+                                        }
+
+                                        echo $inputInvoice;
+                                        ?>
+                                        <!-- <input autocomplete="off" pattern="\d\d\d\d\d\d" title="Example: 123456" name="invoice_number" type="text" class="form-control border-danger" id="drNumber" placeholder='Enter Invoice Number' required> -->
+                                    </div>
+                                    <div class="col">
+                                        <!-- <span class="text-danger">
+                                            Duplicate Invoice!
+                                        </span> -->
+                                        <?php
+                                        if (isset($_GET['error'])) {
+                                            if ($_GET['error'] == 'duplicate_invoice') {
+                                                echo "
+                                                <span class='text-danger'>
+                                                    Invoice Number Already Used!
+                                                </span>";
+                                            }
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                         </div>
@@ -136,12 +180,15 @@ if (isset($_GET['next'])) {
                                                     $grandTotal += $itemRows['totalRowAmount'];
                                             ?>
                                                     <tr>
-                                                        <td><?php echo str_pad($itemRows['product_id'], 8, 0, STR_PAD_LEFT) ?></td>
+                                                        <td><?php echo str_pad($itemRows['product_id'], 8, 0, STR_PAD_LEFT) ?>
+                                                        </td>
                                                         <td><?php echo $itemRows['product_name'] ?></td>
-                                                        <td class='label--price'><?php echo number_format($itemRows['jo_product_price'], 2) ?></td>
+                                                        <td class='label--price'>
+                                                            <?php echo number_format($itemRows['jo_product_price'], 2) ?></td>
                                                         <td><?php echo number_format($itemRows['totalQty'], 2) ?></td>
                                                         <td><?php echo $itemRows['unit_name'] ?></td>
-                                                        <td class='label--subtotal text-end'><?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
+                                                        <td class='label--subtotal text-end'>
+                                                            <?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
                                                     </tr>
                                             <?php
                                                 }
@@ -159,7 +206,8 @@ if (isset($_GET['next'])) {
                                                     <h6 class="fw-bold ">Total:₱</h6>
                                                 </div>
                                                 <div class="col-sm-2 text-end">
-                                                    <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                                    <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span>
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +217,8 @@ if (isset($_GET['next'])) {
 
                                 <div class="mt-5 text-end">
                                     <button type='submit' name="save" class="btn btn-primary btn--submit__form"><i class="bi bi-check2-circle"></i> Save and Print</button>
-                                    <a href="pos-si.php"><button type="button" class="btn btn-secondary">Go Back</button></a>
+                                    <a href="pos-si.php"><button type="button" class="btn btn-secondary">Go
+                                            Back</button></a>
                                     </form>
                                 </div>
                             </div>
