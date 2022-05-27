@@ -89,7 +89,7 @@ if (isset($_GET['next'])) {
                                 </div>
                             </div>
 
-                            <form action="./php/dr_save.php?<?php echo http_build_query(array('jo_id' => $joId)); ?>" method="post">
+                            <form action="./php/invoice_save.php?<?php echo http_build_query(array('dr_number' => $dr_number)); ?>" method="post">
                                 <div class="row order-list-container">
                                     <div class="col">
                                         <h4><i class="bi bi-cart4"></i> Order Details</h4>
@@ -146,17 +146,24 @@ if (isset($_GET['next'])) {
                                             <?php
                                                 }
                                             }
-
                                             ?>
                                         </tbody>
                                     </table>
-                                    <div class="row container text-end mb-3">
-                                        <div class="col-sm-11">
-                                            <h6 class="fw-bold ">Total:₱</h6>
+                                    <div class=" container container--summary row">
+                                        <div class="col-sm-6">
+
                                         </div>
-                                        <div class="col-sm-1 text-end">
-                                            <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                        <div class="col-sm-6">
+                                            <div class="row container text-end mb-3">
+                                                <div class="col-sm-10">
+                                                    <h6 class="fw-bold ">Total:₱</h6>
+                                                </div>
+                                                <div class="col-sm-2 text-end">
+                                                    <h6 class="fw-bold "><span class="text-success lbl--table__total"><?php echo number_format($grandTotal, 2) ?></span></h6>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
 
