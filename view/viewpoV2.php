@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, po_tb.po_terms, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address,sup_tb.sup_tel, sup_tb.sup_tin, sup_tb.sup_email,sup_tb.sup_id FROM sup_tb INNER JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  WHERE po_id=" . $_GET['id']);
+    $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, po_tb.po_terms, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address,sup_tb.sup_tel, sup_tb.sup_tin, sup_tb.sup_email,sup_tb.sup_id, sup_tb.tax_type_id FROM sup_tb INNER JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  WHERE po_id=" . $_GET['id']);
 
 
     $row = mysqli_fetch_array($result);
@@ -25,6 +25,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'F d, Y');
         $sup_id = $row['sup_id'];
+        $tax_type_id = $row['tax_type_id'];
     } else {
         echo "No results!";
     }
@@ -242,44 +243,75 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <div class="subtot">
                 <table>
                     <?php
+                    if ($tax_type_id == 1) {
+                        $limit = 0;
+                        $subTot = 0;
+                        $disTot = 0;
 
-                    $limit = 0;
-                    $subTot = 0;
-                    $disTot = 0;
+                        while ($limit != count($total)) {
+                            $subTot += $total[$limit];
+                            $disTot += $totaldisamount[$limit];
+                            $limit += 1;
+                        }
 
-                    while ($limit != count($total)) {
-                        $subTot += $total[$limit];
-                        $disTot += $totaldisamount[$limit];
-                        $limit += 1;
-                    }
-
-                    $grandTot = $subTot - $disTot;
-                    $ewt1 = $grandTot / 1.12;
-                    $ewt2 = $ewt1 * 0.01;
-                    $grandTot2 = $grandTot - $ewt2;
-                    ?>
-                    <tr>
+                        $grandTot = $subTot - $disTot;
+                        $ewt1 = $grandTot / 1.12;
+                        $ewt2 = $ewt1 * 0.01;
+                        $grandTot2 = $grandTot - $ewt2;
+                        echo '<tr>
                         <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
-                        <td>: <?php echo number_format($subTot, 2); ?></td>
+                        <td>: ' . number_format($subTot, 2) . '</td>
                     </tr>
                     <tr>
                         <td><label class="totDiv"> Discount Total</label></td>
-                        <td>: <?php echo number_format($disTot, 2)  ?></td>
+                        <td>: ' . number_format($disTot, 2) . '</td>
                     </tr>
                     <tr>
-                        <td><label class="totDiv">Gross&nbsp; </label></td>
-                        <td><label class="totDiv">: <?php echo number_format($grandTot, 2) ?></label></td>
+                        <td><label class="totDivGrand">Grand Total &nbsp; </label></td>
+                        <td><label class="totDivGrand">: ' . number_format($grandTot, 2) . '</label></td>
                     </tr>
-                    <tr>
-                        <td><label class="totDiv"> EWT</label></td>
-                        <td>: <?php echo number_format($ewt2, 2)  ?></td>
-                    </tr>
-                    <tr>
-                        <td><label class="totDivGrand"> Grand Total</label></td>
-                        <td><label class="totDivGrand">: &#8369;&nbsp;<?php echo number_format($grandTot2, 2)  ?></label></td>
-                    </tr>
-                </table>
 
+                   ';
+                    } else {
+                        $limit = 0;
+                        $subTot = 0;
+                        $disTot = 0;
+
+                        while ($limit != count($total)) {
+                            $subTot += $total[$limit];
+                            $disTot += $totaldisamount[$limit];
+                            $limit += 1;
+                        }
+
+                        $grandTot = $subTot - $disTot;
+                        $ewt1 = $grandTot / 1.12;
+                        $ewt2 = $ewt1 * 0.01;
+                        $grandTot2 = $grandTot - $ewt2;
+                        echo '<tr>
+                        <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
+                        <td>: ' . number_format($subTot, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv"> Total Discount</label></td>
+                        <td>: ' . number_format($disTot, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv">Gross &nbsp; </label></td>
+                        <td><label class="totDiv">: ' . number_format($grandTot, 2) . '</label></td>
+                    </tr>
+                    <tr>
+                    <td><label class="totDiv">EWT &nbsp; </label></td>
+                    <td><label class="totDiv">: ' . number_format($ewt2, 2) . '</label></td>
+                </tr>
+                <tr>
+                    <td><label class="totDivGrand">Grand Total &nbsp; </label></td>
+                    <td><label class="totDivGrand">: ' . number_format($grandTot2, 2) . '</label></td>
+                </tr>
+
+                   ';
+                    }
+                    ?>
+                </table>
             </div>
 
             <div class="footer">
