@@ -55,11 +55,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         <div class="dr_table">
             <table class="items" style="position: absolute;">
                 <?php
-                $sql = "SELECT product.product_id, product.product_name, order_product.pos_temp_qty, unit_tb.unit_name, order_product.pos_temp_price, product.qty,order_product.pos_temp_tot
-                FROM order_product
-                LEFT JOIN product ON product.product_id = order_product.product_id
-                LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
-                WHERE order_product.order_id='$id'  ";
+                $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ol_product.ol_qty, ol_product.ol_price, ol_product.ol_priceTot, ol_product.ol_fee
+                FROM product 
+                LEFT JOIN ol_product ON product.product_id = ol_product.product_id
+                LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ol_product.ol_id='$id' ";
                 $result = $db->query($sql);
                 $count = 0;
 
@@ -68,21 +67,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     while ($irow = $result->fetch_assoc()) {
 
                         $limit = 0;
-                        $posQty = $irow["pos_temp_qty"];
-                        $posPrice = $irow["pos_temp_price"];
+                        $olQty = $irow["ol_qty"];
+                        $olPrice = $irow["ol_price"];
+                        $olfc = $irow["ol_fee"];
                         $productId = $irow["product_id"];
-                        $total[] = $posQty * $posPrice;
+                        $total[] = $olQty * $olPrice - $olfc;
+
 
 
 
 
                 ?>
                         <tr>
-                            <td style="width: 2.2cm;height:0.7cm;text-align:center"><?php echo $irow['pos_temp_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
+                            <td style="width: 2.2cm;height:0.7cm;text-align:center"><?php echo $irow['ol_qty'] ?>&nbsp;<?php echo $irow['unit_name'] ?></td>
                             <td style="font-size: 12.8px;width: 12.8cm;"><?php echo $irow['product_name'] ?></td>
-                            <td style="width: 1.9cm;text-align:right;font-size: 12.8px"><?php echo number_format($irow['pos_temp_price'], 2)  ?>/<?php echo $irow['unit_name']; ?></td>
+                            <td style="width: 1.9cm;text-align:right;font-size: 12.8px"><?php echo number_format($irow['ol_price'], 2)  ?>/<?php echo $irow['unit_name']; ?></td>
                             <td style="width: 0.95cm;"></td>
-                            <td style="width: 2.5cm;;font-size: 12.8px">&#8369;<?php echo number_format($posQty * $posPrice, 2) ?></td>
+                            <td style="width: 2.5cm;;font-size: 12.8px">&#8369;<?php echo number_format($olQty * $olPrice - $olfc, 2) ?></td>
                         </tr>
                 <?php }
                 } ?>
