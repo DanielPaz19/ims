@@ -151,7 +151,7 @@
                                     INNER JOIN product ON product.product_id = po_product.product_id
                                     LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id
                                     LEFT JOIN po_type ON po_type.po_type_id = po_tb.po_type_id
-                                    WHERE po_tb.po_type_id = 1 AND po_tb.po_date 
+                                    WHERE po_tb.po_type_id = 1 AND po_tb.rec_date 
                                     BETWEEN '$date1' AND '$date2'
                                      ORDER BY sup_tb.sup_name ASC");
                                     $row = mysqli_num_rows($query);
