@@ -104,6 +104,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
       <form method="GET" action="../commit/que/po_commit_que.php">
         <input type="hidden" name="po_id" value="<?php echo $_GET['id'] ?>">
         <input type="hidden" name='mov_date' class='date'>
+        <div class="row">
+          <div class="col-7"></div>
+          <div class="col-5">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" name="rec_date" required>
+              <label for="floatingInput">Recieving Date</label>
+            </div>
+          </div>
+        </div>
         <table class="table">
           <tr>
             <th width="10%">Product ID</th>

@@ -83,7 +83,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <td style="font-size: 12.8px;width: 12.8cm;"><?php echo $irow['product_name'] ?></td>
                             <td style="width: 1.9cm;text-align:right;font-size: 12.8px"><?php echo number_format($irow['ol_price'], 2)  ?>/<?php echo $irow['unit_name']; ?></td>
                             <td style="width: 0.95cm;"></td>
-                            <td style="width: 2.5cm;;font-size: 12.8px">&#8369;<?php echo number_format($olQty * $olPrice - $olfc, 2) ?></td>
+                            <td style="width: 2.5cm;;font-size: 12.8px">&#8369;<?php echo number_format($olQty * $olPrice, 2) ?></td>
                         </tr>
                 <?php }
                 } ?>
