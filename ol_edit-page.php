@@ -8,7 +8,7 @@ include 'php/ol_edit-inc.php';
 <link rel="stylesheet" href="css/ol_edit-style.css">
 <script defer src="js/ol_edit-script.js"></script>
 <div style="padding: 2%;">
-    <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff;height:80vh;">
+    <div class="shadow-lg p-5 mt-5 bg-body rounded" style="width:100%;border:5px solid #cce0ff;height:85vh;">
         <h4 style="font-family:Verdana, Geneva, Tahoma, sans-serifl;letter-spacing:2px">Online Transactions : Editing Records <i class="bi bi-pencil"></i></h4>
         <hr>
 
@@ -68,8 +68,8 @@ include 'php/ol_edit-inc.php';
                 <div class="col"> <button class="edit__button edit__button--insert__item btn btn-primary" style="float: right; margin-bottom:5px"><i class="bi bi-plus-circle"></i> Add Product</button>
                 </div>
             </div>
-            <div class="table-responsive" style="height: 40vh;overflow-y:scroll">
-                <table class='table'>
+            <div class="table-responsive" style="height: 45vh;">
+                <table class='table table-sm'>
                     <thead>
                         <tr style="text-align: left;">
                             <th style="width: 10%;">&nbsp;&nbsp;Product ID</th>
