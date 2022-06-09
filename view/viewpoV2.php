@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, po_tb.po_terms, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address,sup_tb.sup_tel, sup_tb.sup_tin, sup_tb.sup_email,sup_tb.sup_id, sup_tb.tax_type_id FROM sup_tb INNER JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  WHERE po_id=" . $_GET['id']);
+    $result = mysqli_query($db, "SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, po_tb.po_terms, sup_tb.sup_id, po_tb.po_id, sup_tb.sup_name, sup_tb.sup_address,sup_tb.sup_tel, sup_tb.sup_tin, sup_tb.sup_email,sup_tb.sup_id, sup_tb.tax_type_id,po_tb.rec_date,po_tb.closed FROM sup_tb INNER JOIN po_tb ON sup_tb.sup_id = po_tb.sup_id  WHERE po_id=" . $_GET['id']);
 
 
     $row = mysqli_fetch_array($result);
@@ -13,6 +13,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     if ($row) {
         $id = $row['po_id'];
         $po_code = $row['po_code'];
+        $closed = $row['closed'];
         $po_title = $row['po_title'];
         $po_remarks = $row['po_remarks'];
         $po_terms = $row['po_terms'];
@@ -24,6 +25,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $dateString = $row['po_date'];
         $dateTimeObj = date_create($dateString);
         $date = date_format($dateTimeObj, 'F d, Y');
+        $dateString1 = $row['rec_date'];
+        $dateTimeObj1 = date_create($dateString1);
+        $date1 = date_format($dateTimeObj1, 'm/d/Y');
         $sup_id = $row['sup_id'];
         $tax_type_id = $row['tax_type_id'];
     } else {
@@ -37,6 +41,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <head>
     <link rel="stylesheet" href="../css/viewpoV2.css" type="text/css" media="print">
     <link rel="stylesheet" href="../css/viewpoV2.css" type="text/css">
+    <style>
+        .diagonal {
+
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            text-align: center;
+        }
+    </style>
 </head>
 <script>
     function printDiv() {
@@ -50,9 +63,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 <button class="noprint" onclick="window.print()">PRINT DOCUMENT</button>
 
 <body>
-
+    <?php
+    if ($closed == 1) {
+        echo '  <div style="position: absolute;background-color:red;top:15cm;padding:2%;left:15cm" class="diagonal">
+    <h3 style="color:white;">RECEIVED<br>' . $date1 . '</h3>
+</div>';
+    } ?>
     <div class="print-area">
         <page id="print" size="A4">
+
 
             <div class="heading">
                 <img src="../img/pacclogo.png">

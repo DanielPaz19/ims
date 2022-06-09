@@ -26,7 +26,7 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name, po_tb.po_terms, po_type.po_type_id, po_type.po_type_name,sup_tb.tax_type_id
+SELECT po_tb.po_code, po_tb.po_title, po_tb.po_date, po_tb.po_remarks, sup_tb.sup_name, po_tb.po_id, po_tb.closed, sup_tb.sup_id,user.user_name, po_tb.po_terms, po_type.po_type_id, po_type.po_type_name,sup_tb.tax_type_id,po_tb.rec_date
 FROM po_tb 
 LEFT JOIN user ON user.user_id = po_tb.user_id
 LEFT JOIN sup_tb ON sup_tb.sup_id=po_tb.sup_id
@@ -53,12 +53,12 @@ $output = '
 <tr style="background-color:#0d6efd;color:white">
   <th width="10%">PO ID</th>
     <th width="10%">PO Code</th>
-    <th width="5%"><center>Date</th>
+    <th width="5%"><center>PO Date</th>
     <th width="25%">Supplier</th>
-    <th width="10%">Terms</th>
     <th width="15%"><center>Action</th>
     <th width="15%"><center>Created By</th>
     <th width="5%"><center>Status</th>
+    <th width="10%"><center>Received Date</th>
     
   </tr>
 ';
@@ -96,7 +96,6 @@ if ($total_data > 0) {
       <td>' . $row["po_code"] . '</td>
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
       <td>' . $row["sup_name"] . '</td>
-      <td>' . $row["po_terms"] . '</td>
       <td><center>
       ' . $disable . '
                 <a href="view/viewpoV2.php?id=' . $row["po_id"] . '&tax=' . $row["tax_type_id"] . '">
@@ -106,6 +105,7 @@ if ($total_data > 0) {
       </td>
       <td><center>' . $row["user_name"] . '</center></td>
       <td><center>' . $str . '</center></td>
+      <td><center>' . $row["rec_date"] . '</center></td>
       
     </tr>
     ';
