@@ -13,7 +13,7 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date,order_status.order_status_name, order_tb.jo_id,order_status.order_status_id
+SELECT order_tb.order_id, customers.customers_name, order_tb.dr_number,order_tb.pos_date,order_status.order_status_name, order_tb.jo_id,order_status.order_status_id,customers.tax_type_id
                 FROM order_tb
                 LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
                 LEFT JOIN order_status ON order_status.order_status_id = order_tb.order_status_id
@@ -92,7 +92,7 @@ if ($total_data > 0) {
 <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a>
 
 
-<a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '">
+<a href="view/viewsi2.php?id=' . $irow["order_id"] . '&joId=' . $irow['jo_id'] . '&taxId=' . $irow['tax_type_id'] . '">
 <button type="button" class="btn  btn-outline-primary btn-sm"><i class="bi bi-receipt"></i> Sales Invoice</button></a>
 
 <a href="#">
