@@ -51,7 +51,7 @@ $output = '
 <table class="table table-hover" width="100%">
   <tr>
     <th>OL ID</th>
-    <th>DR No.</th>
+    <th>Statement</th>
     <th>SI No.</th>
     <th>Type</th>
     <th><center>Date</th>
