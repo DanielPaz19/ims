@@ -119,7 +119,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <p style="position: absolute;top:16.3cm;left:18.1cm">' . number_format($addVat, 2) . '</p>
             <p style="position: absolute;top:16.9cm;left:18.1cm">' . number_format($grandTot, 2) . '</p>';
         } else {
-            echo ' <p style="position: absolute;top:15.6cm;left:12cm">' . number_format($posQty * $posPrice, 2) . '</p>';
+            echo ' <p style="position: absolute;top:15.9cm;left:12cm">' . number_format($posQty * $posPrice, 2) . '</p>';
         }
         ?>
 
