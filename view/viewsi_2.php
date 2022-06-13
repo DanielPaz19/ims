@@ -71,7 +71,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         $olPrice = $irow["ol_price"];
                         $olfc = $irow["ol_fee"];
                         $productId = $irow["product_id"];
-                        $total[] = $olQty * $olPrice - $olfc;
+                        $total[] = $olQty * $olPrice;
 
 
 
