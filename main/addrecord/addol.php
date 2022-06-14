@@ -374,7 +374,7 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="ol_title">
-                                <label for="floatingInput">OR No.</label>
+                                <label for="floatingInput">Statement</label>
                             </div>
                         </div>
                         <div class="col">
