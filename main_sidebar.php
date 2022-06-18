@@ -32,6 +32,7 @@
                     <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear"></i>&nbsp;Utilities</a>
                     <ul class="dropdown-menu">
                         <a href="pos-utilities.php" class="dropdown-item"><i class="bi bi-caret-right"></i> POS</a>
+                        <a href="ol-utilities.php" class="dropdown-item"><i class="bi bi-caret-right"></i> Online Transactions</a>
                         <a href="sup_main.php" class="dropdown-item"><i class="fas fa-people-arrows"></i><i class="bi bi-caret-right"></i> Supplier</a>
                         <a href="#" class="dropdown-item" onclick="showPayments()"><i class="fa fa-plus-circle"></i><i class="bi bi-caret-right"></i>&nbsp;Payment Type</a>
                         <a href="#" class="dropdown-item" onclick="showBank()"><i class="fa fa-plus-circle"></i><i class="bi bi-caret-right"></i>&nbsp;Bank</a>
