@@ -135,7 +135,6 @@
                                                 <th style="text-align: center;">Product Total Qty</th>
                                                 <th>SI Amount</th>
                                                 <th>Fee's and Charges</th>
-                                                <th>Sub Total</th>
                                             </thead>
                                         </tr>
                                         <tr>
@@ -144,9 +143,10 @@
                                             $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,
                             SUM(ol_product.ol_fee) AS fc,
                             SUM(ol_product.ol_priceTot) AS price,
+                            SUM(ol_product.ol_price) AS pricetot,
                             SUM(ol_product.ol_qty) AS qty
                             FROM ol_product
-                           
+            
                             LEFT JOIN ol_tb ON ol_tb.ol_id = ol_product.ol_id
                             LEFT JOIN ol_type ON ol_tb.ol_type_id = ol_type.ol_type_id
                             WHERE ol_tb.ol_title ='$set'
@@ -157,7 +157,7 @@
                                             if ($result->num_rows >  0) {
 
                                                 while ($irow = $result->fetch_assoc()) {
-                                                    $total[] = $irow['price'] - $irow['fc'];
+                                                    $total[] = $irow['price'] + $irow['fc'];
                                                     $fcTotal[] = $irow['fc'];
 
                                             ?>
@@ -165,10 +165,9 @@
                                                         <td><?php echo  str_pad($irow['ol_id'], 8, 0, STR_PAD_LEFT) ?></td>
                                                         <td><?php echo $irow['ol_si'] ?></td>
                                                         <td style="text-align: center;"><?php echo number_format($irow['qty'], 2)  ?></td>
-
                                                         <td><?php echo number_format($irow['fc'] + $irow['price'], 2) ?></td>
                                                         <td><?php echo number_format($irow['fc'], 2)  ?></td>
-                                                        <td><?php echo number_format($irow['price'] - $irow['fc'], 2)  ?></td>
+
 
                                                     </tbody>
                                         </tr>
@@ -186,6 +185,26 @@
                                     <h4 style="color:orange">Summary Breakdown</h4>
                                     <br>
                                     <table class="table">
+
+                                        <tr>
+                                            <td style="color:orange">Total Sales Invoice Amount</td>
+
+
+                                            <td><?php
+                                                $limit = 0;
+                                                $subTot = 0;
+                                                $disTot = 0;
+                                                while ($limit != count($total)) {
+                                                    $subTot += $total[$limit];
+
+                                                    // $disTot += $totaldisamount[$limit];
+                                                    $limit += 1;
+                                                }
+                                                $grandTot = $subTot - $disTot;
+
+                                                echo "₱ " . number_format($grandTot, 2)  ?></td>
+
+                                        </tr>
                                         <tr>
                                             <td style="color:orange">Total Fee's & Charges</td>
                                             <td><?php
@@ -200,25 +219,7 @@
                                                 }
                                                 $fCgrandTot = $subTot - $disTot;
 
-                                                echo "₱ " . number_format($fCgrandTot, 2)  ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="color:orange">Sub Total Amount</td>
-                                            <td><?php
-                                                $limit = 0;
-                                                $subTot = 0;
-                                                $disTot = 0;
-                                                while ($limit != count($total)) {
-                                                    $subTot += $total[$limit];
-
-                                                    // $disTot += $totaldisamount[$limit];
-                                                    $limit += 1;
-                                                }
-                                                $grandTot = $subTot - $disTot;
-
-
-
-                                                echo "₱ " . number_format($grandTot, 2) ?></td>
+                                                echo "- ₱ " . number_format($fCgrandTot, 2)  ?></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -227,6 +228,8 @@
                                             <td><?php
                                                 $fTot = $grandTot - $fCgrandTot;
                                                 echo "<h5>₱ " . number_format($fTot, 2) . "</h5>"; ?>
+
+
                                                 <input type="hidden" name="setAmount" value="<?php echo $fTot ?>">
                                                 <input type="hidden" name="fcTotal" value="<?php echo $fCgrandTot ?>">
                                                 <input type="hidden" name="grandTot" value="<?php echo $grandTot ?>">
