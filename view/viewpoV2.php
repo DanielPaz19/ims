@@ -304,7 +304,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                     } elseif ($tax_type_id == 4) {
                         $limit = 0;
                         $subTot = 0;
-
+$disTot = 0;
                         while ($limit != count($total)) {
                             $subTot += $total[$limit];
                             $disTot += $totaldisamount[$limit];
