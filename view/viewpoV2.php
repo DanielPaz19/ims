@@ -301,22 +301,20 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
 
                    ';
+                    } elseif ($tax_type_id == 4) {
+                        $limit = 0;
+                        $subTot = 0;
 
-                        if ($tax_type_id == 4) {
-                            $limit = 0;
-                            $subTot = 0;
-                            $disTot = 0;
+                        while ($limit != count($total)) {
+                            $subTot += $total[$limit];
+                            $disTot += $totaldisamount[$limit];
+                            $limit += 1;
+                        }
 
-                            while ($limit != count($total)) {
-                                $subTot += $total[$limit];
-                                $disTot += $totaldisamount[$limit];
-                                $limit += 1;
-                            }
-
-                            $grandTot = $subTot - $disTot;
-                            $ewt2 = $grandTot * 0.01;
-                            $grandTot2 = $grandTot - $ewt2;
-                            echo '<tr>
+                        $grandTot = $subTot - $disTot;
+                        $ewt2 = $grandTot * 0.01;
+                        $grandTot2 = $grandTot - $ewt2;
+                        echo '<tr>
                         <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
                         <td>: ' . number_format($subTot, 2) . '</td>
                     </tr>
@@ -338,7 +336,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
 
                    ';
-                        }
                     } else {
 
                         $limit = 0;
