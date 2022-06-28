@@ -262,36 +262,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <div class="subtot">
                 <table>
                     <?php
-                    if ($tax_type_id == 1) {
-                        $limit = 0;
-                        $subTot = 0;
-                        $disTot = 0;
 
-                        while ($limit != count($total)) {
-                            $subTot += $total[$limit];
-                            $disTot += $totaldisamount[$limit];
-                            $limit += 1;
-                        }
 
-                        $grandTot = $subTot - $disTot;
-                        $ewt1 = $grandTot / 1.12;
-                        $ewt2 = $ewt1 * 0.01;
-                        $grandTot2 = $grandTot - $ewt2;
-                        echo '<tr>
-                        <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
-                        <td>: ' . number_format($subTot, 2) . '</td>
-                    </tr>
-                    <tr>
-                        <td><label class="totDiv"> Discount Total</label></td>
-                        <td>: ' . number_format($disTot, 2) . '</td>
-                    </tr>
-                    <tr>
-                        <td><label class="totDivGrand">Grand Total &nbsp; </label></td>
-                        <td><label class="totDivGrand">: ' . number_format($grandTot, 2) . '</label></td>
-                    </tr>
-
-                   ';
-                    } else {
+                    if ($tax_type_id == 3) {
                         $limit = 0;
                         $subTot = 0;
                         $disTot = 0;
@@ -329,7 +302,78 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
                    ';
                     }
+                    if ($tax_type_id == 4) {
+                        $limit = 0;
+                        $subTot = 0;
+                        $disTot = 0;
+
+                        while ($limit != count($total)) {
+                            $subTot += $total[$limit];
+                            $disTot += $totaldisamount[$limit];
+                            $limit += 1;
+                        }
+
+                        $grandTot = $subTot - $disTot;
+                        $ewt2 = $grandTot * 0.01;
+                        $grandTot2 = $grandTot - $ewt2;
+                        echo '<tr>
+                        <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
+                        <td>: ' . number_format($subTot, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv"> Total Discount</label></td>
+                        <td>: ' . number_format($disTot, 2) . '</td>
+                    </tr>
+                    <tr>
+                        <td><label class="totDiv">Gross &nbsp; </label></td>
+                        <td><label class="totDiv">: ' . number_format($grandTot, 2) . '</label></td>
+                    </tr>
+                    <tr>
+                    <td><label class="totDiv">EWT</label></td>
+                    <td><label class="totDiv">:  ' . number_format($ewt2, 2) . '</label></td>
+                </tr>
+                <tr>
+                    <td><label class="totDivGrand">Grand Total &nbsp; </label></td>
+                    <td><label class="totDivGrand">: ' . number_format($grandTot2, 2) . '</label></td>
+                </tr>
+
+                   ';
+                    } else {
+
+                        $limit = 0;
+                        $subTot = 0;
+                        $disTot = 0;
+
+                        while ($limit != count($total)) {
+                            $subTot += $total[$limit];
+                            $disTot += $totaldisamount[$limit];
+                            $limit += 1;
+                        }
+
+                        $grandTot = $subTot - $disTot;
+                        echo '<tr>
+                            <td><label class="totDiv"> Sub Total</label>&nbsp;</td>
+                            <td>: ' . number_format($subTot, 2) . '</td>
+                        </tr>
+                        <tr>
+                            <td><label class="totDiv"> Discount Total</label></td>
+                            <td>: ' . number_format($disTot, 2) . '</td>
+                        </tr>
+                        <tr>
+                            <td><label class="totDivGrand">Grand Total &nbsp; </label></td>
+                            <td><label class="totDivGrand">: ' . number_format($grandTot, 2) . '</label></td>
+                        </tr>
+
+';
+                    }
+
                     ?>
+
+
+
+
+
+
                 </table>
             </div>
 
