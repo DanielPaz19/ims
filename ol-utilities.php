@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="source/css/bootstrap.min.css">
     <script src="source/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>Online Sales</title>
 </head>
 
 <body style="background-color: aliceblue;">
@@ -134,13 +134,14 @@
                                                 <th>SI No.</th>
                                                 <th style="text-align: center;">Product Total Qty</th>
                                                 <th>SI Amount</th>
+                                                <th>Adjustment</th>
                                                 <th>Fee's and Charges</th>
                                             </thead>
                                         </tr>
                                         <tr>
                                             <?php
                                             include "php/config.php";
-                                            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,
+                                            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,ol_tb.ol_adjustment,
                             SUM(ol_product.ol_fee) AS fc,
                             SUM(ol_product.ol_priceTot) AS price,
                             SUM(ol_product.ol_price) AS pricetot,
@@ -159,6 +160,7 @@
                                                 while ($irow = $result->fetch_assoc()) {
                                                     $total[] = $irow['price'] + $irow['fc'];
                                                     $fcTotal[] = $irow['fc'];
+                                                    $adjustmentTot[] = $irow['ol_adjustment'];
 
                                             ?>
                                                     <tbody>
@@ -166,6 +168,7 @@
                                                         <td><?php echo $irow['ol_si'] ?></td>
                                                         <td style="text-align: center;"><?php echo number_format($irow['qty'], 2)  ?></td>
                                                         <td><?php echo number_format($irow['fc'] + $irow['price'], 2) ?></td>
+                                                        <td><?php echo number_format($irow['ol_adjustment'], 2) ?></td>
                                                         <td><?php echo number_format($irow['fc'], 2)  ?></td>
 
 
@@ -181,7 +184,7 @@
                                 <div class="col-1">
                                 </div>
 
-                                <div class="shadow col-4" style="background-color: #FEFEFC;padding:2%;height:35vh;margin-top:1cm">
+                                <div class="shadow col-4" style="background-color: #FEFEFC;padding:2%;height:38vh;margin-top:1cm">
                                     <h4 style="color:orange">Summary Breakdown</h4>
                                     <br>
                                     <table class="table">
@@ -206,7 +209,29 @@
 
                                         </tr>
                                         <tr>
+                                            <td style="color:orange">Adjustment Amount</td>
+
+
+                                            <td>
+                                                <?php
+                                                $limit = 0;
+                                                $subTot = 0;
+                                                $disTot = 0;
+                                                while ($limit != count($adjustmentTot)) {
+                                                    $subTot += $adjustmentTot[$limit];
+
+                                                    // $disTot += $totaldisamount[$limit];
+                                                    $limit += 1;
+                                                }
+                                                $adjustmentGrandTot = $subTot - $disTot;
+
+                                                echo "+ ₱ " . number_format($adjustmentGrandTot, 2)  ?></td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
                                             <td style="color:orange">Total Fee's & Charges</td>
+
                                             <td><?php
                                                 $limit = 0;
                                                 $subTot = 0;
@@ -226,13 +251,14 @@
                                                 <h5 style="color:orange">Settlement Amount</h5>
                                             </td>
                                             <td><?php
-                                                $fTot = $grandTot - $fCgrandTot;
+                                                $fTot = $grandTot - $fCgrandTot + $adjustmentGrandTot;
                                                 echo "<h5>₱ " . number_format($fTot, 2) . "</h5>"; ?>
 
 
                                                 <input type="hidden" name="setAmount" value="<?php echo $fTot ?>">
                                                 <input type="hidden" name="fcTotal" value="<?php echo $fCgrandTot ?>">
                                                 <input type="hidden" name="grandTot" value="<?php echo $grandTot ?>">
+                                                <input type="hidden" name="addTot" value="<?php echo $adjustmentGrandTot ?>">
                                             </td>
                                         </tr>
                                     </table>

@@ -46,7 +46,7 @@ if (isset($_GET['save'])) {
         <!-- table breakdown -->
         <table style="top:2.2cm;width:5.6cm;left:.3cm;position:absolute;border-collapse: collapse;">
             <?php
-            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,
+            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,ol_tb.ol_adjustment,
                     SUM(ol_product.ol_fee) AS fc,
                     SUM(ol_product.ol_priceTot) AS price,
                     SUM(ol_product.ol_qty) AS qty
@@ -69,18 +69,22 @@ if (isset($_GET['save'])) {
 
             <?php }
             } ?>
-
             <tr>
                 <td>
-                    <p style="">Less Fee's</p>
+                    <p>Adjustment</p>
                 </td>
-                <td style=""><?php echo "- " . number_format($_GET['fcTotal'], 2)  ?></td>
-
+                <td><?php echo "+" . number_format($_GET['addTot'], 2)  ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Less Fee's</p>
+                </td>
+                <td style=""><?php echo "-" . number_format($_GET['fcTotal'], 2)  ?></td>
             </tr>
 
         </table>
         <!-- table grand total -->
-        <p style="position: absolute;top:9.2cm;left:2.7cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'], 2)  ?></p>
+        <p style="position: absolute;top:9.2cm;left:2.7cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'] + $_GET['addTot'], 2)  ?></p>
 
         <?php
         $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,ol_tb.ol_date
@@ -104,11 +108,11 @@ if (isset($_GET['save'])) {
                 <!-- customer name -->
                 <p style="position: absolute;top:3.7cm;left:9.5cm"><?php echo $irow['ol_type_name']  ?></p>
                 <!-- Pesos Total -->
-                <p style="position: absolute;top:6.2cm;left:15.3cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'], 2)  ?></p>
+                <p style="position: absolute;top:6.2cm;left:15.3cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'] + $_GET['addTot'], 2)  ?></p>
                 <!-- Payment in Form -->
                 <p style="position: absolute;top:8.6cm;left:12.1cm">BDO ONLINE</p>
-                <p style="position: absolute;top:8.6cm;left:15.5cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'], 2)  ?></p>
-                <p style="position: absolute;top:11.5cm;left:15.5cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'], 2)  ?></p>
+                <p style="position: absolute;top:8.6cm;left:15.5cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'] + $_GET['addTot'], 2)  ?></p>
+                <p style="position: absolute;top:11.5cm;left:15.5cm"><?php echo number_format($_GET['grandTot'] - $_GET['fcTotal'] + $_GET['addTot'], 2)  ?></p>
         <?php }
         } ?>
 

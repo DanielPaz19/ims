@@ -333,18 +333,18 @@
                             <input type="number" class="form-control item-qty" id="floatingInput" value="1">
                             <label for="floatingInput">Quantity</label>
                             <label style="display: none;">Discount: &nbsp;&nbsp;</label>
-                            <input class="item-discount" type="number" placeholder="Discount" value="0" style="display: none;" />
+                            <input class="item-discount" type="number" placeholder="Discount" value="0.00" style="display: none;" />
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control item-price" id="floatingInput" value="0">
+                            <input type="number" class="form-control item-price" id="floatingInput" value="0.00">
                             <label for="floatingInput">SRP</label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control item-fee" id="floatingInput" value="0">
+                            <input type="number" class="form-control item-fee" id="floatingInput" value="0.00">
                             <label for="floatingInput">Fee's & Charges</label>
                         </div>
                     </div>
@@ -368,7 +368,7 @@
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/olInsert.php">
 
                     <div class="row">
-                        <div class="col">&nbsp;RT ID : <span class="newEpId"></span></div>
+                        <div class="col">&nbsp;OL ID : <span class="newEpId"></span></div>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -381,6 +381,12 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="ol_si">
                                 <label for="floatingInput">SI No.</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="floatingInput" name="ol_adjustment" value="0.00">
+                                <label for="floatingInput">Adjustment Amount</label>
                             </div>
                         </div>
                         <div class="col">
