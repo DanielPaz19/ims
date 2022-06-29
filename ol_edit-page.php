@@ -52,6 +52,12 @@ include 'php/ol_edit-inc.php';
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" name="olAdjustment" value="<?php echo $olAdjustment ?>">
+                        <label for="floatingInput">Adjustment Amount</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
                         <input type="date" name="olDate" class="form-control" id="floatingInput" value="<?php echo $olDate ?>">
                         <label for="floatingInput">Online Transaction Date </label>
                     </div>

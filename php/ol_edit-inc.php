@@ -9,7 +9,7 @@ if (isset($_GET['editOl'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT ol_tb.ol_id, ol_type.ol_type_id, ol_type.ol_type_name, ol_product.ol_price, ol_product.ol_priceTot, ol_tb.ol_title, ol_tb.ol_date, ol_product.ol_qty, product.product_id, product.product_name, unit_tb.unit_name, unit_tb.unit_id, ol_tb.ol_si, ol_product.ol_fee
+        "SELECT ol_tb.ol_id, ol_type.ol_type_id, ol_type.ol_type_name, ol_product.ol_price, ol_product.ol_priceTot, ol_tb.ol_title, ol_tb.ol_date, ol_product.ol_qty, product.product_id, product.product_name, unit_tb.unit_name, unit_tb.unit_id, ol_tb.ol_si, ol_product.ol_fee, ol_tb.ol_adjustment
         FROM ol_tb
         LEFT JOIN ol_product ON ol_product.ol_id = ol_tb.ol_id
         LEFT JOIN ol_type ON ol_type.ol_type_id = ol_tb.ol_type_id
@@ -29,6 +29,7 @@ if (isset($_GET['editOl'])) {
             $olTitle = $row['ol_title'];
             $olSi = $row['ol_si'];
             $olDate = $row['ol_date'];
+            $olAdjustment = $row['ol_adjustment'];
             $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
             $productName[] = $row['product_name'];
             $qtyIn[] = $row['ol_qty'];
@@ -50,6 +51,7 @@ if (isset($_POST['update'])) {
     $olTitle = $_POST['olTitle'];
     $olSi = $_POST['olSi'];
     $olDate = $_POST['olDate'];
+    $olAdjustment = $_POST['olAdjustment'];
 
     $productId = $_POST['productId'];
     $qtyIn = $_POST['qtyIn'];
@@ -62,7 +64,7 @@ if (isset($_POST['update'])) {
     // Update po_tb
     mysqli_query(
         $db,
-        "UPDATE ol_tb SET ol_title='$olTitle',ol_si='$olSi', ol_type_id='$oltypeId',  ol_date='$olDate' WHERE ol_id='$olId' "
+        "UPDATE ol_tb SET ol_title='$olTitle',ol_si='$olSi', ol_type_id='$oltypeId',  ol_date='$olDate', ol_adjustment = '$olAdjustment' WHERE ol_id='$olId' "
     );
 
 

@@ -22,6 +22,7 @@ $olTitle = $_GET['ol_title'];
 $olSi = $_GET['ol_si'];
 $olDate = $_GET['ol_date'];
 $olType = $_GET['ol_type_id'];
+$olAdjustment = $_GET['ol_adjustment'];
 
 
 
@@ -74,8 +75,8 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
 
 
 
-    $sql = "INSERT INTO ol_tb (ol_id,ol_title,ol_si,ol_date, ol_type_id ,user_id)
-            VALUES ('$olId','$olTitle','$olSi','$olDate','$olType','" . $_SESSION['id'] . "')";
+    $sql = "INSERT INTO ol_tb (ol_id,ol_title,ol_si,ol_date, ol_type_id,ol_adjustment,user_id)
+            VALUES ('$olId','$olTitle','$olSi','$olDate','$olType','$olAdjustment','" . $_SESSION['id'] . "')";
 
     if (mysqli_query($db, $sql)) {
         echo "<script>alert('New Record Added')</script>";
