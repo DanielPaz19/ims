@@ -69,6 +69,7 @@
             <a href="stin_report.php?date1=&date2="><button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Fabrication</button></a>
             <a href="stin_report_acry.php?date1=&date2="><button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Acrylic</button></a>
             <a href="stin_report_prcg.php?date1=&date2="><button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">PRCG</button></a>
+            <a href="stin_report_stkrm.php?date1=&date2="><button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">STKRM</button></a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
