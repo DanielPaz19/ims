@@ -119,12 +119,14 @@
                                     $date1 = date("Y-m-d", strtotime($_GET['date1']));
                                     $date2 = date("Y-m-d", strtotime($_GET['date2']));
 
-                                    $sql = "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, employee_tb.emp_name, stin_tb.stin_remarks, stin_tb.closed,dept_tb.dept_name
+                                    $sql = "SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, stin_tb.stin_date, employee_tb.emp_name, stin_tb.stin_remarks, stin_tb.closed,dept_tb.dept_name, product.product_name
                                 FROM stin_tb 
+                                LEFT JOIN stin_product ON stin_product.stin_id = stin_tb.stin_id
+                                LEFT JOIN product ON product.product_id = stin_product.product_id      
                                 LEFT JOIN employee_tb ON employee_tb.emp_id=stin_tb.emp_id
                                 LEFT JOIN dept_tb ON dept_tb.dept_id = employee_tb.dept_id
                                 WHERE stin_tb.stin_date 
-                                    BETWEEN '$date1' AND '$date2' AND dept_tb.dept_name LIKE '%STKRM%'
+                                    BETWEEN '$date1' AND '$date2' AND dept_tb.dept_name LIKE '%STKRM%' AND product.product_name LIKE '%ACRYSOLV%'
                                 ";
 
                                     $result = $db->query($sql);
@@ -155,11 +157,11 @@
 
 
                                             $sqlItem = "SELECT stin_product.stin_id, product.product_name, product.product_id, stin_product.stin_temp_qty, unit_tb.unit_name,stin_tb.stin_date,stin_product.stin_temp_remarks
-                                    FROM stin_product 
-                                    INNER JOIN stin_tb ON stin_tb.stin_id = stin_product.stin_id
-                                    LEFT JOIN product ON product.product_id = stin_product.product_id                  
-                                    LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-                                    WHERE stin_product.stin_id = $stinId 
+                                            FROM stin_product 
+                                            LEFT JOIN stin_tb ON stin_tb.stin_id = stin_product.stin_id
+                                            LEFT JOIN product ON product.product_id = stin_product.product_id                  
+                                            LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
+                                            WHERE stin_product.stin_id = $stinId 
                                     ";
 
                                             $resultItem = $db->query($sqlItem);
