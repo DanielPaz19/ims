@@ -10,13 +10,13 @@
                     </label>
                 </span>
                 <span class="form-check mx-3" style="display: inline-block">
-                    <input class="form-check-input" disabled type="radio" name="payment_option" id="online_payment" />
+                    <input class="form-check-input" checked disabled type="radio" name="payment_option" id="online_payment" />
                     <label class="form-check-label" for="online_payment">
                         Online
                     </label>
                 </span>
                 <span class="form-check mx-3" style="display: inline-block">
-                    <input class="form-check-input" disabled checked type="radio" name="payment_option" id="bank_payment" />
+                    <input class="form-check-input" disabled type="radio" name="payment_option" id="bank_payment" />
                     <label class="form-check-label" for="bank_payment">
                         Bank Check
                     </label>
@@ -28,20 +28,16 @@
                     <input type="date" disabled name="date" value="<?php echo $paymentDate ?>" class="form-control payment__date" id="trans_date" required />
                 </div>
                 <div class="mb-3">
-                    <label for="" class="form-label">Check Date</label>
-                    <input type="date" name="check_date" class="form-control " id="trans_date" required />
-                </div>
-                <div class="mb-3">
-                    <label for="online_select" class="form-label">Back</label>
+                    <label for="online_select" class="form-label">Online Platform</label>
                     <select name="online_select" class="form-select" aria-label="Default select example" required>
                         <option disabled selected value="">Open this select menu</option>
-                        <option value="1">BPI</option>
-                        <option value="2">Metrobank</option>
-                        <option value="3">Chinabank</option>
+                        <option value="1">GCash</option>
+                        <option value="2">Paymaya</option>
+                        <option value="3">Online Bank</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="ref_num" class="form-label">Check Number</label>
+                    <label for="ref_num" class="form-label">Reference Number</label>
                     <input type="text" name="date" id="ref_num" class="form-control payment__date" id="trans_date" required />
                 </div>
                 <div class="mb-3">
