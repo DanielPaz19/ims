@@ -12,7 +12,7 @@ if (isset($_GET['editpo'])) {
     "SELECT po_tb.po_id, po_tb.po_terms, po_tb.po_remarks, po_tb.po_code,
   po_tb.po_date, po_tb.po_title, po_tb.sup_id, po_product.item_qtyorder, po_product.item_cost, 
   po_product.item_disamount, po_product.item_discpercent, po_product.po_temp_tot, product.product_name, product.product_name,
-  product.class_id, product.unit_id, product.product_id, sup_tb.sup_name, unit_tb.unit_name, po_type.po_type_id, po_type.po_type_name
+  product.class_id, product.unit_id, product.product_id, sup_tb.sup_name, unit_tb.unit_name, po_type.po_type_id, po_type.po_type_name,po_tb.ref_num
  FROM po_tb  
  LEFT JOIN po_product ON po_product.po_id = po_tb.po_id
  LEFT JOIN product ON po_product.product_id = product.product_id
@@ -34,6 +34,7 @@ if (isset($_GET['editpo'])) {
       $poDate = $row['po_date'];
       $poCode = $row['po_code'];
       $poTitle = $row['po_title'];
+      $refNum = $row['ref_num'];
       $po_type_id = $row['po_type_id'];
       $po_type_name = $row['po_type_name'];
       $productId[] = str_pad($row['product_id'], 8, 0, STR_PAD_LEFT);
@@ -61,6 +62,7 @@ if (isset($_POST['updatepo'])) {
   $poRemarks = $_POST['poRemarks'];
   $poDate = $_POST['poDate'];
   $poCode = $_POST['poCode'];
+  $refNum = $_POST['refNum'];
   $po_type_id = $_POST['po_type_id'];
 
 
@@ -76,7 +78,7 @@ if (isset($_POST['updatepo'])) {
   // Update po_tb
   mysqli_query(
     $db,
-    "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle',po_code = '$poCode', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' , po_type_id='$po_type_id'
+    "UPDATE po_tb SET sup_id ='$supId', po_title = '$poTitle',po_code = '$poCode', po_terms = '$poTerms', po_remarks = '$poRemarks',  po_date = '$poDate' , po_type_id='$po_type_id' , ref_num='$refNum'
     WHERE po_id = '" . number_format($poId) . "'"
   );
 

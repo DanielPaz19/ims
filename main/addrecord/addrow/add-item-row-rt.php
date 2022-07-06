@@ -15,7 +15,7 @@ if (mysqli_num_rows($result) > 0) {
         <td>" . $row['product_name'] . "</td>
         <td><input name='qty_order[]' style='border:none;' value='" . $product_qty . "' readonly></td>
         <td>" . $row['unit_name'] . "</td>
-        <td style='text-align:center;'><span><a href='#' class='delete' id='" . $row['product_id'] . " title='remove' ><font color='red'><i class='fa fa-trash-o' style='font-size:20px'></i></font></a></span></td>
+        <td style='text-align:center;'><span><a href='#' class='delete' id='" . $row['product_id'] . " title='remove' ><font color='red'><i class='bi bi-trash3-fill' style='font-size:20px'></i></font></a></span></td>
         </tr>";
     }
 } else {

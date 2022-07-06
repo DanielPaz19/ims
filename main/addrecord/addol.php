@@ -2,11 +2,23 @@
 <html lang="en">
 
 <head>
-    <title>Add Online Transaction Records</title>
-    <link rel="icon" href="img/pacclogo.png" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- <link rel="stylesheet" href="css/pos-page.css" /> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- font include -->
+
+    <link rel="stylesheet" href="../../css/font.css">
+    <!-- sidebar styles -->
+    <link rel="stylesheet" href="../../css/main_style.css">
+
+    <!-- sidebar script -->
+    <script src="js/sidebar_scriot.js"></script>
     <style>
         body {
             padding: 50px;
@@ -31,7 +43,7 @@
             font-weight: bold;
         }
 
-        th {
+        /* th {
             background-color: #A5A4A4;
             color: white;
             border: 2px solid white;
@@ -42,14 +54,15 @@
             border: 1px solid lightgrey;
             background-color: white;
             margin-left: 5px;
-        }
+        } */
 
+        /* 
         button {
             background-color: midnightblue;
             color: whitesmoke;
             cursor: pointer;
             padding: 5px;
-        }
+        } */
 
         input {
             border: 1px solid lightgrey;
@@ -112,7 +125,7 @@
         }
 
         /* Style for Order ID Input box */
-        .newID {
+        /* .newID {
             margin-left: 5px;
             color: red;
         }
@@ -127,7 +140,7 @@
         input#item-name {
             position: relative;
             width: 430px;
-        }
+        } */
 
         .hidden {
             display: none;
@@ -154,7 +167,7 @@
 
         }
 
-        .stin-button-save {
+        /* .stin-button-save {
             width: 300px;
             height: 40px;
             font-size: 15px;
@@ -162,7 +175,7 @@
             float: right;
             font-weight: initial;
             margin-bottom: 20px;
-        }
+        } */
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -297,71 +310,115 @@
     </script>
 </head>
 
-<body bgcolor="#B0C4DE">
-    <div class="Incontainer">
-        <div class="inDetails">
-            <fieldset>
-                <legend>&nbsp;&nbsp;&nbsp;Online Transaction: Entering Record&nbsp;&nbsp;&nbsp;</legend>
-
-                <br>
-                <div>
-                    <!-- Search Bar -->
-                    <div class="container">
-                        <div id="search">
-                            <label>Enter Item:&nbsp;&nbsp;</label>
-                            <input type="text" name="item" id="item-name" style="height: 30px;" placeholder=" 🔍 Search item here ......." />
+<body style="background-color:#cce0ff">
+    <div style="padding: 2%">
+        <div class="card card-lg border-light-grey mb-3 mt-3 shadow" style="max-width: 100%;">
+            <div class="card-header" style="background-color: #0d6efd;color:white;letter-spacing:2px">Online Transaction: Entering Records <i class="bi bi-pencil"></i>
+            </div>
+            <div class="card-body">
+                <div id="search">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="item-name" name="item">
+                                <label for="floatingInput">Search Item</label>
+                            </div>
                             <div id="item-list"></div><!-- Dont Remove this -->
                         </div>
                     </div>
-                    <br>
-                    <!-- input for item qty -->
-                    <label>Quantity: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input class="item-qty" type="number" placeholder="Quantity" value="1" />
-                    &emsp;
-                    <!-- input for discount -->
-                    <label>SRP Price: &nbsp;&nbsp;</label>
-                    <input class="item-price" type="number" placeholder="Price" value="0" />
-                    &emsp;
-                    <label>Fee's & Charges: &nbsp;&nbsp;</label>
-                    <input class="item-fee" type="number" placeholder="Fee" value="0" />
-                    <br /><br />
-                    <button class="add-button" title="Add Item">Add item to table</button>
                 </div>
-                <br><br><br>
-                <hr> <br>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control item-qty" id="floatingInput" value="1">
+                            <label for="floatingInput">Quantity</label>
+                            <label style="display: none;">Discount: &nbsp;&nbsp;</label>
+                            <input class="item-discount" type="number" placeholder="Discount" value="0.00" style="display: none;" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control item-price" id="floatingInput" value="0.00">
+                            <label for="floatingInput">SRP</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control item-fee" id="floatingInput" value="0.00">
+                            <label for="floatingInput">Fee's & Charges</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <button class="btn btn-primary add-button mt-1" style="width: 100%;height:50px"><i class="bi bi-plus-circle"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <br>
+                <hr>
+
+
+
+
                 <form autocomplete="off" method="GET" action="../addrecord/itemInsert/olInsert.php">
 
-                    <label>OL ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <span class="newEpId"></span><br><br>
+                    <div class="row">
+                        <div class="col">&nbsp;OL ID : <span class="newEpId"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="ol_title">
+                                <label for="floatingInput">Statement</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="ol_si">
+                                <label for="floatingInput">SI No.</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="floatingInput" name="ol_adjustment" value="0.00">
+                                <label for="floatingInput">Adjustment Amount</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="ol_type_id">
+                                    <option></option>
+                                    <?php
+                                    include "../../php/config.php";
+                                    $records = mysqli_query($db, "SELECT * FROM ol_type ORDER BY ol_type_name ASC");
+
+                                    while ($data = mysqli_fetch_array($records)) {
+                                        echo "<option value='" . $data['ol_type_id'] . "'>" . $data['ol_type_name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="floatingSelect">Online Platform</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingInput" name="ol_date">
+                                <label for="floatingInput">Online Date</label>
+                            </div>
+                        </div>
+                    </div>
 
 
-                    <label>OR No.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="ol_title" placeholder="#####"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label>SI No.:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" name="ol_si" placeholder="#####"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label>Date:&nbsp;&nbsp;</label>
-                    <input type="date" name="ol_date" required><br><br>
-
-                    <label>Online Type:</label>
-                    <select name="ol_type_id" style="width: 200px; height: 35px; border: 1px solid gray; border-radius: 5px;" required>
-                        <option>--- Choose Type ---</option>
-                        <?php
-                        include "../../php/config.php";
-                        $records = mysqli_query($db, "SELECT * FROM ol_type ORDER BY ol_type_name ASC");
-
-                        while ($data = mysqli_fetch_array($records)) {
-                            echo "<option value='" . $data['ol_type_id'] . "'>" . $data['ol_type_name'] . "</option>";
-                        }
-                        ?>
-                    </select>
-
-                    <div>
-                        <!--Add item for order-->
-
-                        <br /> <br />
-
-                        <button name="btnsave" class="stin-button-save">Save Record </button>
-                        <table id="crud_table" width="100%" class="postb">
+                    <br>
+                    <hr><br>
+                    <h5>Product Table</h5>
+                    <div class="table-responsive">
+                        <table id="crud_table" width="100%" class="postb table">
                             <tr>
                                 <th style="padding: 10px; text-align: left" width="50%">
                                     Item Description
@@ -380,13 +437,21 @@
                                 </th>
                             </tr>
                         </table>
-                        <br>
+                    </div>
+
+                    <!--Add item for order-->
+
+                    <br /> <br />
+
+                    <button name="btnsave" class="btn btn-primary stin-button-save">Save Record </button>
+
+                    <br>
 
                 </form>
+            </div>
+            </fieldset>
+            </fieldset>
         </div>
-        </fieldset>
-        </fieldset>
-    </div>
     </div>
 </body>
 

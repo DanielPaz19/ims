@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name
+    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name,jo_tb.jo_remarks
     FROM order_tb
     LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
     LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
@@ -32,6 +32,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $reasonId = $row['reason_id'];
         $reasonName = $row['reason_name'];
         $user_name = $row['user_name'];
+        $remarks = $row['jo_remarks'];
     } else {
         echo "No results!";
     }

@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name,customers_tin
+    $result = mysqli_query($db, "SELECT order_tb.order_id, customers.customers_name, order_tb.pos_date, jo_tb.jo_no, jo_tb.jo_date, user.user_name,order_tb.dr_number,reason_tb.reason_name,reason_tb.reason_id,user.user_id,jo_tb.jo_id,customers.customers_address,user.user_name,customers_tin,customers.tax_type_id
     FROM order_tb
     LEFT JOIN customers ON customers.customers_id = order_tb.customer_id
     LEFT JOIN jo_tb ON jo_tb.jo_id = order_tb.jo_id
@@ -33,6 +33,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
         $reasonName = $row['reason_name'];
         $user_name = $row['user_name'];
         $custin = $row['customers_tin'];
+        $taxId = $row['tax_type_id'];
     } else {
         echo "No results!";
     }
@@ -96,28 +97,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </table>
         </div>
         <?php
+        if ($taxId == 1) {
+            $subTot = 0;
+            $disTot = 0;
+
+            while ($limit != count($total)) {
+                $subTot += $total[$limit];
+                // $disTot += $totaldisamount[$limit];
+                $limit += 1;
+            }
+
+            $grandTot = $subTot - $disTot;
+            // $anv = $grandTot / 112;
+            // $anvv = $anv * 100;
+            // $av = $grandTot - $anvv;
+            $amountNetVat  = $grandTot / 1.12;
+            $addVat = $grandTot - $amountNetVat;
 
 
-        $subTot = 0;
-        $disTot = 0;
-
-        while ($limit != count($total)) {
-            $subTot += $total[$limit];
-            // $disTot += $totaldisamount[$limit];
-            $limit += 1;
+            echo ' <p style="position: absolute;top:15.1cm;left:18.1cm">' . number_format($amountNetVat, 2) . '</p>
+            <p style="position: absolute;top:16.3cm;left:18.1cm">' . number_format($addVat, 2) . '</p>
+            <p style="position: absolute;top:16.9cm;left:18.1cm">' . number_format($grandTot, 2) . '</p>';
+        } else {
+            echo ' <p style="position: absolute;top:15.9cm;left:12cm">' . number_format($posQty * $posPrice, 2) . '</p>';
         }
-
-        $grandTot = $subTot - $disTot;
-        // $anv = $grandTot / 112;
-        // $anvv = $anv * 100;
-        // $av = $grandTot - $anvv;
-        $amountNetVat  = $grandTot / 1.12;
-        $addVat = $grandTot - $amountNetVat;
-
         ?>
-        <p style="position: absolute;top:15.1cm;left:18.1cm"><?php echo number_format($amountNetVat, 2)  ?></p>
-        <p style="position: absolute;top:16.3cm;left:18.1cm"><?php echo number_format($addVat, 2)  ?></p>
-        <p style="position: absolute;top:16.9cm;left:18.1cm"><?php echo number_format($grandTot, 2)  ?></p>
+
     </div>
     </div>
 </body>
