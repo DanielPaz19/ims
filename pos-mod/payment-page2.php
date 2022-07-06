@@ -14,6 +14,12 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+</style>
 
 <div style="padding:2%;margin-top:-1.4cm;">
     <!-- <h2>IMS CASHIERING</h2> -->
