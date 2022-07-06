@@ -86,9 +86,8 @@ if (isset($_POST['submit'])) {
                                 include './payment-online.php';
                             }
                             if ($option === 'bank') {
-                                include './payment-online.php';
+                                include './payment-bank.php';
                             }
-
                             ?>
                         </div>
                     </div>

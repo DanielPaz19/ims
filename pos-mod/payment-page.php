@@ -102,7 +102,9 @@ include('../php/config.php');
                                             </div>
                                         </div>
                                         <div class="text-center mt-5">
-                                            <input type="submit" name="submit" class="btn btn-primary" value="Next >" />
+                                            <a href="./index.php" class="btn btn-danger me-4">
+                                                < Back</a>
+                                                    <input type="submit" name="submit" class="btn btn-primary" value="Next >" />
                                         </div>
                                     </form>
                                 </div>
