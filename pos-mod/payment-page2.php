@@ -6,6 +6,15 @@ include('../php/config.php');
 ?>
 
 
+<?php
+if (isset($_POST['submit'])) {
+    $option = $_POST['payment_option'];
+    $paymentDate = $_POST['date'];
+    $tendered = $_POST['tendered'];
+}
+
+?>
+
 <div style="padding:2%;margin-top:-1.4cm;">
     <!-- <h2>IMS CASHIERING</h2> -->
     <br>
@@ -67,46 +76,13 @@ include('../php/config.php');
                                     </div>
                                 </div>
                             </div>
-                            <div class="col p-3">
-                                <div class="container text-primary payment__form--container">
-                                    <form action="payment-page2.php" method="post" style="width: 100%" class="container m-4 mx-auto">
-                                        <div class="payment__title text-center">Payment Options</div>
-                                        <div class="checkbox--container container text-center my-2" style="width: 100%">
-                                            <span class="form-check mx-3" style="display: inline-block">
-                                                <input checked class="form-check-input" type="radio" name="payment_option" id="cash_payment" value="cash" required />
-                                                <label class="form-check-label" for="cash_payment">
-                                                    Cash
-                                                </label>
-                                            </span>
-                                            <span class="form-check mx-3" style="display: inline-block">
-                                                <input class="form-check-input" type="radio" name="payment_option" id="online_payment" value="online" />
-                                                <label class="form-check-label" for="online_payment">
-                                                    Online
-                                                </label>
-                                            </span>
-                                            <span class="form-check mx-3" style="display: inline-block">
-                                                <input class="form-check-input" type="radio" name="payment_option" id="bank_payment" value="bank" />
-                                                <label class="form-check-label" for="bank_payment">
-                                                    Bank Check
-                                                </label>
-                                            </span>
-                                        </div>
-                                        <div class="form_control-container container mt-5" style="width: 90%">
-                                            <div class="mb-3">
-                                                <label for="trans_date" class="form-label">Date</label>
-                                                <input name="date" type="date" class="form-control payment__date" id="trans_date" required max="2022-07-01" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleFormControlInput1" class="form-label">Tendered Amount</label>
-                                                <input name="tendered" type="number" min="1" class="form-control" placeholder="Enter Amount" required />
-                                            </div>
-                                        </div>
-                                        <div class="text-center mt-5">
-                                            <input type="submit" name="submit" class="btn btn-primary" value="Next >" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            <?php
+
+                            if ($option === 'cash') {
+                                include './payment-cash.php';
+                            }
+
+                            ?>
                         </div>
                     </div>
 
@@ -114,13 +90,6 @@ include('../php/config.php');
             </div>
         </div>
     </div>
-    <script>
-        const paymentDate = document.querySelector(".payment__date");
-
-        paymentDate.max = new Date().toISOString().split("T")[0];
-        paymentDate.value = new Date().toISOString().split("T")[0];
-    </script>
-
     <script>
         //date
         document.querySelector('.date').value = new Date().toISOString();
