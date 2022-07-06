@@ -256,9 +256,10 @@ if (isset($_GET['editJo'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                            <i class="bi bi-check2-circle"></i> Proceed to Payment</button>
-
+                                        <a href="payment-page.php">
+                                            <button type="button" class="btn btn-primary">
+                                                <i class="bi bi-check2-circle"></i> Proceed to Payment</button>
+                                        </a>
                                     </div>
                                     <div class="col">
                                         <a href="index.php"><button type="button" class="btn btn-secondary" style="width:100%">Go Back</button></a>
