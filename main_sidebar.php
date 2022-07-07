@@ -24,7 +24,7 @@
                         <li><a class="dropdown-item" href="po_main.php"><i class="bi bi-bag"></i>&nbsp;Purchase Order</a></li>
                         <li><a class="dropdown-item" href="pinv_main2.php"><i class="bi bi-person-workspace"></i>&nbsp;Physical Inventory</a></li>
                         <li><a class="dropdown-item" href="rt_main.php"><i class="bi bi-box-arrow-right"></i>&nbsp;Return Slip</a></li>
-                        <li><a class="dropdown-item" href="ol_main.php"><i class="bi bi-box-arrow-right"></i>&nbsp;Online Transaction</a></li>
+                        <li><a class="dropdown-item" href="ol_shopee_main.php"><i class="bi bi-box-arrow-right"></i>&nbsp;Online Transaction</a></li>
                     </ul>
                 </li>
                 &emsp;
