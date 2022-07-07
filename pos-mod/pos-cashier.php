@@ -256,7 +256,7 @@ if (isset($_GET['editJo'])) {
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <a href="payment-page.php">
+                                        <a href="payment-page.php?id=<?php echo $joId ?>">
                                             <button type="button" class="btn btn-primary">
                                                 <i class="bi bi-check2-circle"></i> Proceed to Payment</button>
                                         </a>

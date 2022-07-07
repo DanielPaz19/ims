@@ -2,7 +2,11 @@
 if (!isset($_SESSION['user'])) {
     header("location: login-page.php");
 }
-include('../php/config.php');
+
+include './php/Payment.php';
+
+$payment = new Payments($_GET['id']);
+
 ?>
 
 <style>
@@ -45,9 +49,9 @@ include('../php/config.php');
                             <div class="col border-end position-relative">
                                 <div class="container jo_details--container">
                                     <div class="position-absolute top-50 start-50 translate-middle" style="min-width: 70%">
-                                        <div class="text-secondary">JO# 12-34567</div>
+                                        <div class="text-secondary">JO# <?php echo $payment->jo_number ?></div>
                                         <div class="customer__name text-uppercase fw-bold fs-5 mb-5 text-secondary">
-                                            philippine acrylic and chemical corp.
+                                            <?php echo $payment->customer_name ?>
                                         </div>
                                         <div class="jo__amount--container mx-auto" style="width: 60%">
                                             <div class="jo__amount--container row mb-2">
