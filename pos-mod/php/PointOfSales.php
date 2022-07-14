@@ -3,6 +3,18 @@ include 'database.php';
 
 class PointOfSales extends Database
 {
+
+    public $online_platform;
+    public $banks;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->online_platform = $this->getOnlinePlatforms();
+        $this->banks = $this->getBank();
+    }
+
     function getDrList($qry = '')
     {
         $sql =
@@ -21,6 +33,19 @@ class PointOfSales extends Database
 
         $result = $this->mysqli->query($sql);
 
+        return $result;
+    }
+
+    function getOnlinePlatforms()
+    {
+        $result = $this->select("*", "online_platform");
+
+        return $result;
+    }
+
+    function getBank()
+    {
+        $result = $this->select("*", "bank");
         return $result;
     }
 }

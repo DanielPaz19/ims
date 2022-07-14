@@ -59,7 +59,7 @@ $payment = new Payments($_GET['id']);
                                                     JO Amount:
                                                 </div>
                                                 <div class="jo__amount text-end col text-secondary">
-                                                    1000.00
+                                                    <?php echo number_format($payment->jo_total, 2) ?>
                                                 </div>
                                             </div>
                                             <div class="jo__paid--container mt-1 row">
@@ -67,12 +67,12 @@ $payment = new Payments($_GET['id']);
                                                     Total Paid:
                                                 </div>
                                                 <div class="jo__paid text-end col text-secondary">
-                                                    3000.00
+                                                    <?php echo number_format($payment->paid_amount, 2) ?>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="jo__balance text-success mt-5 fw-bold fs-2 text-center">
-                                            ₱ 100000.00
+                                            ₱ <?php echo number_format($payment->jo_balance, 2) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@ $payment = new Payments($_GET['id']);
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleFormControlInput1" class="form-label">Tendered Amount</label>
-                                                <input name="tendered" type="number" min="1" class="form-control" placeholder="Enter Amount" required />
+                                                <input max="<?php echo $payment->jo_balance ?>" name="tendered" type="number" min="1" class="form-control" placeholder="Enter Amount" required />
                                             </div>
                                         </div>
                                         <div class="text-center mt-5">

@@ -35,9 +35,17 @@
                     <label for="online_select" class="form-label">Bank</label>
                     <select name="online_select" class="form-select" aria-label="Default select example" required>
                         <option disabled selected value="">Open this select menu</option>
-                        <option value="1">BPI</option>
-                        <option value="2">Metrobank</option>
-                        <option value="3">Chinabank</option>
+                        <?php
+
+                        if ($payment->banks->num_rows > 0) {
+                            while ($row = $payment->banks->fetch_assoc()) {
+                                # code... 
+                        ?>
+                                <option value="<?php echo $row['bank_id'] ?>"><?php echo $row['bank_code'] ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="mb-3">

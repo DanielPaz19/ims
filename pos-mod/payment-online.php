@@ -31,10 +31,21 @@
                     <label for="online_select" class="form-label">Online Platform</label>
                     <select name="online_select" class="form-select" aria-label="Default select example" required>
                         <option disabled selected value="">Open this select menu</option>
-                        <option value="1">GCash</option>
-                        <option value="2">Paymaya</option>
-                        <option value="3">Online Bank</option>
+
+                        <?php
+
+                        if ($payment->online_platform->num_rows > 0) {
+                            while ($row = $payment->online_platform->fetch_assoc()) {
+                                # code... 
+                        ?>
+                                <option value="<?php echo $row['online_platform_id'] ?>"><?php echo $row['online_platform_name'] ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
                     </select>
+
+
                 </div>
                 <div class="mb-3">
                     <label for="ref_num" class="form-label">Reference Number</label>

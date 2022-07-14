@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
                                                     JO Amount:
                                                 </div>
                                                 <div class="jo__amount text-end col text-secondary">
-                                                    1000.00
+                                                    <?php echo number_format($payment->jo_total, 2) ?>
                                                 </div>
                                             </div>
                                             <div class="jo__paid--container mt-1 row">
@@ -76,12 +76,12 @@ if (isset($_POST['submit'])) {
                                                     Total Paid:
                                                 </div>
                                                 <div class="jo__paid text-end col text-secondary">
-                                                    3000.00
+                                                    <?php echo number_format($payment->paid_amount, 2) ?>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="jo__balance text-success mt-5 fw-bold fs-2 text-center">
-                                            ₱ 100000.00
+                                            ₱ <?php echo number_format($payment->jo_balance, 2) ?>
                                         </div>
                                     </div>
                                 </div>
