@@ -79,7 +79,7 @@ $payment = new Payments($_GET['id']);
                             </div>
                             <div class="col p-3">
                                 <div class="container text-primary payment__form--container">
-                                    <form action="payment-page2.php" method="post" style="width: 100%" class="container m-4 mx-auto">
+                                    <form action="payment-page2.php?id=<?php echo $_GET['id'] ?>" method="post" style="width: 100%" class="container m-4 mx-auto">
                                         <div class="payment__title text-center">Payment Options</div>
                                         <div class="checkbox--container container text-center my-2" style="width: 100%">
                                             <span class="form-check mx-3" style="display: inline-block">

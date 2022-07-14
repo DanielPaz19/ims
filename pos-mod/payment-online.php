@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="text-center mt-5">
-                <a href="./payment-page.php" class="btn btn-danger me-4">
+                <a href="./payment-page.php?id=<?php echo $_GET['id'] ?>" class="btn btn-danger me-4">
                     Cancel</a>
                 <input type="submit" name="submit" class="btn btn-success" value="Save Payment" />
             </div>
