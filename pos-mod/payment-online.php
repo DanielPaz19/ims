@@ -22,7 +22,7 @@
 <div class="form_control-container container mt-5" style="width: 90%">
     <div class="mb-3">
         <label for="" class="form-label">Date</label>
-        <input type="date" disabled name="date" value="<?php echo $paymentDate ?>" class="form-control payment__date" id="trans_date" required />
+        <input type="date" readonly name="date" value="<?php echo $paymentDate ?>" class="form-control payment__date" id="trans_date" required />
     </div>
     <div class="mb-3">
         <label for="online_select" class="form-label">Online Platform</label>
@@ -46,7 +46,7 @@
     </div>
     <div class="mb-3">
         <label for="ref_num" class="form-label">Reference Number</label>
-        <input type="text" name="date" id="ref_num" class="form-control payment__date" id="trans_date" required />
+        <input type="text" name="ref_num" id="ref_num" class="form-control payment__date" id="trans_date" required />
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Tendered Amount</label>
