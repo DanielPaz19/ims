@@ -86,19 +86,30 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                             </div>
-                            <?php
+                            <div class="col p-3">
+                                <div class="container text-primary payment__form--container">
+                                    <form action="payment-save.php" method="post" style="width: 100%" class="container m-4 mx-auto">
+                                        <?php
 
-                            if ($option === 'cash') {
-                                include './payment-cash.php';
-                            }
+                                        if ($option === 'cash') {
+                                            include './payment-cash.php';
+                                        }
 
-                            if ($option === 'online') {
-                                include './payment-online.php';
-                            }
-                            if ($option === 'bank') {
-                                include './payment-bank.php';
-                            }
-                            ?>
+                                        if ($option === 'online') {
+                                            include './payment-online.php';
+                                        }
+                                        if ($option === 'bank') {
+                                            include './payment-bank.php';
+                                        }
+                                        ?>
+                                        <div class="text-center mt-5">
+                                            <a href="./payment-page.php?id=<?php echo $_GET['id'] ?>" class="btn btn-danger me-4">
+                                                Cancel</a>
+                                            <input type="submit" name="submit" class="btn btn-success" value="Save Payment" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
