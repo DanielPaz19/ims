@@ -32,7 +32,7 @@
                     <input type="date" name="check_date" class="form-control " id="trans_date" required />
                 </div>
                 <div class="mb-3">
-                    <label for="online_select" class="form-label">Back</label>
+                    <label for="online_select" class="form-label">Bank</label>
                     <select name="online_select" class="form-select" aria-label="Default select example" required>
                         <option disabled selected value="">Open this select menu</option>
                         <option value="1">BPI</option>
