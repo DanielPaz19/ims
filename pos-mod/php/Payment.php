@@ -79,33 +79,40 @@ class Payments extends PointOfSales
         return;
     }
 
-    public function savePayment($payment = [])
-    {
-        $state = json_decode(json_encode($payment));
-
-        if ($payment['payment_option'] == 1) {
-            if ($this->cashPayment($state)) return 1;
-        }
-        if ($payment['payment_option'] == 2) {
-            $this->onlinePayment($state);
-        }
-        if ($payment['payment_option'] == 3) {
-            $this->chequePayment($state);
-        }
-
-        return 0;
-    }
-
-    private function cashPayment($state)
-    {
-        return $this->insert('order_payment', 'payment_type_id,jo_id,order_payment_debit,order_payment_date', "1, '$this->jo_id','$state->amount','$state->date'");
-    }
-
     private function onlinePayment($state)
     {
+        if (!$this->insert('online_payment', 'order_payment_id,online_platform_id,online_payment_reference,online_payment_amount,online_payment_date', "'$state->last_id','$state->online_select','$state->ref_num', '$state->amount','$state->date'")) return 0;
+
+        return 1;
     }
 
     private function chequePayment($state)
     {
+
+        if (!$this->insert("cheque_payment", "order_payment_id, cheque_number, cheque_date, cheque_amount, bank_id", "'$state->last_id', '$state->check_number', '$state->check_number', '$state->amount', '$state->bank_select'")) return 0;
+
+        return 1;
+    }
+
+
+    public function savePayment($payment = [])
+    {
+        $state = json_decode(json_encode($payment));
+
+        $state->amount = str_replace(',', '', $state->amount);
+
+        if (!$this->insert('order_payment', 'payment_type_id,jo_id,order_payment_debit,order_payment_date', "'$state->payment_option', '$this->jo_id','$state->amount','$state->date'")) return 0;
+
+        $state->last_id = $this->mysqli->insert_id;
+
+        if ($payment['payment_option'] == 2) {
+            if (!$this->onlinePayment($state)) return 0;
+        }
+
+        if ($payment['payment_option'] == 3) {
+            if (!$this->chequePayment($state)) return 0;
+        }
+
+        return 1;
     }
 }

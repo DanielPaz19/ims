@@ -6,9 +6,10 @@ if (isset($_POST['submit'])) {
 
     $payment = new Payments($_GET['jo_id']);
 
-    if ($payment->savePayment($_POST)) {
-        return header("Location: index.php");
+    if (!$payment->savePayment($_POST)) {
+        echo "Something went wrong";
+        return false;
     }
 
-    echo "Something went wrong";
+    return header("Location: index.php");
 }

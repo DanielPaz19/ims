@@ -50,6 +50,7 @@
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Tendered Amount</label>
-        <input type="text" name="amount" value="<?php echo number_format($tendered, 2) ?>" class="form-control" required readonly />
+        <input type="text" value="<?php echo number_format($tendered, 2) ?>" class="form-control" required disabled />
+        <input type="hidden" name="amount" value="<?php echo $tendered ?>" class="form-control" />
     </div>
 </div>
