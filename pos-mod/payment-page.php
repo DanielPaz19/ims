@@ -113,8 +113,8 @@ $payment = new Payments($_GET['id']);
                                         </div>
                                         <div class="text-center mt-5">
                                             <a href="./index.php" class="btn btn-danger me-4">
-                                                < Back</a>
-                                                    <input type="submit" name="submit" class="btn btn-primary" value="Next >" />
+                                                <i class="bi bi-arrow-left-short"></i> Back</a>
+                                            <button name="submit" class="btn btn-primary">Next <i class="bi bi-arrow-right-short"></i></button>
                                         </div>
                                     </form>
                                 </div>

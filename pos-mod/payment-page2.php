@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="col p-3">
                                 <div class="container text-primary payment__form--container">
-                                    <form action="payment-save.php" method="post" style="width: 100%" class="container m-4 mx-auto">
+                                    <form action="payment-save.php?jo_id=<?php echo $payment->jo_id ?>" method="post" style="width: 100%" class="container m-4 mx-auto">
                                         <?php
 
                                         if ($option === 'cash') {
@@ -104,8 +104,8 @@ if (isset($_POST['submit'])) {
                                         ?>
                                         <div class="text-center mt-5">
                                             <a href="./payment-page.php?id=<?php echo $_GET['id'] ?>" class="btn btn-danger me-4">
-                                                Cancel</a>
-                                            <input type="submit" name="submit" class="btn btn-success" value="Save Payment" />
+                                                <i class="bi bi-x-circle"></i> Cancel</a>
+                                            <button class="btn btn-success" name="submit"><i class="bi bi-check-circle"></i> Save Payment</button>
                                         </div>
                                     </form>
                                 </div>

@@ -1,7 +1,14 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+
+    include "./php/Payment.php";
+
+    $payment = new Payments($_GET['jo_id']);
+
+    if ($payment->savePayment($_POST)) {
+        return header("Location: index.php");
+    }
+
+    echo "Something went wrong";
 }

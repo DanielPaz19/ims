@@ -76,6 +76,36 @@ class Payments extends PointOfSales
             $this->paid_amount = $row['jo_total_paid'];
         }
 
+        return;
+    }
+
+    public function savePayment($payment = [])
+    {
+        $state = json_decode(json_encode($payment));
+
+        if ($payment['payment_option'] == 1) {
+            if ($this->cashPayment($state)) return 1;
+        }
+        if ($payment['payment_option'] == 2) {
+            $this->onlinePayment($state);
+        }
+        if ($payment['payment_option'] == 3) {
+            $this->chequePayment($state);
+        }
+
         return 0;
+    }
+
+    private function cashPayment($state)
+    {
+        return $this->insert('order_payment', 'payment_type_id,jo_id,order_payment_debit,order_payment_date', "1, '$this->jo_id','$state->amount','$state->date'");
+    }
+
+    private function onlinePayment($state)
+    {
+    }
+
+    private function chequePayment($state)
+    {
     }
 }
