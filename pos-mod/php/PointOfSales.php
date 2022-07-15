@@ -6,6 +6,13 @@ class PointOfSales extends Database
 
     public $online_platform;
     public $banks;
+    public $jo_id;
+    public $jo_number;
+    public $customer_id;
+    public $customer_name;
+    public $jo_total;
+    public $paid_amount;
+    public $jo_balance;
 
     public function __construct()
     {
@@ -47,5 +54,38 @@ class PointOfSales extends Database
     {
         $result = $this->select("*", "bank");
         return $result;
+    }
+
+    function getPendingJoPayments()
+    {
+        $result = $this->select("jo_tb.jo_id, jo_tb.jo_no, jo_tb.customers_id, customers.customers_name, jo_tb.jo_date", "jo_tb LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id", "jo_tb.jo_type_id = 1  ORDER BY jo_date DESC LIMIT 15");
+
+        return $result;
+    }
+
+    function getJoTotal($jo_id)
+    {
+        $result = $this->select("SUM(jo_product_price * jo_product_qty) AS joTotal", "jo_product", "jo_id = $jo_id ");
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $this->jo_total = $row['joTotal'];
+        }
+
+        return $this->jo_total;
+    }
+
+    public function getPaidAmount($jo_id)
+    {
+        $result = $this->select("SUM(order_payment_debit) AS jo_total_paid", "order_payment", "jo_id = $jo_id ");
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $this->paid_amount = $row['jo_total_paid'];
+        }
+
+        return $this->paid_amount;
     }
 }
