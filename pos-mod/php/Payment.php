@@ -89,7 +89,7 @@ class Payments extends PointOfSales
     private function chequePayment($state)
     {
 
-        if (!$this->insert("cheque_payment", "order_payment_id, cheque_number, cheque_date, cheque_amount, bank_id", "'$state->last_id', '$state->check_number', '$state->check_number', '$state->amount', '$state->bank_select'")) return 0;
+        if (!$this->insert("cheque_payment", "order_payment_id, cheque_number, cheque_date, cheque_amount, bank_id", "'$state->last_id', '$state->check_number', '$state->check_date', '$state->amount', '$state->bank_select'")) return 0;
 
         return 1;
     }
