@@ -47,17 +47,7 @@ $pos = new PointOfSales();
                             <input class="form-control" name="qry" placeholder="Type to search..." autocomplete="off">
                         </form>
                     </div>
-                    <div class="container text-end ">
-                        <nav class="d-inline-block">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
+
                     <div class="container">
                         <table class="table table-sm align-middle">
                             <tr class="text-center">
@@ -99,6 +89,17 @@ $pos = new PointOfSales();
                                 ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="container">
+                        <nav class="">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
