@@ -44,7 +44,7 @@ $pos = new PointOfSales();
 
                     <div class="container w-50 ">
                         <form action="" class="mt-3 mb-5" method="get">
-                            <input class="form-control" name="qry" placeholder="Type to search...">
+                            <input class="form-control" name="qry" placeholder="Type to search..." autocomplete="off">
                         </form>
                     </div>
                     <div class="container text-end ">
