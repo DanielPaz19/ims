@@ -14,7 +14,7 @@ if (!isset($_GET['page'])) {
 }
 
 // Set row limit
-$limit = 15;
+$limit = 10;
 
 // Get initial page number
 $initial_page = ($page_number - 1) * $limit;
@@ -66,7 +66,71 @@ $total_pages = ceil($total_rows / $limit);
                             <input class="form-control" name="qry" placeholder="Type to search..." autocomplete="off">
                         </form>
                     </div>
+                    <div class="container">
+                        <nav class="">
+                            <ul class="pagination">
 
+                                <li class="page-item <?php if ($page_number == 1) {
+                                                            echo "disabled";
+                                                        } ?>">
+
+                                    <a class="page-link" href="./index.php?page=<?php echo $page_number - 1; ?>">Previous</a>
+                                </li>
+
+                                <?php
+
+                                $page_limit = 1;
+                                $break_point = 5;
+                                $showed_pages = 1;
+
+
+                                if ($page_number > 3) {
+                                    $showed_pages = $page_number - 2;
+                                    //Stop adjustmetn of pages;
+                                    if ($showed_pages > $total_pages - 6)  $showed_pages = $total_pages - 5;
+                                }
+                                ?>
+
+                                <li class="page-item <?php $pos->checkActivePage($page_limit, $page_number) ?>">
+                                    <a class="page-link " href="./index.php?page=<?php echo $page_limit ?>"><?php echo $page_limit ?></a>
+                                </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
+                                </li>
+                                <?php
+
+                                while ($page_limit != $total_pages) {
+                                    if ($page_limit == $break_point) {
+                                        break;
+                                    };
+
+                                ?>
+                                    <li class="page-item <?php $pos->checkActivePage($page_limit + $showed_pages, $page_number) ?>">
+                                        <a class="page-link " href="./index.php?page=<?php echo $page_limit + $showed_pages ?>"><?php echo $page_limit + $showed_pages ?></a>
+                                    </li>
+                                <?php
+
+                                    $page_limit++;
+                                } ?>
+
+
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
+                                </li>
+
+                                <li class="page-item <?php $pos->checkActivePage($total_pages, $page_number) ?>">
+                                    <a class="page-link " href="./index.php?page=<?php echo $total_pages ?>"><?php echo $total_pages ?></a>
+                                </li>
+
+
+                                <li class="page-item <?php if ($page_number == $total_pages) {
+                                                            echo "disabled";
+                                                        } ?>">
+                                    <a class="page-link" href="./index.php?page=<?php echo $page_number + 1 ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                     <div class="container">
                         <table class="table table-sm align-middle">
                             <tr class="text-center">
@@ -109,57 +173,7 @@ $total_pages = ceil($total_rows / $limit);
                             </tbody>
                         </table>
                     </div>
-                    <div class="container">
-                        <nav class="">
-                            <ul class="pagination">
 
-                                <li class="page-item">
-                                    <a class="page-link" href="">Previous</a>
-                                </li>
-
-                                <?php
-
-                                $page_limit = 1;
-                                $break_point = 5;
-                                ?>
-
-                                <li class="page-item <?php $pos->checkActivePage($page_limit, $page_number) ?>">
-                                    <a class="page-link " href="./index.php?page=<?php echo $page_limit ?>"><?php echo $page_limit ?></a>
-                                </li>
-                                <li class="page-item disabled">
-                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
-                                </li>
-                                <?php
-                                while ($page_limit != $total_pages) {
-                                    if ($page_limit == $break_point) {
-                                        break;
-                                    };
-
-                                ?>
-                                    <li class="page-item <?php $pos->checkActivePage($page_limit + 1, $page_number) ?>">
-                                        <a class="page-link " href="./index.php?page=<?php echo $page_limit + 1 ?>"><?php echo $page_limit + 1 ?></a>
-                                    </li>
-                                <?php
-
-                                    $page_limit++;
-                                } ?>
-
-
-                                <li class="page-item disabled">
-                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
-                                </li>
-
-                                <li class="page-item <?php $pos->checkActivePage($total_pages, $page_number) ?>">
-                                    <a class="page-link " href="./index.php?page=<?php echo $total_pages ?>"><?php echo $total_pages ?></a>
-                                </li>
-
-
-                                <li class="page-item">
-                                    <a class="page-link" href="">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
         </div>
