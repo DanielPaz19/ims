@@ -80,14 +80,14 @@ $total_pages = ceil($total_rows / $limit);
                                 <?php
 
                                 $page_limit = 1;
-                                $break_point = 5;
+                                $break_point = $total_pages <= 4 ? 3 : 5;
                                 $showed_pages = 1;
 
 
                                 if ($page_number > 3) {
                                     $showed_pages = $page_number - 2;
                                     //Stop adjustmetn of pages;
-                                    if ($showed_pages > $total_pages - 6)  $showed_pages = $total_pages - 5;
+                                    if ($showed_pages > $total_pages - 6)  $showed_pages = $total_pages - $total_pages <= 4 ? 1 : 5;
                                 }
                                 ?>
 
@@ -150,19 +150,14 @@ $total_pages = ceil($total_rows / $limit);
                                     while ($row = $pendingResult->fetch_assoc()) {
 
                                         $jo_amount = $pos->getJoTotal($row['jo_id']);
-                                        $jo_total_paid = $pos->getPaidAmount($row['jo_id']);
-
-                                        $jo_balance = $jo_amount - $jo_total_paid;
-
-                                        // if ($jo_balance == 0) continue;
                                 ?>
 
                                         <tr class="text-center">
                                             <td><?php echo $row['jo_id'] ?></td>
                                             <td><?php echo $row['jo_no'] ?></td>
-                                            <td class="text-start"><?php echo $row['customers_name'] ?></td>
+                                            <td class="text-start fw-bold"><?php echo $row['customers_name'] ?></td>
                                             <td class="text-end"><?php echo number_format($jo_amount, 2); ?></td>
-                                            <td class="text-end"><?php echo number_format($row['jo_balance'], 2); ?></td>
+                                            <td class="text-end text-danger"><?php echo number_format($row['jo_balance'], 2); ?></td>
                                             <td><?php echo $row['jo_date'] ?></td>
                                             <td><a href="pos-cashier.php?editJo&id=<?php echo $row['jo_id'] ?>" class="btn btn-success"><i class="bi bi-wallet2 "></i> Pay Now</a></td>
                                         </tr>
