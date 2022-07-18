@@ -6,7 +6,6 @@ include './php/PointOfSales.php';
 
 $pos = new PointOfSales();
 
-// Get/Set the current page number 
 if (!isset($_GET['page'])) {
     $page_number = 1;
 } else {
@@ -19,8 +18,14 @@ $limit = 10;
 // Get initial page number
 $initial_page = ($page_number - 1) * $limit;
 
+if (isset($_GET['qry'])) {
+    $qry = $_GET['qry'];
+} else {
+    $qry = "";
+}
+
 // Calculate total number of pages
-$result = $pos->getPendingJoPayments();
+$result = $pos->getPendingJoPayments("", $qry);
 $total_rows = $result->num_rows;
 $total_pages = ceil($total_rows / $limit);
 
@@ -63,7 +68,7 @@ $total_pages = ceil($total_rows / $limit);
 
                     <div class="container w-50 ">
                         <form action="" class="mt-3 mb-5" method="get">
-                            <input class="form-control" name="qry" placeholder="Type to search..." autocomplete="off">
+                            <input class="form-control" name="qry" placeholder="Type to search..." autocomplete="off" value="<?php echo $qry ?>" autofocus>
                         </form>
                     </div>
                     <div class="container">
@@ -78,6 +83,9 @@ $total_pages = ceil($total_rows / $limit);
                                 </li>
 
                                 <?php
+
+
+
 
                                 $page_limit = 1;
                                 $break_point = $total_pages <= 4 ? 3 : 5;
@@ -144,7 +152,10 @@ $total_pages = ceil($total_rows / $limit);
                             </tr>
                             <tbody>
                                 <?php
-                                $pendingResult = $pos->getPendingJoPayments("LIMIT $initial_page, $limit");
+
+
+
+                                $pendingResult = $pos->getPendingJoPayments("LIMIT $initial_page, $limit", $qry);
 
                                 if ($pendingResult->num_rows > 0) {
                                     while ($row = $pendingResult->fetch_assoc()) {

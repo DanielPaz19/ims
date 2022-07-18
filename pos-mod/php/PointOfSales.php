@@ -56,7 +56,7 @@ class PointOfSales extends Database
         return $result;
     }
 
-    function getPendingJoPayments($limit = "")
+    function getPendingJoPayments($limit = "", $qry = "")
     {
         $result = $this->select(
             "*, jo_total - total_paid as jo_balance from(select SUM(jo_product.jo_product_qty * jo_product.jo_product_price) as jo_total,jo_tb.jo_type_id, jo_product.jo_id as jo_id, jo_tb.jo_no, jo_tb.jo_date, customers.customers_name",
@@ -64,7 +64,7 @@ class PointOfSales extends Database
             left join jo_tb on jo_tb.jo_id = jo_product.jo_id 
             left join customers on customers.customers_id = jo_tb.customers_id
             group by jo_id) as t1 LEFT JOIN (SELECT SUM(order_payment.order_payment_debit) as total_paid, order_payment.jo_id as joId from order_payment GROUP by jo_id) as t2 ON t1.jo_id = t2.joId ",
-            "jo_type_id = 1 HAVING jo_balance > 0 ORDER BY jo_date desc $limit"
+            "jo_type_id = 1 AND (t1.customers_name LIKE '%$qry%' OR t1.jo_no LIKE '%$qry%') HAVING jo_balance > 0 ORDER BY jo_date desc $limit"
         );
 
         return $result;
