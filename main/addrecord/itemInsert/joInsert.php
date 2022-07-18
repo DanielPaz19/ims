@@ -80,10 +80,10 @@ if (isset($_GET['btnsave']) && $productId[0] != "") { //Will not proceed if Prod
         }
 
 
-        // Insert order payment using lastid of order_tb
-        $order_payment_sql = "INSERT INTO order_payment (jo_id,order_payment_credit,order_payment_balance,payment_status_id)
-        VALUES ('$lastJoId','$joTotalAmount','$joTotalAmount','1')";
-        mysqli_query($db, $order_payment_sql);
+        // // Insert order payment using lastid of order_tb
+        // $order_payment_sql = "INSERT INTO order_payment (jo_id,order_payment_credit,order_payment_balance,payment_status_id)
+        // VALUES ('$lastJoId','$joTotalAmount','$joTotalAmount','1')";
+        // mysqli_query($db, $order_payment_sql);
 
 
         $limiter = 0;

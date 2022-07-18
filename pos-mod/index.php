@@ -152,9 +152,6 @@ $total_pages = ceil($total_rows / $limit);
                             </tr>
                             <tbody>
                                 <?php
-
-
-
                                 $pendingResult = $pos->getPendingJoPayments("LIMIT $initial_page, $limit", $qry);
 
                                 if ($pendingResult->num_rows > 0) {
@@ -164,7 +161,7 @@ $total_pages = ceil($total_rows / $limit);
                                 ?>
 
                                         <tr class="text-center">
-                                            <td><?php echo $row['jo_id'] ?></td>
+                                            <td><?php echo str_pad($row['jo_id'], 6, 0, STR_PAD_LEFT) ?></td>
                                             <td><?php echo $row['jo_no'] ?></td>
                                             <td class="text-start fw-bold"><?php echo $row['customers_name'] ?></td>
                                             <td class="text-end"><?php echo number_format($jo_amount, 2); ?></td>
