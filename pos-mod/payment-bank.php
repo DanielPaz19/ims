@@ -47,7 +47,7 @@
     </div>
     <div class="mb-3">
         <label for="trans_date" class="form-label">Check Number</label>
-        <input type="text" name="check_number" id="ref_num" class="form-control payment__date" id="trans_date" required />
+        <input autocomplete="off" type="text" name="check_number" id="ref_num" class="form-control payment__date" id="trans_date" required />
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Tendered Amount</label>

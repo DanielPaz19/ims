@@ -6,6 +6,25 @@ include './php/PointOfSales.php';
 
 $pos = new PointOfSales();
 
+// Get/Set the current page number 
+if (!isset($_GET['page'])) {
+    $page_number = 1;
+} else {
+    $page_number = $_GET['page'];
+}
+
+// Set row limit
+$limit = 15;
+
+// Get initial page number
+$initial_page = ($page_number - 1) * $limit;
+
+// Calculate total number of pages
+$result = $pos->getPendingJoPayments();
+$total_rows = $result->num_rows;
+$total_pages = ceil($total_rows / $limit);
+
+
 ?>
 <style>
     * {
@@ -61,17 +80,17 @@ $pos = new PointOfSales();
                             </tr>
                             <tbody>
                                 <?php
-                                $result = $pos->getPendingJoPayments();
+                                $pendingResult = $pos->getPendingJoPayments("LIMIT $initial_page, $limit");
 
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
+                                if ($pendingResult->num_rows > 0) {
+                                    while ($row = $pendingResult->fetch_assoc()) {
 
                                         $jo_amount = $pos->getJoTotal($row['jo_id']);
                                         $jo_total_paid = $pos->getPaidAmount($row['jo_id']);
 
                                         $jo_balance = $jo_amount - $jo_total_paid;
 
-                                        if ($jo_balance == 0) continue;
+                                        // if ($jo_balance == 0) continue;
                                 ?>
 
                                         <tr class="text-center">
@@ -79,7 +98,7 @@ $pos = new PointOfSales();
                                             <td><?php echo $row['jo_no'] ?></td>
                                             <td class="text-start"><?php echo $row['customers_name'] ?></td>
                                             <td class="text-end"><?php echo number_format($jo_amount, 2); ?></td>
-                                            <td class="text-end"><?php echo number_format($jo_balance, 2); ?></td>
+                                            <td class="text-end"><?php echo number_format($row['jo_balance'], 2); ?></td>
                                             <td><?php echo $row['jo_date'] ?></td>
                                             <td><a href="pos-cashier.php?editJo&id=<?php echo $row['jo_id'] ?>" class="btn btn-success"><i class="bi bi-wallet2 "></i> Pay Now</a></td>
                                         </tr>
@@ -93,11 +112,51 @@ $pos = new PointOfSales();
                     <div class="container">
                         <nav class="">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="">Previous</a>
+                                </li>
+
+                                <?php
+
+                                $page_limit = 1;
+                                $break_point = 5;
+                                ?>
+
+                                <li class="page-item <?php $pos->checkActivePage($page_limit, $page_number) ?>">
+                                    <a class="page-link " href="./index.php?page=<?php echo $page_limit ?>"><?php echo $page_limit ?></a>
+                                </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
+                                </li>
+                                <?php
+                                while ($page_limit != $total_pages) {
+                                    if ($page_limit == $break_point) {
+                                        break;
+                                    };
+
+                                ?>
+                                    <li class="page-item <?php $pos->checkActivePage($page_limit + 1, $page_number) ?>">
+                                        <a class="page-link " href="./index.php?page=<?php echo $page_limit + 1 ?>"><?php echo $page_limit + 1 ?></a>
+                                    </li>
+                                <?php
+
+                                    $page_limit++;
+                                } ?>
+
+
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-three-dots"></i></a>
+                                </li>
+
+                                <li class="page-item <?php $pos->checkActivePage($total_pages, $page_number) ?>">
+                                    <a class="page-link " href="./index.php?page=<?php echo $total_pages ?>"><?php echo $total_pages ?></a>
+                                </li>
+
+
+                                <li class="page-item">
+                                    <a class="page-link" href="">Next</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
