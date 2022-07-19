@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 include 'PointOfSales.php';
 
 
@@ -47,7 +49,9 @@ class Delivery extends PointOfSales
     {
         $sql = "SELECT customers.customers_name,
         customers.customers_address,
+        customers.customers_id,
         customers.customers_tin,
+        customers.customers_contact,
         delivery_receipt.user_id,
         delivery_receipt.dr_date
         FROM delivery_receipt
@@ -55,7 +59,7 @@ class Delivery extends PointOfSales
         LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id
         LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id 
         LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
-        WHERE delivery_receipt.dr_number = '$dr_number'";
+        WHERE delivery_receipt.dr_number IN ($dr_number)";
 
         $result = $this->mysqli->query($sql);
 
@@ -106,14 +110,38 @@ class Delivery extends PointOfSales
 
     function getProductDetails($dr_number)
     {
-        $sql = "SELECT dr_products.dr_product_qty, dr_products.jo_product_id, product.product_name, jo_product.jo_product_price, unit_tb.unit_name, dr_products.dr_product_qty * jo_product.jo_product_price AS subTotal
+        $sql = "SELECT product.product_id, dr_products.dr_product_qty, dr_products.jo_product_id, product.product_name, jo_product.jo_product_price, unit_tb.unit_name, dr_products.dr_product_qty * jo_product.jo_product_price AS subTotal
         FROM dr_products
         LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id
         LEFT JOIN product ON product.product_id = jo_product.product_id
         LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
-        WHERE dr_products.dr_number = '$dr_number'
+        WHERE dr_products.dr_number IN ($dr_number)
         ";
 
         return $this->mysqli->query($sql);
+    }
+
+    function getDrItems($dr_number = [])
+    {
+        $sql = "SELECT dr_products.jo_product_id, 
+                dr_products.dr_number,
+                dr_products.dr_product_qty, 
+                SUM(dr_products.dr_product_qty) AS totalQty,
+                product.product_id,
+                product.product_name,
+                unit_tb.unit_name,
+                SUM(dr_products.dr_product_qty * jo_product.jo_product_price) AS totalRowAmount,
+                jo_product.jo_product_price
+                FROM dr_products
+                LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id
+                LEFT JOIN product ON product.product_id = jo_product.product_id
+                LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
+                WHERE dr_products.dr_number IN ($dr_number)
+                GROUP BY product.product_id, jo_product.jo_product_price 
+        ";
+
+        $result = $this->mysqli->query($sql);
+
+        return $result;
     }
 }
