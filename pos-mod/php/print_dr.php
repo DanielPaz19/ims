@@ -30,81 +30,114 @@ if (isset($_GET['dr_number'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print DR</title>
-</head>
-
-<body style="box-sizing:border-box; padding: 0px; margin: 0px; position:relative;">
-    <div style="position: absolute; left: 10cm">
-        <?php echo $dr_number ?>
-    </div>
-    <div style="position: absolute;">
-        <?php echo $customer['customers_name'] ?>
-    </div>
-    <div style="position: absolute; top: 1cm;">
-        <?php echo $customer['customers_address'] ?>
-    </div>
-    <div style="position: absolute; top: 2cm;">
-        <?php echo $customer['customers_tin'] ?>
-    </div>
-    <div style="position: absolute; top: 3cm;">
-        <?php echo date_format($date, "F d, Y") ?>
-    </div>
-
-
-    <div class="items__container" style="position: absolute; top: 4cm;">
-        <?php
-
-        $itemResult = $dr->getProductDetails($dr_number);
-        $grandTotal = 0;
-        if ($itemResult->num_rows > 0) {
-            while ($itemRow = $itemResult->fetch_assoc()) {
-
-                $grandTotal += $itemRow['subTotal'];
-        ?>
-
-
-                <div>
-                    <div style="display:inline-block ;">
-                        <?php echo number_format($itemRow['dr_product_qty'], 2) ?>
-                    </div>
-                    <div style="display:inline-block ;">
-                        <?php echo $itemRow['unit_name'] ?>
-                    </div>
-                    <div style="display:inline-block ;">
-                        <?php echo $itemRow['product_name'] ?>
-                    </div>
-                    <div style="display:inline-block ;">
-                        <?php echo number_format($itemRow['jo_product_price'], 2) ?>
-                    </div>
-                    <div style="display:inline-block ;">
-                        <?php echo number_format($itemRow['subTotal'], 2) ?>
-                    </div>
-                </div>
-
-
-        <?php
-            }
+    <style>
+        body {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        ?>
+        .dr_paper {
+            /* border: 1px solid black; */
+            width: 21.3cm;
+            height: 25.5cm;
+        }
 
-        <br>
-        <div>
-            <?php echo number_format($grandTotal, 2) ?>
-        </div>
+        .dr_table {
+            position: absolute;
+            /* border: 1px solid black; */
+            width: 198mm;
+            height: 120mm;
+            top: 6.6cm;
 
-        <div>
-            ****** NOTHING FOLLOWS ******
-        </div>
+            margin-right: .5cm;
+            margin-left: 7mm;
+        }
+
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            /* border: 1px solid black; */
+        }
+
+        .items td {
+            /* border: 1px solid black; */
+        }
+
+
+        .ep_table table {
+            width: 100%;
+            /* border: 1px solid black; */
+            border-collapse: collapse;
+        }
+
+        @media print {
+            .hidden-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dr_paper" style="position:relative">
+        <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $dr_number ?></p>
+        <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customer['customers_name'] ?></p>
+        <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:70%;letter-spacing: -0px;font-size:14px"> <?php echo $customer['customers_address'] ?></p>
+        <p style="position: absolute;left:17cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo date_format($date, "F d, Y") ?></p>
     </div>
 
-    <div style="position: absolute; top: 10cm;">
-        <?php echo $drDetails['user_name'] ?>
+    <div class="dr_table">
+        <table class="items" style="position: absolute;">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <?php
+            $itemResult = $dr->getProductDetails($dr_number);
+            $grandTotal = 0;
+            if ($itemResult->num_rows > 0) {
+                while ($itemRow = $itemResult->fetch_assoc()) {
+
+                    $grandTotal += $itemRow['subTotal'];
+            ?>
+                    <tr>
+                        <td style="width: 1.9cm;height:0.7cm;text-align:center"><?php echo $itemRow['dr_product_qty'] ?></td>
+                        <td style="width: 1.9cm;height:0.7cm"> <?php echo $itemRow['unit_name'] ?></td>
+                        <td style="font-size: 12.5px;"> <?php echo $itemRow['product_name'] ?></td>
+                        <td> <?php echo $itemRow['jo_product_price'] ?>/<?php echo $itemRow['unit_name'] ?></td>
+                        <td style="width: 1cm;height:0.7cm"></td>
+                        <td> <?php echo number_format($itemRow['subTotal'], 2) ?></td>
+                    </tr>
+
+            <?php
+                }
+            }
+
+            ?>
+            <tr>
+
+                <td></td>
+                <td style="font-size: small; padding-top:-5px" colspan="4">
+                    <center>****** NOTHING FOLLOWS *****</center>
+                </td>
+                <td style="text-decoration: overline;text-align:left;vertical-align:top">
+                    &#8369;<?php echo number_format($grandTotal, 2) ?>
+                </td>
+            </tr>
+        </table>
+
+
     </div>
-    <div style="position: absolute; top: 11cm;">
-        JO NUMBER:<br>
-        <?php echo implode(", ", $jo) ?>
+
+    <div style="position: absolute; top: 20.5cm;left:3cm">
+        <?php echo "/" . $drDetails['user_name'] ?>
     </div>
-    <div style="position: fixed; bottom: 1cm">
+    <div style="position: absolute; top: 21.5cm;left:1cm">
+        JO<?php echo implode(", ", $jo) ?>
+    </div>
+    <div class="hidden-print" style="position: fixed; bottom: 1cm">
         <a href="../index.php">Exit Page</a>
     </div>
 
