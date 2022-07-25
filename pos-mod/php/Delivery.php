@@ -53,12 +53,14 @@ class Delivery extends PointOfSales
         customers.customers_tin,
         customers.customers_contact,
         delivery_receipt.user_id,
-        delivery_receipt.dr_date
+        delivery_receipt.dr_date,
+        customers.tax_type_id
         FROM delivery_receipt
         LEFT JOIN dr_products ON dr_products.dr_number = delivery_receipt.dr_number
         LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id
         LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id 
         LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
+        LEFT JOIN tax_type_tb ON tax_type_tb.tax_type_id = customers.tax_type_id
         WHERE delivery_receipt.dr_number IN ($dr_number)";
 
         $result = $this->mysqli->query($sql);
@@ -137,7 +139,7 @@ class Delivery extends PointOfSales
                 LEFT JOIN product ON product.product_id = jo_product.product_id
                 LEFT JOIN unit_tb ON unit_tb.unit_id = product.unit_id
                 WHERE dr_products.dr_number IN ($dr_number)
-                GROUP BY product.product_id, jo_product.jo_product_price 
+                GROUP BY product.product_id, jo_product.jo_product_price  
         ";
 
         $result = $this->mysqli->query($sql);

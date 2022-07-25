@@ -2,11 +2,12 @@
 
 include "./php/Delivery.php";
 
-$dr_number[] = $_GET['dr_number'];
+$dr_number = $_GET['dr_number'];
 
 $dr = new Delivery();
 $customer = $dr->getCustomerDetails(implode(",", $dr_number));
-
+$taxId = $customer['tax_type_id'];
+echo $taxId;
 ?>
 
 
@@ -23,23 +24,51 @@ $customer = $dr->getCustomerDetails(implode(",", $dr_number));
 
 <body>
     <div class="dr_paper" style="position: relative;">
-        <p style="position: absolute;left:2.5cm;top:4cm;margin:0;">Mang Kanor Corporation</p>
-        <p style="position: absolute;left:2.5cm;top:4.6cm;margin:0;">111-222-333-000 </p>
-        <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0; font-size:small;width:60%">629 Edsa Cubao Quezon City</p>
-        <p style="position: absolute;left:16cm;top:4cm;margin:0;">April 14,2018</p>
+        <p style="position: absolute;left:2.5cm;top:4cm;margin:0;"><?php echo $customer['customers_name'] ?></p>
+        <p style="position: absolute;left:2.5cm;top:4.6cm;margin:0;"><?php echo $customer['customers_tin'] ?> </p>
+        <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0; font-size:small;width:60%"><?php echo $customer['customers_address'] ?></p>
+        <p style="position: absolute;left:16cm;top:4cm;margin:0;"><?php echo date("F d, Y") ?></p>
         <!-- dr No. -->
-        <p style="position: absolute;left:17cm;top:4.6cm;margin:0;">39477</p>
+        <p style="position: absolute;left:17cm;top:4.6cm;margin:0;"><?php echo implode(",", $dr_number) ?></p>
 
         <div class="dr_table">
             <table class="items" style="position: absolute;">
 
-                <tr>
+                <tbody>
+
+                    <?php
+
+                    $drItemsResult = $dr->getDrItems(implode(",", $dr_number));
+
+                    $grandTotal = 0;
+                    if ($drItemsResult->num_rows > 0) {
+                        while ($itemRows = $drItemsResult->fetch_assoc()) {
+                            $grandTotal += $itemRows['totalRowAmount'];
+                    ?>
+                            <tr>
+                                <td><?php echo str_pad($itemRows['product_id'], 8, 0, STR_PAD_LEFT) ?>
+                                </td>
+                                <td><?php echo $itemRows['product_name'] ?></td>
+                                <td class='label--price'>
+                                    <?php echo number_format($itemRows['jo_product_price'], 2) ?></td>
+                                <td><?php echo number_format($itemRows['totalQty'], 2) ?></td>
+                                <td><?php echo $itemRows['unit_name'] ?></td>
+                                <td class='label--subtotal text-end'>
+                                    <?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
+                            </tr>
+                    <?php
+                        }
+                    }
+                    ?>
+                </tbody>
+
+                <!-- <tr>
                     <td style="width: 2.2cm;height:0.7cm;text-align:center">1pcs</td>
                     <td style="font-size: 12.8px;width: 12.8cm;">Test Item</td>
                     <td style="width: 1.9cm;text-align:right;font-size: 12.8px">99/pcs</td>
                     <td style="width: 0.95cm;"></td>
                     <td style="width: 2.5cm;;font-size: 12.8px">&#8369;99.00</td>
-                </tr>
+                </tr> -->
 
             </table>
         </div>
@@ -66,12 +95,12 @@ $customer = $dr->getCustomerDetails(implode(",", $dr_number));
         //     <p style="position: absolute;top:16.3cm;left:18.1cm">' . number_format($addVat, 2) . '</p>
         //     <p style="position: absolute;top:16.9cm;left:18.1cm">' . number_format($grandTot, 2) . '</p>';
         // } else {
-        //     echo ' <p style="position: absolute;top:15.9cm;left:12cm">' . number_format($posQty * $posPrice, 2) . '</p>';
+        //     echo ' <p style="position: absolute;top:15.9cm;left:12cm"></p>';
         // }
         ?>
         <p style="position: absolute;top:15.1cm;left:18.1cm">amountNetVat</p>
         <p style="position: absolute;top:16.3cm;left:18.1cm">addVat</p>
-        <p style="position: absolute;top:16.9cm;left:18.1cm">GrandTot</p>
+        <p style="position: absolute;top:16.9cm;left:18.1cm"><?php echo number_format($grandTotal, 2) ?></p>
 
     </div>
     </div>
