@@ -103,16 +103,21 @@ include './php/Delivery.php';
                                     }
 
                                     $dr = new Delivery();
-                                    $drResult = $dr->getDrList($query);
+                                    $drResult = $dr->getPendingDr($query);
 
                                     if ($drResult->num_rows > 0) {
                                         while ($drRow = $drResult->fetch_assoc()) {
+
+                                            $drAmount = $dr->getDrAmount($drRow['dr_number']);
+                                            $drCustomer =  $dr->getCustomerDetails($drRow['dr_number']);
+                                            if ($query != $drCustomer['customers_id']) continue;
+
                                     ?>
                                             <tr>
                                                 <td class="text-end"><input id="tableCheckbox<?php echo $drRow['dr_number'] ?>" class="jo__checkbox form-check-input fs-5" type="checkbox" name="dr_number[]" value="<?php echo $drRow['dr_number'] ?>" /></td>
                                                 <td class="text-center"><label for="tableCheckbox<?php echo $drRow['dr_number'] ?>" class="form-check-label"><?php echo $drRow['dr_number'] ?></label> </td>
-                                                <td><?php echo $drRow['customers_name'] ?></td>
-                                                <td class="text-end"><?php echo number_format($drRow['subTotal'], 2) ?></td>
+                                                <td><?php echo $drCustomer['customers_name'] ?></td>
+                                                <td class="text-end"><?php echo number_format($drAmount['dr_amount'], 2) ?></td>
                                                 <td class="text-center"><?php echo $drRow['dr_date'] ?></td>
                                             </tr>
 

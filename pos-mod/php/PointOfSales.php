@@ -34,6 +34,7 @@ class PointOfSales extends Database
             LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id
             LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id
             LEFT JOIN customers ON customers.customers_id = jo_tb.customers_id
+            LEFT JOIN dr_inv ON dr_inv.dr_number = delivery_receipt.dr_number 
             WHERE customers.customers_id = '$qry'
             GROUP BY delivery_receipt.dr_number
             ORDER BY delivery_receipt.dr_date DESC";

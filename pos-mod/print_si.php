@@ -1,3 +1,15 @@
+<?php
+
+include "./php/Delivery.php";
+
+$dr_number[] = $_GET['dr_number'];
+
+$dr = new Delivery();
+$customer = $dr->getCustomerDetails(implode(",", $dr_number));
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,6 +72,7 @@
         <p style="position: absolute;top:15.1cm;left:18.1cm">amountNetVat</p>
         <p style="position: absolute;top:16.3cm;left:18.1cm">addVat</p>
         <p style="position: absolute;top:16.9cm;left:18.1cm">GrandTot</p>
+
     </div>
     </div>
 </body>

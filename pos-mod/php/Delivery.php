@@ -144,4 +144,28 @@ class Delivery extends PointOfSales
 
         return $result;
     }
+
+    function getPendingDr()
+    {
+        $result = $this->select(
+            "delivery_receipt.dr_number, dr_inv.inv_number, delivery_receipt.dr_date",
+            "delivery_receipt LEFT JOIN dr_inv ON dr_inv.dr_number = delivery_receipt.dr_number",
+            "dr_inv.inv_number IS NULL ORDER BY delivery_receipt.dr_date DESC"
+        );
+
+        return $result;
+    }
+
+    function getDrAmount($dr_number)
+    {
+        $result = $this->select(
+            "dr_products.dr_number,  SUM(jo_product.jo_product_price * dr_products.dr_product_qty) as dr_amount",
+            "dr_products LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id",
+            "dr_products.dr_number = '$dr_number' GROUP BY dr_products.dr_number"
+        );
+
+        $row = $result->fetch_assoc();
+
+        return $row;
+    }
 }

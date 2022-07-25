@@ -23,11 +23,13 @@ if (isset($_POST['save'])) {
     // 2) Save dr number to invoice_dr table
     $invoice->saveInvoice($user_id, $dr_number);
 
-    // Back to Sales invoice Customer selection
-    echo "
-    <script>
-        alert('Transaction Saved!');
-        location.replace('../pos-si.php');
-    </script>";
-    // header("Location: ../pos-si.php?status=saved");
+    // header("Location: ../print_si.php?dr_number=" . http_build_query(array('dr_number' => $dr_number)));
+
+    // // Back to Sales invoice Customer selection
+    // echo "
+    // <script>
+    //     alert('Transaction Saved!');
+    //     location.replace('../print-si.php?$');
+    // </script>";
+    // // header("Location: ../pos-si.php?status=saved");
 }
