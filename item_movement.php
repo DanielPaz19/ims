@@ -127,7 +127,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         echo $irow['po_code'];
                         break;
                       case '4':
-                        echo 'DR# ' . $irow['dr_number'];
+                        echo 'DR# ' . $irow['move_ref'];
                         break;
                       case '5':
                         echo 'Beginning';

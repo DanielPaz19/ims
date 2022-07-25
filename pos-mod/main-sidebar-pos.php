@@ -4,7 +4,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="nav-link dropdown" href="php/logout-inc.php" role="button" style="color: white;"><i class="bi bi-person-circle"></i>&nbsp; <?php echo $_SESSION["empName"]; ?></a>
+        <a class="nav-link dropdown" href="../php/logout-inc.php" role="button" style="color: white;"><i class="bi bi-person-circle"></i>&nbsp; <?php echo $_SESSION["empName"]; ?></a>
     </div>
 
 

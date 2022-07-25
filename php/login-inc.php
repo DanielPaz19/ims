@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         exit();
       }
       if ($_SESSION['level'] == 2) {
-        header("Location: ../pos/index.php");
+        header("Location: ../pos-mod/index.php");
         exit();
       }
 
