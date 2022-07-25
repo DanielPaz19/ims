@@ -170,4 +170,33 @@ class Delivery extends PointOfSales
 
         return $row;
     }
+
+
+    function saveDrItemsMove($dr_number)
+    {
+        $result = $this->select(
+            "dr_products.jo_product_id, dr_products.dr_number, product.product_id, product.qty, SUM(dr_products.dr_product_qty) as out_qty",
+            "dr_products LEFT JOIN jo_product ON jo_product.jo_product_id = dr_products.jo_product_id LEFT JOIN product ON product.product_id = jo_product.product_id",
+            "dr_products.dr_number = '$dr_number' GROUP BY product.product_id"
+        );
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+
+                $product_id = $row['product_id'];
+                $balance_qty = $row['qty'];
+                $out_qty = $row['out_qty'];
+
+                $this->update("product", "qty = qty - $out_qty", "product_id = '$product_id'");
+
+                $this->insert(
+                    "move_product",
+                    "product_id, bal_qty,out_qty, mov_type_id, move_ref",
+                    "'$product_id','$balance_qty','$out_qty','4','$dr_number'"
+                );
+            }
+        }
+
+        return 0;
+    }
 }

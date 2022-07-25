@@ -38,6 +38,17 @@ class Database
         return $this->mysqli->query($sql);
     }
 
+    public function update($table, $set, $where = null)
+    {
+
+        if ($where != null) {
+            $sql = "UPDATE $table SET $set WHERE $where";
+        } else {
+            $sql = "UPDATE $table SET $set";
+        }
+
+        return $this->mysqli->query($sql);
+    }
 
     public function __destruct()
     {

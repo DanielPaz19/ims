@@ -47,6 +47,10 @@ if (isset($_POST['save'])) {
         $dr->insert("dr_products", "dr_number,jo_product_id,dr_product_qty", "$dr_number,$jo_product_id[$key],$product_qty[$key]");
     }
 
+    // Item Movement
+    $dr->saveDrItemsMove($dr_number);
+
+
     // // Insert into order_product
     // $limit = 0;
     // while (count($product_id) != $limit) {
@@ -65,8 +69,6 @@ if (isset($_POST['save'])) {
 
 
     // Get product id, jo id, product_price, qty
-
-
     // UPDATE dr number from order_tb with jo_numbers
 
     header('Location: ./print_dr.php?dr_number=' . $dr_number);
