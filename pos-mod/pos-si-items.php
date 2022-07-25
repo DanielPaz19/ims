@@ -102,8 +102,8 @@ if (isset($_GET['next'])) {
                                         <?php
 
                                         $inputInvoice = "<input autocomplete='off' 
-                                                        pattern='\d\d\d\d\d\d' 
-                                                        title='Example: 123456' 
+                                                        pattern='\d\d\d\d\d' 
+                                                        title='Example: 12345' 
                                                         name='invoice_number' 
                                                         type='text' 
                                                         class='form-control' 
