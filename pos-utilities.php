@@ -211,6 +211,16 @@ $result = mysqli_query($connect, $query);
           </thead>
           <?php
           while ($row = mysqli_fetch_array($result)) {
+
+            if ($row["jo_no"] == "" or $row["customers_name"] == "") {
+
+              $disable = ' <a href="view/pos-utilities_print_dr.php?dr_number=' . $row["dr_number"] . '">
+                  <button type="button" class="btn btn-outline-success btn-sm" disabled><i class="bi bi-printer"></i> Re-Print DR</button></a>        
+                 ';
+            } else {
+              $disable = ' <a href="view/pos-utilities_print_dr.php?dr_number=' . $row["dr_number"] . '">
+                  <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a>   ';
+            }
             $dateString = $row['dr_date'];
             $dateTimeObj = date_create($dateString);
             $date = date_format($dateTimeObj, 'm/d/y');
@@ -223,8 +233,7 @@ $result = mysqli_query($connect, $query);
                                     <td align="left">' . $row["customers_name"] . '</td>  
                                     <td align="center">' . $date . '</td>  
                                     <td align="center">' . $row["user_name"] . '</td>                              
-                                    <td align="center"><a href="view/pos-utilities_print_dr.php?dr_number=' . $row["dr_number"] . '">
-                                    <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a></td> 
+                                    <td align="center">' . $disable . '</td> 
                                </tr>  
                                ';
           }

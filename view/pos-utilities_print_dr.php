@@ -55,14 +55,14 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
         }
 
         .dr_paper {
-            /* border: 1px solid black; */
+            border: 1px solid black;
             width: 21.3cm;
             height: 25.5cm;
         }
 
         .dr_table {
             position: absolute;
-            /* border: 1px solid black; */
+            border: 1px solid black;
             width: 198mm;
             height: 120mm;
             top: 6.6cm;
@@ -74,17 +74,17 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
         .items {
             width: 100%;
             border-collapse: collapse;
-            /* border: 1px solid black; */
+            border: 1px solid black;
         }
 
         .items td {
-            /* border: 1px solid black; */
+            border: 1px solid black;
         }
 
 
         .ep_table table {
             width: 100%;
-            /* border: 1px solid black; */
+            border: 1px solid black;
             border-collapse: collapse;
         }
 
@@ -136,14 +136,14 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
 
                         <td style="width: 1.9cm;height:0.7cm"><?php echo $irow['unit_name'] ?></td>
 
-                        <td style="font-size: 12.5px;"><?php echo $irow['product_name'] ?></td>
+                        <td style="font-size: 12.5px;width:9cm"><?php echo $irow['product_name'] ?></td>
 
                         <td>&#8369;<?php echo $irow['jo_product_price'] ?>/<?php echo $irow['unit_name'] ?></td>
 
 
                         <td style="width: 1cm;height:0.7cm"></td>
 
-                        <td>&emsp;&#8369;<?php echo number_format($irow['subTotal'], 2)   ?></td>
+                        <td>&#8369;<?php echo number_format($irow['subTotal'], 2)   ?></td>
                     </tr>
             <?php }
             } ?>
