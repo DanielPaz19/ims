@@ -110,7 +110,6 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
                 <td></td>
                 <td></td>
                 <td></td>
-
             </tr>
             <?php
             $sql = "SELECT product.product_id, dr_products.dr_product_qty, dr_products.jo_product_id, product.product_name, jo_product.jo_product_price, unit_tb.unit_name, dr_products.dr_product_qty * jo_product.jo_product_price AS subTotal
