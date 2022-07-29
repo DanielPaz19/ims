@@ -231,21 +231,21 @@ $result = mysqli_query($connect, $query);
 
                 $inv_no = $_GET['inv_no'];
 
+
                 require 'php/config.php';
 
                 $result = mysqli_query(
                     $db,
-                    "SELECT invoice.invoice_id,invoice.invoice_number,dr_inv.dr_number,customers.customers_name,invoice.invoice_date,user.user_name,tax_type_tb.tax_type_id,
-                   
-                    SUM(jo_product.jo_product_price) AS pricetot
-                     FROM invoice 
-                                        LEFT JOIN user ON user.user_id = invoice.user_id 
-                                        LEFT JOIN dr_inv ON dr_inv.inv_number = invoice.invoice_number 
-                                        LEFT JOIN dr_products ON dr_products.dr_number = dr_inv.dr_number 
-                                        LEFT JOIN jo_product ON dr_products.jo_product_id = jo_product.jo_product_id 
-                                        LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id 
-                                        LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
-                                        LEFT JOIN tax_type_tb ON tax_type_tb.tax_type_id = customers.tax_type_id
+                    "SELECT invoice.invoice_id,invoice.invoice_number,dr_inv.dr_number,customers.customers_name,invoice.invoice_date,user.user_name,tax_type_tb.tax_type_id,dr_products.dr_product_qty,jo_product.jo_product_price,
+                    SUM(jo_product.jo_product_price*dr_products.dr_product_qty) AS tot
+                    FROM invoice 
+                    LEFT JOIN user ON user.user_id = invoice.user_id 
+                    LEFT JOIN dr_inv ON dr_inv.inv_number = invoice.invoice_number 
+                    LEFT JOIN dr_products ON dr_products.dr_number = dr_inv.dr_number 
+                    LEFT JOIN jo_product ON dr_products.jo_product_id = jo_product.jo_product_id 
+                    LEFT JOIN jo_tb ON jo_tb.jo_id = jo_product.jo_id 
+                    LEFT JOIN customers ON jo_tb.customers_id = customers.customers_id 
+                    LEFT JOIN tax_type_tb ON tax_type_tb.tax_type_id = customers.tax_type_id
                     WHERE invoice.invoice_number ='$inv_no'"
                 );
 
@@ -255,9 +255,12 @@ $result = mysqli_query($connect, $query);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $limit = 0;
                         $customerName = $row['customers_name'];
                         $invDate = $row['invoice_date'];
-                        $amount = $row['pricetot'];
+                        $qty = $row['dr_product_qty'];
+                        $price = $row['jo_product_price'];
+                        $sumTot = $row['tot'];
                         $tax_type = $row['tax_type_id'];
                     }
                 } else {
@@ -281,18 +284,26 @@ location.href ='pos-utilities-or.php' </script>";
                                 <th>Amount</th>
                             </tr>
                         </thead>
+                        <?php
+                        // while ($limit != count($amount)) {
+                        //     $subTot += $amount[$limit];
+                        //     // $disTot += $totaldisamount[$limit];
+                        //     $limit += 1;
+                        // } 
+                        ?>
+
                         <tbody>
                             <tr>
                                 <td><?php echo $inv_no ?></td>
                                 <td><?php echo $customerName ?></td>
                                 <td><?php echo $invDate  ?></td>
-                                <td>P <?php echo number_format($amount, 2)   ?></td>
+                                <td>P <?php echo number_format($sumTot, 2)   ?></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
                     <input type="hidden" name="invNo" value="<?php echo $inv_no ?>">
-                    <input type="hidden" name="amountInv" value="<?php echo $amount ?>">
+                    <input type="hidden" name="amountInv" value="<?php echo $sumTot ?>">
                     <input type="hidden" name="tax" value="<?php echo $tax_type ?>">
                     <div>
                         <button class="btn btn-primary" name="printOr"> Generate OR</button>
