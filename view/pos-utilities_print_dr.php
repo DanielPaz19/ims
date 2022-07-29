@@ -55,7 +55,7 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
         }
 
         .dr_paper {
-            border: 1px solid black;
+            /* border: 1px solid black; */
             width: 21.3cm;
             height: 25.5cm;
         }
