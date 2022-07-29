@@ -62,7 +62,7 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
 
         .dr_table {
             position: absolute;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             width: 198mm;
             height: 120mm;
             top: 6.6cm;
@@ -74,17 +74,17 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
         .items {
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid black;
+            /* border: 1px solid black; */
         }
 
         .items td {
-            border: 1px solid black;
+            /* border: 1px solid black; */
         }
 
 
         .ep_table table {
             width: 100%;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             border-collapse: collapse;
         }
 
