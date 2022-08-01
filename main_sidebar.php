@@ -57,6 +57,7 @@
                         <li> <a class="dropdown-item" href="#"><i class="bi bi-caret-right"></i>&nbsp;Stock-Out </a></li>
                         <li> <a class="dropdown-item" href="#" onclick="showSrr()"><i class="bi bi-caret-right"></i>&nbsp;Purchase Order</a></li>
                         <li> <a class="dropdown-item" href="pinv_report.php"><i class="bi bi-caret-right"></i>&nbsp;PINV</a></li>
+                        <li> <a class="dropdown-item" href="report/sales-report.php?date1=&date2="><i class="bi bi-caret-right"></i>&nbsp;Sales Report</a></li>
                     </ul>
                 </li>&emsp;
 
