@@ -229,7 +229,7 @@
                                 <td>$prodId[$limit]</td>
                                 <td>$prodName[$limit]</td>
                                 <td>$qty[$limit] $unit[$limit]</td>
-                                <td>$price[$limit]/$unit[$limit]</td>
+                                <td>" . number_format($price[$limit], 0) . "/$unit[$limit]</td>
                                 <td>" . number_format($total[$limit], 2) . "</td>        
                                 </tr>";
 
