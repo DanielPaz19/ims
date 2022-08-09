@@ -58,7 +58,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 $sql = "SELECT product.product_id, product.product_name, product.qty, unit_tb.unit_name, product.price, ol_product.ol_qty, ol_product.ol_price, ol_product.ol_priceTot, ol_product.ol_fee
                 FROM product 
                 LEFT JOIN ol_product ON product.product_id = ol_product.product_id
-                LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ol_product.ol_id='$id' ";
+                LEFT JOIN unit_tb ON product.unit_id = unit_tb.unit_id WHERE ol_product.ol_id='$id' ORDER BY ol_product.ol_product_id DESC";
                 $result = $db->query($sql);
                 $count = 0;
 
