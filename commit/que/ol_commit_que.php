@@ -69,5 +69,5 @@ if (isset($_GET['submit'])) {
         $status = "Transaction Closed, Viewing Purpose Only !";
         echo "<script> alert('" . $status . "')</script>";
     }
-    header("location: ../../ol_main.php");
+    header("location: ../../ol_shopee_main.php");
 }
