@@ -330,18 +330,19 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-floating mb-3">
+                            <input type="number" class="form-control item-price" id="floatingInput" value="0.00">
+                            <label for="floatingInput">SRP</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
                             <input type="number" class="form-control item-qty" id="floatingInput" value="1">
                             <label for="floatingInput">Quantity</label>
                             <label style="display: none;">Discount: &nbsp;&nbsp;</label>
                             <input class="item-discount" type="number" placeholder="Discount" value="0.00" style="display: none;" />
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control item-price" id="floatingInput" value="0.00">
-                            <label for="floatingInput">SRP</label>
-                        </div>
-                    </div>
+
                     <div class="col">
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control item-fee" id="floatingInput" value="0.00">
