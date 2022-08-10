@@ -186,6 +186,9 @@ $result = mysqli_query($connect, $query);
         <input type="radio" name="tabs">
         <label for="tab3"><a href="pos-utilities-or.php">Official Reciept</a></label>
 
+        <input id="tab4" type="radio" name="tabs">
+        <label for="tab4"><a href="ep_utilities.php">Exit-Pass</a></label>
+
         <!-- tab content -->
         <section id="content2" style=" padding:2%;border: 1px solid #ddd;background-color:white;height:auto;box-shadow: 5px 5px 5px #aaaaaa;">
 

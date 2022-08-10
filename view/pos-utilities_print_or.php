@@ -98,9 +98,10 @@ if (isset($_GET['printOr'])) {
                 $dateTimeObj = date_create($dateString);
                 $date = date_format($dateTimeObj, 'M d, Y');
         ?>
-                <!-- Date-->
-                <p style="position: absolute;top:9.8cm;left:7cm">DR No.<?php echo $drno ?></p>
+                <!-- DR#-->
 
+                <p style="position: absolute;top:9.8cm;left:7cm">DR#<?php echo $drno ?></p>
+                <!-- Date-->
                 <p style="position: absolute;top:3cm;left:15cm"><?php echo $date  ?></p>
                 <!-- customer name -->
                 <p style="position: absolute;top:3.7cm;left:8.5cm;font-size:small"><?php echo $irow['customers_name']  ?></p>

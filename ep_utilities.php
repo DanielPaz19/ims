@@ -223,7 +223,7 @@ $result = mysqli_query($connect, $query);
                  ';
                         } else {
                             $disable = ' <a href="view/viewep2.php?id=' . $row["ep_id"] . '">
-                  <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print DR</button></a>   ';
+                  <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-printer"></i> Re-Print EP</button></a>   ';
                         }
                         $dateString = $row['ep_date'];
                         $dateTimeObj = date_create($dateString);
