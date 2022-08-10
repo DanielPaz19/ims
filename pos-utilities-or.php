@@ -205,7 +205,7 @@ $result = mysqli_query($connect, $query);
                                 $records = mysqli_query($db, "SELECT invoice_number 
                                 FROM invoice
                                 GROUP BY invoice_number
-                                ORDER BY invoice_number DESC");
+                                ORDER BY invoice_id DESC");
                                 while ($data = mysqli_fetch_array($records)) {
                                     echo "<option value='" . $data['invoice_number'] . "'>" . $data['invoice_number'] . "</option>";
                                 }
@@ -262,6 +262,7 @@ $result = mysqli_query($connect, $query);
                         $price = $row['jo_product_price'];
                         $sumTot = $row['tot'];
                         $tax_type = $row['tax_type_id'];
+                        $drno = $row['dr_number'];
                     }
                 } else {
 
@@ -279,6 +280,7 @@ location.href ='pos-utilities-or.php' </script>";
                         <thead style="color: white;">
                             <tr>
                                 <th>SI No.</th>
+                                <th>DR No.</th>
                                 <th>Customer</th>
                                 <th>Date</th>
                                 <th>Amount</th>
@@ -295,6 +297,7 @@ location.href ='pos-utilities-or.php' </script>";
                         <tbody>
                             <tr>
                                 <td><?php echo $inv_no ?></td>
+                                <td><?php echo $drno ?></td>
                                 <td><?php echo $customerName ?></td>
                                 <td><?php echo $invDate  ?></td>
                                 <td>P <?php echo number_format($sumTot, 2)   ?></td>

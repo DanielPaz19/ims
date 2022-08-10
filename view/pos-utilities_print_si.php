@@ -140,6 +140,7 @@ if (isset($_GET['inv_number']) && is_numeric($_GET['inv_number']) && $_GET['inv_
             <p style="position: absolute;top:16.3cm;left:18cm;font-size: 12.8px">' . number_format($addVat, 2) . '</p>
             <p style="position: absolute;top:16.9cm;left:18cm;font-size: 12.8px">' . number_format($grandTotal, 2) . '</p>';
         } else {
+            $grandTotal = $total[$limit];
             echo ' <p style="position: absolute;top:15.9cm;left:12cm;font-size: 12.8px">' . number_format($grandTotal, 2) . '</p>';
         }
         ?>
