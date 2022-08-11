@@ -141,8 +141,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             </table>
         </div>
         <p style="position: absolute;top:14.2cm;left:5cm">/<?php echo $user_name ?></p>
-        <p style="position: absolute;top:15.3cm;left:3cm">/ctg</p>
-        <p style="position: absolute;top:15.3cm;left:7cm">/re</p>
+        <p style="position: absolute;top:15cm;left:3cm">/ctg</p>
+        <p style="position: absolute;top:15cm;left:7cm">/re</p>
     </div>
 </body>
 
