@@ -25,6 +25,7 @@ body {
     margin-bottom: 12mm;
     margin-right: 7mm;
     margin-left: 7mm;
+    border: 1px solid black;
 }
 
 .ep_table td {
