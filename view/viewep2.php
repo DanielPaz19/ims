@@ -103,7 +103,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             <td style="font-size: 12.5px;"><?php echo $irow['product_name'] ?></td>
                             <td>&#8369;<?php echo $irow['ep_price'] ?>/<?php echo $irow['unit_name'] ?></td>
                             <td>&emsp;</td>
-                            <td>&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td>
+                            <td style="font-size: 12.5px;">&#8369;<?php echo number_format($irow['ep_totPrice'], 2)  ?></td>
                         </tr>
                 <?php }
                 } ?>
@@ -118,7 +118,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 }
                 $grandTot = $subTot - $disTot;
                 ?>
-                <tr style="text-align: center;">
+                <tr style=" text-align: center;">
                     <td></td>
                     <td style="font-size: small; padding-top:-5px" colspan="2">****** NOTHING FOLLOWS *****</td>
                     <td></td>
