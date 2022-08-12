@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, employee_tb.emp_name, stin_tb.stin_date, stin_tb.closed, user.user_name
+SELECT stin_tb.stin_id, stin_tb.stin_code, stin_tb.stin_title, employee_tb.emp_name, stin_tb.stin_date, stin_tb.closed, user.user_name, stin_tb.stin_remarks
 FROM stin_tb
 LEFT JOIN user ON user.user_id = stin_tb.user_id
 LEFT JOIN employee_tb 
@@ -49,10 +49,11 @@ $output = '
 <tr style="background-color:#0d6efd;color:white">
   <th width="10%">STIN ID</th>
     <th width="5%" style="display:none;">ID</th>
-    <th width="15%">STIN Code</th>
-    <th width="20%">JO No.</th>
+    <th width="10%">STIN Code</th>
+    <th width="10%">JO No.</th>
     <th width="10%">Prepared By</th>
     <th width="10%"><center>STIN Date</th>
+    <th width="15%">Remarks</th>
     <th width="15%"><center>Action</th>
     <th width="10%"><center>Created By</th>
     <th width="5%"><center>Status</th>
@@ -93,6 +94,8 @@ if ($total_data > 0) {
       <td>' . $row["stin_title"] . '</td>
       <td>' . $row["emp_name"] . '</td>
       <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
+      <td>' . $row["stin_remarks"] . '</td>
+
       <td><center>
                ' . $disable . '
                 <a href="view/viewstin.php?id=' . $row["stin_id"] . '">
