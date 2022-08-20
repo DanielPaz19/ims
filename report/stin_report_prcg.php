@@ -125,6 +125,8 @@
                                 LEFT JOIN dept_tb ON dept_tb.dept_id = employee_tb.dept_id
                                 WHERE stin_tb.stin_date 
                                     BETWEEN '$date1' AND '$date2' AND dept_tb.dept_name LIKE '%PRCG%'
+                                    GROUP BY stin_tb.stin_id
+                                    ORDER BY stin_tb.stin_date
                                 ";
 
                                     $result = $db->query($sql);

@@ -134,7 +134,7 @@ include 'php/ol_edit-inc.php';
             <br>
             <div class="container--edit__button">
                 <button class="edit__button button--update btn btn-success" name='update'><i class="bi bi-check2-circle"></i> Update Records</button>
-                <a href="ol_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
+                <a href="ol_shopee_main.php"><button type="button" class="btn btn-danger">Cancel</button></a>
             </div>
         </form>
     </div>
