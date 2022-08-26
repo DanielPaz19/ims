@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $product_name = $_POST['product_name'];
     $class = $_POST['class_id'];
+    $qty = $_POST['qty'];
     $unit = $_POST['unit_id'];
     $pro_remarks = $_POST['pro_remarks'];
     $loc_id = $_POST['loc_id'];
@@ -17,7 +18,7 @@ if (isset($_POST['submit'])) {
     $dept = $_POST['dept_id'];
     $product_type_id = $_POST['product_type_id'];
 
-    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
+    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',qty = '$qty',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
     echo "<script type='text/javascript'>alert('Update Records Successfully!');
     location.href = '../itemlist_main.php'</script>";
 
@@ -47,6 +48,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
         $id = $row['product_id'];
         $product_name = $row['product_name'];
         $class = $row['class_name'];
+        $qty = $row['qty'];
         $unit = $row['unit_name'];
         $pro_remarks = $row['pro_remarks'];
         $loc_id = $row['loc_name'];
@@ -102,6 +104,12 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                             </select>
                             <label for="floatingSelect">Class</label>
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" name="qty" value="<?php echo $_GET['qty']; ?>">
+                        <label for="floatingInput">Quantity</label>
                     </div>
                 </div>
 
