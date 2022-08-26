@@ -108,7 +108,7 @@ LEFT JOIN dept_tb ON product.dept_id = dept_tb.dept_id WHERE product_id=" . $_GE
                 </div>
                 <div class="col">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingInput" name="qty" value="<?php echo $_GET['qty']; ?>">
+                        <input type="number" class="form-control" id="floatingInput" name="qty" value="<?php echo $_GET['qty']; ?>" onchange="setDecimal" min="0" max="9999999999" step="0.0000001">
                         <label for="floatingInput">Quantity</label>
                     </div>
                 </div>
