@@ -271,7 +271,7 @@
                                         // Search through the array print out value if see the Key  eg: 'id', 'firstname ' etc.
                                         echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
                                         echo '<td>' . $data['product_name'] . '</td>';
-                                        echo '<td>' . number_format($data['qty'], 2)  . ' ' . $data['unit_name'] . '</td>';
+                                        echo '<td>' . $data['qty']  . ' ' . $data['unit_name'] . '</td>';
                                         echo '<td>' . $data['loc_name'] . '</td>';
 
 
