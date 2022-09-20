@@ -211,9 +211,9 @@
 
                             $selectCompany = "SELECT product.product_id, product.product_name,class_tb.class_name,dept_tb.dept_name
                                         FROM product
-                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
-                                            WHERE product.dept_id = '$dept_id'";
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = '$dept_id'";
 
 
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
@@ -243,7 +243,8 @@
                                     echo "<tr>";
                                     echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
                                     echo "<td style='width:50%;font-weight:bold'>Item Description</td>";
-                                    echo "<td style='width:20%;font-weight:bold'>Ending Balance</td>";
+
+                                    echo "<td style='width:20%;font-weight:bold'>E.Bal</td>";
                                     echo "<td style='width:20%;font-weight:bold'>Location</td>";
 
                                     echo "</tr>";
@@ -252,12 +253,12 @@
 
                                     $selectPerson = "SELECT product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
                                 FROM product
+                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
-                                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
-
-                                                 WHERE class_tb.class_name = '$companyName' AND product.qty > 0 ORDER BY product.product_name ASC";
+                                                 WHERE class_tb.class_name = '$companyName' AND product.qty > 0 AND product.dept_id = '$dept_id' 
+                                                 ORDER BY product.product_name ASC";
 
                                     $selectPerson_Query = mysqli_query($dbConnectionStatus, $selectPerson);
                                     $arrayPerson = array();
@@ -265,12 +266,14 @@
 
                                         $arrayPerson[] = $personrows;
                                     }
+
                                     foreach ($arrayPerson as $data) {
 
                                         echo '<tr>';
                                         // Search through the array print out value if see the Key  eg: 'id', 'firstname ' etc.
                                         echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
                                         echo '<td>' . $data['product_name'] . '</td>';
+
                                         echo '<td>' . $data['qty']  . ' ' . $data['unit_name'] . '</td>';
                                         echo '<td>' . $data['loc_name'] . '</td>';
 
