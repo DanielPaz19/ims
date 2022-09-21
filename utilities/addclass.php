@@ -22,6 +22,22 @@
               <input type="text" class="form-control" id="floatingInput" name="class_name" required>
               <label for="floatingInput">Class Name</label>
             </div>
+            <div class="form-floating mb-3">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="dept_id">
+                  <option class="select__option--class"></option>
+                  <?php
+                  include "../php/config.php";
+                  $records = mysqli_query($db, "SELECT * FROM dept_tb");
+
+                  while ($data = mysqli_fetch_array($records)) {
+                    echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
+                  }
+                  ?>
+                </select>
+                <label for="floatingSelect">Department</label>
+              </div>
+            </div>
             <div class="col mb-3">
               <div class="col"><button type="submit" class="btn btn-success" name="addClass" style="width: 100%;">Save Class</button></div>
             </div>
