@@ -214,7 +214,7 @@
                                         FROM product
                                         LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = '$dept_id'";
+                                        WHERE product.dept_id = '$dept_id' ";
 
 
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
@@ -253,7 +253,7 @@
                                     //-----------------Add Row into the Selected Company --------------------------------
 
                                     $selectPerson = "SELECT
-                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
+                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id,product.pro_remarks
                                                 FROM product
                                                 LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
@@ -275,7 +275,7 @@
                                     foreach ($arrayPerson as $data) {
 
                                         echo '<tr>';
-                                        // Search through the array print out value if see the Key  eg: 'id', 'firstname ' etc.
+                                        // Search through the array print out value if see the Key  eg: 'id', 'product_name ' etc.
                                         echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
                                         echo '<td>' . $data['product_name'] . '</td>';
                                         echo '<td>' . $data['loc_name'] . '</td>';
@@ -285,6 +285,7 @@
                                         strlen(substr(strrchr($str, "."), 2));
                                         '</td>';
                                         echo '<td>' . $data['unit_name'] . '</td>';
+                                        echo '<td>' . $data['pro_remarks'] . '</td>';
                                         echo '</tr>';
                                         echo '<tr>';
                                     }
@@ -295,10 +296,11 @@
                                     echo '<td></td>';
                                     echo '<td></td>';
 
+                                    //SUM and display total of quantity
                                     $selectPerson2 = "SELECT SUM(product.qty) AS total
                                     FROM product
                                     LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                    WHERE class_tb.class_name = '$companyName' ";
+                                    WHERE class_tb.class_name = '$companyName' AND product.dept_id = '$dept_id' ";
 
                                     $selectPerson_Query2 = mysqli_query($dbConnectionStatus, $selectPerson2);
                                     $arrayPerson2 = array();
