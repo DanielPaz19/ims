@@ -214,7 +214,7 @@
                                         FROM product
                                         LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = '$dept_id'  AND class_tb.dept_id = '$dept_id'";
+                                        WHERE product.dept_id = '$dept_id'  ";
 
 
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
