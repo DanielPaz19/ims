@@ -205,8 +205,9 @@
 
 
                         if (isset($_GET['search'])) {
-                            $dept_id = $_GET['dept_id'];
 
+
+                            $dept_id = $_GET['dept_id'];
 
 
                             $selectCompany = "SELECT product.product_id, product.product_name,class_tb.class_name,dept_tb.dept_name
@@ -243,21 +244,22 @@
                                     echo "<tr>";
                                     echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
                                     echo "<td style='width:50%;font-weight:bold'>Item Description</td>";
-
-                                    echo "<td style='width:20%;font-weight:bold'>E.Bal</td>";
                                     echo "<td style='width:20%;font-weight:bold'>Location</td>";
+                                    echo "<td style='width:20%;font-weight:bold;text-align:right'>Ending Balance</td>";
+                                    echo "<td style='width:20%;font-weight:bold'>Unit</td>";
 
                                     echo "</tr>";
 
                                     //-----------------Add Row into the Selected Company --------------------------------
 
-                                    $selectPerson = "SELECT product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
-                                FROM product
-                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
+                                    $selectPerson = "SELECT
+                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
+                                                FROM product
+                                                LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
-                                                 WHERE class_tb.class_name = '$companyName' AND product.qty > 0 AND product.dept_id = '$dept_id' 
+                                                 WHERE class_tb.class_name = '$companyName' AND product.qty > 0.000001 AND product.dept_id = '$dept_id' 
                                                  ORDER BY product.product_name ASC";
 
                                     $selectPerson_Query = mysqli_query($dbConnectionStatus, $selectPerson);
@@ -267,22 +269,51 @@
                                         $arrayPerson[] = $personrows;
                                     }
 
+
+
+
                                     foreach ($arrayPerson as $data) {
 
                                         echo '<tr>';
                                         // Search through the array print out value if see the Key  eg: 'id', 'firstname ' etc.
                                         echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
                                         echo '<td>' . $data['product_name'] . '</td>';
-
-                                        echo '<td>' . $data['qty']  . ' ' . $data['unit_name'] . '</td>';
                                         echo '<td>' . $data['loc_name'] . '</td>';
+                                        // echo '<td>' . number_format($data['qty'], 7)  . ' ' . $data['unit_name'] . '</td>';
 
-
+                                        echo '<td style="text-align:right">' . $str = $data['qty'];
+                                        strlen(substr(strrchr($str, "."), 2));
+                                        '</td>';
+                                        echo '<td>' . $data['unit_name'] . '</td>';
                                         echo '</tr>';
+                                        echo '<tr>';
                                     }
 
                                     //-------------------------------------------------------------------------------------
 
+                                    echo '<tr>';
+                                    echo '<td></td>';
+                                    echo '<td></td>';
+
+                                    $selectPerson2 = "SELECT SUM(product.qty) AS total
+                                    FROM product
+                                    LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                    WHERE class_tb.class_name = '$companyName' ";
+
+                                    $selectPerson_Query2 = mysqli_query($dbConnectionStatus, $selectPerson2);
+                                    $arrayPerson2 = array();
+
+                                    while ($personrows2 = mysqli_fetch_assoc($selectPerson_Query2)) {
+
+                                        $arrayPerson2[] = $personrows2;
+                                    }
+                                    foreach ($arrayPerson2 as $data2) {
+
+                                        echo '<td style="text-align:right;color:red"><b>TOTAL QTY</b>:</td>';
+                                        echo '<td style="color:red;margin:0px;text-align:right"> <b>' . number_format($data2['total'], 2) . '</b></td>';
+                                        echo '<td style="text-align:right;color:red"><b></b></td>';
+                                        echo '</tr>';
+                                    }
                                     echo "</table>";
                                     echo '</div>';
                                     echo '</div><br>';
