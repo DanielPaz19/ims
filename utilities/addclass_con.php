@@ -12,9 +12,10 @@ if (isset($_POST['addClass'])) {
     // receive all input values from the form
     // echo "connect";
     $class_name = mysqli_real_escape_string($db, $_POST['class_name']);
+    $dept_id = mysqli_real_escape_string($db, $_POST['dept_id']);
 
-    $query = "INSERT INTO class_tb (class_name) 
-          VALUES('$class_name')";
+    $query = "INSERT INTO class_tb (class_name,dept_id) 
+          VALUES('$class_name','$dept_id')";
 
     if (mysqli_query($db, $query)) {
         echo "<script>alert('New Record Added')</script>";

@@ -24,7 +24,10 @@ if ($_POST['page'] > 1) {
 }
 
 $query = "
-SELECT * FROM class_tb ";
+SELECT class_tb.class_id,class_tb.class_name,dept_tb.dept_name,dept_tb.dept_id
+FROM class_tb
+LEFT JOIN dept_tb 
+ON dept_tb.dept_id = class_tb.dept_id  ";
 
 if ($_POST['query'] != '') {
   $query .= '
@@ -51,6 +54,9 @@ $output = '
   <tr style="background-color:#0d6efd;color:white">
     <th >Class ID</th>
     <th>Class Name</th>
+    <th>Department</th>
+    <th> </th>
+
 
   </tr>
 ';
@@ -62,6 +68,8 @@ if ($total_data > 0) {
     <tr>
       <td>' . str_pad($row["class_id"], 8, 0, STR_PAD_LEFT) . '</td>
       <td>' . $row["class_name"] . '</td>
+      <td>' . $row["dept_name"] . '</td>
+     <td><a href="../edit/class_edit.php?id=' . $row["class_id"] . '">Edit<a></td>
      
     </tr>
     ';

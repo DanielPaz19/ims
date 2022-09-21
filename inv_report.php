@@ -214,7 +214,7 @@
                                         FROM product
                                         LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = '$dept_id' ";
+                                        WHERE product.dept_id = '$dept_id'  AND class_tb.dept_id = '$dept_id'";
 
 
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
@@ -253,7 +253,7 @@
                                     //-----------------Add Row into the Selected Company --------------------------------
 
                                     $selectPerson = "SELECT
-                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id,product.pro_remarks
+                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
                                                 FROM product
                                                 LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
@@ -285,7 +285,7 @@
                                         strlen(substr(strrchr($str, "."), 2));
                                         '</td>';
                                         echo '<td>' . $data['unit_name'] . '</td>';
-                                        echo '<td>' . $data['pro_remarks'] . '</td>';
+                                        // echo '<td>' . $data['pro_remarks'] . '</td>';
                                         echo '</tr>';
                                         echo '<tr>';
                                     }
