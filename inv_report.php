@@ -22,7 +22,7 @@
         }
 
         .report--content {
-            /* page-break-before: always !important; */
+            page-break-before: always !important;
             border: 1px solid black;
         }
     }
@@ -36,6 +36,16 @@
     @media print {
         body {
             line-height: .5;
+            page-break-inside: always;
+        }
+
+        .content {
+            page-break-inside: always;
+        }
+
+        #contentTb {
+            break-inside: avoid;
+            color: red
         }
     }
 
@@ -56,7 +66,7 @@
     <div style="padding: 2%;">
         <div class="row">
             <div class="col-4">
-                <div style="padding: 10%; background-color:none">
+                <div class="card" style="padding: 10%; background-color:aliceblue;">
 
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <i class="bi bi-info-circle-fill"></i> Choose on <strong>Department</strong> listed below to generate reports based on inventory records.
@@ -85,8 +95,8 @@
 
 
                             <div class="row">
-                                <div class="col-4"><button class="btn btn-primary" name="search" id='button' style="width:100%"><i class="bi bi-tools"></i> Generate</button></div>
-                                <div class="col-4"><button class="btn btn-success" type="button" id="print" style="width:100%"><i class="bi bi-printer"></i> Print Report</button></div>
+                                <div class="col-4"><button class="btn btn-primary" name="search" id='button'><i class="bi bi-tools"></i> Generate</button></div>
+                                <div class="col-4"><button class="btn btn-success" type="button" id="print"><i class="bi bi-printer"></i> Print Report</button></div>
                                 <div class="col-4"> <a href="itemlist_main.php"> <button type="button" class="btn btn-danger" style="width:100%">Cancel</button></a></div>
                             </div>
                             <br>
@@ -96,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="col-8" style="background-color: white;">
+            <div class="content col-8" style="background-color: white;">
                 <div id="report">
                     <div class="header mt-3" style="text-align:center;">
                         <h5>Philippine Acrylic & Chemical Corporation</h5>
@@ -214,7 +224,11 @@
                                         FROM product
                                         LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = '$dept_id'  ";
+
+                                        WHERE product.dept_id = '$dept_id' 
+                                        AND class_tb.dept_id = '$dept_id'  
+                                        ORDER BY class_tb.class_name ASC";
+
 
 
                             $selectCompany_Query = mysqli_query($dbConnectionStatus, $selectCompany);
@@ -235,18 +249,20 @@
 
                                     echo '<br>';
 
-                                    echo '<div style="padding:2%; border:2px dotted lightgrey;">';
+                                    echo '<div class="shadow-sm" id="conentTb" style="padding:2%; border:1px dotted lightgrey;"';
 
-                                    echo '<h5' . $indent50 . ' >' . '<i class="bi bi-caret-right-fill"></i> Group by <b>' . $companyName . '</b></h5>';
+                                    echo '<h5' . $indent50 . ' >' . '<strong>**</strong> GROUP  <b>' . $companyName . '</b></h5>';
                                     echo '<div ' . $indent100 . '>';
                                     echo "<table border='0' class='table'";
 
                                     echo "<tr>";
-                                    echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
-                                    echo "<td style='width:50%;font-weight:bold'>Item Description</td>";
-                                    echo "<td style='width:20%;font-weight:bold'>Location</td>";
-                                    echo "<td style='width:20%;font-weight:bold;text-align:right'>Ending Balance</td>";
-                                    echo "<td style='width:20%;font-weight:bold'>Unit</td>";
+                                    // echo "<td style='width:10% ;font-weight:bold'>Product_id</td>";
+                                    echo "<td style='width:50%;font-weight:bold'>PRODUCT</td>";
+                                    // echo "<td style='width:20%;font-weight:bold'>Location</td>";
+                                    echo "<td style='width:20%;font-weight:bold;text-align:right'>B.BAL</td>";
+                                    echo "<td style='width:20%;font-weight:bold'>UNIT</td>";
+                                    echo "<td style='width:20%;font-weight:bold;text-align:right'>E.BAL</td>";
+                                    echo "<td style='width:20%;font-weight:bold'>UNIT</td>";
 
                                     echo "</tr>";
 
@@ -260,7 +276,7 @@
                                                 LEFT JOIN unit_tb ON unit_tb.unit_id= product.unit_id
                                                 LEFT JOIN loc_tb ON loc_tb.loc_id= product.loc_id
                                                  WHERE class_tb.class_name = '$companyName' AND product.qty > 0.000001 AND product.dept_id = '$dept_id' 
-                                                 ORDER BY product.product_name ASC";
+                                                 ORDER BY product.product_id ASC";
 
                                     $selectPerson_Query = mysqli_query($dbConnectionStatus, $selectPerson);
                                     $arrayPerson = array();
@@ -276,10 +292,11 @@
 
                                         echo '<tr>';
                                         // Search through the array print out value if see the Key  eg: 'id', 'product_name ' etc.
-                                        echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
+                                        // echo '<td>' . str_pad($data['product_id'], 8, 0, STR_PAD_LEFT) . '</td>';
                                         echo '<td>' . $data['product_name'] . '</td>';
-                                        echo '<td>' . $data['loc_name'] . '</td>';
-                                        // echo '<td>' . number_format($data['qty'], 7)  . ' ' . $data['unit_name'] . '</td>';
+                                        // echo '<td>' . $data['loc_name'] . '</td>';
+                                        echo '<td style="text-align:right">0.00</td>';
+                                        echo '<td> ' . $data['unit_name'] . '</td>';
 
                                         echo '<td style="text-align:right">' . $str = $data['qty'];
                                         strlen(substr(strrchr($str, "."), 2));
@@ -293,8 +310,9 @@
                                     //-------------------------------------------------------------------------------------
 
                                     echo '<tr>';
-                                    echo '<td></td>';
-                                    echo '<td></td>';
+
+                                    echo '<td style="color:red"><strong><i>Subtotal</i></strong></td>';
+                                    echo '<td style="text-align:right;color:red"><strong>0.00</strong></td>';
 
                                     //SUM and display total of quantity
                                     $selectPerson2 = "SELECT SUM(product.qty) AS total
@@ -311,14 +329,14 @@
                                     }
                                     foreach ($arrayPerson2 as $data2) {
 
-                                        echo '<td style="text-align:right;color:red"><b>TOTAL QTY</b>:</td>';
+                                        echo '<td style="text-align:right;color:red"></td>';
                                         echo '<td style="color:red;margin:0px;text-align:right"> <b>' . number_format($data2['total'], 2) . '</b></td>';
                                         echo '<td style="text-align:right;color:red"><b></b></td>';
                                         echo '</tr>';
                                     }
                                     echo "</table>";
                                     echo '</div>';
-                                    echo '</div><br>';
+                                    echo '</div>';
                                 }
                             }
 
@@ -362,15 +380,3 @@
 
     <?php include 'footer.php' ?>
 </body>
-
-</body>
-
-<script>
-    document.getElementById("print").addEventListener("click", function() {
-        var printContents = document.getElementById('report').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    });
-</script>
