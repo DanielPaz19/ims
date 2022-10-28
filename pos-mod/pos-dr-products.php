@@ -183,7 +183,7 @@ if (isset($_GET['next'])) {
 
                                 <div class="row mt-3">
                                     <div class="col-sm-3">
-                                        <input autocomplete="off" pattern="\d\d\d\d\d" title="Example: 12345" name="dr_number" type="text" class="form-control" id="drNumber" placeholder='Enter DR Number' required>
+                                        <input autocomplete="off" pattern="\d\d\d\d\d\d\d" title="Example: 12345" name="dr_number" type="text" class="form-control" id="drNumber" placeholder='Enter DR Number' required>
                                     </div>
                                     <div class="col-sm-6 text-end">
                                         <h6 class="fw-bold">
