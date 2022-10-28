@@ -102,8 +102,8 @@ if (isset($_GET['next'])) {
                                         <?php
 
                                         $inputInvoice = "<input autocomplete='off' 
-                                                        pattern='\d\d\d\d\d' 
-                                                        title='Example: 12345' 
+                                                        pattern='\d\d\d\d\d\d\d' 
+                                                        title='Example: 1234567' 
                                                         name='invoice_number' 
                                                         type='text' 
                                                         class='form-control' 
@@ -113,8 +113,8 @@ if (isset($_GET['next'])) {
                                         if (isset($_GET['error'])) {
                                             if ($_GET['error'] == 'duplicate_invoice') {
                                                 $inputInvoice = "<input autocomplete='off' 
-                                               pattern='\d\d\d\d\d\d' 
-                                               title='Example: 123456' 
+                                               pattern='\d\d\d\d\d\d\d' 
+                                               title='Example: 1234567' 
                                                name='invoice_number' 
                                                type='text' 
                                                class='form-control border-danger' 
