@@ -263,13 +263,14 @@
                                     echo "<td style='width:20%;font-weight:bold'>UNIT</td>";
                                     echo "<td style='width:20%;font-weight:bold;text-align:right'>E.BAL</td>";
                                     echo "<td style='width:20%;font-weight:bold'>UNIT</td>";
+                                    echo "<td style='width:20%;font-weight:bold'>REMARKS</td>";
 
                                     echo "</tr>";
 
                                     //-----------------Add Row into the Selected Company --------------------------------
 
                                     $selectPerson = "SELECT
-                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id
+                                    product.product_id, product.product_name,class_tb.class_name,product.qty,unit_tb.unit_name,loc_tb.loc_name,dept_tb.dept_id,product.pro_remarks
                                                 FROM product
                                                 LEFT JOIN dept_tb ON dept_tb.dept_id = product.dept_id
                                                 LEFT JOIN class_tb ON class_tb.class_id = product.class_id
@@ -302,6 +303,7 @@
                                         strlen(substr(strrchr($str, "."), 2));
                                         '</td>';
                                         echo '<td>' . $data['unit_name'] . '</td>';
+                                        echo '<td>' . $data['pro_remarks'] . '</td>';
                                         // echo '<td>' . $data['pro_remarks'] . '</td>';
                                         echo '</tr>';
                                         echo '<tr>';
