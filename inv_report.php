@@ -81,7 +81,7 @@
                                     <option></option>
                                     <?php
                                     include "php/config.php";
-                                    $records = mysqli_query($db, "SELECT * FROM dept_tb");
+                                    $records = mysqli_query($db, "SELECT * FROM dept_tb WHERE dept_type = 0");
                                     while ($data = mysqli_fetch_array($records)) {
                                         echo "<option value='" . $data['dept_id'] . "'>" . $data['dept_name'] . "</option>";
                                     }
