@@ -334,6 +334,7 @@
                                         echo '<td style="text-align:right;color:red"></td>';
                                         echo '<td style="color:red;margin:0px;text-align:right"> <b>' . number_format($data2['total'], 2) . '</b></td>';
                                         echo '<td style="text-align:right;color:red"><b></b></td>';
+                                        echo '<td style="text-align:right;color:red"><b></b></td>';
                                         echo '</tr>';
                                     }
                                     echo "</table>";
