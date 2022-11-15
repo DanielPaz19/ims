@@ -1,3 +1,74 @@
+<style>
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+    }
+
+    ul:hover {
+        overflow: visible;
+    }
+
+    li {
+        position: relative;
+        float: left;
+        /* background-color: #17B0FF; */
+    }
+
+    li:hover {
+        /* background-color: #189BDF; */
+    }
+
+    /* a {
+        display: block;
+        padding: 10px 20px;
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+    } */
+
+    /* second level */
+
+    ul li:hover ul {
+        max-height: 999px;
+    }
+
+    ul ul li {
+        float: none;
+        /* background-color: #189BDF; */
+    }
+
+    ul ul li:hover {
+        /* background-color: #1289C7; */
+    }
+
+    /* third level */
+    ul ul ul {
+        position: absolute;
+        width: 0;
+        top: 0;
+        left: 100%;
+        transition: width 0.5s;
+    }
+
+    ul ul li:hover ul {
+        width: 100%;
+    }
+
+    ul ul ul li {
+        background-color: white;
+        padding: 1%;
+
+        /* border: 1px solid gray; */
+    }
+
+    ul ul ul li:hover {
+        /* background-color: lightgrey; */
+        cursor: pointer;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #3333cc;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="img/navbar_logo.png" alt="" style="height: 25px;"> PACC IMS</a>
@@ -48,7 +119,20 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-journals"></i>&nbsp;Reports</a>
                     <ul class="dropdown-menu">
-                        <li> <a class="dropdown-item" href="inv_report.php?dept_id=23"><i class="bi bi-caret-right"></i>&nbsp;Inventory</a></li>
+                        <li> <a class="dropdown-item" href="#"><i class="bi bi-list"></i>&nbsp;Inventory </a>
+                            <ul>
+                                <li><a class="dropdown-item" href="inv_report.php?dept_id=23"><i class="bi bi-caret-right"></i> Detailed</a></li>
+                                <li><a class="dropdown-item" href="inv_report_summary.php?dept_id=23&date1=&date2="><i class="bi bi-caret-right"></i> Summary Dated</a></li>
+                                <!-- <li><a href="#" type="button" class="dropdown-item" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="And here's some amazing content. It's very engaging. Right?" title="asdjaslkdjsa"><i class="bi bi-caret-right"></i> Dated</a></li> -->
+
+                            </ul>
+                            <script>
+                                var popoverList1 = [].slice.call(document.querySelectorAll('[data-bs-toggle = "popover"]'))
+                                var popoverList2 = popoverList1.map(function(popoverTriggerfun) {
+                                    return new bootstrap.Popover(popoverTriggerfun)
+                                })
+                            </script>
+                        </li>
                         <!-- <li> <a class="dropdown-item" href="pos_report.php"><i class="bi bi-caret-right"></i>&nbsp;POS</a></li> -->
                         <li> <a class="dropdown-item" href="#" onclick="showJoReport()"><i class="bi bi-caret-right"></i>&nbsp;Job-Order</a></li>
                         <li> <a class="dropdown-item" href="#" onclick="showStinReport()"><i class="bi bi-caret-right"></i>&nbsp;Stock-In </a></li>
