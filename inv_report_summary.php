@@ -68,6 +68,10 @@
             <!-- right panel -->
             <div class="col-3" style="background-color: aliceblue;padding:1%">
                 <br>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Select Date Range to generate report.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <form class="form-inline" method="GET" action="">
                     <div class="range mt-4">
                         <label style="float: left;">From:</label>
@@ -98,274 +102,310 @@
                         </div>
                         <hr>
                         <div style="padding:3%">
-                            <h6 style="float: right;">Date :
-                                <?php
-                                $dateString = $_GET['date1'];
-                                $dateTimeObj = date_create($dateString);
-                                $date = date_format($dateTimeObj, 'F d ');
 
-                                $dateString2 = $_GET['date2'];
-                                $dateTimeObj2 = date_create($dateString2);
-                                $date2 = date_format($dateTimeObj2, 'F d, Y ');
+                            <?php
+                            $dateString = $_GET['date1'];
+                            $dateTimeObj = date_create($dateString);
+                            $date = date_format($dateTimeObj, 'F d ');
 
-                                if (isset($_GET['search'])) {
-                                    echo $date; ?> - <?php echo $date2; ?>
-                            </h6>
-                            <table class="table table-bordered mt-3">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">DEPARTMENT</th>
-                                        <th scope="col">FINISH GOODS</th>
-                                        <th scope="col">RAW MATERIAL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ACRYLIC</td>
+                            $dateString2 = $_GET['date2'];
+                            $dateTimeObj2 = date_create($dateString2);
+                            $date2 = date_format($dateTimeObj2, 'F d, Y ');
 
-                                        <td> <?php
+                            if (isset($_GET['search'])) {
+                                echo $date; ?> - <?php echo $date2; ?>
 
+                                <table class="table table-bordered mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">DEPARTMENT</th>
+                                            <th scope="col">FINISH GOODS</th>
+                                            <th scope="col">RAW MATERIAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ACRYLIC</td>
+
+                                            <td> <?php
+
+                                                    $result = mysqli_query(
+                                                        $db,
+                                                        "SELECT SUM(product.qty) AS tot FROM product
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = 3 AND class_tb.class_type = 0"
+                                                    );
+
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                        // output data of each row
+                                                        while ($row = mysqli_fetch_assoc($result)) {
+
+                                                            $totalAcry = $row['tot'];
+                                                        }
+                                                    } else {
+                                                        echo "0 results";
+                                                    }
+                                                    ?><?php echo number_format($totalAcry, 2);  ?> pcs
+                                            </td>
+                                            <td><?php
                                                 $result = mysqli_query(
                                                     $db,
                                                     "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = 3 AND class_tb.class_type = 0"
+                                        WHERE product.dept_id = 3 AND class_tb.class_type = 1"
                                                 );
 
                                                 if (mysqli_num_rows($result) > 0) {
                                                     // output data of each row
                                                     while ($row = mysqli_fetch_assoc($result)) {
 
-                                                        $totalAcry = $row['tot'];
+                                                        $totalAcry2 = $row['tot'];
                                                     }
                                                 } else {
                                                     echo "0 results";
-                                                }
-                                                ?><?php echo number_format($totalAcry, 2);  ?> pcs
-                                        </td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
-                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = 3 AND class_tb.class_type = 1"
-                                            );
-
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
-
-                                                    $totalAcry2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalAcry2, 2);  ?> pcs</td>
+                                                } ?><?php echo number_format($totalAcry2, 2);  ?> pcs</td>
 
 
-                                    </tr>
-                                    <tr>
-                                        <td>FABRICATION</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FABRICATION</td>
 
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 2 AND class_tb.class_type = 0"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalFab = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalFab, 2); ?> pcs</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                                        $totalFab = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalFab, 2); ?> pcs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 2 AND class_tb.class_type = 1"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalFab2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalFab2, 2); ?> pcs</td>
+                                                        $totalFab2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalFab2, 2); ?> pcs</td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>PROCESSING</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PROCESSING</td>
 
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 1 AND class_tb.class_type = 0"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalPro = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalPro, 2); ?> pcs</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                                        $totalPro = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalPro, 2); ?> kgs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 1 AND class_tb.class_type = 1"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalPro2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalPro2, 2); ?> pcs</td>
+                                                        $totalPro2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalPro2, 2); ?> kgs</td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>SALES & DELIVERY</td>
-                                        <td></td>
-                                        <td></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>ADMINISTRATION</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
-                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = 8 AND class_tb.class_type = 0"
-                                            );
-
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
-
-                                                    $totalAdm = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalAdm, 2); ?> pcs</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
-                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
-                                        WHERE product.dept_id = 8 AND class_tb.class_type = 1"
-                                            );
-
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
-
-                                                    $totalAdm2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalAdm2, 2); ?> pcs</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>MAINTENANCE</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                        </tr>
+                                        <tr>
+                                            <td>SALES & DELIVERY</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 12 AND class_tb.class_type = 0"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalMai = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalMai, 2); ?> pcs</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                                        $totalSal = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalSal, 2); ?> pcs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 12 AND class_tb.class_type = 1"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalMai2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalMai2, 2); ?> pcs</td>
+                                                        $totalSal2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalSal2, 2); ?> pcs</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>ADMINISTRATION</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = 8 AND class_tb.class_type = 0"
+                                                );
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                                        $totalAdm = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalAdm, 2); ?> pcs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = 8 AND class_tb.class_type = 1"
+                                                );
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                                        $totalAdm2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalAdm2, 2); ?> pcs</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>MAINTENANCE</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = 12 AND class_tb.class_type = 0"
+                                                );
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                                        $totalMai = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalMai, 2); ?> pcs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
+                                        LEFT JOIN class_tb ON class_tb.class_id = product.class_id
+                                        WHERE product.dept_id = 12 AND class_tb.class_type = 1"
+                                                );
+
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+
+                                                        $totalMai2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalMai2, 2); ?> pcs</td>
 
 
-                                    </tr>
-                                    <tr>
-                                        <td>AGRICULTURE</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                        </tr>
+                                        <tr>
+                                            <td>AGRICULTURE</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 17 AND class_tb.class_type = 0"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalAgr = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalAgr, 2); ?> pcs</td>
-                                        <td><?php
-                                            $result = mysqli_query(
-                                                $db,
-                                                "SELECT SUM(product.qty) AS tot FROM product
+                                                        $totalAgr = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalAgr, 2); ?> pcs</td>
+                                            <td><?php
+                                                $result = mysqli_query(
+                                                    $db,
+                                                    "SELECT SUM(product.qty) AS tot FROM product
                                         LEFT JOIN class_tb ON class_tb.class_id = product.class_id
                                         WHERE product.dept_id = 17 AND class_tb.class_type = 1"
-                                            );
+                                                );
 
-                                            if (mysqli_num_rows($result) > 0) {
-                                                // output data of each row
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    // output data of each row
+                                                    while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $totalAgr2 = $row['tot'];
-                                                }
-                                            } else {
-                                                echo "0 results";
-                                            } ?><?php echo number_format($totalAgr2, 2) . ' pcs';
-                                            } ?> </td>
+                                                        $totalAgr2 = $row['tot'];
+                                                    }
+                                                } else {
+                                                    echo "0 results";
+                                                } ?><?php echo number_format($totalAgr2, 2) . ' pcs';
+                                                    ?> </td>
 
 
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-primary" role="alert">
+                                    <i><strong>*</strong> Total <strong>Quantity</strong> based on ending inventory reports.</i>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
