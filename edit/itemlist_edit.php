@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $product_name = $_POST['product_name'];
     $class = $_POST['class_id'];
-    $qty = $_POST['qty'];
+    // $qty = $_POST['qty'];
     $unit = $_POST['unit_id'];
     $pro_remarks = $_POST['pro_remarks'];
     $loc_id = $_POST['loc_id'];
@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
     $dept = $_POST['dept_id'];
     $product_type_id = $_POST['product_type_id'];
 
-    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',qty = '$qty',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
+    mysqli_query($db, "UPDATE product SET product_name='$product_name', class_id='$class',unit_id='$unit' ,pro_remarks='$pro_remarks',loc_id='$loc_id' ,barcode='$barcode' ,price='$price',cost='$cost' ,dept_id='$dept' ,product_type_id='$product_type_id' WHERE product_id='$id'");
     echo "<script type='text/javascript'>alert('Update Records Successfully!');
     location.href = '../itemlist_main.php'</script>";
 
