@@ -103,7 +103,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 						$count = $count + 1;
 				?>
 						<td style="text-align: left; padding-left: 10px;"><?php echo $irow['product_name'] ?></td>
-						<td><?php echo number_format($irow['stin_temp_qty'], 2)  ?> <?php echo $irow['unit_name'] ?></td>
+						<td><?php echo $irow['stin_temp_qty'] ?> <?php echo $irow['unit_name'] ?></td>
 						<td><?php echo $irow['stin_temp_remarks'] ?></td>
 						</tr>
 				<?php }
