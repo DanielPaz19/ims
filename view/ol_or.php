@@ -63,7 +63,7 @@ if (isset($_GET['save'])) {
                 while ($irow = $result->fetch_assoc()) {
             ?>
                     <tr>
-                        <td style="">SI#<?php echo $irow['ol_si'] ?></td>
+                        <td style=""><?php echo $irow['ol_si'] ?></td>
                         <td style=""><?php echo number_format($irow['price'], 2) ?></td>
                     </tr>
 

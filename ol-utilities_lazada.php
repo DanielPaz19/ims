@@ -99,11 +99,12 @@
     location.href ='ol-utilities.php' </script>";
                         }
 
-                    ?><br>
+                    ?>
+                        <button class="btn btn-primary bg-gradient mb-3" type="button" id="doPrint"> Print Summary</button>
 
                         <form action="view/ol_or.php" method="GET">
                             <div class="row">
-                                <div class="shadow col-7" style="background-color: #FEFEFC;padding:2%;height:50vh">
+                                <div class="shadow col-7" id="printDiv" style="background-color: #FEFEFC;padding:2%;height:50vh">
                                     <div class="row" style="color:#0d6efd">
                                         <div class="col">
                                             <h4><?php echo $ol_type_name ?></h4>
@@ -126,27 +127,27 @@
                                         </div>
                                     </div>
 
-
-                                    <table class="table">
+                                    <table class="table table-sm">
                                         <tr>
                                             <thead style="color: #0d6efd;">
-                                                <th>OL ID</th>
                                                 <th>SI No.</th>
-                                                <th style="text-align: center;">Product Total Qty</th>
+                                                <th style="text-align: left;">Prod TotQty</th>
                                                 <th>SI Amount</th>
-                                                <th>Fee's and Charges</th>
-                                                <th>Sub Total</th>
+                                                <th>Adj</th>
+                                                <th>Fee's</th>
+                                                <th>Amount</th>
                                             </thead>
                                         </tr>
                                         <tr>
                                             <?php
                                             include "php/config.php";
-                                            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,
+                                            $sql = "SELECT ol_product.ol_id,ol_tb.ol_title,ol_type.ol_type_name,ol_tb.ol_si,ol_tb.ol_adjustment,
                             SUM(ol_product.ol_fee) AS fc,
                             SUM(ol_product.ol_priceTot) AS price,
+                            SUM(ol_product.ol_price) AS pricetot,
                             SUM(ol_product.ol_qty) AS qty
                             FROM ol_product
-                           
+            
                             LEFT JOIN ol_tb ON ol_tb.ol_id = ol_product.ol_id
                             LEFT JOIN ol_type ON ol_tb.ol_type_id = ol_type.ol_type_id
                             WHERE ol_tb.ol_title ='$set'
@@ -157,24 +158,100 @@
                                             if ($result->num_rows >  0) {
 
                                                 while ($irow = $result->fetch_assoc()) {
-                                                    $total[] = $irow['price'] - $irow['fc'];
+                                                    $limit = 0;
+                                                    $totalQyt[] = $irow['qty'];
+                                                    $total[] = $irow['price'] + $irow['fc'];
                                                     $fcTotal[] = $irow['fc'];
+                                                    $adjustmentTot[] = $irow['ol_adjustment'];
+                                                    $siAmount[] = $irow['fc'] + $irow['price'];
 
                                             ?>
                                                     <tbody>
-                                                        <td><?php echo  str_pad($irow['ol_id'], 8, 0, STR_PAD_LEFT) ?></td>
+
                                                         <td><?php echo $irow['ol_si'] ?></td>
-                                                        <td style="text-align: center;"><?php echo number_format($irow['qty'], 2)  ?></td>
-
+                                                        <td style="text-align: left;"><?php echo number_format($irow['qty'], 2)  ?></td>
                                                         <td><?php echo number_format($irow['fc'] + $irow['price'], 2) ?></td>
+                                                        <td><?php echo number_format($irow['ol_adjustment'], 2) ?></td>
                                                         <td><?php echo number_format($irow['fc'], 2)  ?></td>
-                                                        <td><?php echo number_format($irow['price'] - $irow['fc'], 2)  ?></td>
-
+                                                        <td><?php echo number_format($irow['fc'] + $irow['price'] - $irow['fc'], 2) ?></td>
                                                     </tbody>
                                         </tr>
 
                                 <?php }
                                             } ?>
+                                <tr>
+                                    <td style="color: red;font-weight:bold;">
+                                        <i>Summary Total</i>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <?php
+                                        $limit = 0;
+                                        $qtyTot = 0;
+                                        $disTot = 0;
+                                        while ($limit != count($totalQyt)) {
+                                            $qtyTot += $totalQyt[$limit];
+
+                                            // $disTot += $totaldisamount[$limit];
+                                            $limit += 1;
+                                        }
+                                        // $grandTot = $subTot - $disTot;
+
+                                        echo "<b style='color:red;'>" . number_format($qtyTot, 2) . "</b>" ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $limit = 0;
+                                        $subTot = 0;
+                                        $disTot = 0;
+                                        while ($limit != count($total)) {
+                                            $subTot += $total[$limit];
+
+                                            // $disTot += $totaldisamount[$limit];
+                                            $limit += 1;
+                                        }
+                                        $grandTot = $subTot - $disTot;
+
+                                        // echo   number_format($grandTot, 2)  ;
+                                        echo "<b style='color:red'>" . number_format($grandTot, 2) . "</b>" ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $limit = 0;
+                                        $subTot = 0;
+                                        $disTot = 0;
+                                        while ($limit != count($adjustmentTot)) {
+                                            $subTot += $adjustmentTot[$limit];
+
+                                            // $disTot += $totaldisamount[$limit];
+                                            $limit += 1;
+                                        }
+                                        $adjustmentGrandTot = $subTot - $disTot;
+
+                                        echo "<b style='color:red'>" . number_format($adjustmentGrandTot, 2)  . "</b>" ?></td>
+                                    </td>
+
+                                    <td><?php
+                                        $limit = 0;
+                                        $subTot = 0;
+                                        $disTot = 0;
+                                        while ($limit != count($fcTotal)) {
+                                            $subTot += $fcTotal[$limit];
+
+                                            // $disTot += $totaldisamount[$limit];
+                                            $limit += 1;
+                                        }
+                                        $fCgrandTot = $subTot - $disTot;
+
+                                        echo "<b style='color:red'>" . number_format($fCgrandTot, 2) . "</b>" ?>
+                                    </td>
+                                    <td><?php
+                                        $fTot = $grandTot - $fCgrandTot + $adjustmentGrandTot;
+                                        echo "<b style='color:red'> " . number_format($fTot, 2) . "</b>"; ?>
+
+
+
+                                    </td>
+                                </tr>
                                     </table>
 
 
@@ -250,7 +327,15 @@
 
         </div>
     </div>
-
+    <script>
+        document.getElementById("doPrint").addEventListener("click", function() {
+            var printContents = document.getElementById('printDiv').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        });
+    </script>
 
 </body>
 
