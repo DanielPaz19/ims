@@ -9,7 +9,7 @@ if (isset($_GET['edit'])) {
 
     $result = mysqli_query(
         $db,
-        "SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, rt_tb.rt_reason, rt_tb.rt_note, customers.customers_name, customers.customers_id, rt_tb.rt_driver, rt_tb.rt_guard, product.product_name, product.product_id, unit_tb.unit_name, rt_product.rt_qty
+        "SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, rt_tb.rt_reason, rt_tb.rt_note, customers.customers_company, customers.customers_id, rt_tb.rt_driver, rt_tb.rt_guard, product.product_name, product.product_id, unit_tb.unit_name, rt_product.rt_qty
         FROM rt_tb 
         LEFT JOIN rt_product ON rt_product.rt_id = rt_tb.rt_id
         LEFT JOIN product ON rt_product.product_id = product.product_id 
@@ -30,7 +30,7 @@ if (isset($_GET['edit'])) {
             $rtReason = $row['rt_reason'];
             $rtNote = $row['rt_note'];
             $rtDate = $row['rt_date'];
-            $cusName = $row['customers_name'];
+            $cusName = $row['customers_company'];
             $cusId = $row['customers_id'];
 
             $productId[] = $row['product_id'];

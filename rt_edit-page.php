@@ -70,10 +70,10 @@ include 'php/rt_edit-inc.php';
                             <option value="<?php echo $cusId ?>"><?php echo $cusName; ?></option>
                             <?php
                             include "config.php";
-                            $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_name ASC");
+                            $records = mysqli_query($db, "SELECT * FROM customers ORDER BY customers_company ASC");
 
                             while ($data = mysqli_fetch_array($records)) {
-                                echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_name'] . "</option>";
+                                echo "<option value='" . $data['customers_id'] . "'>" . $data['customers_company'] . "</option>";
                             }
                             ?>
                         </select>
