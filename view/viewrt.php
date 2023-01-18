@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
     $id = $_GET['id'];
 
-    $result = mysqli_query($db, "SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_name, rt_tb.rt_reason, rt_tb.rt_note, rt_tb.rt_driver, rt_tb.rt_guard
+    $result = mysqli_query($db, "SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_company, rt_tb.rt_reason, rt_tb.rt_note, rt_tb.rt_driver, rt_tb.rt_guard
                                 FROM rt_tb
                                 LEFT JOIN customers ON customers.customers_id = rt_tb.customers_id
                                   WHERE rt_id=" . $_GET['id']);
@@ -16,7 +16,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     if ($row) {
         $id = $row['rt_id'];
         $rt_no = $row['rt_no'];
-        $customer = $row['customers_name'];
+        $customer = $row['customers_company'];
         $rt_note = $row['rt_note'];
         $rt_reason = $row['rt_reason'];
         $rt_driver = $row['rt_driver'];

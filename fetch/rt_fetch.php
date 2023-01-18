@@ -24,7 +24,7 @@ if ($_POST['page'] > 1) {
 }
 $qry = str_replace(' ', '%', $_POST['query']);
 $query = "
-SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_name, user.user_name, rt_tb.closed
+SELECT rt_tb.rt_id, rt_tb.rt_no, rt_tb.rt_date, customers.customers_company, user.user_name, rt_tb.closed
 FROM rt_tb
 LEFT JOIN customers ON customers.customers_id = rt_tb.customers_id
 LEFT JOIN user ON user.user_id = rt_tb.user_id
@@ -88,7 +88,7 @@ if ($total_data > 0) {
       <tr>
         <td >' . str_pad($row["rt_id"], 8, 0, STR_PAD_LEFT) . '</td>
         <td>' . $row["rt_no"] . '</td>
-        <td>' . $row["customers_name"] . '</td>
+        <td>' . $row["customers_company"] . '</td>
         <td style="letter-spacing:1px;text-align:center">' . $date . '</td>
         <td><center>
                  ' . $disable . '
