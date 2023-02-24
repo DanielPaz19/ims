@@ -27,9 +27,9 @@ $taxId = $customer['tax_type_id'];
         <p style="position: absolute;left:2.5cm;top:4cm;margin:0;"><?php echo $customer['customers_name'] ?></p>
         <p style="position: absolute;left:2.5cm;top:4.6cm;margin:0;"><?php echo $customer['customers_tin'] ?> </p>
         <p style="position: absolute;left:2.5cm;top:5.3cm;margin:0; font-size:small;width:60%"><?php echo $customer['customers_address'] ?></p>
-        <p style="position: absolute;left:16cm;top:4cm;margin:0;"><?php echo date("F d, Y") ?></p>
+        <p style="position: absolute;left:16.5cm;top:4cm;margin:0;"><?php echo date("F d, Y") ?></p>
         <!-- dr No. -->
-        <p style="position: absolute;left:16cm;top:4.6cm;margin:0;width:4cm;height:1.2cm;"><?php echo implode(", ", $dr_number) ?></p>
+        <p style="position: absolute;left:17cm;top:4.6cm;margin:0;width:4cm;height:1.2cm;"><?php echo implode(", ", $dr_number) ?></p>
 
         <div class="dr_table">
             <table class="items" style="position: absolute;">
@@ -54,9 +54,9 @@ $taxId = $customer['tax_type_id'];
                                 <td class='label--price' style="width: 1.9cm;text-align:right;font-size: 12.8px">
                                     <?php echo number_format($itemRows['jo_product_price'], 0)  ?></td>
                                 <td>/<?php echo $itemRows['unit_name'] ?></td>
-                                <td style="width: 0.95cm;"></td>
+                                <td style="width: 0.75cm;"></td>
                                 <td class='label--subtotal text-end' style="width: 2.5cm;;font-size: 12.8px">
-                                    <?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
+                                    &emsp;<?php echo number_format($itemRows['totalRowAmount'], 2) ?></td>
                             </tr>
                     <?php
                         }
@@ -93,9 +93,9 @@ $taxId = $customer['tax_type_id'];
             $addVat = $grandTotal - $amountNetVat;
 
 
-            echo ' <p style="position: absolute;top:15.1cm;left:18cm;font-size: 12.8px">' . number_format($amountNetVat, 2) . '</p>
-            <p style="position: absolute;top:16.3cm;left:18cm;font-size: 12.8px">' . number_format($addVat, 2) . '</p>
-            <p style="position: absolute;top:16.9cm;left:18cm;font-size: 12.8px">' . number_format($grandTotal, 2) . '</p>';
+            echo ' <p style="position: absolute;top:16.1cm;left:18.5cm;font-size: 12.8px">' . number_format($amountNetVat, 2) . '</p>
+            <p style="position: absolute;top:17.3cm;left:18.5cm;font-size: 12.8px">' . number_format($addVat, 2) . '</p>
+            <p style="position: absolute;top:17.9cm;left:18.5cm;font-size: 12.8px">' . number_format($grandTotal, 2) . '</p>';
         } else {
             echo ' <p style="position: absolute;top:15.9cm;left:12cm;font-size: 12.8px">' . number_format($grandTotal, 2) . '</p>';
         }
