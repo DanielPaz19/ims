@@ -56,7 +56,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         .ep_table {
             position: absolute;
-            top: 6.1cm;
+            top: 5.6cm;
             left: .8cm;
             /* border: 1px solid black; */
             width: 19.8cm;
@@ -67,10 +67,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
 <body>
     <div class="ep_paper">
-        <p style="position: absolute;left:18.5cm;top:3.5cm;margin:0;"> <?php echo $ep_no ?></p>
-        <p style="position: absolute;left:3.8cm;top:4.5cm;margin:0;"> <?php echo $customers_name ?></p>
+        <p style="position: absolute;left:18.5cm;top:2.8cm;margin:0;"> <?php echo $ep_no ?></p>
+        <p style="position: absolute;left:3cm;top:3.8cm;margin:0;"> <?php echo $customers_name ?></p>
         <p style="position: absolute;left:2.8cm;top:5.3cm;margin:0;"> <?php echo $customers_address ?></p>
-        <p style="position: absolute;left:15cm;top:5cm;margin:0;"> <?php echo $date ?></p>
+        <p style="position: absolute;left:15cm;top:4.5cm;margin:0;"> <?php echo $date ?></p>
         <div class="ep_table">
             <table>
 
@@ -140,7 +140,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                 </tr>
             </table>
         </div>
-        <p style="position: absolute;top:14.2cm;left:5cm">/<?php echo $user_name ?></p>
+        <p style="position: absolute;top:13.2cm;left:5cm">/<?php echo $user_name ?></p>
         <p style="position: absolute;top:15cm;left:3cm">/ctg</p>
         <p style="position: absolute;top:15cm;left:7cm">/re</p>
     </div>
