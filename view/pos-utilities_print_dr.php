@@ -63,12 +63,12 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
         .dr_table {
             position: absolute;
             /* border: 1px solid black; */
-            width: 198mm;
+            width: 209mm;
             height: 120mm;
-            top: 6.6cm;
+            top: 5.9cm;
 
-            margin-right: .5cm;
-            margin-left: 7mm;
+            /* margin-right: .5cm; */
+            /* margin-left: 3mm; */
         }
 
         .items {
@@ -98,10 +98,10 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
 
 <body>
     <div class="dr_paper" style="position:relative">
-        <p style="position: absolute;left:17cm;top:3.5cm;margin:0;"> <?php echo $dr_number ?></p>
-        <p style="position: absolute;left:2.7cm;top:4.5cm;margin:0;"> <?php echo $customerName ?></p>
-        <p style="position: absolute;left:2cm;top:5.3cm;margin:0;width:70%;letter-spacing: -0px;font-size:14px"> <?php echo $customerAdd ?></p>
-        <p style="position: absolute;left:16.7cm;top:4.5cm;margin:0;letter-spacing: -1px;"> <?php echo $date ?></p>
+        <p style="position: absolute;left:17cm;top:2.8cm;margin:0;"> <?php echo $dr_number ?></p>
+        <p style="position: absolute;left:1.7cm;top:3.9cm;margin:0;"> <?php echo $customerName ?></p>
+        <p style="position: absolute;left:1cm;top:4.6cm;margin:0;width:70%;letter-spacing: -0px;font-size:14px"> <?php echo $customerAdd ?></p>
+        <p style="position: absolute;left:17.3cm;top:3.9cm;margin:0;letter-spacing: -1px;"> <?php echo $date ?></p>
     </div>
 
     <div class="dr_table">
@@ -131,18 +131,18 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
 
             ?>
                     <tr>
-                        <td style="width: 1.9cm;height:0.7cm;text-align:center"><?php echo $irow['dr_product_qty'] ?></td>
+                        <td style="width:3cm;height:0.7cm;text-align:center;"><?php echo $irow['dr_product_qty'] ?></td>
 
-                        <td style="width: 1.9cm;height:0.7cm"><?php echo $irow['unit_name'] ?></td>
+                        <td style="width: 4cm;height:0.7cm;"><?php echo $irow['unit_name'] ?></td>
 
-                        <td style="font-size: 12.5px;width:9cm"><?php echo $irow['product_name'] ?></td>
+                        <td style="font-size: 12.5px;width:25cm;"><?php echo $irow['product_name'] ?></td>
 
-                        <td>&#8369;<?php echo $irow['jo_product_price'] ?>/<?php echo $irow['unit_name'] ?></td>
+                        <td style="letter-spacing:-2px">&#8369;<?php echo number_format($irow['jo_product_price'], 0)  ?>/<?php echo $irow['unit_name'] ?></td>
 
 
-                        <td style="width: 1cm;height:0.7cm"></td>
+                        <td style=" width: 1cm;height:0.7cm"></td>
 
-                        <td>&#8369;<?php echo number_format($irow['subTotal'], 2)   ?></td>
+                        <td style="letter-spacing:-2px">&#8369;<?php echo number_format($irow['subTotal'], 2)   ?></td>
                     </tr>
             <?php }
             } ?>
@@ -165,7 +165,7 @@ if (isset($_GET['dr_number']) && is_numeric($_GET['dr_number']) && $_GET['dr_num
                 <td style="font-size: small; padding-top:-5px" colspan="4">
                     <center>****** NOTHING FOLLOWS *****</center>
                 </td>
-                <td style="text-decoration: overline;text-align:left;vertical-align:top">
+                <td style="text-decoration: overline;text-align:left;vertical-align:top;letter-spacing:-2px">
                     &#8369;<?php echo number_format($grandTot, 2) ?>
                 </td>
             </tr>
