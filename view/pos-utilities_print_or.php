@@ -45,7 +45,7 @@ if (isset($_GET['printOr'])) {
 
 
         <!-- table breakdown -->
-        <table style="top:2.2cm;width:5.6cm;left:.3cm;position:absolute;border-collapse: collapse;">
+        <table style="top:2.2cm;width:5.6cm;left:.9cm;position:absolute;border-collapse: collapse;">
             <tr>
                 <td>SI#<?php echo $inv_no ?></td>
                 <td><?php echo number_format($amount, 2)  ?></td>
@@ -75,7 +75,7 @@ if (isset($_GET['printOr'])) {
 
         </table>
         <!-- table grand total -->
-        <p style="position: absolute;top:9.2cm;left:2.7cm"><?php echo number_format($str, 2)  ?></p>
+        <p style="position: absolute;top:9.4cm;left:3.7cm"><?php echo number_format($str, 2)  ?></p>
 
         <?php
         $sql = "SELECT invoice.invoice_id,invoice.invoice_number,dr_inv.dr_number,customers.customers_name,invoice.invoice_date,user.user_name, tax_type_tb.tax_type_id, customers.customers_address,      
@@ -100,119 +100,103 @@ if (isset($_GET['printOr'])) {
         ?>
                 <!-- DR#-->
 
-                <p style="position: absolute;top:9.8cm;left:7cm">DR#<?php echo $drno ?></p>
+                <p style="position: absolute;top:9.3cm;left:7.5cm">DR#<?php echo $drno ?></p>
                 <!-- Date-->
-                <p style="position: absolute;top:3cm;left:15cm"><?php echo $date  ?></p>
+                <p style="position: absolute;top:2.4cm;left:15cm"><?php echo $date  ?></p>
                 <!-- customer name -->
-                <p style="position: absolute;top:3.7cm;left:8.5cm;font-size:small"><?php echo $irow['customers_name']  ?></p>
-                <p style="position: absolute;top:4.3cm;left:7.5cm;font-size:11px"><?php echo $irow['customers_address']  ?></p>
+                <p style="position: absolute;top:3.2cm;left:9.2cm;font-size:small"><?php echo $irow['customers_name']  ?></p>
+                <p style="position: absolute;top:3.9cm;left:7.7cm;font-size:11px"><?php echo $irow['customers_address']  ?></p>
                 <!-- Pesos Total -->
-                <p style="position: absolute;top:5.7cm;left:15.3cm"><?php echo number_format($str, 2)  ?></p>
+                <p style="position: absolute;top:5.5cm;left:15.9cm"><?php echo number_format($str, 2)  ?></p>
                 <!-- Payment in Form -->
                 <!-- <p style="position: absolute;top:8.6cm;left:12.1cm">BDO ONLINE</p> -->
-                <p style="position: absolute;top:8.6cm;left:15.5cm">
+                <p style="position: absolute;top:7.1cm;left:15.9cm">
                     <?php echo number_format($str, 2)  ?>
                 </p>
-                <p style="position: absolute;top:11.5cm;left:15.5cm"><?php echo number_format($str, 2)  ?></p>
+                <p style="position: absolute;top:11.3cm;left:15.9cm"><?php echo number_format($str, 2)  ?></p>
 
         <?php }
         } ?>
 
 
         <?php
-        function numberTowords($num)
+        function number_to_word($num = '')
         {
+            $num = (string) ((int) $num);
 
-            $ones = array(
-                0 => "ZERO",
-                1 => "ONE",
-                2 => "TWO",
-                3 => "THREE",
-                4 => "FOUR",
-                5 => "FIVE",
-                6 => "SIX",
-                7 => "SEVEN",
-                8 => "EIGHT",
-                9 => "NINE",
-                10 => "TEN",
-                11 => "ELEVEN",
-                12 => "TWELVE",
-                13 => "THIRTEEN",
-                14 => "FOURTEEN",
-                15 => "FIFTEEN",
-                16 => "SIXTEEN",
-                17 => "SEVENTEEN",
-                18 => "EIGHTEEN",
-                19 => "NINETEEN",
-                "014" => "FOURTEEN"
-            );
-            $tens = array(
-                0 => "ZERO",
-                1 => "TEN",
-                2 => "TWENTY",
-                3 => "THIRTY",
-                4 => "FORTY",
-                5 => "FIFTY",
-                6 => "SIXTY",
-                7 => "SEVENTY",
-                8 => "EIGHTY",
-                9 => "NINETY"
-            );
-            $hundreds = array(
-                "HUNDRED",
-                "THOUSAND",
-                "MILLION",
-                "BILLION",
-                "TRILLION",
-                "QUARDRILLION"
-            ); /*limit t quadrillion */
-            $num = number_format($num, 2, ".", ",");
-            $num_arr = explode(".", $num);
-            $wholenum = $num_arr[0];
-            $decnum = $num_arr[1];
-            $whole_arr = array_reverse(explode(",", $wholenum));
-            krsort($whole_arr, 1);
-            $rettxt = "";
-            foreach ($whole_arr as $key => $i) {
+            if ((int) ($num) && ctype_digit($num)) {
+                $words = array();
 
-                while (substr($i, 0, 1) == "0")
-                    $i = substr($i, 1, 5);
-                if ($i < 20) {
-                    /* echo "getting:".$i; */
-                    $rettxt .= $ones[$i];
-                } elseif ($i < 100) {
-                    if (substr($i, 0, 1) != "0")  $rettxt .= $tens[substr($i, 0, 1)];
-                    if (substr($i, 1, 1) != "0") $rettxt .= " " . $ones[substr($i, 1, 1)];
-                } else {
-                    if (substr($i, 0, 1) != "0") $rettxt .= $ones[substr($i, 0, 1)] . " " . $hundreds[0];
-                    if (substr($i, 1, 1) != "0") $rettxt .= " " . $tens[substr($i, 1, 1)];
-                    if (substr($i, 2, 1) != "0") $rettxt .= " " . $ones[substr($i, 2, 1)];
+                $num = str_replace(array(',', ' '), '', trim($num));
+
+                $list1 = array(
+                    '', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+                    'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
+                    'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
+                );
+
+                $list2 = array(
+                    '', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty',
+                    'seventy', 'eighty', 'ninety', 'hundred'
+                );
+
+                $list3 = array(
+                    '', 'thousand', 'million', 'billion', 'trillion',
+                    'quadrillion', 'quintillion', 'sextillion', 'septillion',
+                    'octillion', 'nonillion', 'decillion', 'undecillion',
+                    'duodecillion', 'tredecillion', 'quattuordecillion',
+                    'quindecillion', 'sexdecillion', 'septendecillion',
+                    'octodecillion', 'novemdecillion', 'vigintillion'
+                );
+
+                $num_length = strlen($num);
+                $levels = (int) (($num_length + 2) / 3);
+                $max_length = $levels * 3;
+                $num = substr('00' . $num, -$max_length);
+                $num_levels = str_split($num, 3);
+
+                foreach ($num_levels as $num_part) {
+                    $levels--;
+                    $hundred = (int) ($num_part / 100);
+                    $hundred = ($hundred ? ' ' . $list1[$hundred] . ' Hundred' . ($hundred == 1 ? '' : '') . ' ' : '');
+                    $tens = (int) ($num_part % 100);
+                    $singles = '';
+
+                    if ($tens < 20) {
+                        $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '');
+                    } else {
+                        $tens = (int) ($tens / 10);
+                        $tens = ' ' . $list2[$tens] . ' ';
+                        $singles = (int) ($num_part % 10);
+                        $singles = ' ' . $list1[$singles] . ' ';
+                    }
+                    $words[] = $hundred . $tens . $singles . (($levels && (int) ($num_part)) ? ' ' . $list3[$levels] . ' ' : '');
                 }
-                if ($key > 0) {
-                    $rettxt .= " " . $hundreds[$key] . " ";
+                $commas = count($words);
+                if ($commas > 1) {
+                    $commas = $commas - 1;
                 }
+
+                $words = implode(', ', $words);
+
+                $words = trim(str_replace(' ,', ',', ucwords($words)), ', ');
+                if ($commas) {
+                    $words = str_replace(',', ' and', $words);
+                }
+
+                return $words;
+            } else if (!((int) $num)) {
+                return 'Zero';
             }
-            if ($decnum > 0) {
-                $rettxt .= " and ";
-                if ($decnum < 20) {
-                    $rettxt .= $ones[$decnum];
-                } elseif ($decnum < 100) {
-                    $rettxt .= $tens[substr($decnum, 0, 1)];
-                    $rettxt .= " " . $ones[substr($decnum, 1, 1)];
-                }
-            }
-            return $rettxt;
+            return '';
         }
-        extract($_POST);
 
-        $words = "<p style='position:absolute;left:8cm;top:5.5cm;margin:0;font-size:small'>" . numberTowords("$str") . "</p>";
+        $words = "<p style='position:absolute;left:8.3cm;top:5.3cm;margin:0;font-size:small'>" . number_to_word("$str") . "</p>";
+
+        echo $words;
+
 
         ?>
-
-
-        <?php echo $words ?>
-
-
 
 
 
