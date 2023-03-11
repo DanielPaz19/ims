@@ -29,7 +29,7 @@ FROM stin_tb
 LEFT JOIN user ON user.user_id = stin_tb.user_id
 LEFT JOIN employee_tb 
 ON stin_tb.emp_id = employee_tb.emp_id 
-WHERE stin_tb.stin_code LIKE '%$qry%' OR stin_tb.stin_title LIKE '%$qry%' OR employee_tb.emp_name LIKE '%$qry%' ORDER BY stin_tb.stin_id DESC
+WHERE stin_tb.stin_code LIKE '%$qry%' OR stin_tb.stin_title LIKE '%$qry%' OR employee_tb.emp_name LIKE '%$qry%' OR stin_tb.stin_remarks LIKE '%$qry%' ORDER BY stin_tb.stin_id DESC
 ";
 
 $filter_query = $query . 'LIMIT ' . $start . ', ' . $limit . '';
